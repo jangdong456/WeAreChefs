@@ -18,5 +18,11 @@ public class MemberController {
 		memberService.kakao();
 	}
 	
+	@GetMapping("join")
+	public void join() {
+		System.out.println("== Join Controller");
+		memberService.join();
+	}
+	
 	
 }

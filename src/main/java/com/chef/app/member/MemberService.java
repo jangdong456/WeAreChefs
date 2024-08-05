@@ -12,6 +12,11 @@ public class MemberService {
 	public void kakao() {
 		System.out.println("== Kakao Service ==");
 		memberDAO.kakao();
-		
 	}
+	
+	public void join() {
+		System.out.println("== Join Service");
+		memberDAO.join();
+	}
+	
 }
