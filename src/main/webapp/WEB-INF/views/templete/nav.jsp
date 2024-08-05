@@ -24,7 +24,7 @@
             </div>
             <div class="container px-0">
                 <nav class="navbar navbar-light bg-white navbar-expand-xl">
-                    <a href="index.html" class="navbar-brand"><h1 class="text-primary display-6">Fruitables</h1></a>
+                    <a href="/" class="navbar-brand"><h1 class="text-primary display-6">Fruitables</h1></a>
                     <button class="navbar-toggler py-2 px-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
                         <span class="fa fa-bars text-primary"></span>
                     </button>
@@ -33,7 +33,7 @@
                             <a href="/" class="nav-item nav-link active">Home</a>
                             <a href="shop.html" class="nav-item nav-link">Recipe</a>
                             <a href="shop-detail.html" class="nav-item nav-link">Shop</a>
-                            <a href="../board/notice/list" class="nav-item nav-link">Notice</a>
+                            <a href="/board/notice/list" class="nav-item nav-link">Notice</a>
                             <div class="nav-item dropdown">
                                 <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Inquiry</a>
                                 <div class="dropdown-menu m-0 bg-secondary rounded-0">

@@ -10,13 +10,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/board/fna/*")
 public class FnaController {	
 	
-	@ModelAttribute("inquiry")
-	public String get_inquiry() {
+	@ModelAttribute("page")
+	public String getInquiry() {
 		return "fna";
 	}
 	
 	@GetMapping("list")
-	public String fna_list() throws Exception {
+	public String fnaList() throws Exception {
 		
 		return "board/inquiry/list";
 	}

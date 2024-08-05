@@ -5,15 +5,24 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.chef.app.comment.CommentDTO;
 import com.chef.app.manager.NoticeDTO;
 
 @Service
 public class NoticeService {
 	@Autowired
-	private NoticeDAO notice_dao;
+	private NoticeDAO noticeDAO;
 
-	public List<NoticeDTO> notice_list() throws Exception{
-		return notice_dao.notice_list();
+	public List<NoticeDTO> noticeList() throws Exception{
+		return noticeDAO.noticeList();
+	}
+	
+	public NoticeDTO noticeDetail(CommentDTO commentDTO) throws Exception{
+		return noticeDAO.noticeDetail(commentDTO);
+	}
+
+	public int noticeAdd(NoticeDTO noticeDTO) throws Exception{
+		return noticeDAO.noticeAdd(noticeDTO);
 	}
 	
 }

@@ -11,13 +11,13 @@ import oracle.jdbc.proxy.annotation.GetCreator;
 @RequestMapping("/board/qna/*")
 public class QnaController {
 	
-	@ModelAttribute("inquiry")
-	public String get_inquiry() {
+	@ModelAttribute("page")
+	public String getInquiry() {
 		return "qna";
 	}
 	
 	@GetMapping("list")
-	public String qna_list() throws Exception{
+	public String qnaList() throws Exception{
 		
 		return "board/inquiry/list";
 	}

@@ -5,9 +5,9 @@
 <head>
 <meta charset="utf-8">
 
-<c:import url="/WEB-INF/views/templete/header.jsp"></c:import>
 </head>
 <body>
+<c:import url="/WEB-INF/views/templete/header.jsp"></c:import>
 <c:import url="/WEB-INF/views/templete/nav.jsp"></c:import>
 <!-- Start -->
 

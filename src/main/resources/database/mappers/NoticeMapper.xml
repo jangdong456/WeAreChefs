@@ -4,8 +4,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.chef.app.board.notice.NoticeDAO">
-	<select id="notice_list" resultType="NoticeDTO">
+	<select id="noticeList" resultType="NoticeDTO">
 		SELECT * FROM NOTICE
 	</select>
-
+	
+	<select id="noticeDetail" parameterType="CommentDTO" resultType="NoticeDTO">
+		SELECT * FROM NOTICE
+		WHERE BOARD_NUM = #{board_num}
+	</select>
+	
+<!-- 	<insert id="noticeAdd" parameterType="NoticeDTO">
+		INSERT INTO NOTICE(BOARD_NUM, BOARD_TITLE, BOARD_CONTENT, CREATE_DATE)
+		VALUES(NOTICE_SEQ.NEXTVAL, #{board_title}, #{board_content}, SYSDATE)
+	</insert> -->
 </mapper>
