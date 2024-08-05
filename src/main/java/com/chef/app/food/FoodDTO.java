@@ -13,7 +13,6 @@ public class FoodDTO {
 	private Date create_date;
 	private Date  update_date;
 	private Long rating;
-//	세령
 	
 	public Long getFood_num() {
 		return food_num;
