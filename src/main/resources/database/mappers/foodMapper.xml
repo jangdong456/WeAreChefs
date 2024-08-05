@@ -5,9 +5,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="com.chef.app.food.FoodDAO">
 
-	<select id="searchFood" resultType="java.util.List" parameterType="FoodDTO">
+	<select id="searchFood" resultType="FoodDTO" parameterType="FoodDTO">
 		SELECT * FROM FOOD
 		WHERE FOOD_STOCK>0 AND FOOD_NAME LIKE '%'||#{food_name}||'%'
 	</select>
-
+	
+	<update id="add" parameterType="FoodDTO">
+		UPDATE FOOD SET FOOD_CONTENTS=#{food_contents}, UPDATE_DATE=SYSDATE WHERE FOOD_NUM = #{food_num}
+	</update>
+	
 </mapper>

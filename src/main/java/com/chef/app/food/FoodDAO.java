@@ -15,8 +15,11 @@ public class FoodDAO {
 	private final String NAMESPACE = "com.chef.app.food.FoodDAO.";
 	
 	public List<FoodDTO> searchFood(FoodDTO foodDTO) throws Exception{
-		List<FoodDTO> ar = sqlSession.selectList(NAMESPACE+"searchFood", foodDTO);
-		return ar;
+		return sqlSession.selectList(NAMESPACE+"searchFood", foodDTO);
+	}
+	
+	public int add(FoodDTO foodDTO) throws Exception{
+		return sqlSession.update(NAMESPACE+"add", NAMESPACE);
 	}
 
 }
