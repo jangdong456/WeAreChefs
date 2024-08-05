@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.chef.app.food.FoodDAO">
+
+	<select id="searchFood" resultType="java.util.List" parameterType="FoodDTO">
+		SELECT * FROM FOOD
+		WHERE FOOD_STOCK>0 AND FOOD_NAME LIKE '%'||#{food_name}||'%'
+	</select>
+
+</mapper>
