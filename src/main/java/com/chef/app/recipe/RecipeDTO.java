@@ -11,6 +11,9 @@ public class RecipeDTO {
 	private Date update_date;
 	private String recipe_category;
 	private Long recipe_hit;
+	private Long rating;
+	private String recipe_level;
+	private String recipe_time;
 
 	// db
 	public Long getRecipe_num() {
