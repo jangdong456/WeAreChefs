@@ -5,10 +5,10 @@
 <head>
 <meta charset="utf-8">
 
-<c:import url="./templete/header.jsp"></c:import>
+<c:import url="/WEB-INF/views/templete/header.jsp"></c:import>
 </head>
 <body>
-<c:import url="./templete/nav.jsp"></c:import>
+<c:import url="/WEB-INF/views/templete/nav.jsp"></c:import>
 		<!-- Hero Start -->
         <div class="container-fluid py-5 mb-5 hero-header">
             <div class="container py-5">
@@ -47,9 +47,6 @@
             </div>
         </div>
 <!-- Hero End -->
-<h1>test</h1>
-	<c:import url="./templete/footer.jsp"></c:import>
-
-
+	<c:import url="/WEB-INF/views/templete/footer.jsp"></c:import>
 </body>
 </html>
