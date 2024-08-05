@@ -66,13 +66,15 @@
 					</tr>
 				</thead>
 				<tbody>
+				 <c:forEach var="recipe" items="${ar}">
 					<tr>
-						<td>${ar.recipe_num}</td>
-						<td>${ar.recipe_writer}</td>
-						<td>${ar.recipe_name}</td>
-						<td>${ar.menu_recipe}</td>
-						<td>${ar.recipe_category}</td>	
-					</tr>
+						<td>${recipe.recipe_num}</td>
+						<td>${recipe.recipe_writer}</td>
+						<td>${recipe.recipe_name}</td>
+						<td>${recipe.menu_recipe}</td>
+						<td>${recipe.recipe_category}</td>	
+					</tr>					
+				</c:forEach>
 				
 				</tbody>
 				</table>

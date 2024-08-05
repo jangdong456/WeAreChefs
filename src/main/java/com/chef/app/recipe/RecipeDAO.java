@@ -13,7 +13,17 @@ public class RecipeDAO {
 	private final String NAMESPACE = "com.chef.app.recipe.RecipeDAO.";
 
 	public List<RecipeDTO> recipeList() {
-		return sqlSession.selectList(NAMESPACE + "recipeList");
+		
+		 List<RecipeDTO> recipes = sqlSession.selectList(NAMESPACE + "recipeList");
+		 
+		   for (RecipeDTO recipe : recipes) {
+	            System.out.println("Recipe Num: " + recipe.getRecipe_num());
+	            System.out.println("Recipe Name: " + recipe.getRecipe_name());
+	        }
+		 
+		    return recipes;
+		
+		//return sqlSession.selectList(NAMESPACE + "recipeList");
 
 	}
 

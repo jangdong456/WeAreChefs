@@ -17,6 +17,7 @@ public class RecipeController {
 	@GetMapping("list")
 	public void recipeList(Model model) throws Exception {
 		List<RecipeDTO> ar = recipeService.recipeList();
+	
 		model.addAttribute("ar", ar);
 
 	}

@@ -12,6 +12,7 @@ public class RecipeService {
 	private RecipeDAO recipeDAO;
 
 	public List<RecipeDTO> recipeList() {
+		
 		return recipeDAO.recipeList();
 	}
 
