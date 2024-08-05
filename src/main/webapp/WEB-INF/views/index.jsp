@@ -47,7 +47,7 @@
             </div>
         </div>
 <!-- Hero End -->
-
+<h1>test</h1>
 	<c:import url="./templete/footer.jsp"></c:import>
 
 
