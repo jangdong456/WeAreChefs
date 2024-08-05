@@ -26,6 +26,6 @@
  		<typeAlias type="com.chef.app.manager.BuyingHistoryDTO" alias="BuyingHistoryDTO"/>
  		<typeAlias type="com.chef.app.manager.NoticeDTO" alias="NoticeDTO"/>
  		<typeAlias type="com.chef.app.manager.NoticeFileDTO" alias="NoticeFileDTO"/>
- 		<typeAlias type="com.chef.app.manager.QnaDTO" alias="QnaDTO"/>
+ 		<typeAlias type="com.chef.app.manager.InquiryDTO" alias="InquiryDTO"/>
  	</typeAliases>
  </configuration>
