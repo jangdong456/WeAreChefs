@@ -5,6 +5,9 @@
 
  <configuration>
  	<typeAliases>
+ 	 	<!-- 공용 -->
+ 	 	<typeAlias type="com.chef.app.util.Pager" alias="Pager"/>
+ 		<typeAlias type="com.chef.app.comment.CommentDTO" alias="CommentDTO"/>
  		<!-- 동국 -->
  		<typeAlias type="com.chef.app.member.MemberDTO" alias="MemberDTO"/>
  		<typeAlias type="com.chef.app.member.MemberFileDTO" alias="MemberFileDTO"/>
@@ -28,7 +31,6 @@
  		<typeAlias type="com.chef.app.manager.NoticeFileDTO" alias="NoticeFileDTO"/>
  		<typeAlias type="com.chef.app.manager.InquiryDTO" alias="InquiryDTO"/>
  		
- 		<!-- 공통 -->
- 		<typeAlias type="com.chef.app.comment.CommentDTO" alias="CommentDTO"/>
+
  	</typeAliases>
  </configuration>

@@ -12,12 +12,10 @@
 <!-- Start -->
 	<!-- Single Page Header start -->
     <div class="container-fluid page-header py-5">
-        <h1 class="text-center text-white display-6">Notice</h1>
+        <h1 class="text-center text-white display-6">Inquiry</h1>
         <ol class="breadcrumb justify-content-center mb-0">
-            <li class="breadcrumb-item"><a href="/">Home</a></li>
-<!--             <li class="breadcrumb-item"><a href="N">Pages</a></li>-->
-            <li class="breadcrumb-item"><a href="./list">Notice</a></li>
-            <li class="breadcrumb-item active text-white">Update</li>
+            <li class="breadcrumb-item"><a href="./list">${page}</a></li>
+            <li class="breadcrumb-item active text-white">Add</li>
         </ol>
     </div>
     <!-- Single Page Header End -->

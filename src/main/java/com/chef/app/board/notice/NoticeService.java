@@ -7,18 +7,27 @@ import org.springframework.stereotype.Service;
 
 import com.chef.app.comment.CommentDTO;
 import com.chef.app.manager.NoticeDTO;
+import com.chef.app.util.Pager;
 
 @Service
 public class NoticeService {
 	@Autowired
 	private NoticeDAO noticeDAO;
 
-	public List<NoticeDTO> noticeList() throws Exception{
-		return noticeDAO.noticeList();
+	public List<NoticeDTO> noticeList(Pager pager) throws Exception{
+		return noticeDAO.noticeList(pager);
 	}
 	
 	public NoticeDTO noticeDetail(CommentDTO commentDTO) throws Exception{
 		return noticeDAO.noticeDetail(commentDTO);
+	}
+	
+	public int noticeUpdate(NoticeDTO noticeDTO) throws Exception{
+		return noticeDAO.noticeUpdate(noticeDTO);
+	}
+	
+	public int noticeDelete(CommentDTO commentDTO)throws Exception{
+		return noticeDAO.noticeDelete(commentDTO);
 	}
 
 	public int noticeAdd(NoticeDTO noticeDTO) throws Exception{

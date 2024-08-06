@@ -9,6 +9,7 @@ public class InquiryDTO extends CommentDTO {
 	private Long ref;
 	private Long step;
 	private String del;
+	
 	public String getBoard_type() {
 		return board_type;
 	}

@@ -10,9 +10,15 @@
 <c:import url="/WEB-INF/views/templete/header.jsp"></c:import>
 <c:import url="/WEB-INF/views/templete/nav.jsp"></c:import>
 <!-- Start -->
+	<div class="container-fluid py-5">
+    	<div class="container py-5">
 
-
-
+    	
+    	
+    	
+    	
+    	</div>
+     </div>
 <!-- End -->
 <c:import url="/WEB-INF/views/templete/footer.jsp"></c:import>
 </body>

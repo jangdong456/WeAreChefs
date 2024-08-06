@@ -3,6 +3,7 @@ package com.chef.app.manager;
 import com.chef.app.file.FileDTO;
 
 public class NoticeFileDTO extends FileDTO {
+	
 	private Long board_num;
 
 	public Long getBoard_num() {

@@ -12,11 +12,9 @@
 <!-- Start -->
 	<!-- Single Page Header start -->
     <div class="container-fluid page-header py-5">
-        <h1 class="text-center text-white display-6">Notice</h1>
+        <h1 class="text-center text-white display-6">Inquiry</h1>
         <ol class="breadcrumb justify-content-center mb-0">
-            <li class="breadcrumb-item"><a href="/">Home</a></li>
-<!--             <li class="breadcrumb-item"><a href="N">Pages</a></li>-->
-            <li class="breadcrumb-item"><a href="./list">Notice</a></li>
+            <li class="breadcrumb-item"><a href="./list">${page}</a></li>
             <li class="breadcrumb-item active text-white">Update</li>
         </ol>
     </div>
@@ -24,17 +22,18 @@
     
 	<div class="container-fluid py-5">
     	<div class="container py-5">
-	    	<form method="post" action="./add">
+	    	<form method="post" action="./update">
+	    		<input type="hidden" name="board_num" value="${inquiryDetail.board_num}">
 	            <div class="form-item">
 	               <label class="form-label my-3">공지 제목</label>
-	               <input type="text" name="board_title" class="form-control" value="">
+	               <input type="text" name="board_title" class="form-control" value="${inquiryDetail.board_title}">
 	            </div>
 	            <div class="form-item">
 	               <label class="form-label my-3">공지 내용</label>
-	               <textarea name="board_content" class="form-control" cols="30" rows="11"></textarea>
+	               <textarea name="board_content" class="form-control" cols="30" rows="11">${inquiryDetail.board_content}</textarea>
 	            </div>
 	            <hr>
-	            <button type="submit" class="btn border-secondary rounded-pill px-4 py-3 text-primary">작성 완료</button>
+	            <button type="submit" class="btn border-secondary rounded-pill px-4 py-3 text-primary">수정완료</button>
 			</form>
     	</div>
      </div>

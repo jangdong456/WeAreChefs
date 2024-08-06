@@ -22,7 +22,8 @@ public class NoticeController {
 	
 	@GetMapping("list")
 	public String noticeList(Pager pager, Model model) throws Exception{
-		List<NoticeDTO> list = noticeService.noticeList();
+		// & Todo : 페이징 처리 해야함.
+		List<NoticeDTO> list = noticeService.noticeList(pager);
 		model.addAttribute("noticeList", list);
 		
 		return "board/notice/list";
@@ -35,15 +36,68 @@ public class NoticeController {
 		return "board/notice/detail";
 	}
 	
+	@GetMapping("update")
+	public String noticeUpdate(CommentDTO commentDTO, Model model) throws Exception{
+		// & Todo : session에서 member_lev 가져오고 관리자인지 아닌지를 판별해야함.
+		NoticeDTO noticeDTO = noticeService.noticeDetail(commentDTO);
+		model.addAttribute("noticeDetail", noticeDTO);
+		return "board/notice/update";
+	}
+	
+	@PostMapping("update")
+	public String noticeUpdate(NoticeDTO noticeDTO, Model model) throws Exception{
+		int result = noticeService.noticeUpdate(noticeDTO);
+		
+		String msg = "수정을 실패 하였습니다.";
+		String url = "/board/notice/detail";
+		if (result >= 1) {
+			msg = "수정을 성공 하였습니다.";
+			url = url + "?board_num=" + noticeDTO.getBoard_num();
+		}
+		model.addAttribute("msg", msg);
+		model.addAttribute("url", url);
+		return "commons/message";
+	}
+	
+	@GetMapping("delete")
+	public String noticeDelete(CommentDTO commentDTO, Model model) throws Exception{
+		// & Todo : session에서 member_lev 가져오고 관리자인지 아닌지를 판별해야함.
+		int result = noticeService.noticeDelete(commentDTO);
+		
+		String msg = "삭제를 실패 하였습니다.";
+		String url = "/board/notice/detail";
+		if (result >= 1) {
+			msg = "삭제를 성공 하였습니다.";
+			url = "/board/notice/list";
+		}
+		model.addAttribute("msg", msg);
+		model.addAttribute("url", url);
+		return "commons/message";
+	}
+	
 	@GetMapping("add")
 	public String noticeAdd() throws Exception{
+		// & Todo : session에서 member_lev 가져오고 관리자인지 아닌지를 판별해야함.
 		return "board/notice/add";
 	}
 	
 	@PostMapping("add")
-	public void noticeAdd(NoticeDTO noticeDTO) throws Exception{
-		noticeDTO.setMember_id("admin1");
+	public String noticeAdd(NoticeDTO noticeDTO, Model model) throws Exception{
+		// & Todo - admin1 - Start
+		// 세션 member의 id 값을 집어 넣을 수 있는 기능을 만들고 교체할것 
+		noticeDTO.setMember_id("admin1"); 
+		// & Todo - admin1 - Finish
 		int result = noticeService.noticeAdd(noticeDTO);
+		
+		String msg = "작성을 실패 하였습니다.";
+		String url = "/board/notice/detail";
+		if (result >= 1) {
+			msg = "작성을 성공 하였습니다.";
+			url = "/board/notice/list";
+		}
+		model.addAttribute("msg", msg);
+		model.addAttribute("url", url);
+		return "commons/message";
 		
 	}
 }

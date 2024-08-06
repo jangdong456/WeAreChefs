@@ -21,27 +21,38 @@
         </ol>
     </div>
     <!-- Single Page Header End -->
-    <table class="table">
-        <thead>
-	        <tr>
-	            <th scope="col">공지번호</th>
-	            <th scope="col">회원아이디</th>
-	            <th scope="col">공지제목</th>
-	            <th scope="col">공지작성일</th>
-	            <th scope="col">공지수정일</th>
-	        </tr>
-        </thead>
-        <tbody>
-          	<tr>
-          		<th>${noticeDetail.board_num}</th>
-          		<th>${noticeDetail.member_id}</th>
-          		<th>${noticeDetail.board_title}</th>
-          		<th>${noticeDetail.create_date}</th>
-          		<th>${noticeDetail.update_date}</th>
-         	</tr>
-        </tbody>
-    </table>
-    <h1>${noticeDetail.board_content} 내용</h1>	
+    <div class="container-fluid py-5">
+    <div class="container py-5">
+	    <table class="table">
+	        <thead>
+		        <tr>
+		            <th scope="col">공지번호</th>
+		            <th scope="col">회원아이디</th>
+		            <th scope="col">공지제목</th>
+		            <th scope="col">공지작성일</th>
+		            <th scope="col">공지수정일</th>
+		        </tr>
+	        </thead>
+	        <tbody>
+	          	<tr>
+	          		<th>${noticeDetail.board_num}</th>
+	          		<th>${noticeDetail.member_id}</th>
+	          		<th>${noticeDetail.board_title}</th>
+	          		<th>${noticeDetail.create_date}</th>
+	          		<th>${noticeDetail.update_date}</th>
+	         	</tr>
+	        </tbody>
+	    </table>
+	    <div>
+			<textarea disabled name="text" class="form-control" cols="30" rows="11">${noticeDetail.board_content}</textarea>
+		</div>
+		<hr>
+		<!-- & Todo Start : 이부분은 관리자 레벨만 보이도록 해야함. -->		
+		<a class="btn border-secondary rounded-pill px-4 py-3 text-primary" href="/board/notice/update?board_num=${noticeDetail.board_num}">Update</a>
+		<a class="btn border-secondary rounded-pill px-4 py-3 text-primary" href="/board/notice/delete?board_num=${noticeDetail.board_num}">Delete</a>
+		<!-- & Todo Final : 이부분은 관리자 레벨만 보이도록 해야함. -->
+	</div>
+	</div>
 
 
 <!-- End -->
