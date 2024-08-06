@@ -13,7 +13,15 @@ public class FoodDTO {
 	private Date create_date;
 	private Date  update_date;
 	private Long rating;
+	private StoreImgFileDTO storeImgFileDTO;
 	
+	
+	public StoreImgFileDTO getStoreImgFileDTO() {
+		return storeImgFileDTO;
+	}
+	public void setStoreImgFileDTO(StoreImgFileDTO storeImgFileDTO) {
+		this.storeImgFileDTO = storeImgFileDTO;
+	}
 	public Long getFood_num() {
 		return food_num;
 	}

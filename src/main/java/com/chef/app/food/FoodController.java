@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,6 +13,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+
+import com.chef.app.util.Pager;
 
 @Controller
 @RequestMapping("/food/*")
@@ -28,9 +29,19 @@ public class FoodController {
 	}
 	
 	@PostMapping("add")
-	public void add(FoodDTO foodDTO,MultipartFile attach,HttpSession session) throws Exception {
+	public String add(FoodDTO foodDTO,MultipartFile attach,HttpSession session,Model model) throws Exception {
 		
+		int result = foodService.add(foodDTO, attach, session);
 		
+		if(result>0) {
+			model.addAttribute("result", "상품 등록이 완료됐습니다");
+			model.addAttribute("url", "/food/list");
+			return "food/message";
+		}
+		
+		model.addAttribute("result", "상품 등록에 실패했습니다");
+		model.addAttribute("url", "/food/list");
+		return "food/message";
 		
 	}
 	
@@ -40,6 +51,38 @@ public class FoodController {
 		List<FoodDTO> ar = foodService.searchFood(foodDTO);
 		model.addAttribute("list", ar);
 		return "food/foodSearchList";
+		
+	}
+	
+
+	@PostMapping("uploadContentImage")
+	@ResponseBody
+	public Map<String, String> uploadContentImage(MultipartFile upload,Model model,HttpSession session) throws Exception{
+
+		String imgName = foodService.uploadContentImage(upload, session);
+		String path ="/resources/upload/foodcontents/"+imgName;
+		
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("url", path);
+
+		return map;
+
+	}
+	
+	@GetMapping("list")
+	public void getList(Pager pager,Model model) throws Exception{
+		List<FoodDTO> ar =foodService.getList(pager);
+		model.addAttribute("list", ar);
+	}
+	
+	@PostMapping("list")
+	public String getListSearch(Pager pager,Model model) throws Exception{
+		System.out.println(pager.getSearch());
+		System.out.println("post");
+		List<FoodDTO> ar =foodService.getList(pager);
+		System.out.println(ar.size());
+		model.addAttribute("list", ar);
+		return "food/nameSearchList";
 		
 	}
 	

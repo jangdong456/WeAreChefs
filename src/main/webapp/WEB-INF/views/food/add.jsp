@@ -79,11 +79,11 @@
             
              <div class="form-group">
                 <label class="form-label mt-3 mr-3">* 대표 이미지</label>
-                <input type="file" name="attach">
+                <input type="file" name="attach" id="attach">
             </div>
 
             <div class="form-group" align="right">
-                <button class="btn border-secondary text-uppercase text-primary" type="submit">등록하기</button>
+                <button class="btn border-secondary text-uppercase text-primary" type="submit" id="foodAdd">등록하기</button>
             </div>
             
         </form>
