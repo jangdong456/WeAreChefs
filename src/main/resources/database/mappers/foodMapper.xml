@@ -52,5 +52,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
    	SELECT COUNT(FOOD_NUM) FROM FOOD
    </select>
    
+   <select id="categoryCount" resultType="java.util.Map">
+   	SELECT FOOD_CATEGORY, COUNT(*) AS COUNT
+	FROM FOOD
+	GROUP BY FOOD_CATEGORY
+	ORDER BY 
+   </select>
+   
 	
 </mapper>

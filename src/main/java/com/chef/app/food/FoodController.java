@@ -72,7 +72,9 @@ public class FoodController {
 	@GetMapping("list")
 	public void getList(Pager pager,Model model) throws Exception{
 		List<FoodDTO> ar =foodService.getList(pager);
+		List<Map<String, Object>> categoryCount =foodService.categoryCount();
 		model.addAttribute("list", ar);
+		model.addAttribute("count", categoryCount);
 	}
 	
 	@PostMapping("list")

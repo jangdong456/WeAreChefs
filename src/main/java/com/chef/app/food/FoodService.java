@@ -2,6 +2,7 @@ package com.chef.app.food;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
@@ -67,6 +68,10 @@ public class FoodService {
 		
 		return foodDAO.getList(pager);
 		
+	}
+	
+	public List<Map<String, Object>> categoryCount() throws Exception{
+		return foodDAO.categoryCount();
 	}
 
 }

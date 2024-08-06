@@ -1,6 +1,7 @@
 package com.chef.app.food;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,5 +37,7 @@ public class FoodDAO {
 		return sqlSession.selectOne(NAMESPACE+"getTotalCount");
 	}
 	
-
+	public List<Map<String, Object>> categoryCount() throws Exception{
+		return sqlSession.selectList(NAMESPACE+"categoryCount");
+	}
 }
