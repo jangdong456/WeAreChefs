@@ -1,51 +1,74 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
+<meta charset="utf-8">
+<c:import url="/WEB-INF/views/templete/header.jsp"></c:import>
+	<style>
+		.form-container {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			flex-direction: column;
+		}
+		
+		.form-wrapper {
+			width: 100%;
+			max-width: 600px;
+			margin: 0 auto;
+		}
+		
+		.form-item {
+			margin-bottom: 15px;
+		}
+		
+		.form-control {
+				width: 100%;
+		}
+
+		#join_span {
+			color: red;
+		}
+
+	</style>
 </head>
 <body>
-<h1>login page</h1>
-	<form action="">
-		<script>
-			const key = '504d6b8218f4cc3a051e12c617300d61';
-			// 카카오 초기화
-			Kakao.init(key);
-			console.log(Kakao.isInitialized());
-			Kakao.isInitialized();
-		</script>
-		<div>
-			<input>
-			<button>로그인</button>
-		</div>	
-	</form>
-	<div>
-		<script>
-					function loginWithKakao() {
-			Kakao.Auth.authorize({
-			redirectUri: 'https://developers.kakao.com/tool/demo/oauth',
-			});
-		}
-		</script>
-		<a href="#"> 
-			<img src="/resources/images/kakao_login_medium_narrow.png"  width="200px" height="150px" alt="로그인">
-		</a>
+    <c:import url="/WEB-INF/views/templete/nav.jsp"></c:import>
+	<div class="container-fluid page-header py-5">
+		<h1 class="text-center text-white display-6">로그인</h1>
 	</div>
+	
+	<div class="container-fluid py-5">
+		<div class="container py-5">
+			<div class="form-container">
+				<div class="form-wrapper">
+					<form action="#" method="post">
+						<div class="row g-5">
+							<div class="col-12 ">
+								<div class="row">
+									
+								<div class="form-item">
+									<label class="form-label my-3">아이디<sup>*</sup></label> 
+									<input type="text" class="form-control member_join" id="member_id" name="member_id">
+								</div>
+								<div class="form-item">
+									<label class="form-label my-3">비밀번호<sup>*</sup></label>
+									<input type="text" class="form-control member_join" id="member_pwd" name="member_pwd">
+								</div>
 
-<script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.2/kakao.min.js" 
-		integrity="sha384-TiCUE00h649CAMonG018J2ujOgDKW/kVWlChEuu4jK2vxfAAD0eZxzCKakxg55G4" crossorigin="anonymous">
-</script>
-<script src="/resources/js/member/member.js"></script>
-
+								<div class="row g-4 text-center align-items-center justify-content-center pt-4">
+									<button id="login_btn" type="button" class="btn border-secondary py-3 px-4 text-uppercase w-100 text-primary">로그인</button>
+								</div>
+							</div>
+						</div> 
+					</form>
+				</div>
+			</div>
+		</div>
+	</div> 
+<c:import url="/WEB-INF/views/templete/footer.jsp"></c:import>
+<script src="/resources/member/js/login.js"></script>
 </body>
 </html>
-
-
-
-<!-- <script src="https://t1.kakaocdn.net/kakao_js_sdk/${VERSION}/kakao.min.js"
-		integrity="${INTEGRITY_VALUE}" crossorigin="anonymous">
-</script> -->
-<!-- <script src="https://t1.kakaocdn.net/kakao_js_sdk/v1/kakao.min.js"></script> -->
+<!-- placeholder="House Number Street Name" -->
