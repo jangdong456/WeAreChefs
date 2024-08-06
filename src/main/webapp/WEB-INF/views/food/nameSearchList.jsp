@@ -2,7 +2,6 @@
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<h1>ddddd</h1>
 
                                           <c:forEach items="${list}" var="a">
 		                                    <div class="col-md-6 col-lg-6 col-xl-4">

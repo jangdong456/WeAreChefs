@@ -77,10 +77,8 @@ public class FoodController {
 	
 	@PostMapping("list")
 	public String getListSearch(Pager pager,Model model) throws Exception{
-		System.out.println(pager.getSearch());
-		System.out.println("post");
+
 		List<FoodDTO> ar =foodService.getList(pager);
-		System.out.println(ar.size());
 		model.addAttribute("list", ar);
 		return "food/nameSearchList";
 		
