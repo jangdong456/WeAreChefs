@@ -41,7 +41,7 @@
 </style>
 </head>
 <body>
-	<c:import url="../templete/nav.jsp"></c:import>
+	<c:import url="/WEB-INF/views/templete/nav.jsp"></c:import>
 	<!-- Hero Start -->
 	<div class="container-fluid page-header py-5">
 		<h1 class="text-center text-white display-6">레시피 작성</h1>
@@ -57,28 +57,37 @@
 			<h5 class="mb-4" style="text-align: center;">💡요리의 맛이 좌우될 수 있는 중요한 부분은 빠짐없이 적어주세요.</h5>
 			<div class="form-container">
 				<div class="form-wrapper">
-					<form method ="post" enctype="multipart/form-data">
+					<form action="/recipe/add" method ="post" enctype="multipart/form-data">
 						<div class="row g-5">
 							<div class="col-12 ">
+							
+							 <div class="row">
+									<div class="col-md-12 col-lg-6">
+										<!-- <div class="form-item w-100">  -->
+											
+											
+										</div>
+										
+									</div>
 							
 								 <div class="row">
 									<div class="col-md-12 col-lg-6">
 										<!-- <div class="form-item w-100">  -->
 											<label class="form-label my-3" >작성자<sup>*</sup></label>
-											<input type="text" class="form-control" readonly="readonly">
+											<input type="text" class="form-control" name = "recipe_writer">
 										</div>
 										
 									</div>
 									<div class="col-12 ">
 										<div class="form-item w-100">
 											<label class="form-label my-3">요리명<sup>*</sup></label>
-											<input type="text" class="form-control" placeholder="ex) 소고기 미역국끓이기">
+											<input type="text" class="form-control" name = "recipe_name" placeholder="ex) 소고기 미역국 끓이기">
 										</div>
 									</div>
 									<div class="col-12">
 		    							<div class="form-item w-100">
 											<label class="form-label my-3">완성사진 추가<sup>*</sup></label>
-											<button type="button" class="btn border-secondary py-3 px-4 text-uppercase w-100 text-primary" id="add" style="margin-bottom: 10px;">추가</button>
+											<button type="button" class="btn border-secondary py-3 px-4 text-uppercase w-100 text-primary" name = "attach" id="add" style="margin-bottom: 10px;">추가</button>
 											<div id="result">
 
  											 </div>
@@ -88,14 +97,14 @@
 										<div class="form-item w-100">
 											<label class="form-label my-3">요리소개<sup>*</sup></label>
 											<textarea class="form-control" spellcheck="false" placeholder="ex) 남편 생일을 맞아 소고기 미역국을 끓여봤어요~"
-											cols="30" rows="11" id="editor" ></textarea>
+											cols="30" rows="11" id="editor" name = "menu_recipe" ></textarea>
 										</div>
 									</div>	
 									<div class="col-md-12">
 									      <nav class="navbar navbar-light bg-white navbar-expand-xl">                     
 											<div class="form-item w-100">
 							         			<label class="form-label my-3">레시피 카테고리<sup>*</sup></label>             
-			   	                                	<select class="form-select" aria-label="Default select example" name="category" id="category" >
+			   	                                	<select class="form-select" aria-label="Default select example" name="recipe_category" id="recipe_category" >
 			   	                    						  <option selected>카테고리를 선택하세요.</option>
 															  <option value="한식">한식</option>
 															  <option value="양식">양식</option>
@@ -110,7 +119,7 @@
 									      <nav class="navbar navbar-light bg-white navbar-expand-xl">                     
 											<div class="form-item w-100">
 							         			<label class="form-label my-3">난이도<sup>*</sup></label>             
-			   	                                	<select class="form-select" aria-label="Default select example" name="level" id="level">
+			   	                                	<select class="form-select" aria-label="Default select example" name="recipe_level" id="recipe_level">
 			   	                    						  <option selected>난이도를 선택하세요.</option>
 															  <option value="아무나">아무나</option>
 															  <option value="초급">초급</option>
@@ -125,7 +134,7 @@
 									      <nav class="navbar navbar-light bg-white navbar-expand-xl">                     
 											<div class="form-item w-100">
 							         			<label class="form-label my-3">요리시간<sup>*</sup></label>             
-			   	                                	<select class="form-select" aria-label="Default select example" name="time" id="time">
+			   	                                	<select class="form-select" aria-label="Default select example" name="recipe_time" id="recipe_time">
 			   	                    						  <option selected>요리시간을 선택하세요.</option>
 															  <option value="10분이내">10분이내</option>
 															  <option value="30분이내">30분이내</option>
@@ -158,7 +167,7 @@
 <script type="text/javascript" src="/resources/js/commons/ckeditor.js"></script>
 <script type="text/javascript" src="/resources/js/commons/files.js"></script>
 <script type="text/javascript">
-    setMax(5);
+    setMax(1);
 
   //3. Ckeditor 적용 
 	ClassicEditor.create( 

@@ -13,18 +13,30 @@ public class RecipeDAO {
 	private final String NAMESPACE = "com.chef.app.recipe.RecipeDAO.";
 
 	public List<RecipeDTO> recipeList() {
-		
-		 List<RecipeDTO> recipes = sqlSession.selectList(NAMESPACE + "recipeList");
-		 
-		   for (RecipeDTO recipe : recipes) {
-	            System.out.println("Recipe Num: " + recipe.getRecipe_num());
-	            System.out.println("Recipe Name: " + recipe.getRecipe_name());
-	        }
-		 
-		    return recipes;
-		
-		//return sqlSession.selectList(NAMESPACE + "recipeList");
 
+		return sqlSession.selectList(NAMESPACE + "recipeList");
+
+//		for (RecipeDTO recipe : recipes) {
+//			System.out.println("Recipe Num: " + recipe.getRecipe_num());
+//			System.out.println("Recipe Name: " + recipe.getRecipe_name());
+//		}
+//
+//		return recipes;
+	}
+
+	public int recipeAdd(RecipeDTO recipeDTO) {
+
+		int recipes = sqlSession.insert(NAMESPACE + "recipeAdd", recipeDTO);
+
+		System.out.println("DAO Recipe Num: " + recipeDTO.getRecipe_num());
+		System.out.println("DAO Recipe Name: " + recipeDTO.getRecipe_name());
+
+		return recipes;
+	}
+
+	public int mainImg(RecipeImgFileDTO recipeImgFileDTO) {
+
+		return sqlSession.insert(NAMESPACE + "mainImg", recipeImgFileDTO);
 	}
 
 }

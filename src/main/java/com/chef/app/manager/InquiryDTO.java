@@ -2,7 +2,7 @@ package com.chef.app.manager;
 
 import com.chef.app.comment.CommentDTO;
 
-public class QnaDTO extends CommentDTO {
+public class InquiryDTO extends CommentDTO {
 	
 	private Long qna_num;
 	private String qna_title;
