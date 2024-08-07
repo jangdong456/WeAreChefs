@@ -39,7 +39,7 @@
 <body>
 <c:import url="/WEB-INF/views/templete/nav.jsp"></c:import>
 
-<div id ="listDiv">
+
     <!-- Single Page Header start -->
     <div class="container-fluid page-header py-5">
         <h1 class="text-center text-white display-6">상점</h1>
@@ -49,7 +49,7 @@
         <!-- Fruits Shop Start-->
         <div class="container-fluid fruite py-5">
             <div class="container py-5">
-                <h1 class="mb-4">🍋 어서오세요 ${param.kind}, ${param.search}</h1>
+                <h1 class="mb-4">🍋 어서오세요</h1>
                 <div class="row g-4">
                     <div class="col-lg-12">
                         <div class="row g-4">
@@ -66,13 +66,14 @@
                                 <div class="bg-light ps-3 py-3 rounded d-flex justify-content-between mb-4">
                                     <label for="fruits">분류</label>
                                     <select id="fruits" name="fruitlist" class="border-0 form-select-sm bg-light me-3" form="fruitform">
-                                        <option value="recent" id="orderRecent">최신순</option>
-                                        <option value="up" id="orderUp">높은가격순</option>
-                                        <option value="down" id="orderDown">낮은가격순</option>
+                                        <option value="recent" id="orderRecent" class="listOrder">최신순</option>
+                                        <option value="up" id="orderUp" class="listOrder">높은가격순</option>
+                                        <option value="down" id="orderDown" class="listOrder">낮은가격순</option>
                                     </select>
                                 </div>
                             </div>
                         </div>
+                    <div id ="listDiv">
                         <div class="row g-4">
                             <div class="col-lg-3">
                                 <div class="row g-4">
@@ -126,7 +127,7 @@
                                             
                                         </c:forEach>
                                 </div>
-                                    </div>
+                            </div>
                                     <div class="col-12">
                                         <div class="pagination d-flex justify-content-center mt-5">
                                             <a href="/food/list?page=${pager.startNum-1}&search=${pager.search}&kind=${pager.kind}&order=${pager.order}" class="rounded ${pager.pre?'':'disabled'}" >&laquo;</a>

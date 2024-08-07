@@ -76,7 +76,6 @@ public class FoodController {
 		model.addAttribute("pager", pager);
 		model.addAttribute("list", ar);
 		model.addAttribute("count", categoryCount);
-		System.out.println(ar.size());
 	}
 	
 	@PostMapping("list")
@@ -87,8 +86,6 @@ public class FoodController {
 		model.addAttribute("pager", pager);
 		model.addAttribute("list", ar);
 		model.addAttribute("count", categoryCount);
-		
-		System.out.println(ar.size());
 
 		return "food/nameSearchList";
 		

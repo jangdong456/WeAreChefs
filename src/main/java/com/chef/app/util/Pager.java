@@ -129,7 +129,7 @@ public class Pager {
 
 	public String getSearch() {
 
-		if (this.search == null) {
+		if (this.search == null || this.search.equals("null")) {
 			this.search = "";
 		}
 

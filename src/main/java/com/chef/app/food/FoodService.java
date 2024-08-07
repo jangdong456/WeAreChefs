@@ -31,7 +31,6 @@ public class FoodService {
 		
 		int result = foodDAO.add(foodDTO);
 		Long foodNum = foodDTO.getFood_num();
-		System.out.println(foodNum);
 				
 		ServletContext servletContext = session.getServletContext();
 		String path = servletContext.getRealPath("resources/upload/foods");
@@ -68,10 +67,6 @@ public class FoodService {
 	
 		pager.makeRow(9L);
 		pager.makeNum(totalRow, 9L, 5L);
-		System.out.println(pager.getKind());
-		System.out.println(pager.getSearch());
-		System.out.println(pager.getStartRow());
-		System.out.println(pager.getLastRow());
 		List<FoodDTO> ar = foodDAO.getList(pager);
 		return ar;
 		
