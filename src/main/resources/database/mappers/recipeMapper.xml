@@ -11,33 +11,32 @@
   	 </select>
     
     <!-- 레시피 리스트 -->
-    <select id="recipeList"  resultType="RecipeDTO">
+<!--  	<select id="recipeList"  resultType="RecipeDTO">
     
     	SELECT *
     	FROM RECIPE
-    	ORDER BY RECIPE_NUM DESC
-    	<!-- <select id="recipeList" resultMap="recipeImgName" parameterType="com.chef.app.util.Pager"> -->
-    	
-    	
-    		<!-- SELECT * 
+    	ORDER BY RECIPE_NUM DESC 
+    	</select> -->
+    	<select id="recipeList" resultMap="recipeImgName" parameterType="com.chef.app.util.Pager"> 
+    		SELECT * 
     		FROM 
-    			(SELECT ROWNUM R,B.* 
-    			 FROM
+    			(
+    			SELECT ROWNUM R,B.* 
+    			FROM
     			 (
 	    			SELECT *
-					FROM RECIPE RC
-						INNER JOIN
-		     			RECIPEIMG RI
-    			 			ON RC.RECIPE_NUM = RI.RECIPE_NUM
-    			 	WHERE RECIPE_NAME LIKE '%'||#{search}||'%'
-    			 	ORDER BY CREATE_DATE DESC
-	    			)
-	    			B
-	    			)
-	    	WHERE R BETWEEN #{startRow} AND #{lastRow} -->
-     	</select>
+		            FROM RECIPE RC
+		           LEFT OUTER JOIN RECIPEIMG RI ON RC.RECIPE_NUM = RI.RECIPE_NUM
+		            ORDER BY CREATE_DATE DESC
+    			 			
+    			 	<!-- WHERE RECIPE_NAME LIKE '%'||#{search}||'%' -->
+    			 
+	    			)B
+	    		)
+	    	WHERE R BETWEEN #{startRow} AND #{lastRow}
+     	</select> 
     	
-    	<!-- <resultMap type="RecipeDTO" id="recipeImgName">
+    	 <resultMap type="RecipeDTO" id="recipeImgName">
 		   	<id column="RECIPE_NUM" property="recipe_num"/>
 		   	<result column="RECIPE_WRITER" property="recipe_writer"/>
 		   	<result column="RECIPE_NAME" property="recipe_name"/>
@@ -52,10 +51,9 @@
 		   	<result column="RECIPE_HIT" property="recipe_hit"/>
 		    <association property="recipeImgFileDTO" javaType="RecipeImgFileDTO">
     	<id column="RECIPE_IMG_NUM" property="file_num"/>
-    	<result column="RECIPE_FILE_NAME" property="file_name"/> -->
-   <!--  </association> -->
-<!--    </resultMap> -->
-
+    	<result column="RECIPE_FILE_NAME" property="file_name"/>
+   </association> 
+   </resultMap> 
  <!--    <select id="getLastInsertId" resultType="Long">
         SELECT RECIPE_SEQ.CURRVAL FROM DUAL
     </select>
@@ -64,8 +62,8 @@
 
     <!-- 레시피 등록 -->
     	<insert id="recipeAdd" parameterType="RecipeDTO">
-    	<selectKey keyProperty="recipe_num" resultType="Long" order="AFTER" >
-  			SELECT RECIPE_SEQ.CURRVAL FROM DUAL
+    	<selectKey keyProperty="recipe_num" resultType="Long" order="BEFORE" >
+  			SELECT RECIPE_SEQ.NEXTVAL FROM DUAL
   		</selectKey>
     	INSERT INTO RECIPE(
     						RECIPE_NUM 
@@ -77,7 +75,7 @@
     						,RECIPE_TIME
     						)
 					VALUES(
-					RECIPE_SEQ.NEXTVAL
+					#{recipe_num}
 					,'ydb'
 					,#{recipe_name}
 					,#{menu_recipe}

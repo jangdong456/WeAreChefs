@@ -68,7 +68,7 @@
 		                                        <div class="rounded position-relative fruite-item">
 		                                           
 		                                            <div class="fruite-img">
-		                                                <img src="/resources/img/fruite-item-1.jpg" class="img-fluid w-100 rounded-top" alt="">
+		                                                 <img src="/resources/upload/recipes/${recipe.recipeImgFileDTO.file_name}" class="img-fluid w-100 rounded-top" alt="">
 		                                            </div>
 		                                        <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">${recipe.recipe_category}</div>
 		                                            <div class="p-4 border border-secondary border-top-0 rounded-bottom">
@@ -104,25 +104,25 @@
 
 			<li class="page-item ${pager.pre?'':'disabled'}"><a
 				class="page-link"
-				href="./list?page=${pager.startNum-1}&kind=${pager.kind}&search=${pager.search}"
+				href="./list2?page=${pager.startNum-1}&kind=${pager.kind}&search=${pager.search}"
 				aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
 			</a></li>
 
 			<c:forEach begin="${pager.startNum}" end="${pager.lastNum}" step="1"
 				var="i">
 				<li class="page-item"><a class="page-link"
-					href="./list?page=${i}&kind=${pager.kind}&search=${pager.search}">${i}</a></li>
+					href="./list2?page=${i}&kind=${pager.kind}&search=${pager.search}">${i}</a></li>
 			</c:forEach>
 
 			<li class="page-item ${pager.next?'':'disabled'}"><a
 				class="page-link"
-				href="./list?page=${pager.lastNum+1}&kind=${pager.kind}&search=${pager.search}"
+				href="./list2?page=${pager.lastNum+1}&kind=${pager.kind}&search=${pager.search}"
 				aria-label="Next"> <span aria-hidden="true">&raquo;</span>
 			</a></li>
 		</ul>
 	</nav>
 
-	<form action="./list" method="get"
+	<form action="./list2" method="get"
 		class="row row-cols-lg-auto g-3 align-items-center justify-content-end">
 
 

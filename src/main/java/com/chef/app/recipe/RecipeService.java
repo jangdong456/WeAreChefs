@@ -34,8 +34,14 @@ public class RecipeService {
 	public List<RecipeDTO> recipeList(Pager pager) throws Exception {
 //		1.rownum 계산
 		pager.makeRow(9L);
-		pager.makeNum(recipeDAO.getTotalCount(pager),9L,5L);
-		return recipeDAO.recipeList();
+		//pager.makeNum(recipeDAO.getTotalCount(pager),9L,5L);
+        //Long totalCount = recipeDAO.getTotalCount(pager);
+        pager.makeNum(recipeDAO.getTotalCount(pager), 9L, 5L);
+        
+        System.out.println("Start Row: " + pager.getStartRow());
+        System.out.println("Last Row: " + pager.getLastRow());
+        
+		return recipeDAO.recipeList(pager);
 	}
 	
     @Transactional 

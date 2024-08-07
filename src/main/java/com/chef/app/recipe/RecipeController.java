@@ -40,6 +40,7 @@ public class RecipeController {
 
 	@GetMapping("list2")
 	public void recipeList(Model model,Pager pager) throws Exception {
+		pager.setPage(1L);
 		List<RecipeDTO> ar = recipeService.recipeList(pager);
 
 		model.addAttribute("ar", ar);

@@ -14,9 +14,9 @@ public class RecipeDAO {
 	private SqlSession sqlSession;
 	private final String NAMESPACE = "com.chef.app.recipe.RecipeDAO.";
 
-	public List<RecipeDTO> recipeList() {
+	public List<RecipeDTO> recipeList(Pager pager) {
 
-		return sqlSession.selectList(NAMESPACE + "recipeList");
+		return sqlSession.selectList(NAMESPACE + "recipeList",pager);
 
 //		for (RecipeDTO recipe : recipes) {
 //			System.out.println("Recipe Num: " + recipe.getRecipe_num());
