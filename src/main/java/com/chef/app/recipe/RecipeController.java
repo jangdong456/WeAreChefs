@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.chef.app.util.Pager;
+
 @Controller
 @RequestMapping("/recipe/*")
 public class RecipeController {
@@ -37,8 +39,8 @@ public class RecipeController {
 	}
 
 	@GetMapping("list2")
-	public void recipeList(Model model) throws Exception {
-		List<RecipeDTO> ar = recipeService.recipeList();
+	public void recipeList(Model model,Pager pager) throws Exception {
+		List<RecipeDTO> ar = recipeService.recipeList(pager);
 
 		model.addAttribute("ar", ar);
 
@@ -59,7 +61,7 @@ public class RecipeController {
 
 		if (result > 0) {
 			model.addAttribute("result", "레시피 등록이 완료됐습니다!");
-			model.addAttribute("url", "/recipe/list");
+			model.addAttribute("url", "/recipe/list2");
 		} else {
 			model.addAttribute("result", "레시피 등록에 실패했습니다.");
 			model.addAttribute("url", "/recipe/add");

@@ -57,7 +57,7 @@
 			<h5 class="mb-4" style="text-align: center;">💡요리의 맛이 좌우될 수 있는 중요한 부분은 빠짐없이 적어주세요.</h5>
 			<div class="form-container">
 				<div class="form-wrapper">
-					<form action="/recipe/add" method ="post" enctype="multipart/form-data">
+					<form action="./add" method ="post" enctype="multipart/form-data">
 						<div class="row g-5">
 							<div class="col-12 ">
 							
@@ -87,10 +87,11 @@
 									<div class="col-12">
 		    							<div class="form-item w-100">
 											<label class="form-label my-3">완성사진 추가<sup>*</sup></label>
-											<button type="button" class="btn border-secondary py-3 px-4 text-uppercase w-100 text-primary" name = "attach" id="add" style="margin-bottom: 10px;">추가</button>
-											<div id="result">
+											<input type="file" class="form-control" name="attach" id="attach" required>
+											<!-- <button type="button" class="btn border-secondary py-3 px-4 text-uppercase w-100 text-primary" name = "attach" id="add" style="margin-bottom: 10px;">추가</button> -->
+											<!-- <div id="result">
 
- 											 </div>
+ 											 </div> -->
 										
 		  		 					</div>
 									<div class="col-md-12 ">

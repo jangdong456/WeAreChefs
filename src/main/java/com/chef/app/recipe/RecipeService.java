@@ -7,9 +7,11 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.chef.app.file.FileManager;
+import com.chef.app.util.Pager;
 
 @Service
 public class RecipeService {
@@ -29,17 +31,22 @@ public class RecipeService {
 
 	}
 
-	public List<RecipeDTO> recipeList() {
-
+	public List<RecipeDTO> recipeList(Pager pager) throws Exception {
+//		1.rownum 계산
+		pager.makeRow(9L);
+		pager.makeNum(recipeDAO.getTotalCount(pager),9L,5L);
 		return recipeDAO.recipeList();
 	}
-
+	
+    @Transactional 
 	public int recipeAdd(RecipeDTO recipeDTO, MultipartFile attach, HttpSession session) throws Exception {
-		int result = recipeDAO.recipeAdd(recipeDTO);
-		Long RecipeNnm = recipeDTO.getRecipe_num();
-
+		recipeDAO.recipeAdd(recipeDTO);
+		//Long RecipeNnm = recipeDTO.getRecipe_num();
+		Long RecipeNnm= recipeDTO.getRecipe_num();
+		//recipeDTO.setRecipe_num(RecipeNnm);
+	
 		System.out.println("recipeDTO.getRecipe_num " + recipeDTO.getRecipe_num());
-		System.out.println("recipeDTO.getRecipe_num " + RecipeNnm);
+		System.out.println("RecipeNnm " + RecipeNnm);
 
 		ServletContext servletContext = session.getServletContext();
 		String path = servletContext.getRealPath("resources/upload/recipes");
@@ -56,7 +63,8 @@ public class RecipeService {
 		System.out.println("setFile_name " + fileName);
 		System.out.println("setRecipe_num " + RecipeNnm);
 
-		result = recipeDAO.mainImg(recipeImgFileDTO);
+		int result = recipeDAO.mainImg(recipeImgFileDTO);
+	
 
 		return result;
 

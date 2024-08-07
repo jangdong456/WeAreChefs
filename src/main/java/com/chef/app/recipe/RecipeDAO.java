@@ -6,6 +6,8 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.chef.app.util.Pager;
+
 @Repository
 public class RecipeDAO {
 	@Autowired
@@ -32,6 +34,14 @@ public class RecipeDAO {
 		System.out.println("DAO Recipe Name: " + recipeDTO.getRecipe_name());
 
 		return recipes;
+	}
+//    public Long getLastInsertId() {
+//        return sqlSession.selectOne(NAMESPACE + "getLastInsertId");
+//    }
+	
+	public Long getTotalCount(Pager pager) throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne(NAMESPACE + "getTotalCount", pager);
 	}
 
 	public int mainImg(RecipeImgFileDTO recipeImgFileDTO) {

@@ -11,7 +11,25 @@ public class Pager {
 	private Long lastNum;
 	private boolean pre;
 	private boolean next;
+	 private Long perPage=9L; // Number of items per page
+	 private Long perBlock=5L;
+	 public Long getPerPage() {
+		return perPage;
+	}
 
+	public void setPerPage(Long perPage) {
+		this.perPage = perPage;
+	}
+
+	public Long getPerBlock() {
+		return perBlock;
+	}
+
+	public void setPerBlock(Long perBlock) {
+		this.perBlock = perBlock;
+	}
+
+	
 
 //	row 갯수를 계산하는 메서드
 

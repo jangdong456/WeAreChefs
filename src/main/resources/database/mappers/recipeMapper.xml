@@ -56,10 +56,16 @@
    <!--  </association> -->
 <!--    </resultMap> -->
 
+ <!--    <select id="getLastInsertId" resultType="Long">
+        SELECT RECIPE_SEQ.CURRVAL FROM DUAL
+    </select>
+    
+ -->
+
     <!-- 레시피 등록 -->
     	<insert id="recipeAdd" parameterType="RecipeDTO">
-    	<selectKey order="AFTER" resultType="Long" keyProperty="recipe_num">
-  			SELECT RECIPE_SEQ.NEXTVAL FROM DUAL
+    	<selectKey keyProperty="recipe_num" resultType="Long" order="AFTER" >
+  			SELECT RECIPE_SEQ.CURRVAL FROM DUAL
   		</selectKey>
     	INSERT INTO RECIPE(
     						RECIPE_NUM 
@@ -82,7 +88,8 @@
 			
 	  </insert>
 	      	<insert id="mainImg" parameterType="RecipeImgFileDTO">
-		INSERT INTO RECIPEIMG VALUES (RECIPEIMG_SEQ.NEXTVAL,#{recipe_num},#{file_name})
+		INSERT INTO RECIPEIMG(RECIPE_IMG_NUM, RECIPE_NUM, RECIPE_FILE_NAME) 
+		VALUES (RECIPEIMG_SEQ.NEXTVAL,#{recipe_num},#{file_name})
 	</insert>
     
     </mapper>
