@@ -23,6 +23,10 @@
 	
 	<context:component-scan base-package="com.chef.app" />
 	
-	
+	<beans:bean id="propertyConfigurer"
+      class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+	    <beans:property name="locations" value="classpath:database/config/database.properties">
+	    </beans:property>
+	</beans:bean>
 	
 </beans:beans>

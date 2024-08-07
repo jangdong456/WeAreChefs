@@ -10,6 +10,7 @@ public class MemberService {
 	@Autowired
 	private MemberDAO memberDAO;
 	
+	
 	public void kakao() throws Exception {
 		System.out.println("== Kakao Service ==");
 		memberDAO.kakao();

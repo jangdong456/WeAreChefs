@@ -14,12 +14,29 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.chef.app.util.Email;
+
+
 @Controller
 @RequestMapping("/member/*")
 public class MemberController {
 	
 	@Autowired
 	private MemberService memberService;
+	
+	@Autowired
+	private Email email;
+	
+	@GetMapping("email")
+	public void email(MemberDTO memberDTO, Model model, String member_mail) throws Exception {
+		System.out.println("== Email ==");
+		System.out.println(member_mail);
+//		int result = 1;
+//		model.addAttribute("msg", result);
+		email.mailTemplete(member_mail);
+//		return "member/email";
+	}
+	
 	
 	@GetMapping("kakaologin")
 	public void kakao() throws Exception {
