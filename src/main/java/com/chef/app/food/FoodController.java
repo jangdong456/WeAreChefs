@@ -91,4 +91,12 @@ public class FoodController {
 		
 	}
 	
+	@GetMapping("detail")
+	public void getDetail(FoodDTO foodDTO,Model model) throws Exception {
+		
+		foodDTO = foodService.getDetail(foodDTO);
+		model.addAttribute("dto", foodDTO);
+
+	}
+	
 }

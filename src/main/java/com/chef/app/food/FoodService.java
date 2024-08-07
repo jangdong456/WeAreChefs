@@ -75,5 +75,9 @@ public class FoodService {
 	public List<Map<String, Object>> categoryCount() throws Exception{
 		return foodDAO.categoryCount();
 	}
+	
+	public FoodDTO getDetail(FoodDTO foodDTO) throws Exception {
+		return foodDAO.getDetail(foodDTO);
+	}
 
 }

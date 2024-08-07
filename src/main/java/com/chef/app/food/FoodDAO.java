@@ -40,4 +40,8 @@ public class FoodDAO {
 	public List<Map<String, Object>> categoryCount() throws Exception{
 		return sqlSession.selectList(NAMESPACE+"categoryCount");
 	}
+	
+	public FoodDTO getDetail(FoodDTO foodDTO) throws Exception{
+		return sqlSession.selectOne(NAMESPACE+"getDetail", foodDTO);
+	}
 }

@@ -45,7 +45,7 @@ foodAdd.addEventListener("click",()=>{
     let attachv = attach.value
     let numv = foodNum.value
 
-    if(foodv==""||catev==""||stockv==""||pricev==""||attachv==""||numv==""){
+    if(foodv==""||catev==""||stockv==""||pricev==""||numv==""){
         alert('모든 항목을 입력해주세요');
     }else{
         frm.submit();
