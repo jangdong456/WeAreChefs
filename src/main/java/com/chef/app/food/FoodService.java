@@ -58,15 +58,22 @@ public class FoodService {
 		
 	}
 	
-	public List<FoodDTO> getList(Pager pager) throws Exception{
+	public List<FoodDTO> getList(FoodPager pager) throws Exception{
+				
+		Long totalRow = foodDAO.getTotalCount(pager);
+		
+		if(totalRow==0) {
+			totalRow=1L;
+		}
 	
-		
-		pager.makeRow((long) 9);
-		Long totalRow = foodDAO.getTotalCount();
-		
-		pager.makeNum(totalRow, (long) 9, (long) 5);
-		
-		return foodDAO.getList(pager);
+		pager.makeRow(9L);
+		pager.makeNum(totalRow, 9L, 5L);
+		System.out.println(pager.getKind());
+		System.out.println(pager.getSearch());
+		System.out.println(pager.getStartRow());
+		System.out.println(pager.getLastRow());
+		List<FoodDTO> ar = foodDAO.getList(pager);
+		return ar;
 		
 	}
 	

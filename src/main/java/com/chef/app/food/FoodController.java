@@ -70,18 +70,26 @@ public class FoodController {
 	}
 	
 	@GetMapping("list")
-	public void getList(Pager pager,Model model) throws Exception{
+	public void getList(FoodPager pager,Model model) throws Exception{
 		List<FoodDTO> ar =foodService.getList(pager);
 		List<Map<String, Object>> categoryCount =foodService.categoryCount();
+		model.addAttribute("pager", pager);
 		model.addAttribute("list", ar);
 		model.addAttribute("count", categoryCount);
+		System.out.println(ar.size());
 	}
 	
 	@PostMapping("list")
-	public String getListSearch(Pager pager,Model model) throws Exception{
+	public String getListSearch(FoodPager pager,Model model) throws Exception{
 
 		List<FoodDTO> ar =foodService.getList(pager);
+		List<Map<String, Object>> categoryCount =foodService.categoryCount();
+		model.addAttribute("pager", pager);
 		model.addAttribute("list", ar);
+		model.addAttribute("count", categoryCount);
+		
+		System.out.println(ar.size());
+
 		return "food/nameSearchList";
 		
 	}

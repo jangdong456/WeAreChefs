@@ -1,22 +1,42 @@
-const searchIcon = document.getElementById("search-icon-1");
+const searchIcon = document.getElementById("searchIcon");
 const nameSearch = document.getElementById("nameSearch");
 const listDiv = document.getElementById("listDiv");
+const fruits = document.getElementById("fruits")
+const frm = document.getElementById("frm")
 
 searchIcon.addEventListener("click", () => {
-    fetch("/food/list", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/x-www-form-urlencoded"
-        },
-        body: "search=" + encodeURIComponent(nameSearch.value)
-    })
-    .then(response => response.text())
-    .then(html => {
-        // listDiv의 내부 HTML을 새롭게 받은 HTML로 교체
-        listDiv.innerHTML = html;
 
-        // 동적으로 삽입된 요소들에 대해 추가적으로 해야 할 작업이 있다면 여기에 작성
-        // 예: 이벤트 리스너를 다시 추가하거나, 특정 스타일을 강제 적용하는 작업 등
-    })
-    
+    frm.submit()    
+
 });
+
+fruits.addEventListener("change",()=>{
+    document.getElementById("k").getAttribute("data-");
+    console.log("change")
+    const fruitValue = fruits.value
+    console.log(fruitValue)
+
+    const url = new URL(window.location.href)
+    const params = new URLSearchParams(url.search)
+    const kindValue = params.get('kind')
+
+  
+    const searchValue = params.get('search')
+
+        fetch("/food/list",{
+            method: "POST",
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded"
+            },
+            body: "order=" + fruitValue +"&kind="+kindValue + "&search="+searchValue
+        })
+    
+        .then(r=>r.text())
+        .then(r=>{
+    
+            listDiv.innerHTML = r
+    
+        })
+
+
+})
