@@ -66,7 +66,7 @@
                                       <c:forEach var="recipe" items="${ar}">
 		                                    <div class="col-md-6 col-lg-6 col-xl-4">
 		                                        <div class="rounded position-relative fruite-item">
-		                                           
+		                                           <c:if test=""></c:if>
 		                                            <div class="fruite-img">
 		                                                 <img src="/resources/upload/recipes/${recipe.recipeImgFileDTO.file_name}" class="img-fluid w-100 rounded-top" alt="">
 		                                            </div>
