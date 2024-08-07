@@ -39,7 +39,7 @@ public class MemberController {
 	
 	@GetMapping("email")
 	public void email() throws Exception {
-
+		//1
 	}
 	
 	
