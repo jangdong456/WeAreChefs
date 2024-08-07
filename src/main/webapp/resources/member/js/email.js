@@ -7,7 +7,7 @@ console.log("asd");
 mailBtn.addEventListener("click", ()=>{
     let email = userEmail1.value + userEmail2.value
     console.log(email);
-    fetch("/member/email?member_mail="+email, {
+    fetch("/member/sendEmail?member_mail="+email, {
         method : "GET"
     })
     // .then(res => res.json())

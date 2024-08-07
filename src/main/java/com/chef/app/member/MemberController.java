@@ -27,7 +27,7 @@ public class MemberController {
 	@Autowired
 	private Email email;
 	
-	@GetMapping("email")
+	@GetMapping("sendEmail")
 	public void email(MemberDTO memberDTO, Model model, String member_mail) throws Exception {
 		System.out.println("== Email ==");
 		System.out.println(member_mail);
@@ -35,6 +35,11 @@ public class MemberController {
 //		model.addAttribute("msg", result);
 		email.mailTemplete(member_mail);
 //		return "member/email";
+	}
+	
+	@GetMapping("email")
+	public void email() throws Exception {
+
 	}
 	
 	
