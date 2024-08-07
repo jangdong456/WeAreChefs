@@ -54,7 +54,7 @@ public class Email {
 		
 		//이메일 내용 삽입
 		String context = "인증번호 테스트 6자리 : " + atuhNum;
-		
+		//12
 	}
 	
 }
