@@ -18,7 +18,7 @@
  		<typeAlias type="com.chef.app.recipe.RecipeImgFileDTO" alias="RecipeImgFileDTO"/>
  		<typeAlias type="com.chef.app.recipe.RecipeReplyDTO" alias="RecipeReplyDTO"/>
  		<typeAlias type="com.chef.app.recipe.RecipeReviewDTO" alias="RecipeReviewDTO"/>
- 		
+ 		<typeAlias type="com.chef.app.recipe.RecipePager" alias="RecipePager"/>
  		<!-- 세령 -->
  		<typeAlias type="com.chef.app.food.FoodDTO" alias="FoodDTO"/>
  		<typeAlias type="com.chef.app.food.StoreImgFileDTO" alias="StoreImgFileDTO"/>

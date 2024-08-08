@@ -11,7 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.chef.app.file.FileManager;
-import com.chef.app.util.Pager;
 
 @Service
 public class RecipeService {
@@ -31,26 +30,35 @@ public class RecipeService {
 
 	}
 
-	public List<RecipeDTO> recipeList(Pager pager) throws Exception {
+	public List<RecipeDTO> recipeList(RecipePager recipePager) throws Exception {
 //		1.rownum 계산
-		pager.makeRow(9L);
-		//pager.makeNum(recipeDAO.getTotalCount(pager),9L,5L);
-        //Long totalCount = recipeDAO.getTotalCount(pager);
-        pager.makeNum(recipeDAO.getTotalCount(pager), 9L, 5L);
-        
-        System.out.println("Start Row: " + pager.getStartRow());
-        System.out.println("Last Row: " + pager.getLastRow());
-        
-		return recipeDAO.recipeList(pager);
+		Long perBlock = 5L;
+
+		recipePager.makeRow(9L);
+
+		if (perBlock == 0) {
+			perBlock = 1L;
+		}
+
+		// pager.makeNum(recipeDAO.getTotalCount(pager),9L,5L);
+		// Long totalCount = recipeDAO.getTotalCount(pager);
+		recipePager.makeNum(recipeDAO.getTotalCount(recipePager), 9L, perBlock);
+
+		System.out.println("Start Row: " + recipePager.getStartRow());
+		System.out.println("Last Row: " + recipePager.getLastRow());
+		List<RecipeDTO> ar = recipeDAO.recipeList(recipePager);
+		System.out.println("recipePager.getPage() " + recipePager.getPage());
+
+		return ar;
 	}
-	
-    @Transactional 
+
+	@Transactional
 	public int recipeAdd(RecipeDTO recipeDTO, MultipartFile attach, HttpSession session) throws Exception {
 		recipeDAO.recipeAdd(recipeDTO);
-		//Long RecipeNnm = recipeDTO.getRecipe_num();
-		Long RecipeNnm= recipeDTO.getRecipe_num();
-		//recipeDTO.setRecipe_num(RecipeNnm);
-	
+		// Long RecipeNnm = recipeDTO.getRecipe_num();
+		Long RecipeNnm = recipeDTO.getRecipe_num();
+		// recipeDTO.setRecipe_num(RecipeNnm);
+
 		System.out.println("recipeDTO.getRecipe_num " + recipeDTO.getRecipe_num());
 		System.out.println("RecipeNnm " + RecipeNnm);
 
@@ -70,7 +78,6 @@ public class RecipeService {
 		System.out.println("setRecipe_num " + RecipeNnm);
 
 		int result = recipeDAO.mainImg(recipeImgFileDTO);
-	
 
 		return result;
 

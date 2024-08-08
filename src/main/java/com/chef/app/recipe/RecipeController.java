@@ -15,8 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.chef.app.util.Pager;
-
 @Controller
 @RequestMapping("/recipe/*")
 public class RecipeController {
@@ -38,12 +36,14 @@ public class RecipeController {
 
 	}
 
-	@GetMapping("list2")
-	public void recipeList(Model model,Pager pager) throws Exception {
-		pager.setPage(1L);
-		List<RecipeDTO> ar = recipeService.recipeList(pager);
+	@GetMapping("list")
+	public void recipeList(Model model, RecipePager recipePager) throws Exception {
+		// pager.setPage(1L);
+		List<RecipeDTO> ar = recipeService.recipeList(recipePager);
 
 		model.addAttribute("ar", ar);
+		model.addAttribute("recipePager", recipePager);
+		System.out.println("recipePager.getPage() cont " + recipePager.getPage());
 
 	}
 

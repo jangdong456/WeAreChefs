@@ -6,17 +6,15 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.chef.app.util.Pager;
-
 @Repository
 public class RecipeDAO {
 	@Autowired
 	private SqlSession sqlSession;
 	private final String NAMESPACE = "com.chef.app.recipe.RecipeDAO.";
 
-	public List<RecipeDTO> recipeList(Pager pager) {
+	public List<RecipeDTO> recipeList(RecipePager recipePager) {
 
-		return sqlSession.selectList(NAMESPACE + "recipeList",pager);
+		return sqlSession.selectList(NAMESPACE + "recipeList", recipePager);
 
 //		for (RecipeDTO recipe : recipes) {
 //			System.out.println("Recipe Num: " + recipe.getRecipe_num());
@@ -38,10 +36,10 @@ public class RecipeDAO {
 //    public Long getLastInsertId() {
 //        return sqlSession.selectOne(NAMESPACE + "getLastInsertId");
 //    }
-	
-	public Long getTotalCount(Pager pager) throws Exception {
+
+	public Long getTotalCount(RecipePager recipePager) throws Exception {
 		// TODO Auto-generated method stub
-		return sqlSession.selectOne(NAMESPACE + "getTotalCount", pager);
+		return sqlSession.selectOne(NAMESPACE + "getTotalCount", recipePager);
 	}
 
 	public int mainImg(RecipeImgFileDTO recipeImgFileDTO) {
