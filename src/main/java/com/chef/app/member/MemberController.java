@@ -39,14 +39,26 @@ public class MemberController {
 	
 	@GetMapping("email")
 	public void email() throws Exception {
-		//1
+		
 	}
 	
+	@GetMapping("getcode")
+	public void getcode() throws Exception {
+		System.out.println("== get code ==");
+	}
+	
+	@PostMapping("kakaologin")
+	public void kakao(String token) throws Exception {
+		System.out.println("== Kakao Controller ==");
+		System.out.println(token);
+//		memberService.kakao();
+	}
 	
 	@GetMapping("kakaologin")
 	public void kakao() throws Exception {
 		System.out.println("== Kakao Controller ==");
-		memberService.kakao();
+
+//		memberService.kakao();
 	}
 	
 	@GetMapping("logout")

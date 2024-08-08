@@ -9,20 +9,21 @@
 </head>
 <body>
 <h1>login page</h1>
+<script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.2/kakao.min.js" 
+		integrity="sha384-TiCUE00h649CAMonG018J2ujOgDKW/kVWlChEuu4jK2vxfAAD0eZxzCKakxg55G4" crossorigin="anonymous">
+</script>
+
+
 	<form action="">
-		<script>
+		<!-- <script> 
 			const key = '504d6b8218f4cc3a051e12c617300d61';
 			// 카카오 초기화
 			Kakao.init(key);
 			console.log(Kakao.isInitialized());
 			Kakao.isInitialized();
-		</script>
-		<div>
-			<input>
-			<button>로그인</button>
-		</div>	
+		</script> -->
 	</form>
-	<div>
+	<!-- <div>
 		<script>
 					function loginWithKakao() {
 			Kakao.Auth.authorize({
@@ -30,15 +31,14 @@
 			});
 		}
 		</script>
-		<a href="#"> 
-			<img src="/resources/images/kakao_login_medium_narrow.png"  width="200px" height="150px" alt="로그인">
-		</a>
+	</div> -->
+	<div>
+		<img src="/resources/member/img/kakao_login_medium_narrow.png" id="img">
 	</div>
 
-<script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.2/kakao.min.js" 
-		integrity="sha384-TiCUE00h649CAMonG018J2ujOgDKW/kVWlChEuu4jK2vxfAAD0eZxzCKakxg55G4" crossorigin="anonymous">
-</script>
-<script src="/resources/js/member/member.js"></script>
+
+
+<script src="/resources/member/js/kakaologin.js"></script>
 
 </body>
 </html>
