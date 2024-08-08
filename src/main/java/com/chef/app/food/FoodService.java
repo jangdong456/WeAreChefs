@@ -65,9 +65,10 @@ public class FoodService {
 			totalRow=1L;
 		}
 	
-		pager.makeRow(9L);
-		pager.makeNum(totalRow, 9L, 5L);
+		pager.makeRow(3L);
+		pager.makeNum(totalRow, 3L, 1L);
 		List<FoodDTO> ar = foodDAO.getList(pager);
+		System.out.println(pager.getPage());
 		return ar;
 		
 	}

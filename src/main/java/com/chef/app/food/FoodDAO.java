@@ -44,4 +44,5 @@ public class FoodDAO {
 	public FoodDTO getDetail(FoodDTO foodDTO) throws Exception{
 		return sqlSession.selectOne(NAMESPACE+"getDetail", foodDTO);
 	}
+
 }

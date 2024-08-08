@@ -7,11 +7,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<select id="searchFood" resultType="FoodDTO" parameterType="FoodDTO">
 		SELECT * FROM FOOD
-		WHERE FOOD_STOCK>0 AND FOOD_NAME LIKE '%'||#{food_name}||'%'
+		WHERE FOOD_STOCK>0 AND FOOD_NAME LIKE '%'||#{food_name}||'%' AND ADD_CHECK IS NULL
 	</select>
 	
 	<update id="add" parameterType="FoodDTO">
-		UPDATE FOOD SET FOOD_CONTENTS=#{food_contents}, UPDATE_DATE=SYSDATE WHERE FOOD_NUM = #{food_num}
+		UPDATE FOOD SET FOOD_CONTENTS=#{food_contents}, UPDATE_DATE=SYSDATE, ADD_CHECK='A' WHERE FOOD_NUM = #{food_num}
 	</update>
 	
 	<insert id="mainImg" parameterType="StoreImgFileDTO">
@@ -26,7 +26,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
      INNER JOIN
      STOREIMG S
      ON F.FOOD_NUM =S.FOOD_NUM
-	WHERE 
+	WHERE ADD_CHECK = 'A' AND
 	<choose>
 		<when test="kind=='과일'">
 		FOOD_CATEGORY='과일'
@@ -82,7 +82,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
    
    <select id="getTotalCount" parameterType="com.chef.app.food.FoodPager" resultType="java.lang.Long">
    	SELECT COUNT(FOOD_NUM) FROM FOOD
-   	WHERE
+   	WHERE ADD_CHECK = 'A' AND
 	<choose>
 		<when test="kind=='과일'">
 		FOOD_CATEGORY='과일'
@@ -108,6 +108,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
    <select id="categoryCount" resultType="java.util.Map">
    	SELECT FOOD_CATEGORY, COUNT(*) AS COUNT
 	FROM FOOD
+	WHERE ADD_CHECK='A'
 	GROUP BY FOOD_CATEGORY
 	ORDER BY FOOD_CATEGORY ASC
    </select>
@@ -121,22 +122,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
      WHERE F.FOOD_NUM = #{food_num}
    </select>
    
-      <resultMap type="FoodDTO" id="foodDetail">
-   	<id column="FOOD_NUM" property="food_num"/>
-   	<result column="FOOD_CATEGORY" property="food_category"/>
-   	<result column="FOOD_NAME" property="food_name"/>
-   	<result column="FOOD_STOCK" property="food_stock"/>
-   	<result column="FOOD_BUYING" property="food_buying"/>
-   	<result column="FOOD_PRICE" property="food_price"/>
-   	<result column="FOOD_CONTENTS" property="food_contents"/>
-   	<result column="CREATE_DATE" property="create_date"/>
-   	<result column="UPDATE_DATE" property="update_date"/>
-   	<result column="RATING" property="rating"/>
-    <association property="storeImgFileDTO" javaType="StoreImgFileDTO">
-    	<id column="FOOD_IMG_NUM" property="file_num"/>
-    	<result column="FOOD_FILE_NAME" property="file_name"/>
-    </association>
+   <resultMap type="FoodDTO" id="foodDetail" extends="foodImgName">
+
    </resultMap>
    
-	
+
+ 
 </mapper>
