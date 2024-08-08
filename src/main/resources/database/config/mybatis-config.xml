@@ -19,6 +19,7 @@
  		<typeAlias type="com.chef.app.recipe.RecipeReplyDTO" alias="RecipeReplyDTO"/>
  		<typeAlias type="com.chef.app.recipe.RecipeReviewDTO" alias="RecipeReviewDTO"/>
  		<typeAlias type="com.chef.app.recipe.RecipePager" alias="RecipePager"/>
+ 			<typeAlias type="java.util.Map" alias="Map"/>
  		<!-- 세령 -->
  		<typeAlias type="com.chef.app.food.FoodDTO" alias="FoodDTO"/>
  		<typeAlias type="com.chef.app.food.StoreImgFileDTO" alias="StoreImgFileDTO"/>

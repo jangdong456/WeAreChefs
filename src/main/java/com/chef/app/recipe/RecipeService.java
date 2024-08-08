@@ -1,6 +1,7 @@
 package com.chef.app.recipe;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
@@ -47,6 +48,7 @@ public class RecipeService {
 		System.out.println("Start Row: " + recipePager.getStartRow());
 		System.out.println("Last Row: " + recipePager.getLastRow());
 		List<RecipeDTO> ar = recipeDAO.recipeList(recipePager);
+		
 		System.out.println("recipePager.getPage() " + recipePager.getPage());
 
 		return ar;
@@ -81,6 +83,11 @@ public class RecipeService {
 
 		return result;
 
+	}
+
+	public List<Map<String, Object>> categoryCount(RecipePager recipePager) {
+		
+		return recipeDAO.categoryCount(recipePager);
 	}
 
 }

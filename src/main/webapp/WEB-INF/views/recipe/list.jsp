@@ -87,37 +87,16 @@
                                     <div class="col-lg-12">
                                         <div class="mb-3">
                                             <h4>Categories</h4>
+                                            <h3>${cnt.COUNT}</h3>
                                             <ul class="list-unstyled fruite-categorie">
+                                             <c:forEach items="${count}" var="cnt">
                                                 <li>
                                                     <div class="d-flex justify-content-between fruite-name">
-                                                        <a href="#"><i class="fas fa-apple-alt me-2"></i>한식</a>
-                                                        <span>(3)</span>
+                                                        <a href="/recipe/list?kind=${cnt.RECIPE_CATEGORY}"><i class="fas fa-apple-alt me-2"></i>${cnt.RECIPE_CATEGORY}</a>
+                                                        <span>(${cnt.COUNT})</span>
                                                     </div>
-                                                </li>
-                                                <li>
-                                                    <div class="d-flex justify-content-between fruite-name">
-                                                        <a href="#"><i class="fas fa-apple-alt me-2"></i>양식</a>
-                                                        <span>(5)</span>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="d-flex justify-content-between fruite-name">
-                                                        <a href="#"><i class="fas fa-apple-alt me-2"></i>중식</a>
-                                                        <span>(2)</span>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="d-flex justify-content-between fruite-name">
-                                                        <a href="#"><i class="fas fa-apple-alt me-2"></i>일식</a>
-                                                        <span>(8)</span>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="d-flex justify-content-between fruite-name">
-                                                        <a href="#"><i class="fas fa-apple-alt me-2"></i>디저트</a>
-                                                        <span>(5)</span>
-                                                    </div>
-                                                </li>
+                                                </li>   
+                                               </c:forEach>
                                             </ul>
                                         </div>
                                     </div>
@@ -156,68 +135,24 @@
                                     
                                   	 </c:forEach>
                                     </div>
-                                    <h3>${recipePager.pre}</h3>
-                                           <h3>${recipePager.next}</h3>
-                                            <h3>${recipePager.page}</h3>
-                                  <!--   <div class="col-12"> -->
                                         <div class="pagination d-flex justify-content-center mt-5">
 							                  <nav aria-label="Page navigation example">
-							                     <!-- <ul class="pagination d-flex justify-content-center mt-5 "> -->
-												
-													 
-										<a href="/recipe/list?page=${recipePager.startNum-1}&search=${recipePager.search}&kind=${recipePager.kind}&order=${recipePager.order}" class="rounded ${recipePager.pre?'':'disabled'}" >&laquo;</a>
-                                        <c:forEach begin="${recipePager.startNum}" end="${recipePager.lastNum}" step="1" var="i">
-                                            <a href="/recipe/list?page=${i}&search=${recipePager.search}&kind=${recipePager.kind}&order=${recipePager.order}" class="btn btn-primary disabled">${i}</a>
-                                        </c:forEach>
-                                        <!-- 다음버튼 -->
-                                        <a href="/recipe/list?page=${recipePager.lastNum+1}&search=${recipePager.search}&kind=${recipePager.kind}&order=${recipePager.order}" class="rounded ${recipePager.next?'':'disabled'}">&raquo;</a>
-													 
-							                   <%--  <li class="page-item ${recipePager.pre?'':'disabled'} d-inline ">
-							                           <a href="/recipe/list?page=${recipePager.startNum-1}&kind=${recipePager.kind}&search=${recipePager.search}"
-							                              aria-label="Previous" class="${recipePager.pre ?'':disabled}  rounded"> <span aria-hidden="true">&laquo;</span>
-							                           </a>
-							                        </li> 
-					
-							                        <c:forEach begin="${recipePager.startNum}"
-							                           end="${recipePager.lastNum}" step="1" var="i">
-							                           <li class="page-item ${recipePager.page==i?'active':''}"><a class="page-link d-inline rounded"
-							                              href="/recipe/list?page=${i}&kind=${recipePager.kind}&search=${recipePager.search}">${i}</a></li>
-							                        </c:forEach>
-
-													<!-- 다음버튼 -->
-							                        <li class="page-item ${recipePager.next?'':'disabled'} d-inline">
-							                           <a
-							                              href="/recipe/list?page=${recipePager.lastNum+1}&kind=${recipePager.kind}&search=${recipePager.search}"
-							                              aria-label="Next"  class=" ${recipePager.next ?'':'disabled'} rounded"> <span aria-hidden="true">&raquo;</span>
-							                           </a>
-							                        </li> --%>
-							                    <!--  </ul> -->
-							                  </nav>
-							               </div> 
-                                 <!--    </div> -->
-
-
-
-<!-- 
-									<a href="/food/list?page=${pager.startNum-1}&search=${pager.search}&kind=${pager.kind}&order=${pager.order}" class="rounded ${pager.pre?'':'disabled'}" >&laquo;</a>
-									<c:forEach begin="${pager.startNum}" end="${pager.lastNum}" step="1" var="i">
-										<a href="/food/list?page=${i}&search=${pager.search}&kind=${pager.kind}&order=${pager.order}" class="rounded">${i}</a>
-									</c:forEach>
-									<a href="/food/list?page=${pager.lastNum+1}&search=${pager.search}&kind=${pager.kind}&order=${pager.order}" class="rounded ${pager.next?'':'disabled'}">&raquo;</a> -->
-
-
-
-
-
+													<a href="/recipe/list?page=${recipePager.startNum-1}&search=${recipePager.search}&kind=${recipePager.kind}&order=${recipePager.order}" 
+														class="btn rounded ${recipePager.pre?'':'disabled'}" >&laquo;</a>
+		                                        <c:forEach begin="${recipePager.startNum}" end="${recipePager.lastNum}" step="1" var="i">
+		                                            <a href="/recipe/list?page=${i}&search=${recipePager.search}&kind=${recipePager.kind}&order=${recipePager.order}" 
+		                                            	class="page-link d-inline rounded">${i}</a>
+		                                        </c:forEach>
+		                                        <!-- 다음버튼 -->
+		                                        	<a href="/recipe/list?page=${recipePager.lastNum+1}&search=${recipePager.search}&kind=${recipePager.kind}&order=${recipePager.order}" 
+		                                        		class="btn rounded ${recipePager.next?'':'disabled'}">&raquo;</a> 
+							                 </nav>
+							            </div> 
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-
-	
-				<button class="btn btn-danger disabled">Test</button>
-				<a href="#" 
 			</div> 
 	 </div>
 

@@ -1,6 +1,7 @@
 package com.chef.app.recipe;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,5 +47,10 @@ public class RecipeDAO {
 
 		return sqlSession.insert(NAMESPACE + "mainImg", recipeImgFileDTO);
 	}
+	public List<Map<String, Object>> categoryCount(RecipePager recipePager) {
+
+		return sqlSession.selectList(NAMESPACE + "categoryCount",recipePager);
+	}
+
 
 }

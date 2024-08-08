@@ -44,8 +44,11 @@ public class RecipeController {
 		model.addAttribute("ar", ar);
 		model.addAttribute("recipePager", recipePager);
 		System.out.println("recipePager.getPage() cont " + recipePager.getPage());
+		List<Map<String, Object>> categoryCount =recipeService.categoryCount(recipePager);
+		model.addAttribute("count", categoryCount);
 
 	}
+	
 
 	@GetMapping("add")
 	public void recipeAdd() throws Exception {
