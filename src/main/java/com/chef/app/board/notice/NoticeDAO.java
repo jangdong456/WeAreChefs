@@ -17,7 +17,7 @@ public class NoticeDAO {
 	private SqlSession sqlSession;
 	
 	private final String NAMESPACE = "com.chef.app.board.notice.NoticeDAO.";
-	
+
 	public List<NoticeDTO> noticeList(Pager pager) throws Exception {
 		return sqlSession.selectList(NAMESPACE + "noticeList", pager);
 	}
@@ -36,5 +36,9 @@ public class NoticeDAO {
 	
 	public int noticeAdd(NoticeDTO noticeDTO) throws Exception {
 		return sqlSession.insert(NAMESPACE + "noticeAdd", noticeDTO);
+	}
+	
+	public Long getRowNum(Pager pager) throws Exception{
+		return sqlSession.selectOne(NAMESPACE + "getRowNum", pager);
 	}
 }

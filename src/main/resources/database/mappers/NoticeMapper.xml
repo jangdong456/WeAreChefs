@@ -4,16 +4,26 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.chef.app.board.notice.NoticeDAO">
-	<select id="noticeList" resultType="NoticeDTO">
-		SELECT * FROM NOTICE
-		<choose>
-			<when test="kind == 'board_title'">
-				WHERE BOARD_TITLE LIKE '%' || #{search} || '%' 
-			</when>
-			<otherwise>
-				WHERE MEMBER_ID LIKE '%' || #{search} || '%' 
-			</otherwise>
-		</choose>
+	<select id="noticeList" parameterType="Pager" resultType="NoticeDTO">
+		SELECT * FROM
+			(
+				SELECT ROWNUM R, P.* FROM
+				(
+					SELECT * FROM NOTICE
+					<where>
+						BOARD_NUM > 0
+						<choose>
+							<when test="kind == 'board_title'">
+								AND BOARD_TITLE LIKE '%' || #{search} || '%' 
+							</when>
+							<otherwise>
+								AND MEMBER_ID LIKE '%' || #{search} || '%' 
+							</otherwise>
+						</choose>
+					</where>
+				ORDER BY BOARD_NUM DESC)
+				P)
+		WHERE R BETWEEN #{startRow} AND #{lastRow}
 	</select>
 	
 	<select id="noticeDetail" parameterType="CommentDTO" resultType="NoticeDTO">
@@ -39,4 +49,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		INSERT INTO NOTICE(BOARD_NUM, MEMBER_ID, BOARD_TITLE, BOARD_CONTENT, CREATE_DATE)
 		VALUES(NOTICE_SEQ.NEXTVAL, #{member_id}, #{board_title}, #{board_content}, SYSDATE)
 	</insert>
+	
+	<select id="getRowNum" parameterType="Pager" resultType="java.lang.Long">
+		SELECT COUNT(BOARD_NUM)
+		FROM NOTICE
+			<choose>
+				<when test="kind == 'board_title'">
+					WHERE BOARD_TITLE LIKE '%' || #{search} || '%' 
+				</when>
+				<otherwise>
+					WHERE MEMBER_ID LIKE '%' || #{search} || '%' 
+				</otherwise>
+			</choose>
+	</select>
 </mapper>

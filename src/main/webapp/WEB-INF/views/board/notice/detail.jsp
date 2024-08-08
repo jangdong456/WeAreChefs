@@ -43,19 +43,37 @@
 	         	</tr>
 	        </tbody>
 	    </table>
-	    <div>
-			<textarea disabled name="text" class="form-control" cols="30" rows="11">${noticeDetail.board_content}</textarea>
-		</div>
-		<hr>
-		<!-- & Todo Start : 이부분은 관리자 레벨만 보이도록 해야함. -->		
-		<a class="btn border-secondary rounded-pill px-4 py-3 text-primary" href="/board/notice/update?board_num=${noticeDetail.board_num}">Update</a>
-		<a class="btn border-secondary rounded-pill px-4 py-3 text-primary" href="/board/notice/delete?board_num=${noticeDetail.board_num}">Delete</a>
+
+        <div class="text-center">
+       		${noticeDetail.board_content}
+			<hr>
+		<!-- & Todo Start : 이부분은 관리자 레벨만 보이도록 해야함. -->			
+			<a class="btn border-secondary rounded-pill px-4 py-3 text-primary" href="/board/notice/update?board_num=${noticeDetail.board_num}">Update</a>
+			<a class="btn border-secondary rounded-pill px-4 py-3 text-primary" href="/board/notice/delete?board_num=${noticeDetail.board_num}">Delete</a>
 		<!-- & Todo Final : 이부분은 관리자 레벨만 보이도록 해야함. -->
+        </div>
 	</div>
 	</div>
 
 
 <!-- End -->
 <c:import url="/WEB-INF/views/templete/footer.jsp"></c:import>
+<script src="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/ckeditor.js"></script>
+<script type="text/javascript" src="/resources/js/commons/ckeditor.js"></script>
+<script type="text/javascript">
+ClassicEditor.create( 
+		document.getElementById( 'editor' ), {
+			extraPlugins: [MyCustomUploadAdapterPlugin]
+       },
+	   
+     )
+	 .then(editor=>{	
+		window.editor=editor
+	 })
+	 
+	 .catch(error=>{
+			console.log('error')
+	 });
+</script>
 </body>
 </html>

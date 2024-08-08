@@ -1,6 +1,10 @@
 package com.chef.app.board.qna;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -9,6 +13,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.chef.app.comment.CommentDTO;
 import com.chef.app.manager.InquiryDTO;
@@ -24,6 +30,19 @@ public class QnaController {
 	@Autowired
 	private QnaService qnaService;
 	
+	@PostMapping("uploadContentImage")
+	//JSON으로 받기 때문에 필요
+	@ResponseBody
+	public Map<String, String> ckEditor(MultipartFile upload, HttpSession session) throws Exception{
+		String fileName = qnaService.ckEditor(upload, session);
+		
+		String path = "/resources/upload/boardContents/" + fileName;
+		// 경로 완성
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("url", path);
+		return map;
+	}
+	
 	@ModelAttribute("page")
 	public String getInquiry() {
 		return "qna";
@@ -32,22 +51,29 @@ public class QnaController {
 	@GetMapping("list")
 	public String qnaList(Pager pager, Model model) throws Exception{
 		List<InquiryDTO> inquiryList = qnaService.qnaList(pager);
+		System.out.println("@@ NUM");
+		System.out.println(pager.getStartNum());
+		System.out.println(pager.getLastNum());
 		
+		model.addAttribute("pager", pager);
 		model.addAttribute("inquiryList", inquiryList);
 		
 		return "board/inquiry/list";
-	}
+	}	
 	
 	
 	@GetMapping("detail")
 	public String qnaDetail(CommentDTO commentDTO, Model model) throws Exception{
 		InquiryDTO inquiryDTO = qnaService.qnaDetail(commentDTO);
+		List<InquiryDTO> inquiryDTOList = qnaService.getQnaReply(commentDTO);
+		
 		model.addAttribute("inquiryDetail", inquiryDTO);
+		model.addAttribute("inquiryDTOList", inquiryDTOList);
 		return "board/inquiry/detail";
 	}
 	
 	@GetMapping("update")
-	public String fnaUpdate(CommentDTO commentDTO, Model model) throws Exception{
+	public String qnaUpdate(CommentDTO commentDTO, Model model) throws Exception{
 		InquiryDTO inquiryDTO = qnaService.qnaDetail(commentDTO);
 		model.addAttribute("inquiryDetail", inquiryDTO);
 
@@ -55,7 +81,7 @@ public class QnaController {
 	}
 	
 	@PostMapping("update")
-	public String fnaUpdate(InquiryDTO inquiryDTO, Model model) throws Exception{
+	public String qnaUpdate(InquiryDTO inquiryDTO, Model model) throws Exception{
 		int result = qnaService.qnaUpdate(inquiryDTO);
 		
 		String msg = "수정을 성공 하였습니다.";
@@ -70,7 +96,7 @@ public class QnaController {
 	}
 	
 	@GetMapping("delete")
-	public String fnaDelete(CommentDTO commentDTO, Model model) throws Exception{
+	public String qnaDelete(CommentDTO commentDTO, Model model) throws Exception{
 		
 		int result = qnaService.qnaDelete(commentDTO);
 		
@@ -87,12 +113,12 @@ public class QnaController {
 	}
 	
 	@GetMapping("add")
-	public String fnaAdd() throws Exception{
+	public String qnaAdd() throws Exception{
 		return "board/inquiry/add";		
 	}
 	
 	@PostMapping("add")
-	public String fnaAdd(InquiryDTO inquiryDTO, Model model) throws Exception{
+	public String qnaAdd(InquiryDTO inquiryDTO, Model model) throws Exception{
 		// & Todo : Session에서 memberID 받는 것으로 바꿔줘야함
 		inquiryDTO.setMember_id("admin1");
 		int result = qnaService.qnaAdd(inquiryDTO);
@@ -105,6 +131,21 @@ public class QnaController {
 		};
 		model.addAttribute("msg", msg);
 		model.addAttribute("url", url);
+		
+		return "commons/message";
+	}
+	
+	@PostMapping("reply")
+	public String qnaReply(InquiryDTO inquiryDTO, Model model) throws Exception{
+		inquiryDTO.setMember_id("aaa");
+		int result = qnaService.addQnaReply(inquiryDTO);
+
+		String url = "/board/qna/detail?board_num=" + inquiryDTO.getBoard_num();
+		
+		model.addAttribute("msg", "댓글을 추가 하였습니다.");
+		model.addAttribute("url", url);
+
+		
 		
 		return "commons/message";
 	}

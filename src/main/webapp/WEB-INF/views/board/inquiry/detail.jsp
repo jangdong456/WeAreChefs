@@ -41,8 +41,8 @@
 	         	</tr>
 	        </tbody>
 	    </table>
-	    <div>
-			<textarea disabled name="text" class="form-control" cols="30" rows="11">${inquiryDetail.board_content}</textarea>
+	    <div class="text-center">
+			${inquiryDetail.board_content}
 		</div>
 		<!-- & Todo Start : 이부분은 관리자 레벨만 보이도록 해야함. -->
 		<hr>
@@ -51,11 +51,30 @@
 		<!-- & Todo Final : 이부분은 관리자 레벨만 보이도록 해야함. -->
 		
 		<c:if test="${inquiryDetail.board_type eq 2}">
-			<div class="container"t>
+			<div class="container">
 				<hr>
-				<h1>댓글</h1>
+				<h1>댓글 목록</h1>
+
 			</div>
+			<form action="./reply?board_num=${inquiryDetail.board_num }" method="post">
+				<input type="text" name="board_content">
+				<button>댓글 달기</button>
+			</form>
 		</c:if>
+		<c:forEach items="${inquiryDTOList}" var="list">
+			<table>
+				<thead>
+					<tr>
+						<th>글번호 : ${list.step}</th>
+						<th>작성자 : ${list.member_id}</th>
+						<th>작성일 : ${list.create_date}</th>
+					</tr>
+				</thead>
+				<tbody>
+					<td>  ↳ ${list.board_content}</td>
+				</tbody>
+				</table>
+		</c:forEach>
 	</div>
 	</div>
 

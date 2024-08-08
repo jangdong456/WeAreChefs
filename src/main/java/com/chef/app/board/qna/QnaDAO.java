@@ -37,5 +37,17 @@ public class QnaDAO {
 	public int qnaAdd(InquiryDTO inquiryDTO) throws Exception{
 		return sqlSession.insert(NAMESPACE + "qnaAdd", inquiryDTO);
 	}
+	
+	public Long getRowNum(Pager pager) throws Exception{
+		return sqlSession.selectOne(NAMESPACE + "getRowNum", pager);
+	}
+	
+	public int addQnaReply(InquiryDTO inquiryDTO) throws Exception{
+		return sqlSession.insert(NAMESPACE + "addQnaReply", inquiryDTO);
+	}
+	
+	public List<InquiryDTO> getQnaReply(CommentDTO commentDTO) throws Exception{
+		return sqlSession.selectList(NAMESPACE + "getQnaReply", commentDTO);
+	}
 }
 

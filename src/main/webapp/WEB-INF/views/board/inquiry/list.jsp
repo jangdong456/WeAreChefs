@@ -43,17 +43,18 @@ margin-left: 0px
 			      			<a href="/board/${page}/add" class="btn border-secondary rounded-pill px-4 py-3 text-primary" type="button">add</a>
                         </div>
                     </div>
--->
-					<div>
-						<form method="get" action="./list">
-							<select name="kind">
-								<option value="board_title">문의 제목</option>
-								<option value="member_id">회원 아이디</option>
-							</select>
-							<input type="search" name="search">
-							<button type="submit">검색</button>
-							<a href="/board/${page}/add" class="btn border-secondary rounded-pill px-4 py-3 text-primary" type="button">add</a>
-						</form>
+-->					<div class="row justify-content-md-center">
+						<div class="text-center">
+							<form method="get" action="./list">
+								<select name="kind">
+									<option value="board_title">문의 제목</option>
+									<option value="member_id">회원 아이디</option>
+								</select>
+								<input type="search" name="search">
+								<button type="submit">검색</button>
+								<a href="/board/${page}/add" class="btn border-secondary rounded-pill px-4 py-3 text-primary" type="button">add</a>
+							</form>
+						</div>
 					</div>
                     <!-- Add a태그는 부분은 관리자만 보이도록 해야함-->
                     <table class="table">
@@ -76,6 +77,19 @@ margin-left: 0px
                             </c:forEach>
                         </tbody>
                     </table>
+                </div>
+                <hr>
+                h1
+                <div class="text-center">
+					<nav aria-label="Page navigation example">
+						<ul class="pagination">
+		   					 <a href="./list?page=${pager.startNum-1}&search=${pager.search}&kind=${pager.kind}" class="rounded ${pager.pre?'':'disabled'}" >&laquo;</a>
+		                     <c:forEach begin="${pager.startNum}" end="${pager.lastNum}" step="1" var="i">	
+		                         <a href="./list?page=${i}&search=${pager.search}&kind=${pager.kind}" class="rounded">${i}</a>
+		                     </c:forEach>
+		                     <a href="./list?page=${pager.lastNum+1}&search=${pager.search}&kind=${pager.kind}" class="rounded ${pager.next?'':'disabled'}">&raquo;</a>
+						</ul>
+					</nav>
                 </div>
             </div>
         </div>

@@ -4,7 +4,11 @@
 <html>
 <head>
 <meta charset="utf-8">
-
+<style type="text/css">
+	li{
+		display: inline;
+	}
+</style>
 </head>
 <body>
 <c:import url="/WEB-INF/views/templete/header.jsp"></c:import>
@@ -20,20 +24,23 @@
             <li class="breadcrumb-item active text-white">List</li>
         </ol>
     </div>
+    
     <!-- Single Page Header End -->
         <div class="container-fluid mt-5 py-5">
             <div class="container py-5">
                 <div class="table-responsive">
-				    <div>
-						<form method="get" action="./list">
-							<select name="kind">
-								<option value="board_title">문의 제목</option>
-								<option value="member_id">회원 아이디</option>
-							</select>
-							<input type="search" name="search">
-							<button type="submit">검색</button>
-							<a href="/board/notice/add" class="btn border-secondary rounded-pill px-4 py-3 text-primary" type="button">add</a>
-						</form>
+				    <div class="row justify-content-md-center">
+				    	<div class="text-center">
+							<form method="get" action="./list">
+								<select name="kind">
+									<option value="board_title">문의 제목</option>
+									<option value="member_id">회원 아이디</option>
+								</select>
+								<input type="search" name="search" value="${pager.search}"	>
+								<button type="submit">검색</button>
+								<a href="/board/notice/add" class="btn border-secondary rounded-pill px-4 py-3 text-primary ml-1" type="button">add</a>
+							</form>
+						</div>
 					</div>
                     <table class="table">
                         <thead>
@@ -54,11 +61,32 @@
                            		</tr>
                             </c:forEach>
                         </tbody>
-                    </table>
-                    
-                   
+                    </table>                   
                     <!-- Add a태그는 부분은 관리자만 보이도록 해야함-->
                 </div>
+                <hr>
+               	<div class="text-center">
+					<nav aria-label="Page navigation example">
+						<ul class="pagination">
+							<li class="page-item d-inline ${pager.pre?'':'disabled'}">
+								<a
+									href="./list?page=${pager.startNum-1}&kind=${pager.kind}&search=${pager.search}"
+									aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
+								</a>
+							<c:forEach begin="${pager.startNum}"
+								end="${pager.lastNum}" step="1" var="i">
+								<li class="page-item"><a class="page-link d-inline"
+									href="./list?page=${i}&kin	d=${pager.kind}&search=${pager.search}">${i}</a></li>
+							</c:forEach>
+							<li class="page-item d-inline ${pager.next?'':'disabled'}">
+								<a
+									href="./list?page=${pager.lastNum+1}&kind=${pager.kind}&search=${pager.search}"
+									aria-label="Next"> <span aria-hidden="true">&raquo;</span>
+								</a>
+							</li>
+						</ul>
+					</nav>
+				</div>
             </div>
         </div>
         <!-- Cart Page End -->
