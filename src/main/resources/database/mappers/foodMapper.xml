@@ -18,7 +18,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		INSERT INTO STOREIMG VALUES (STOREIMG_SEQ.NEXTVAL,#{food_num},#{file_name})
 	</insert>
 	
-   <select id="getList" resultMap="foodImgName" parameterType="com.chef.app.food.FoodPager">
+   <select id="getList" resultMap="foodImgName" parameterType="Pager">
   	 SELECT * FROM
 	(SELECT ROWNUM R,B.* FROM
 	(SELECT *
@@ -80,7 +80,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </association>
    </resultMap>
    
-   <select id="getTotalCount" parameterType="com.chef.app.food.FoodPager" resultType="java.lang.Long">
+   <select id="getTotalCount" parameterType="Pager" resultType="java.lang.Long">
    	SELECT COUNT(FOOD_NUM) FROM FOOD
    	WHERE ADD_CHECK = 'A' AND
 	<choose>
@@ -105,7 +105,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</choose>
    </select>
    
-   <select id="categoryCount" resultType="java.util.Map">
+   <select id="categoryCount" resultType="Map">
    	SELECT FOOD_CATEGORY, COUNT(*) AS COUNT
 	FROM FOOD
 	WHERE ADD_CHECK='A'

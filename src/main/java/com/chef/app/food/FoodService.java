@@ -57,7 +57,7 @@ public class FoodService {
 		
 	}
 	
-	public List<FoodDTO> getList(FoodPager pager) throws Exception{
+	public List<FoodDTO> getList(Pager pager) throws Exception{
 				
 		Long totalRow = foodDAO.getTotalCount(pager);
 		

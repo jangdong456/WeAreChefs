@@ -29,11 +29,11 @@ public class FoodDAO {
 		return sqlSession.insert(NAMESPACE+"mainImg", storeImgFileDTO);
 	}
 	
-	public List<FoodDTO> getList(FoodPager pager) throws Exception{
+	public List<FoodDTO> getList(Pager pager) throws Exception{
 		return sqlSession.selectList(NAMESPACE+"getList", pager);
 	}
 	
-	public Long getTotalCount(FoodPager pager) throws Exception{
+	public Long getTotalCount(Pager pager) throws Exception{
 		return sqlSession.selectOne(NAMESPACE+"getTotalCount", pager);
 	}
 	

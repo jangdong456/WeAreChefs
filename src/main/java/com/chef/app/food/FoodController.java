@@ -16,6 +16,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.chef.app.util.Pager;
 
+import oracle.jdbc.proxy.annotation.Post;
+
 @Controller
 @RequestMapping("/food/*")
 public class FoodController {
@@ -70,7 +72,7 @@ public class FoodController {
 	}
 	
 	@GetMapping("list")
-	public void getList(FoodPager pager,Model model) throws Exception{
+	public void getList(Pager pager,Model model) throws Exception{
 		List<FoodDTO> ar =foodService.getList(pager);
 		List<Map<String, Object>> categoryCount =foodService.categoryCount();
 		model.addAttribute("pager", pager);
@@ -79,7 +81,7 @@ public class FoodController {
 	}
 	
 	@PostMapping("list")
-	public String getListSearch(FoodPager pager,Model model) throws Exception{
+	public String getListSearch(Pager pager,Model model) throws Exception{
 
 		List<FoodDTO> ar =foodService.getList(pager);
 		List<Map<String, Object>> categoryCount =foodService.categoryCount();
@@ -97,6 +99,19 @@ public class FoodController {
 		foodDTO = foodService.getDetail(foodDTO);
 		model.addAttribute("dto", foodDTO);
 
+	}
+	
+	@GetMapping("update")
+	public void updateDetail(FoodDTO foodDTO,Model model) throws Exception{
+		
+		foodDTO = foodService.getDetail(foodDTO);
+		model.addAttribute("dto", foodDTO);
+		
+	}
+	
+	@PostMapping("update")
+	public void updateDetail(MultipartFile upload,HttpSession session) throws Exception {
+		
 	}
 	
 }
