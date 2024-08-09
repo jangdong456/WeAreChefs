@@ -18,35 +18,56 @@ console.log("파람 확인: "+ code);
 
 // Restful : 708dbde015c2691a1b7eeac5da0b8b47
 
-let a = "authorization_code";
-let b = "708dbde015c2691a1b7eeac5da0b8b47";
-let c = "http://localhost/member/getcode";
+let a = "authorization_code"; //  grant_type 타입 : 공홈에서 무조건 사용 하라고함 ->authorization_code
+let b = "708dbde015c2691a1b7eeac5da0b8b47"; // REST_API_KEY
+let c = "http://localhost/member/getcode"; // REDIRECT_URL
 
-// 토큰 받아오는 메서드
+// REST API 방식
+// 토큰 받기 URL : https://kauth.kakao.com/oauth/token
+
+// https://kauth.kakao.com/oauth/authorize?
+
+// javaScrpit방식 : "grant_type="+a+"&"+"client_id="+b+"&"+"redirect_uri="+c+"&"+"code="+code
+
+// response_type=code&client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}
+// 
+
 img.addEventListener("click", () => {
     try {
         fetch("https://kauth.kakao.com/oauth/token", {
             
             method : "POST",
             headers : {
-                "Content-Type": "application/x-www-form-urlencoded"
+                "Content-Type": "application/x-www-form-urlencoded; charset=utf-8"
             },
-            body : 
-                "grant_type="+a+"&"+"client_id="+b+"&"+"redirect_uri="+c+"&"+"code="+code
+            body : "grant_type="+a+"&"+"client_id="+b+"&"+"redirect_uri="+c+"&"+"code="+code
+                
             
         })
         .then(res => res.json())
         .then(res =>  {
             console.log(res.access_token);
-            console.log("확인");
-            fetch("kakaologin", {
-                method : "POST",
-                headers:{
-                    "Content-type":"application/x-www-form-urlencoded"
-                },
-                body : "token="+res.access_token
-
+            
+            let token = res.access_token
+            const val = {token}
+            fetch("https://kapi.kakao.com/v1/oidc/userinfo", {
+                method : "GET",
+                headers : { Authorization: Bearer+val}
             })
+            // .then(res => res.json())
+            // .then(res => {
+            //     console.log("사용자 정보 확인")
+            //     console.log(res.name)
+            //     console.log(res.email)
+            // })
+            // fetch("kakaologin", {
+            //     method : "POST",
+            //     headers:{
+            //         "Content-type":"application/x-www-form-urlencoded"
+            //     },
+            //     body : "token="+res.access_token
+
+            // })
         }).catch((error) =>{
             console.log("에러발생 : " + error);
         })
