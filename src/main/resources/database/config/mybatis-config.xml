@@ -31,7 +31,7 @@
  		<typeAlias type="com.chef.app.manager.NoticeDTO" alias="NoticeDTO"/>
  		<typeAlias type="com.chef.app.manager.NoticeFileDTO" alias="NoticeFileDTO"/>
  		<typeAlias type="com.chef.app.manager.InquiryDTO" alias="InquiryDTO"/>
- 		
+
  		
  	</typeAliases>
  </configuration>

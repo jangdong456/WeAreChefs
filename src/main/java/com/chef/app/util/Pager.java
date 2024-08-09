@@ -3,6 +3,7 @@ package com.chef.app.util;
 public class Pager {
 	private String kind;
 	private String search;
+	private String order;
 	private Long startRow;
 	private Long lastRow;
 	private Long page;
@@ -75,6 +76,7 @@ public class Pager {
 		}
 
 	}
+	
 
 	public Long getStartNum() {
 		return startNum;
@@ -138,6 +140,16 @@ public class Pager {
 
 	public void setSearch(String search) {
 		this.search = search;
+	}
+	
+	
+
+	public String getOrder() {
+		return order;
+	}
+
+	public void setOrder(String order) {
+		this.order = order;
 	}
 
 	public Long getStartRow() {
