@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.chef.app.food.FoodDAO">
+
+	<select id="searchFood" resultType="FoodDTO" parameterType="FoodDTO">
+		SELECT * FROM FOOD
+		WHERE FOOD_STOCK>0 AND FOOD_NAME LIKE '%'||#{food_name}||'%' AND ADD_CHECK IS NULL
+	</select>
+	
+	<update id="add" parameterType="FoodDTO">
+		UPDATE FOOD SET FOOD_CONTENTS=#{food_contents}, UPDATE_DATE=SYSDATE, ADD_CHECK='A' WHERE FOOD_NUM = #{food_num}
+	</update>
+	
+	<insert id="mainImg" parameterType="StoreImgFileDTO">
+		INSERT INTO STOREIMG VALUES (STOREIMG_SEQ.NEXTVAL,#{food_num},#{file_name})
+	</insert>
+	
+   <select id="getList" resultMap="foodImgName" parameterType="com.chef.app.food.FoodPager">
+  	 SELECT * FROM
+	(SELECT ROWNUM R,B.* FROM
+	(SELECT *
+	FROM FOOD F
+     INNER JOIN
+     STOREIMG S
+     ON F.FOOD_NUM =S.FOOD_NUM
+	WHERE ADD_CHECK = 'A' AND
+	<choose>
+		<when test="kind=='과일'">
+		FOOD_CATEGORY='과일'
+		</when>
+		<when test="kind=='기타'">
+		FOOD_CATEGORY='기타'
+		</when>
+		<when test="kind=='수산물'">
+		FOOD_CATEGORY='수산물'
+		</when>
+		<when test="kind=='채소'">
+		FOOD_CATEGORY='채소'
+		</when>
+		<when test="kind=='축산'">
+		FOOD_CATEGORY='축산'
+		</when>
+		<otherwise>
+		FOOD_NAME LIKE '%'||#{search}||'%'
+		</otherwise>
+	</choose>
+	ORDER BY 
+	<choose>
+		<when test="order=='up'">
+		FOOD_PRICE DESC
+		</when>
+		<when test="order=='down'">
+		FOOD_PRICE ASC
+		</when>
+		<otherwise>
+		CREATE_DATE DESC
+		</otherwise>
+	</choose>
+	) B)
+	WHERE R BETWEEN #{startRow} AND #{lastRow}
+   </select>
+   
+   <resultMap type="FoodDTO" id="foodImgName">
+   	<id column="FOOD_NUM" property="food_num"/>
+   	<result column="FOOD_CATEGORY" property="food_category"/>
+   	<result column="FOOD_NAME" property="food_name"/>
+   	<result column="FOOD_STOCK" property="food_stock"/>
+   	<result column="FOOD_BUYING" property="food_buying"/>
+   	<result column="FOOD_PRICE" property="food_price"/>
+   	<result column="FOOD_CONTENTS" property="food_contents"/>
+   	<result column="CREATE_DATE" property="create_date"/>
+   	<result column="UPDATE_DATE" property="update_date"/>
+   	<result column="RATING" property="rating"/>
+    <association property="storeImgFileDTO" javaType="StoreImgFileDTO">
+    	<id column="FOOD_IMG_NUM" property="file_num"/>
+    	<result column="FOOD_FILE_NAME" property="file_name"/>
+    </association>
+   </resultMap>
+   
+   <select id="getTotalCount" parameterType="com.chef.app.food.FoodPager" resultType="java.lang.Long">
+   	SELECT COUNT(FOOD_NUM) FROM FOOD
+   	WHERE ADD_CHECK = 'A' AND
+	<choose>
+		<when test="kind=='과일'">
+		FOOD_CATEGORY='과일'
+		</when>
+		<when test="kind=='기타'">
+		FOOD_CATEGORY='기타'
+		</when>
+		<when test="kind=='수산물'">
+		FOOD_CATEGORY='수산물'
+		</when>
+		<when test="kind=='채소'">
+		FOOD_CATEGORY='채소'
+		</when>
+		<when test="kind=='축산'">
+		FOOD_CATEGORY='축산'
+		</when>
+		<otherwise>
+		FOOD_NAME LIKE '%'||#{search}||'%'
+		</otherwise>
+	</choose>
+   </select>
+   
+   <select id="categoryCount" resultType="java.util.Map">
+   	SELECT FOOD_CATEGORY, COUNT(*) AS COUNT
+	FROM FOOD
+	WHERE ADD_CHECK='A'
+	GROUP BY FOOD_CATEGORY
+	ORDER BY FOOD_CATEGORY ASC
+   </select>
+   
+   <select id="getDetail" parameterType="FoodDTO" resultMap="foodDetail">
+   	SELECT *
+	FROM FOOD F
+    	 INNER JOIN
+     	 STOREIMG S
+     	 ON F.FOOD_NUM =S.FOOD_NUM
+     WHERE F.FOOD_NUM = #{food_num}
+   </select>
+   
+   <resultMap type="FoodDTO" id="foodDetail" extends="foodImgName">
+
+   </resultMap>
+   
+
+ 
+</mapper>
