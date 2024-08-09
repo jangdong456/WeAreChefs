@@ -7,7 +7,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<select id="searchFood" resultType="FoodDTO" parameterType="FoodDTO">
 		SELECT * FROM FOOD
-		WHERE FOOD_STOCK>0 AND FOOD_NAME LIKE '%'||#{food_name}||'%' AND ADD_CHECK IS NULL
+		WHERE FOOD_STOCK>0 AND FOOD_NAME LIKE '%'||#{food_name}||'%' AND (ADD_CHECK NOT IN ('A') OR ADD_CHECK IS NULL)
 	</select>
 	
 	<update id="add" parameterType="FoodDTO">
@@ -56,7 +56,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		FOOD_PRICE ASC
 		</when>
 		<otherwise>
-		CREATE_DATE DESC
+		UPDATE_DATE DESC
 		</otherwise>
 	</choose>
 	) B)
@@ -126,6 +126,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
    </resultMap>
    
-
- 
+   <update id="updateDetail" parameterType="FoodDTO">
+   	UPDATE FOOD SET FOOD_CONTENTS = #{food_contents} WHERE FOOD_NUM = #{food_num}
+   </update>
+   
+   <update id="updateFoodImg" parameterType="StoreImgFileDTO">
+   	UPDATE STOREIMG SET FOOD_FILE_NAME = #{file_name} WHERE FOOD_NUM = #{food_num}
+   </update>
+   
+   <update id="detailDelete" parameterType="FoodDTO">
+   	UPDATE FOOD SET ADD_CHECK = 'D' WHERE FOOD_NUM = #{food_num}
+   </update>
+   
 </mapper>

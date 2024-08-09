@@ -110,7 +110,36 @@ public class FoodController {
 	}
 	
 	@PostMapping("update")
-	public void updateDetail(MultipartFile upload,HttpSession session) throws Exception {
+	public String updateDetail(MultipartFile attach,HttpSession session,FoodDTO foodDTO,Model model) throws Exception {
+		
+		int result = foodService.updateDetail(attach, session, foodDTO);
+		
+		if (result>0) {
+			model.addAttribute("result", "게시글 수정이 완료 됐습니다");
+			model.addAttribute("url", "/food/list");
+			return "food/message";
+			
+		}
+			model.addAttribute("result", "게시글 수정에 실패 했습니다");
+			model.addAttribute("url", "/food/list");
+			return "food/message";
+		
+	}
+	
+	@GetMapping("delete")
+	public String detailDelete(FoodDTO foodDTO,Model model) throws Exception {
+		
+		int result = foodService.detailDelete(foodDTO);
+		
+		if (result>0) {
+			model.addAttribute("result", "게시글 삭제가 완료 됐습니다");
+			model.addAttribute("url", "/food/list");
+			return "food/message";
+			
+		}
+			model.addAttribute("result", "게시글 삭제에 실패 했습니다");
+			model.addAttribute("url", "/food/list");
+			return "food/message";
 		
 	}
 	

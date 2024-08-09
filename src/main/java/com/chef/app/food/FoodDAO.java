@@ -44,5 +44,17 @@ public class FoodDAO {
 	public FoodDTO getDetail(FoodDTO foodDTO) throws Exception{
 		return sqlSession.selectOne(NAMESPACE+"getDetail", foodDTO);
 	}
+	
+	public int updateDetail (FoodDTO foodDTO) throws Exception {
+		return sqlSession.update(NAMESPACE+"updateDetail", foodDTO);
+	}
+	
+	public int updateFoodImg (StoreImgFileDTO storeImgFileDTO) throws Exception {
+		return sqlSession.update(NAMESPACE+"updateFoodImg", storeImgFileDTO);
+	}
+	
+	public int detailDelete(FoodDTO foodDTO) throws Exception {
+		return sqlSession.update(NAMESPACE+"detailDelete", foodDTO);
+	}
 
 }

@@ -80,5 +80,41 @@ public class FoodService {
 	public FoodDTO getDetail(FoodDTO foodDTO) throws Exception {
 		return foodDAO.getDetail(foodDTO);
 	}
+	
+	public int updateDetail(MultipartFile attach,HttpSession session,FoodDTO foodDTO) throws Exception {
+		
+		int result = foodDAO.updateDetail(foodDTO);
+		Long foodNum = foodDTO.getFood_num();
+		
+		if(!attach.isEmpty()) {
+				
+			ServletContext servletContext = session.getServletContext();
+			String path = servletContext.getRealPath("resources/upload/foods");
+			System.out.println(path);
+			
+			String fileName = fileManager.fileSave(path, attach);
+			StoreImgFileDTO storeImgFileDTO = new StoreImgFileDTO();
+			storeImgFileDTO.setFile_name(fileName);
+			storeImgFileDTO.setFood_num(foodNum);
+			
+			result = foodDAO.updateFoodImg(storeImgFileDTO);
+
+			return result;
+		}	
+	
+			String notChange = foodDTO.getStoreImgFileDTO().getFile_name();
+			
+			StoreImgFileDTO storeImgFileDTO = new StoreImgFileDTO();
+			storeImgFileDTO.setFile_name(notChange);
+			storeImgFileDTO.setFood_num(foodNum);
+			
+			result = foodDAO.updateFoodImg(storeImgFileDTO);
+			
+			return result;
+	}
+	
+	public int detailDelete (FoodDTO foodDTO) throws Exception {
+		return foodDAO.detailDelete(foodDTO);
+	} 
 
 }

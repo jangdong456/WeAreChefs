@@ -43,8 +43,8 @@
     <h5 class="mb-4">🌱수정할 상품의 카테고리, 재고, 판매가는 자동으로 업데이트 됩니다.</h5>
     <h5 class="mb-4">🌱대표 이미지는 변동사항이 없을 시, 기존의 이미지가 표시 됩니다.</h5>
             
-            <form action="/food/add" method="post" enctype="multipart/form-data">
-                <input type="hidden" id="foodNum" name="food_num">
+            <form action="/food/update" method="post" enctype="multipart/form-data">
+                <input type="hidden" id="foodNum" name="food_num" value="${dto.food_num}">
             <div class="form-group">
                 <label class="form-label mt-3 mr-3">* 상품명</label>
                 <input type="text" class="form-control w-50" readonly id="foodName" value="${dto.food_name}">
@@ -76,6 +76,7 @@
             </div>
 
             <div class="form-group" id="imgDiv">
+                <input type="hidden" id="foodNum" name="storeImgFileDTO.file_name" value="${dto.storeImgFileDTO.file_name}">
                 <img id="viewImg" src="/resources/upload/foods/${dto.storeImgFileDTO.file_name}"/>
             </div>
 

@@ -110,7 +110,7 @@
         <a href="/food/update?food_num=${dto.food_num}"><button class="btn border-secondary text-uppercase text-primary" type="button" id="foodAdd">수정하기</button></a>
     </div>
     <div class="container form-group mt-2" align="right">
-        <button class="btn border-secondary text-uppercase text-primary" type="button" id="foodAdd">삭제하기</button>
+        <a href="/food/delete?food_num=${dto.food_num}"><button class="btn border-secondary text-uppercase text-primary" type="button" id="foodAdd">삭제하기</button></a>
     </div>
 	
 <c:import url="/WEB-INF/views/templete/footer.jsp"></c:import>
