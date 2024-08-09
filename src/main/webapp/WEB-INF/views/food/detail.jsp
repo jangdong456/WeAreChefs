@@ -62,13 +62,13 @@
 
            <div class="input-group quantity mb-3" style="width: 100px;">
 
-               <div class="input-group-btn">  
+               <div class="input-group-btn" id="minusBtn">  
                    <button class="btn btn-sm btn-minus rounded-circle bg-light border" >
                        <i class="fa fa-minus"></i>
                    </button>
                </div>
-               <input type="text" class="form-control form-control-sm text-center border-0" value="1">
-               <div class="input-group-btn">
+               <input type="text" class="form-control form-control-sm text-center border-0" value="1" id="buyCount">
+               <div class="input-group-btn" id="plusBtn">
                    <button class="btn btn-sm btn-plus rounded-circle bg-light border">
                        <i class="fa fa-plus"></i>
                    </button>	
@@ -97,6 +97,7 @@
 	</div>
 	
 <c:import url="/WEB-INF/views/templete/footer.jsp"></c:import>
+<script type="text/javascript" src="/resources/js/food/detail.js"></script>
 
 
 </body>
