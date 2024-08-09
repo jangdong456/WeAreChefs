@@ -44,11 +44,30 @@ public class RecipeController {
 		model.addAttribute("ar", ar);
 		model.addAttribute("recipePager", recipePager);
 		System.out.println("recipePager.getPage() cont " + recipePager.getPage());
-		List<Map<String, Object>> categoryCount =recipeService.categoryCount(recipePager);
+		System.out.println("lastNum" + recipePager.getLastNum());
+
+		List<Map<String, Object>> categoryCount = recipeService.categoryCount();
+		System.out.println("categoryCount " + categoryCount.toString());
 		model.addAttribute("count", categoryCount);
 
 	}
-	
+
+	@GetMapping("detail")
+	public void recipeDetail(RecipeDTO recipeDTO, Model model) {
+		recipeDTO = recipeService.recipeDetail(recipeDTO);
+		model.addAttribute("dto", recipeDTO);
+
+		String url = "";
+		if (recipeDTO != null) {
+			model.addAttribute("dto", recipeDTO);
+			url = "/recipe/list";
+		} else {
+			model.addAttribute("result", "등록되지않은 레시피입니다.");
+			model.addAttribute("url", "./list");
+			url = "recipe/message";
+		}
+
+	}
 
 	@GetMapping("add")
 	public void recipeAdd() throws Exception {

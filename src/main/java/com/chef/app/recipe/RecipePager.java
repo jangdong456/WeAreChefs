@@ -13,4 +13,9 @@ public class RecipePager extends Pager {
 		this.order = order;
 	}
 
+	public String getTotalCount() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
