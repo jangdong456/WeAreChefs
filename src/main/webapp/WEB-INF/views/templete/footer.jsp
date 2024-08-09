@@ -83,5 +83,5 @@
     <script src="/resources/lib/owlcarousel/owl.carousel.min.js"></script>
 
     <!-- Template Javascript -->
-<script src="/resources/js/main.js"></script>
+	<script src="/resources/js/main.js"></script>
   
