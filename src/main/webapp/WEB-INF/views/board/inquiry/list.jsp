@@ -79,15 +79,14 @@ margin-left: 0px
                     </table>
                 </div>
                 <hr>
-                h1
                 <div class="text-center">
 					<nav aria-label="Page navigation example">
 						<ul class="pagination">
-		   					 <a href="./list?page=${pager.startNum-1}&search=${pager.search}&kind=${pager.kind}" class="rounded ${pager.pre?'':'disabled'}" >&laquo;</a>
+		   					 <a href="./list?page=${pager.startNum-1}&search=${pager.search}&kind=${pager.kind}" class="btn rounded ${pager.pre?'':'disabled'}" >&laquo;</a>
 		                     <c:forEach begin="${pager.startNum}" end="${pager.lastNum}" step="1" var="i">	
 		                         <a href="./list?page=${i}&search=${pager.search}&kind=${pager.kind}" class="rounded">${i}</a>
 		                     </c:forEach>
-		                     <a href="./list?page=${pager.lastNum+1}&search=${pager.search}&kind=${pager.kind}" class="rounded ${pager.next?'':'disabled'}">&raquo;</a>
+		                     <a href="./list?page=${pager.lastNum+1}&search=${pager.search}&kind=${pager.kind}" class="btn rounded ${pager.next?'':'disabled'}">&raquo;</a>
 						</ul>
 					</nav>
                 </div>

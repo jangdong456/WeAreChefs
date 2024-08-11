@@ -65,28 +65,17 @@
                     <!-- Add a태그는 부분은 관리자만 보이도록 해야함-->
                 </div>
                 <hr>
-               	<div class="text-center">
+                <div class="text-center">
 					<nav aria-label="Page navigation example">
 						<ul class="pagination">
-							<li class="page-item d-inline ${pager.pre?'':'disabled'}">
-								<a
-									href="./list?page=${pager.startNum-1}&kind=${pager.kind}&search=${pager.search}"
-									aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
-								</a>
-							<c:forEach begin="${pager.startNum}"
-								end="${pager.lastNum}" step="1" var="i">
-								<li class="page-item"><a class="page-link d-inline"
-									href="./list?page=${i}&kin	d=${pager.kind}&search=${pager.search}">${i}</a></li>
-							</c:forEach>
-							<li class="page-item d-inline ${pager.next?'':'disabled'}">
-								<a
-									href="./list?page=${pager.lastNum+1}&kind=${pager.kind}&search=${pager.search}"
-									aria-label="Next"> <span aria-hidden="true">&raquo;</span>
-								</a>
-							</li>
+		   					 <a href="./list?page=${pager.startNum-1}&search=${pager.search}&kind=${pager.kind}" class="btn rounded ${pager.pre?'':'disabled'}" >&laquo;</a>
+		                     <c:forEach begin="${pager.startNum}" end="${pager.lastNum}" step="1" var="i">	
+		                         <a href="./list?page=${i}&search=${pager.search}&kind=${pager.kind}" class="rounded">${i}</a>
+		                     </c:forEach>
+		                     <a href="./list?page=${pager.lastNum+1}&search=${pager.search}&kind=${pager.kind}" class="btn rounded ${pager.next?'':'disabled'}">&raquo;</a>
 						</ul>
 					</nav>
-				</div>
+                </div>
             </div>
         </div>
         <!-- Cart Page End -->

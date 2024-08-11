@@ -65,10 +65,10 @@ public class QnaController {
 	@GetMapping("detail")
 	public String qnaDetail(CommentDTO commentDTO, Model model) throws Exception{
 		InquiryDTO inquiryDTO = qnaService.qnaDetail(commentDTO);
-		List<InquiryDTO> inquiryDTOList = qnaService.getQnaReply(commentDTO);
+		List<InquiryDTO> result = qnaService.getQnaReply(inquiryDTO);
+		model.addAttribute("inquiryDTOList", result);
 		
 		model.addAttribute("inquiryDetail", inquiryDTO);
-		model.addAttribute("inquiryDTOList", inquiryDTOList);
 		return "board/inquiry/detail";
 	}
 	
@@ -139,17 +139,17 @@ public class QnaController {
 	public String qnaReply(InquiryDTO inquiryDTO, Model model) throws Exception{
 		inquiryDTO.setMember_id("aaa");
 		int result = qnaService.addQnaReply(inquiryDTO);
-
-		String url = "/board/qna/detail?board_num=" + inquiryDTO.getBoard_num();
-		
-		model.addAttribute("msg", "댓글을 추가 하였습니다.");
-		model.addAttribute("url", url);
-
-		
-		
-		return "commons/message";
+		System.out.println("reply result : " + result);
+		model.addAttribute("result", result);
+		return "commons/result";
 	}
 	
+	@GetMapping("commentList")
+	public void getQnaReply(InquiryDTO inquiryDTO, Model model) throws Exception{
+		List<InquiryDTO> result = qnaService.getQnaReply(inquiryDTO);
+		model.addAttribute("inquiryDTOList", result);
+		
+	}
 	
 
 }
