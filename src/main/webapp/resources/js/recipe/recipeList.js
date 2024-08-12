@@ -23,7 +23,7 @@ function getQueryParameter(name) {
     return urlParams.get(name);
 }
 
-// Set the selected option based on the query parameter
+
 const selectedOrder = getQueryParameter('order');
 if (selectedOrder) {
     order.value = selectedOrder;

@@ -95,9 +95,11 @@
                             <div class="col-lg-12">
                                 <nav>
                                     <div class="nav nav-tabs mb-3">
+                                    <!-- id가 nav about  인거 -->
                                         <button class="nav-link active border-white border-bottom-0" type="button" role="tab"
                                             id="nav-about-tab" data-bs-toggle="tab" data-bs-target="#nav-about"
                                             aria-controls="nav-about" aria-selected="true">Description</button>
+                                        <!-- id가 nav-mission 인거 -->
                                         <button class="nav-link border-white border-bottom-0" type="button" role="tab"
                                             id="nav-mission-tab" data-bs-toggle="tab" data-bs-target="#nav-mission"
                                             aria-controls="nav-mission" aria-selected="false">Reviews</button>
@@ -113,6 +115,7 @@
                                             icefish goldeye aholehole trumpetfish pilot fish airbreathing catfish, electric ray sweeper.</p>
                                       
                                     </div>
+                                    <!--기본적으로 숨겨져있는 클래스  -->
                                     <div class="tab-pane" id="nav-mission" role="tabpanel" aria-labelledby="nav-mission-tab">
                                         <div class="d-flex">
                                             <img src="/resources/img/avatar.jpg" class="img-fluid rounded-circle p-3" style="width: 100px; height: 100px;" alt="">
@@ -151,18 +154,16 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="tab-pane" id="nav-vision" role="tabpanel">
-                                        <p class="text-dark">Tempor erat elitr rebum at clita. Diam dolor diam ipsum et tempor sit. Aliqu diam
-                                            amet diam et eos labore. 3</p>
-                                        <p class="mb-0">Diam dolor diam ipsum et tempor sit. Aliqu diam amet diam et eos labore.
-                                            Clita erat ipsum et lorem et sit</p>
-                                    </div>
                                 </div>
                             </div>
                          	<form method="post">
                                 <h4 class="mb-5 fw-bold">review📌</h4>
                      
                                    <div class="row g-4">
+                                   
+                                   <div class="border-bottom rounded">
+                                            <input type="hidden" class="form-control border-0 me-4" value="${dto.board_num}">
+                                        </div>
                                     <div class="col-lg-6">
                                         <div class="border-bottom rounded">
                                             <input type="text" class="form-control border-0 me-4" placeholder="작성자">
