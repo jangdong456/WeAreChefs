@@ -159,7 +159,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <form action="#">
+                         	<form method="post">
                                 <h4 class="mb-5 fw-bold">review📌</h4>
                      
                                    <div class="row g-4">

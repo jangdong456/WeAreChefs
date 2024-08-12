@@ -167,9 +167,19 @@
 					)
 			
 	  </insert>
-	      	<insert id="mainImg" parameterType="RecipeImgFileDTO">
+	<insert id="mainImg" parameterType="RecipeImgFileDTO">
 		INSERT INTO RECIPEIMG(RECIPE_IMG_NUM, RECIPE_NUM, RECIPE_FILE_NAME) 
 		VALUES (RECIPEIMG_SEQ.NEXTVAL,#{recipe_num},#{file_name})
 	</insert>
+	
+	<insert id="recipeReply" parameterType="RecipeReplyDTO">
+	
+	
+	
+	
+	
+	</insert>
+	
+	
     
     </mapper>

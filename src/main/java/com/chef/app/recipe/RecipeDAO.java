@@ -7,6 +7,8 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.chef.app.comment.CommentDTO;
+
 @Repository
 public class RecipeDAO {
 	@Autowired
@@ -57,6 +59,11 @@ public class RecipeDAO {
 	public List<Map<String, Object>> categoryCount() {
 
 		return sqlSession.selectList(NAMESPACE + "categoryCount");
+	}
+
+	public int recipeReply(CommentDTO commentDTO) {
+		return sqlSession.insert(NAMESPACE + "recipeReply", commentDTO);
+
 	}
 
 }
