@@ -92,4 +92,9 @@ public class RecipeController {
 		return "/recipe/message";
 	}
 
+	@PostMapping("reply")
+	public void recipeReply() {
+
+	}
+
 }
