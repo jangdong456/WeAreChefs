@@ -49,5 +49,13 @@ public class QnaDAO {
 	public List<InquiryDTO> getQnaReply(CommentDTO commentDTO) throws Exception{
 		return sqlSession.selectList(NAMESPACE + "getQnaReply", commentDTO);
 	}
+	
+	public InquiryDTO getReplyUpdate(InquiryDTO inquiryDTO) throws Exception{
+		return sqlSession.selectOne(NAMESPACE + "getReplyUpdate", inquiryDTO);
+	}
+	
+	public int replyUpdate(InquiryDTO inquiryDTO) throws Exception{
+		return sqlSession.update(NAMESPACE + "replyUpdate", inquiryDTO);
+	}
 }
 

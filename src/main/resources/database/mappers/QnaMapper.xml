@@ -54,7 +54,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="getRowNum" parameterType="Pager" resultType="java.lang.Long">
 		SELECT COUNT(BOARD_NUM)
 		FROM INQUIRY
-		WHERE BOARD_TYPE = 2 AND
+		WHERE BOARD_TYPE = 2 AND STEP IS NULL AND
 			<choose>
 				<when test="kind == 'board_title'">
 					 BOARD_TITLE LIKE '%' || #{search} || '%' 
@@ -75,4 +75,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE BOARD_TYPE = 2 AND "REF" = #{board_num} AND STEP IS NOT NULL
 		ORDER BY STEP ASC
 	</select>
+	
+	
+	<select id="getReplyUpdate" parameterType="InquiryDTO" resultType="InquiryDTO">
+		SELECT * FROM INQUIRY
+		WHERE BOARD_NUM = #{board_num}
+	</select>
+	
+	<update id="replyUpdate" parameterType="InquiryDTO">
+		UPDATE INQUIRY
+			SET BOARD_CONTENT = #{board_content},
+				UPDATE_DATE = SYSDATE
+		WHERE BOARD_NUM = #{board_num}
+	</update>
+	
+	<update id="replyDelete" parameterType="CommentDTO">
+	
+	</update>
 </mapper>

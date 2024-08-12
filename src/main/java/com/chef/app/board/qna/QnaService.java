@@ -29,6 +29,7 @@ public class QnaService {
 		Long perBlock = 5L;
 		pager.makeRow(10L);
 		Long totalCount = qnaDAO.getRowNum(pager);
+		System.out.println("Qna pager : " + totalCount);
 		if(totalCount == 0) {
 			perBlock = 1L;
 		}
@@ -66,5 +67,13 @@ public class QnaService {
 	
 	public int addQnaReply(InquiryDTO inquiryDTO) throws Exception {
 		return qnaDAO.addQnaReply(inquiryDTO);
+	}
+	
+	public InquiryDTO getReplyUpdate(InquiryDTO inquiryDTO) throws Exception{
+		return qnaDAO.getReplyUpdate(inquiryDTO);
+	}
+	
+	public int replyUpdate(InquiryDTO inquiryDTO) throws Exception{
+		return qnaDAO.replyUpdate(inquiryDTO);
 	}
 }

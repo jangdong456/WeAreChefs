@@ -5,7 +5,6 @@ import com.chef.app.comment.CommentDTO;
 public class InquiryDTO extends CommentDTO {
 	
 	private String board_type; 
-	private String board_title;
 	private Long ref;
 	private Long step;
 	private String del;
@@ -15,12 +14,6 @@ public class InquiryDTO extends CommentDTO {
 	}
 	public void setBoard_type(String board_type) {
 		this.board_type = board_type;
-	}
-	public String getBoard_title() {
-		return board_title;
-	}
-	public void setBoard_title(String board_title) {
-		this.board_title = board_title;
 	}
 	public Long getRef() {
 		return ref;

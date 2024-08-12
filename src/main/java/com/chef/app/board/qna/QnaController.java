@@ -64,11 +64,14 @@ public class QnaController {
 	
 	@GetMapping("detail")
 	public String qnaDetail(CommentDTO commentDTO, Model model) throws Exception{
+		// 디테일 호출
 		InquiryDTO inquiryDTO = qnaService.qnaDetail(commentDTO);
+		model.addAttribute("inquiryDetail", inquiryDTO);
+		// 댓글 리스트 호출
 		List<InquiryDTO> result = qnaService.getQnaReply(inquiryDTO);
 		model.addAttribute("inquiryDTOList", result);
-		
-		model.addAttribute("inquiryDetail", inquiryDTO);
+		// &Todo Session에서 member_id를 받아오고 그 값을 model("member", memberDTO)를 통해 detail.jsp로 보낸다.
+		// &Todo detail.jsp에서 member 아이디가 글 작성자와 같으면 수정 삭제가 보이도록 한다.
 		return "board/inquiry/detail";
 	}
 	
@@ -137,17 +140,55 @@ public class QnaController {
 	
 	@PostMapping("reply")
 	public String qnaReply(InquiryDTO inquiryDTO, Model model) throws Exception{
+		// &Todo member session에서 값 받아오기.
 		inquiryDTO.setMember_id("aaa");
-		int result = qnaService.addQnaReply(inquiryDTO);
-		System.out.println("reply result : " + result);
-		model.addAttribute("result", result);
-		return "commons/result";
+		// 댓글 추가
+		int addResult = qnaService.addQnaReply(inquiryDTO);
+		// 댓글 리스트 비동기식으로 불러오기
+		List<InquiryDTO> replyResult = qnaService.getQnaReply(inquiryDTO);
+		model.addAttribute("inquiryDTOList", replyResult);
+		return "board/inquiry/commentList";
 	}
 	
 	@GetMapping("commentList")
 	public void getQnaReply(InquiryDTO inquiryDTO, Model model) throws Exception{
 		List<InquiryDTO> result = qnaService.getQnaReply(inquiryDTO);
 		model.addAttribute("inquiryDTOList", result);
+		
+	}
+	
+	@GetMapping("replyUpdate")
+	public String getReplyUpdate(InquiryDTO inquiryDTO, Model model) throws Exception{
+		
+		InquiryDTO getReplyUpdate = qnaService.getReplyUpdate(inquiryDTO);
+		getReplyUpdate.setMember_id("aaa");
+		System.out.println("get replyUpdate : " + getReplyUpdate.getBoard_content());
+		model.addAttribute("getReplyUpdate", getReplyUpdate);
+		return "board/inquiry/commentUpdate";
+	}
+	
+	@PostMapping("replyUpdate")
+	public String replyUpdate(InquiryDTO inquiryDTO, ReplyUpdateDTO replyUpdateDTO, Model model) throws Exception{
+		int result = qnaService.replyUpdate(inquiryDTO);
+		CommentDTO commentDTO = new CommentDTO();
+		commentDTO.setBoard_num(replyUpdateDTO.getDetail_board_num());
+		System.out.println(" @@ inquiryDTO.boardNum : " + inquiryDTO.getBoard_num());
+		System.out.println(" @@ commentDTO.boardNum : " + commentDTO.getBoard_num());
+		
+		List<InquiryDTO> inquiryDTOList = qnaService.getQnaReply(commentDTO);
+		model.addAttribute("inquiryDTOList", inquiryDTOList);
+		return "board/inquiry/commentList";
+	}
+	
+	@GetMapping("replyUpdateCancel")
+	public String replyUpdateCancel(CommentDTO commentDTO, Model model) throws Exception{
+		List<InquiryDTO> inquiryDTOList = qnaService.getQnaReply(commentDTO);
+		model.addAttribute("inquiryDTOList", inquiryDTOList);
+		return "board/inquiry/commentList";
+	}
+	
+	@GetMapping("replyDelete")
+	public String replyDelete(CommentDTO commentDTO) throws Exception{
 		
 	}
 	

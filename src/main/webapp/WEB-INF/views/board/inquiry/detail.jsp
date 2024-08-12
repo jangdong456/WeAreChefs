@@ -50,33 +50,33 @@
 		<a class="btn border-secondary rounded-pill px-4 py-3 text-primary" href="/board/${page}/delete?board_num=${inquiryDetail.board_num}">Delete</a>
 		<!-- & Todo Final : 이부분은 관리자 레벨만 보이도록 해야함. -->
 		
-		<div id="replyDiv">
+		<div id="commentList">
 			<c:if test="${inquiryDetail.board_type eq 2}">
-				<div class="container">
-					<hr>
-					<h1>댓글 목록</h1>
+        <div class="container">
+            <hr>
+            <h1>댓글 목록</h1>
 
-				</div>
-				<input type="text" id="replyInput">
-				<button id="qnaReplyBtn">댓글 달기</button>
-			</c:if>
-			<c:forEach items="${inquiryDTOList}" var="list">
-  <table>
-    <thead>
-      <tr>
-        <th>글번호 : ${list.step}</th>
-        <th>작성자 : ${list.member_id}</th>
-        <th>작성일 : ${list.create_date}</th>
-      </tr>
-    </thead>
-    <tbody>
-      <td>  ↳ ${list.board_content}</td>
-    </tbody>
-    </table>
-</c:forEach>
-			<div id="commentList">
-
-			</div>
+        </div>
+        <input type="text" id="replyInput">
+        <button id="qnaReplyBtn">댓글 달기</button>
+            <c:forEach items="${inquiryDTOList}" var="list">
+                <table id="${list.board_num}">
+                    <thead>
+                        <tr >
+                            <th>작성자 : ${list.member_id}</th>
+                            <th>작성일 : ${list.create_date}</th>
+														<td><button id="replyUpdate${list.board_num}" data-replyBoardNum="${list.board_num}">수정</button></td>
+														<td><button id="replyDelete${list.board_num}" data-replyBoardNum="${list.board_num}">삭제</button></td>
+													<!-- <c:if test="${list.member_id} eq ${member.member_id}"> -->
+													<!-- </c:if> -->
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <td>  ↳ ${list.board_content}</td>
+                    </tbody>
+                </table>
+            </c:forEach>
+    		</c:if>
 		</div>
 	</div>
 	</div>
