@@ -46,17 +46,18 @@
                                     <p class="mb-0 mt-4">${f.food_name}</p>
                                 </td>
                                 <td>
-                                    <p class="mb-0 mt-4">${f.food_price}</p>
+                                    <p class="mb-0 mt-4">${f.food_price}원</p>
                                 </td>
                                 <td>
                                     <div class="input-group quantity mt-4" style="width: 100px;">
-                                        <div class="input-group-btn">
+                                        <div class="input-group-btn minusBtn" data-buy-price="${f.food_price}" data-food-num="${f.food_num}">
                                             <button class="btn btn-sm btn-minus rounded-circle bg-light border" >
                                             <i class="fa fa-minus"></i>
                                             </button>
                                         </div>
-                                        <input type="text" class="form-control form-control-sm text-center border-0" value="${a.cart_count}">
-                                        <div class="input-group-btn">
+                                        <input type="text" class="form-control form-control-sm text-center border-0 buyCount" value="${a.cart_count}" 
+                                        readonly style="background-color: transparent;border: 0px;" data-food-num="${f.food_num}">
+                                        <div class="input-group-btn plusBtn" data-buy-price="${f.food_price}" data-food-num="${f.food_num}">
                                             <button class="btn btn-sm btn-plus rounded-circle bg-light border">
                                                 <i class="fa fa-plus"></i>
                                             </button>
@@ -64,7 +65,7 @@
                                     </div>
                                 </td>
                                 <td>
-                                    <p class="mb-0 mt-4">총가격</p>
+                                    <p class="mb-0 mt-4 totalPrice" data-food-num="${f.food_num}">${f.food_price*a.cart_count}원</p>
                                 </td>
                                 <td>
                                     <button class="btn btn-md rounded-circle bg-light border mt-4" >
@@ -111,6 +112,7 @@
 
 
 <c:import url="/WEB-INF/views/templete/footer.jsp"></c:import>
+<script type="text/javascript" src="/resources/js/food/cart.js"></script>
 
 
 </body>
