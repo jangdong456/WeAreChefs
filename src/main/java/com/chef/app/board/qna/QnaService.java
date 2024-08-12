@@ -29,7 +29,6 @@ public class QnaService {
 		Long perBlock = 5L;
 		pager.makeRow(10L);
 		Long totalCount = qnaDAO.getRowNum(pager);
-		System.out.println("Qna pager : " + totalCount);
 		if(totalCount == 0) {
 			perBlock = 1L;
 		}
@@ -55,7 +54,6 @@ public class QnaService {
 	public String ckEditor(MultipartFile upload, HttpSession session) throws Exception{
 		ServletContext servletContext = session.getServletContext();
 		String path = servletContext.getRealPath("/resources/upload/boardContents");
-		System.out.println("@@ path : " + path);
 		return fileManager.fileSave(path, upload);
 		// 파일에 사진 저장까지 함.
 		
@@ -75,5 +73,9 @@ public class QnaService {
 	
 	public int replyUpdate(InquiryDTO inquiryDTO) throws Exception{
 		return qnaDAO.replyUpdate(inquiryDTO);
+	}
+	
+	public int replyDeleteUpdate(CommentDTO commentDTO) throws Exception{
+		return qnaDAO.replyDeleteUpdate(commentDTO);
 	}
 }

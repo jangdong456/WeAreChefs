@@ -51,9 +51,6 @@ public class QnaController {
 	@GetMapping("list")
 	public String qnaList(Pager pager, Model model) throws Exception{
 		List<InquiryDTO> inquiryList = qnaService.qnaList(pager);
-		System.out.println("@@ NUM");
-		System.out.println(pager.getStartNum());
-		System.out.println(pager.getLastNum());
 		
 		model.addAttribute("pager", pager);
 		model.addAttribute("inquiryList", inquiryList);
@@ -138,6 +135,7 @@ public class QnaController {
 		return "commons/message";
 	}
 	
+	//댓글 달기 및 댓글 비동기 호출
 	@PostMapping("reply")
 	public String qnaReply(InquiryDTO inquiryDTO, Model model) throws Exception{
 		// &Todo member session에서 값 받아오기.
@@ -150,6 +148,7 @@ public class QnaController {
 		return "board/inquiry/commentList";
 	}
 	
+	//댓글 리스트 비동기 호출
 	@GetMapping("commentList")
 	public void getQnaReply(InquiryDTO inquiryDTO, Model model) throws Exception{
 		List<InquiryDTO> result = qnaService.getQnaReply(inquiryDTO);
@@ -171,10 +170,7 @@ public class QnaController {
 	public String replyUpdate(InquiryDTO inquiryDTO, ReplyUpdateDTO replyUpdateDTO, Model model) throws Exception{
 		int result = qnaService.replyUpdate(inquiryDTO);
 		CommentDTO commentDTO = new CommentDTO();
-		commentDTO.setBoard_num(replyUpdateDTO.getDetail_board_num());
-		System.out.println(" @@ inquiryDTO.boardNum : " + inquiryDTO.getBoard_num());
-		System.out.println(" @@ commentDTO.boardNum : " + commentDTO.getBoard_num());
-		
+		commentDTO.setBoard_num(replyUpdateDTO.getDetail_board_num());		
 		List<InquiryDTO> inquiryDTOList = qnaService.getQnaReply(commentDTO);
 		model.addAttribute("inquiryDTOList", inquiryDTOList);
 		return "board/inquiry/commentList";
@@ -188,8 +184,14 @@ public class QnaController {
 	}
 	
 	@GetMapping("replyDelete")
-	public String replyDelete(CommentDTO commentDTO) throws Exception{
-		
+	public String replyDelete(CommentDTO commentDTO, ReplyUpdateDTO replyUpdateDTO, Model model) throws Exception{
+		System.out.println("REPLYDELETE 1 : " + commentDTO.getBoard_num());
+		System.out.println("REPLYDELETE 2 : " + replyUpdateDTO.getDetail_board_num());
+		int replyDeleteUpdate = qnaService.replyDeleteUpdate(commentDTO);
+		commentDTO.setBoard_num(replyUpdateDTO.getDetail_board_num());
+		List<InquiryDTO> inquiryDTOList = qnaService.getQnaReply(commentDTO);
+		model.addAttribute("inquiryDTOList", inquiryDTOList);
+		return "board/inquiry/commentList";
 	}
 	
 

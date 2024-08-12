@@ -31,6 +31,8 @@ public class FnaController {
 	@GetMapping("list")
 	public String fnaList(Pager pager, Model model) throws Exception {
 		List<InquiryDTO> InquiryList = fnaService.fnaList(pager);
+		
+		model.addAttribute("pager", pager);
 		model.addAttribute("inquiryList", InquiryList);
 		return "board/inquiry/list";
 	}

@@ -17,8 +17,13 @@
                 <tr >
                     <th>작성자 : ${list.member_id}</th>
                     <th>작성일 : ${list.create_date}</th>
-                    <td><button id="replyUpdate${list.board_num}" data-replyBoardNum="${list.board_num}">수정</button></td>
-                    <td><button id="replyDelete${list.board_num}" data-replyBoardNum="${list.board_num}">삭제</button></td>
+                    <c:if test="${not empty list.update_date}">
+                        <th>수정일 : ${list.update_date}</th>    
+                    </c:if>
+                    <c:if test="${empty list.del}">
+                        <td><button id="replyUpdate${list.board_num}" data-replyBoardNum="${list.board_num}">수정</button></td>
+                        <td><button id="replyDelete${list.board_num}" data-replyBoardNum="${list.board_num}">삭제</button></td>
+                    </c:if>
                     <!-- <c:if test="${list.member_id} eq ${member.member_id}"> -->
                     <!-- </c:if> -->
                 </tr>

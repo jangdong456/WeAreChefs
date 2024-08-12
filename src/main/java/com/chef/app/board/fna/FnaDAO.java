@@ -21,6 +21,10 @@ public class FnaDAO {
 	public List<InquiryDTO> fnaList(Pager pager) throws Exception{
 		return sqlSession.selectList(NAMESPACE + "fnaList", pager);
 	}
+
+	public Long getRowNum(Pager pager) throws Exception{
+		return sqlSession.selectOne(NAMESPACE + "getRowNum", pager);
+	}
 	
 	public InquiryDTO fnaDetail(CommentDTO commentDTO) throws Exception{
 		return sqlSession.selectOne(NAMESPACE + "fnaDetail", commentDTO);

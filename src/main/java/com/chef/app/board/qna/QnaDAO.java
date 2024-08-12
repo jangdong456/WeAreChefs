@@ -57,5 +57,9 @@ public class QnaDAO {
 	public int replyUpdate(InquiryDTO inquiryDTO) throws Exception{
 		return sqlSession.update(NAMESPACE + "replyUpdate", inquiryDTO);
 	}
+	
+	public int replyDeleteUpdate(CommentDTO commentDTO) throws Exception{
+		return sqlSession.update(NAMESPACE + "replyDeleteUpdate", commentDTO);
+	}
 }
 

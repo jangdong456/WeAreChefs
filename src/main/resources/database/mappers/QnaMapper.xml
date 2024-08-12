@@ -89,7 +89,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE BOARD_NUM = #{board_num}
 	</update>
 	
-	<update id="replyDelete" parameterType="CommentDTO">
-	
+	<update id="replyDeleteUpdate" parameterType="CommentDTO">
+		UPDATE INQUIRY
+		SET	DEL = 1,
+			BOARD_CONTENT = '삭제된 글입니다.'		
+		WHERE BOARD_NUM = #{board_num}
 	</update>
 </mapper>

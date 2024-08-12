@@ -41,7 +41,6 @@ commentList.addEventListener("click", (e)=> {
   // 댓글 수정 버튼을 클릭 했을 때 인풋창과 '등록' 및 '취소' 버튼을 가져오는 코드
   if(id == "replyUpdate"+dat){
     console.log(dat);
-    alert(dat + "수정");
     let replyTable = document.getElementById(dat)
     fetch("replyUpdate?board_num="+dat, {
       method:"GET"
@@ -54,7 +53,6 @@ commentList.addEventListener("click", (e)=> {
 
   // 댓글 수정 버튼 클릭 후 나타나는 인풋창에 값을 넣고 등록을 눌렀을 때 실행되는 코드
   if(id == "replyUpdateSubmit"+dat){
-    alert("등록버튼이란다")
     let replyUpdateInput = document.getElementById("replyUpdateInput"+dat).value;
     const form = new FormData();
     form.append("board_num", dat); //댓글 번호를 의미하는 board_num임
@@ -73,7 +71,6 @@ commentList.addEventListener("click", (e)=> {
 
   if(id == "replyUpdateCancel"+dat){
     console.log("replyUpdateCancel : " + dat)
-    alert("취소버튼이란다!!!")
     fetch("replyUpdateCancel?board_num="+qnaBoardNum, {
       method: "GET"
     })
@@ -84,7 +81,14 @@ commentList.addEventListener("click", (e)=> {
   }
 
 
-  if(id == "replyDelete"){
+  if(id == "replyDelete"+dat){
     alert(dat + "삭제");
+    fetch("replyDelete?board_num="+dat+"&&detail_board_num="+qnaBoardNum, {
+      method: "GET"
+    })
+    .then(r=>r.text())
+    .then(r=>{
+      commentList.innerHTML = r;
+    })
   }
 });
