@@ -63,31 +63,36 @@
 
            <div class="input-group quantity mb-3" style="width: 100px;">
 
-               <div class="input-group-btn" id="minusBtn">  
-                   <button class="btn btn-sm btn-minus rounded-circle bg-light border">
-                       <i class="fa fa-minus"></i>
-                   </button>
-               </div>
-               <input type="text" class="form-control form-control-sm text-center border-0" id="buyCount">
-               <div class="input-group-btn" id="plusBtn">
-                   <button class="btn btn-sm btn-plus rounded-circle bg-light border">
-                       <i class="fa fa-plus"></i>
-                   </button>	
-               </div>
-           </div>
+            <div class="input-group-btn" id="minusBtn">  
+                <button class="btn btn-sm btn-minus rounded-circle bg-light border">
+                    <i class="fa fa-minus"></i>
+                </button>
+            </div>
+                <input type="text" class="form-control form-control-sm text-center border-0" id="buyCount" readonly style="background-color: transparent;border: 0px;">
+            <div class="input-group-btn" id="plusBtn">
+                <button class="btn btn-sm btn-plus rounded-circle bg-light border">
+                    <i class="fa fa-plus"></i>
+                </button>	
+            </div>
+        </div>
         <c:choose>
         	<c:when test="${dto.food_stock<1}">
-		        <a href="#" class="btn border border-secondary rounded-pill px-4 py-2 mb-4 text-primary disabled">
+		        <a href="#none" class="btn border border-secondary rounded-pill px-4 py-2 mb-4 text-primary disabled">
 		            <i class="fa fa-shopping-bag me-2 text-primary"></i> 품절입니다
 		        </a>
         	</c:when>
 			<c:otherwise>
-	        <a href="#" class="btn border border-secondary rounded-pill px-4 py-2 mb-4 text-primary">
-	            <i class="fa fa-shopping-bag me-2 text-primary"></i> 장바구니 담기
+	        <a href="#none" class="btn border border-secondary rounded-pill px-4 py-2 mb-4 text-primary" id="cartAdd">
+	            <i class="fa fa-shopping-bag me-2 text-primary" ></i> 장바구니 담기
 	        </a>
         </c:otherwise>
       </c:choose>
     </div>
+
+    <form action="/food/cartAdd" method="get" id="cartFrm">
+        <input type="hidden" name="cart_count" id="cartCount">
+        <input type="hidden" name="food_num" value="${dto.food_num}">
+    </form>
     
     
     

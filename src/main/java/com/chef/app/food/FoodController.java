@@ -143,4 +143,40 @@ public class FoodController {
 		
 	}
 	
+	@GetMapping("cartAdd")
+	public String cartAdd (Long food_num,Long cart_count,Model model) throws Exception {
+		String memberId = "ksr";
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("member_id", memberId);
+		map.put("food_num", food_num);
+		map.put("cart_count", cart_count);
+		
+		int result = foodService.cartAdd(map);
+		
+		if (result>0) {
+			model.addAttribute("result", "장바구니 추가 완료, 장바구니로 이동하시겠습니까?");
+			model.addAttribute("urlTrue", "/food/cart");
+			model.addAttribute("urlFalse", "/food/detail?food_num="+food_num);
+			return "food/confirm";
+			
+		}
+			model.addAttribute("result", "장바구니 추가에 실패했습니다");
+			model.addAttribute("url", "/food/list");
+			return "food/message";
+		
+	}
+	
+	@GetMapping("cart")
+	public void cartList(Model model) throws Exception{
+		
+		String member_id = "ksr";
+		StoreCartDTO storeCartDTO = new StoreCartDTO();
+		storeCartDTO.setMember_id(member_id);
+		List<StoreCartDTO> ar = foodService.cartList(storeCartDTO);
+		
+		model.addAttribute("list", ar);
+		
+	}
+	
 }

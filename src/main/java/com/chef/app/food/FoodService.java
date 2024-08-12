@@ -116,5 +116,19 @@ public class FoodService {
 	public int detailDelete (FoodDTO foodDTO) throws Exception {
 		return foodDAO.detailDelete(foodDTO);
 	} 
+	
+	public int cartAdd (Map<String, Object> map) throws Exception {
+				
+		List<FoodDTO> ar = foodDAO.selectCart(map);
+		
+		if(ar.isEmpty()) {
+			return foodDAO.cartAdd(map);
+		}
+			return foodDAO.updateCart(map);
+	}
+	
+	public List<StoreCartDTO> cartList(StoreCartDTO storeCartDTO) throws Exception{
+		return foodDAO.cartList(storeCartDTO);
+	}
 
 }

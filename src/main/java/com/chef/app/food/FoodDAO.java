@@ -56,5 +56,22 @@ public class FoodDAO {
 	public int detailDelete(FoodDTO foodDTO) throws Exception {
 		return sqlSession.update(NAMESPACE+"detailDelete", foodDTO);
 	}
+	
+	public int cartAdd(Map<String, Object>map) throws Exception {
+		return sqlSession.insert(NAMESPACE+"cartAdd", map);
+	}
+	
+	public List<FoodDTO> selectCart(Map<String, Object>map) throws Exception {
+		return sqlSession.selectList(NAMESPACE+"selectCart", map);
+	}
+	
+	public int updateCart(Map<String, Object>map) throws Exception {
+		return sqlSession.update(NAMESPACE+"updateCart", map);
+	
+	}
+	
+	public List<StoreCartDTO> cartList(StoreCartDTO storeCartDTO) throws Exception{
+		return sqlSession.selectList(NAMESPACE+"cartList", storeCartDTO);
+	}
 
 }
