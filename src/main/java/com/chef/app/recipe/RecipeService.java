@@ -96,8 +96,10 @@ public class RecipeService {
 		return recipeDAO.categoryCount();
 	}
 
-	public void recipeReview(RecipeDTO recipeDTO) {
-		recipeDAO.recipeReview(recipeDTO);
+	public int recipeReview(RecipeReviewDTO recipeReviewDTO) {
+		return  recipeDAO.recipeReview(recipeReviewDTO);
 	}
+
+
 
 }

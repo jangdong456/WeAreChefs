@@ -118,6 +118,7 @@
                                     <!--기본적으로 숨겨져있는 클래스  -->
                                     <div class="tab-pane" id="nav-mission" role="tabpanel" aria-labelledby="nav-mission-tab">
                                         <div class="d-flex">
+                                       
                                             <img src="/resources/img/avatar.jpg" class="img-fluid rounded-circle p-3" style="width: 100px; height: 100px;" alt="">
                                             <div class="">
                                                 <p class="mb-2" style="font-size: 14px;">April 12, 2024</p>
@@ -134,49 +135,37 @@
                                                 <p>The generated Lorem Ipsum is therefore always free from repetition injected humour, or non-characteristic 
                                                     words etc. Susp endisse ultricies nisi vel quam suscipit </p>
                                             </div>
+                                            
                                         </div>
-                                        <div class="d-flex">
-                                            <img src="/resources/img/avatar.jpg" class="img-fluid rounded-circle p-3" style="width: 100px; height: 100px;" alt="">
-                                            <div class="">
-                                                <p class="mb-2" style="font-size: 14px;">April 12, 2024</p>
-                                                <div class="d-flex justify-content-between">
-                                                    <h5>Sam Peters</h5>
-                                                    <div class="d-flex mb-3">
-                                                        <i class="fa fa-star text-secondary"></i>
-                                                        <i class="fa fa-star text-secondary"></i>
-                                                        <i class="fa fa-star text-secondary"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                    </div>
-                                                </div>
-                                                <p class="text-dark">The generated Lorem Ipsum is therefore always free from repetition injected humour, or non-characteristic 
-                                                    words etc. Susp endisse ultricies nisi vel quam suscipit </p>
-                                            </div>
-                                        </div>
+                                        
+                                       </div>
                                     </div>
                                 </div>
                             </div>
-                         	<form method="post" >
+                            <c:if test="${not empty result}">
+    							<div class="alert alert-success">${result}</div>
+							</c:if>
+                         	<form action="./review" method="post" >
                                 <h4 class="mb-5 fw-bold">review📌</h4>
                      
                                    <div class="row g-4">
                                    
                                    <div class="border-bottom rounded">
-                                          <%--   <input type="hidden" class="form-control border-0 me-4" value="${dto.board_num}"> --%>
+                                        <input type="hidden" class="form-control border-0 me-4" value="${dto.recipe_num}" name="recipe_num"> 
                                         </div>
                                     <div class="col-lg-6">
                                         <div class="border-bottom rounded">
-                                            <input type="text" class="form-control border-0 me-4" placeholder="작성자">
+                                            <input type="text" class="form-control border-0 me-4" placeholder="작성자" name="member_id" >
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="border-bottom rounded">
-                                            <input type="text" class="form-control border-0" placeholder="제목">
+                                            <input type="text" class="form-control border-0" placeholder="제목" name="board_title" >
                                         </div>
                                     </div>
                                     <div class="col-lg-12">
                                         <div class="border-bottom rounded my-4">
-                                            <textarea name="" id="" class="form-control border-0" cols="30" rows="8" placeholder="내용" spellcheck="false"></textarea>
+                                            <textarea name="board_content" class="form-control border-0" cols="30" rows="8" placeholder="내용" spellcheck="false" name="board_content"></textarea>
                                         </div>
                                     </div>
                                     <div class="col-lg-12">
@@ -184,7 +173,7 @@
                                              <div class="d-flex align-items-center">
     
                                        	  </div>
-                                            <a href="#" class="btn border border-secondary text-primary rounded-pill px-4 py-3"> Post Comment</a>
+                                            <button type="submit" class="btn border border-secondary text-primary rounded-pill px-4 py-3"> Post Comment</button>
                                         </div>
                                     </div>
                                 </div>

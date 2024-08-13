@@ -50,9 +50,10 @@
 	    SELECT RC.*, RI.* 
 		FROM RECIPE RC
 		 	 LEFT OUTER JOIN
-  			 RECIPEIMG RI 
+  			 RECIPEIMG RI
+  			 
   			 ON (RC.RECIPE_NUM = RI.RECIPE_NUM)
-		WHERE RC.RECIPE_NUM = #{recipe_num}
+		WHERE RC.RECIPE_NUM = #{recipe_num}  
     
     
     </select>
@@ -172,14 +173,24 @@
 		VALUES (RECIPEIMG_SEQ.NEXTVAL,#{recipe_num},#{file_name})
 	</insert>
 	
-	<insert id="recipeReply" parameterType="RecipeReplyDTO">
-	
-	
-	
-	
-	
+	<insert id="recipeReview" parameterType="RecipeReviewDTO">
+		INSERT INTO RECIPEREVIEW(
+								   REVIEW_NUM
+								 , RECIPE_NUM
+								 , MEMBER_ID
+								 , BOARD_TITLE	
+								 , BOARD_CONTENT	
+								 )
+							VALUES
+   									(
+   									RECIPEREVIEW_SEQ.NEXTVAL
+   									, #{recipe_num}
+   									, #{member_id}
+   									, #{board_title}
+   									, #{board_content}
+   									)
+
 	</insert>
 	
-	
-    
+	    
     </mapper>
