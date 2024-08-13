@@ -105,7 +105,11 @@ public class RecipeController {
 			model.addAttribute("url", "/recipe/detail?recipe_num=" + recipeReviewDTO.getRecipe_num());
 			return "/recipe/message";
 			//model.addAttribute("review",recipeReviewDTO);
-		} 
+		} else {
+			model.addAttribute("result", "리뷰등록에 실패했습니다.");
+			model.addAttribute("url", "/recipe/detail?recipe_num=" + recipeReviewDTO.getRecipe_num());
+			return "/recipe/message";
+		}
 		
 		return "redirect:/recipe/detail?recipe_num=" + recipeReviewDTO.getRecipe_num();
 	}
