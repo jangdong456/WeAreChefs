@@ -193,4 +193,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
    	<result column="FOOD_NUM" property="food_num"/>
    </resultMap>
    
+   <delete id="deleteCart" parameterType="StoreCartDTO">
+   	DELETE STORECART WHERE MEMBER_ID=#{member_id} AND FOOD_NUM=#{food_num}
+   </delete>
+   
+   <update id="payUpdateCart" parameterType="StoreCartDTO">
+   	UPDATE STORECART SET CART_COUNT = #{cart_count} WHERE MEMBER_ID=#{member_id} AND FOOD_NUM=#{food_num}
+   </update>
+   
 </mapper>

@@ -10,7 +10,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -176,6 +178,40 @@ public class FoodController {
 		List<StoreCartDTO> ar = foodService.cartList(storeCartDTO);
 		
 		model.addAttribute("list", ar);
+		
+	}
+	
+	@GetMapping("cartDelete")
+	public String deleteCart(StoreCartDTO storeCartDTO,Model model) throws Exception {
+		
+		String member_id = "ksr";
+		storeCartDTO.setMember_id(member_id);
+		
+		int result = foodService.deleteCart(storeCartDTO);
+		
+		return "redirect:/food/cart";
+
+	}
+	
+	@PostMapping("finalCart")
+	public String finalCart(@RequestBody List<StoreCartDTO> ar,Model model) throws Exception{
+		
+		String member_id = "ksr";
+		
+		for(StoreCartDTO a:ar) {
+			a.setMember_id(member_id);
+		}
+		
+		int result = foodService.payUpdateCart(ar);
+		
+		model.addAttribute("msg", "/food/pay");
+		
+		return "commons/result";
+		
+	}
+	
+	@GetMapping("pay")
+	public void payMain() throws Exception{
 		
 	}
 	

@@ -73,5 +73,13 @@ public class FoodDAO {
 	public List<StoreCartDTO> cartList(StoreCartDTO storeCartDTO) throws Exception{
 		return sqlSession.selectList(NAMESPACE+"cartList", storeCartDTO);
 	}
+	
+	public int deleteCart(StoreCartDTO storeCartDTO) throws Exception {
+		return sqlSession.delete(NAMESPACE+"deleteCart", storeCartDTO);
+	}
+	
+	public int payUpdateCart(StoreCartDTO storeCartDTO) throws Exception{
+		return sqlSession.update(NAMESPACE+"payUpdateCart", storeCartDTO);
+	}
 
 }

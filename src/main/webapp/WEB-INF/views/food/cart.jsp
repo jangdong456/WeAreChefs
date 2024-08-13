@@ -18,6 +18,27 @@
     </div>
     <!-- Single Page Header End -->
 
+	<c:choose>
+		<c:when test="${empty list}">
+		
+		        <!-- 장바구니 빔 Start -->
+        <div class="container-fluid py-5">
+            <div class="container py-5 text-center">
+                <div class="row justify-content-center">
+                    <div class="col-lg-6">
+                        <h1 class="mb-4">장바구니가</h1>
+                        <h1 class="mb-4">비어있습니다</h1>
+                        <p class="mb-4">신선한 재료 둘러보러 가실래요?</p>
+                        <a class="btn border-secondary rounded-pill py-3 px-5" href="/food/list">스토어로 바로가기</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 장바구니 빔 End -->
+		
+		</c:when>
+	
+		<c:otherwise>
          <!-- Cart Page Start -->
         <div class="container-fluid py-5">
             <div class="container py-5">
@@ -65,19 +86,22 @@
                                     </div>
                                 </td>
                                 <td>
-                                    <p class="mb-0 mt-4 totalPrice" data-food-num="${f.food_num}">${f.food_price*a.cart_count}원</p>
+                                    <p class="mb-0 mt-4 totalPrice" data-food-num="${f.food_num}" data-total-notice="${f.food_price*a.cart_count}">${f.food_price*a.cart_count}원</p>
                                 </td>
                                 <td>
-                                    <button class="btn btn-md rounded-circle bg-light border mt-4" >
+                                    <button class="btn btn-md rounded-circle bg-light border mt-4 delBtn" data-food-num="${f.food_num}">
                                         <i class="fa fa-times text-danger"></i>
                                     </button>
                                 </td>
                             </tr>
-                            	</c:forEach>
-                           </c:forEach>
-                        </tbody>
-                    </table>
-                </div>
+                            <form action="/food/cartDelete" method="get" class="numFrm" data-food-num="${f.food_num}">
+                                 <input type="hidden" name="food_num" value="${f.food_num}">
+                            </form>
+                        </c:forEach>
+                    </c:forEach>
+                </tbody>
+            </table>
+        </div>
 
                 <div class="row g-4 justify-content-end">
                     <div class="col-8"></div>
@@ -87,29 +111,29 @@
                                 <h1 class="display-6 mb-4">주문 <span class="fw-normal">예상금액</span></h1>
                                 <div class="d-flex justify-content-between mb-4">
                                     <h5 class="mb-0 me-4">상품 가격</h5>
-                                    <p class="mb-0">$96.00</p>
+                                    <p class="mb-0" id="totalNotice"></p>
                                 </div>
                                 <div class="d-flex justify-content-between">
                                     <h5 class="mb-0 me-4">배송비</h5>
                                     <div class="">
-                                        <p class="mb-0">3000원</p>
+                                        <p class="mb-0" id="deliveryPrice"></p>
                                     </div>
                                 </div>
                                 <p class="mb-0 text-end">(50,000원 이상 구매시 배송비 무료)</p>
                             </div>
                             <div class="py-4 mb-4 border-top border-bottom d-flex justify-content-between">
                                 <h5 class="mb-0 ps-4 me-4">총 가격</h5>
-                                <p class="mb-0 pe-4">$99.00</p>
+                                <p class="mb-0 pe-4" id="finalPrice"></p>
                             </div>
-                            <button class="btn border-secondary rounded-pill px-4 py-3 text-primary text-uppercase mb-4 ms-4" type="button">결제 진행하기</button>
+                            <button class="btn border-secondary rounded-pill px-4 py-3 text-primary text-uppercase mb-4 ms-4" type="button" id="payBtn">결제 진행하기</button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
         <!-- Cart Page End -->
-
-
+	</c:otherwise>
+</c:choose>
 
 <c:import url="/WEB-INF/views/templete/footer.jsp"></c:import>
 <script type="text/javascript" src="/resources/js/food/cart.js"></script>

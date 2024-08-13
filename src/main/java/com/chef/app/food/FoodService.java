@@ -68,7 +68,6 @@ public class FoodService {
 		pager.makeRow(9L);
 		pager.makeNum(totalRow, 9L, 5L);
 		List<FoodDTO> ar = foodDAO.getList(pager);
-		System.out.println(pager.getPage());
 		return ar;
 		
 	}
@@ -129,6 +128,23 @@ public class FoodService {
 	
 	public List<StoreCartDTO> cartList(StoreCartDTO storeCartDTO) throws Exception{
 		return foodDAO.cartList(storeCartDTO);
+	}
+	
+	public int deleteCart(StoreCartDTO storeCartDTO) throws Exception {
+		return foodDAO.deleteCart(storeCartDTO);
+	}
+	
+	public int payUpdateCart(List<StoreCartDTO> ar) throws Exception {
+		
+		int result = 0;
+		
+		for(StoreCartDTO a:ar) {
+
+			result = foodDAO.payUpdateCart(a);
+		}
+		
+		return result;
+		
 	}
 
 }
