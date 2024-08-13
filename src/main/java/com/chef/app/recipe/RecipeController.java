@@ -15,8 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.chef.app.comment.CommentDTO;
-
 @Controller
 @RequestMapping("/recipe/*")
 public class RecipeController {
@@ -94,15 +92,13 @@ public class RecipeController {
 		return "/recipe/message";
 	}
 
-	@PostMapping("reply")
-	public void recipeReply(CommentDTO commentDTO) {
-		commentDTO.setMember_id("ydb");
-		recipeService.recipeReply(commentDTO);
+	@PostMapping("review")
+	public void recipeReview() {
 
 	}
 
-	@GetMapping("reply")
-	public void recipeReply(RecipeDTO recipeDTO) {
+	@GetMapping("review")
+	public void recipeReview(RecipeReviewDTO recipeReviewDTO) {
 
 	}
 

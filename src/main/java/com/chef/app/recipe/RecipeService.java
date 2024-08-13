@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.chef.app.comment.CommentDTO;
 import com.chef.app.file.FileManager;
 
 @Service
@@ -97,8 +96,8 @@ public class RecipeService {
 		return recipeDAO.categoryCount();
 	}
 
-	public int recipeReply(CommentDTO commentDTO) {
-		return recipeDAO.recipeReply(commentDTO);
+	public void recipeReview(RecipeDTO recipeDTO) {
+		recipeDAO.recipeReview(recipeDTO);
 	}
 
 }

@@ -156,13 +156,13 @@
                                     </div>
                                 </div>
                             </div>
-                         	<form method="post">
+                         	<form method="post" >
                                 <h4 class="mb-5 fw-bold">review📌</h4>
                      
                                    <div class="row g-4">
                                    
                                    <div class="border-bottom rounded">
-                                            <input type="hidden" class="form-control border-0 me-4" value="${dto.board_num}">
+                                          <%--   <input type="hidden" class="form-control border-0 me-4" value="${dto.board_num}"> --%>
                                         </div>
                                     <div class="col-lg-6">
                                         <div class="border-bottom rounded">
