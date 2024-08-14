@@ -123,11 +123,11 @@
                                                <img src="/resources/upload/recipes/${recipe.recipeImgFileDTO.file_name}" class="img-fluid w-100 rounded-top" alt="">
                                                
                                             </div>
-                                            <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">${recipe.recipe_category}</div>
+                                           <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">${recipe.recipe_category}</div> 
                                             <div class="p-4 border border-secondary border-top-0 rounded-bottom">
                                                  <h4>${recipe.recipe_name}</h4>
 		                                                <p> ${recipe.menu_recipe}</p>
-                                                <div class="d-flex justify-content-between flex-lg-wrap">
+                                                <div class="d-flex justify-content-between flex-lg-wrap" style="margin-left: 33px;">
                                                     
                                                     <a href="/recipe/detail?recipe_num=${recipe.recipe_num}" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="fa me-2 text-primary"></i> 🧑‍🍳레시피 보러가기</a>
                                                 </div>

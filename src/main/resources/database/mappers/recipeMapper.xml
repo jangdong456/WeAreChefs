@@ -192,5 +192,19 @@
 
 	</insert>
 	
+	<select id="reviewList" parameterType="recipeReviewDTO" resultType="recipeReviewDTO">
+		SELECT *
+		FROM RECIPEREVIEW
+		WHERE RECIPE_NUM = #{recipe_num}
+		ORDER BY CREATE_DATE DESC
+
+	</select>
+	
+	  
+   <update id="hit" parameterType="RecipeDTO">
+   	UPDATE RECIPE 
+   	SET RECIPE_HIT = RECIPE_HIT + 1 
+   	WHERE RECIPE_NUM = #{recipe_num}
+   </update>
 	    
     </mapper>

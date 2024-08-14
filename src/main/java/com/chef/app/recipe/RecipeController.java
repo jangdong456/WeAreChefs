@@ -12,7 +12,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -54,20 +53,22 @@ public class RecipeController {
 	}
 
 	@GetMapping("detail")
-	public String recipeDetail(RecipeDTO recipeDTO, Model model) {
+	public String recipeDetail(RecipeDTO recipeDTO, Model model, RecipeReviewDTO recipeReviewDTO) {
 		recipeDTO = recipeService.recipeDetail(recipeDTO);
-		//model.addAttribute("dto", recipeDTO);
+		List<RecipeReviewDTO> ar = recipeService.reviewList(recipeReviewDTO);
+
+		model.addAttribute("ar", ar);
 
 		String url = "";
 		if (recipeDTO != null) {
 			model.addAttribute("dto", recipeDTO);
-			url= "/recipe/detail";
+			url = "/recipe/detail";
 		} else {
 			model.addAttribute("result", "등록되지 않은 레시피입니다.");
 			model.addAttribute("url", "/recipe/list");
-			url= "recipe/message";
+			url = "recipe/message";
 		}
-	
+
 		return url;
 
 	}
@@ -96,28 +97,28 @@ public class RecipeController {
 	}
 
 	@PostMapping("review")
-	public String recipeReview(RecipeReviewDTO recipeReviewDTO,Model model) {
+	public String recipeReview(RecipeReviewDTO recipeReviewDTO, Model model) {
 		recipeReviewDTO.setMember_id("ydb");
 		int result = recipeService.recipeReview(recipeReviewDTO);
-				
+
 		if (result > 0) {
 			model.addAttribute("result", "소중한 리뷰가 등록됐습니다!");
 			model.addAttribute("url", "/recipe/detail?recipe_num=" + recipeReviewDTO.getRecipe_num());
 			return "/recipe/message";
-			//model.addAttribute("review",recipeReviewDTO);
+			// model.addAttribute("review",recipeReviewDTO);
 		} else {
 			model.addAttribute("result", "리뷰등록에 실패했습니다.");
 			model.addAttribute("url", "/recipe/detail?recipe_num=" + recipeReviewDTO.getRecipe_num());
 			return "/recipe/message";
 		}
-		
-		return "redirect:/recipe/detail?recipe_num=" + recipeReviewDTO.getRecipe_num();
+
+		// return "redirect:/recipe/detail?recipe_num=" +
+		// recipeReviewDTO.getRecipe_num();
 	}
+
 	@GetMapping("review")
 	public void recipeReview() {
 
 	}
-
-
 
 }

@@ -57,14 +57,18 @@
                     <div class="col-lg-8 col-xl-9">
                         <div class="row g-4">
                             <div class="col-lg-6">
-                                <div class="border rounded">
+                                <div class="border rounded position-relative">
                                     <a href="#">
                                        	 <img src="/resources/upload/recipes/${dto.recipeImgFileDTO.file_name}" class="img-fluid w-100 rounded-top" alt="">
                                     </a>
+                                      <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">
+                                      	<img src="/resources/upload/recipes/hit2.png" class="text-white" style="width:20px; margin-right: 5px;margin-bottom: 2.4px;">
+                                      		${dto.recipe_hit}
+                                      </div> 
                                 </div>
-                            </div>
+                              </div>
                             <div class="col-lg-6">
-                                <h4 class="fw-bold mb-3">${dto.recipe_name}</h4>
+                                <h4 class="fw-bold mb-3">${dto.recipe_name}</h4> 
                                  <h6 class="fw-bold mb-3">분류 : ${dto.recipe_category}</h6>
                                 <h6 class="fw-bold mb-3">난이도 : ${dto.recipe_level}</h6>
                                 <h6 class="fw-bold mb-3">소요시간 : ${dto.recipe_time}</h6>
@@ -117,13 +121,13 @@
                                     </div>
                                     <!--기본적으로 숨겨져있는 클래스  -->
                                     <div class="tab-pane" id="nav-mission" role="tabpanel" aria-labelledby="nav-mission-tab">
+                                       	<c:forEach items="${ar}" var="ar" >
                                         <div class="d-flex">
-                                       
                                             <img src="/resources/img/avatar.jpg" class="img-fluid rounded-circle p-3" style="width: 100px; height: 100px;" alt="">
                                             <div class="">
-                                                <p class="mb-2" style="font-size: 14px;">April 12, 2024</p>
+                                                <p class="mb-2" style="font-size: 14px;">${ar.create_date}</p>
                                                 <div class="d-flex justify-content-between">
-                                                    <h5>Jason Smith</h5>
+                                                    <h5>${ar.member_id}</h5>
                                                     <div class="d-flex mb-3">
                                                         <i class="fa fa-star text-secondary"></i>
                                                         <i class="fa fa-star text-secondary"></i>
@@ -132,11 +136,11 @@
                                                         <i class="fa fa-star"></i>
                                                     </div>
                                                 </div>
-                                                <p>The generated Lorem Ipsum is therefore always free from repetition injected humour, or non-characteristic 
-                                                    words etc. Susp endisse ultricies nisi vel quam suscipit </p>
+                                                <p>${ar.board_content}</p>
                                             </div>
-                                            
                                         </div>
+                                            <hr>
+                                           </c:forEach> 
                                         
                                        </div>
                                     </div>
@@ -145,7 +149,7 @@
                             <c:if test="${not empty result}">
     							<div class="alert alert-success">${result}</div>
 							</c:if>
-                         	<form action="./review" method="post" >
+                         	<form action="./review" method="post" id ="re_frm">
                                 <h4 class="mb-5 fw-bold">review📌</h4>
                      
                                    <div class="row g-4">
@@ -173,17 +177,18 @@
                                              <div class="d-flex align-items-center">
     
                                        	  </div>
-                                            <button type="submit" class="btn border border-secondary text-primary rounded-pill px-4 py-3"> Post Comment</button>
+                                            <button type="button" class="btn border border-secondary text-primary rounded-pill px-4 py-3" id="reviewBtn"> Post Comment</button>
                                         </div>
                                     </div>
                                 </div>
                             </form> 
                         </div>
                     </div>
+                    
+                    
     			 </div>
        		</div>
-       </div>
-
+    
 
 <c:import url="/WEB-INF/views/templete/footer.jsp"></c:import>
 
@@ -193,8 +198,9 @@
 <script src="/resources/lib/waypoints/waypoints.min.js"></script>
 <script src="/resources/lib/lightbox/js/lightbox.min.js"></script> 
 <script src="/resources/lib/owlcarousel/owl.carousel.min.js"></script>
-
+<script src="/resources/js/recipe/recipeDetail.js"></script>
 <!-- Template Javascript -->
 <script src="/resources/js/main.js"></script>
+
 </body>
 </html>

@@ -56,6 +56,7 @@ public class RecipeService {
 	}
 
 	public RecipeDTO recipeDetail(RecipeDTO recipeDTO) {
+		int num = recipeDAO.hit(recipeDTO);
 		return recipeDAO.recipeDetail(recipeDTO);
 
 	}
@@ -97,9 +98,16 @@ public class RecipeService {
 	}
 
 	public int recipeReview(RecipeReviewDTO recipeReviewDTO) {
-		return  recipeDAO.recipeReview(recipeReviewDTO);
+		return recipeDAO.recipeReview(recipeReviewDTO);
 	}
 
+	public List<RecipeReviewDTO> reviewList(RecipeReviewDTO recipeReviewDTO) {
 
+		return recipeDAO.reviewList(recipeReviewDTO);
+	}
+
+	public int hit(RecipeDTO recipeDTO) {
+		return recipeDAO.hit(recipeDTO);
+	}
 
 }
