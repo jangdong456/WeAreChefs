@@ -211,7 +211,31 @@ public class FoodController {
 	}
 	
 	@GetMapping("pay")
-	public void payMain() throws Exception{
+	public void payMain(Model model) throws Exception{
+		
+		String member_id = "ksr";
+		StoreCartDTO storeCartDTO = new StoreCartDTO();
+		storeCartDTO.setMember_id(member_id);
+		List<StoreCartDTO> ar = foodService.cartList(storeCartDTO);
+		
+		model.addAttribute("list", ar);
+		
+	}
+	
+	@PostMapping("payment/complete")
+	public String payComplete(@RequestBody StoreOrderDTO storeOrderDTO,Model model) throws Exception {
+		
+		System.out.println(storeOrderDTO.getDelivery_address());
+		System.out.println(storeOrderDTO.getStore_ar().isEmpty());
+		
+		for(StoreMidOrderDTO a : storeOrderDTO.getStore_ar()) {
+			System.out.println("배열의 푸드넘"+a.getFood_num());
+			System.out.println("배열의 카트카운트"+a.getCart_count());
+		}
+	
+		model.addAttribute("msg", "하는중이다");
+	
+		return "commons/result";
 		
 	}
 	

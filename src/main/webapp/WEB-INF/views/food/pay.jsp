@@ -5,7 +5,9 @@
 <head>
 <meta charset="utf-8">
 
+<script src="https://cdn.iamport.kr/v1/iamport.js"></script>
 <c:import url="/WEB-INF/views/templete/header.jsp"></c:import>
+
 </head>
 <body>
 <c:import url="/WEB-INF/views/templete/nav.jsp"></c:import>
@@ -20,49 +22,40 @@
         <div class="container-fluid py-5">
             <div class="container py-5">
                 <h1 class="mb-4">주문/결제</h1>
-                <h2 class="mb-4">구매자 정보</h2>
+                <h3 class="mb-4">🥕받는사람 정보</h3>
                 <form action="#">
                     <div class="row g-5">
                         <div class="col-md-12 col-lg-6 col-xl-7">
                             <div class="form-item">
-                                <label class="form-label my-3">Company Name<sup>*</sup></label>
-                                <input type="text" class="form-control">
+                                <label class="form-label my-3">이름<sup>*</sup></label>
+                                <input type="text" class="form-control" id="nameInput">
                             </div>
                             <div class="form-item">
-                                <label class="form-label my-3">Address <sup>*</sup></label>
-                                <input type="text" class="form-control" placeholder="House Number Street Name">
+                                <label class="form-label my-3">연락처<sup>*</sup></label>
+                                <input type="text" class="form-control" id="phoneInput">
                             </div>
                             <div class="form-item">
-                                <label class="form-label my-3">Town/City<sup>*</sup></label>
-                                <input type="text" class="form-control">
+                                <label class="form-label my-3">이메일<sup>*</sup></label>
+                                <input type="text" class="form-control" id="mailInput">
+                            </div>
+                           <div class="col-md-12 col-lg-6">
+                            <div class="form-group">
+                                <label class="form-label my-3">우편번호<sup>*</sup></label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" style="flex: 1 1 0; max-width: 60%; background-color: transparent;" id="postInput" readonly>
+                                    <div class="input-group-append">
+                                        <button class="btn border-secondary text-uppercase text-primary" type="button" style="margin-left: 10px;" id="postSearch">우편번호 검색하기</button>
+                                    </div>
+                                </div>
+                            </div>
+                           </div>
+                            <div class="form-item">
+                                <label class="form-label my-3">주소<sup>*</sup></label>
+                                <input type="text" class="form-control" id="firstAddress" readonly style="background-color: transparent;">
                             </div>
                             <div class="form-item">
-                                <label class="form-label my-3">Country<sup>*</sup></label>
-                                <input type="text" class="form-control">
-                            </div>
-                            <div class="form-item">
-                                <label class="form-label my-3">Postcode/Zip<sup>*</sup></label>
-                                <input type="text" class="form-control">
-                            </div>
-                            <div class="form-item">
-                                <label class="form-label my-3">Mobile<sup>*</sup></label>
-                                <input type="tel" class="form-control">
-                            </div>
-                            <div class="form-item">
-                                <label class="form-label my-3">Email Address<sup>*</sup></label>
-                                <input type="email" class="form-control">
-                            </div>
-                            <div class="form-check my-3">
-                                <input type="checkbox" class="form-check-input" id="Account-1" name="Accounts" value="Accounts">
-                                <label class="form-check-label" for="Account-1">Create an account?</label>
-                            </div>
-                            <hr>
-                            <div class="form-check my-3">
-                                <input class="form-check-input" type="checkbox" id="Address-1" name="Address" value="Address">
-                                <label class="form-check-label" for="Address-1">Ship to a different address?</label>
-                            </div>
-                            <div class="form-item">
-                                <textarea name="text" class="form-control" spellcheck="false" cols="30" rows="11" placeholder="Oreder Notes (Optional)"></textarea>
+                                <label class="form-label my-3" >상세주소</label>
+                                <input type="text" class="form-control" id="secondAddress">
                             </div>
                         </div>
                         <div class="col-md-12 col-lg-6 col-xl-5">
@@ -70,47 +63,29 @@
                                 <table class="table">
                                     <thead>
                                         <tr>
-                                            <th scope="col">Products</th>
-                                            <th scope="col">Name</th>
-                                            <th scope="col">Price</th>
-                                            <th scope="col">Quantity</th>
-                                            <th scope="col">Total</th>
+				                            <th scope="col">상품</th>
+				                            <th scope="col">상품명</th>
+				                            <th scope="col">가격</th>
+				                            <th scope="col">갯수</th>
+				                            <th scope="col">합계</th>
                                         </tr>
                                     </thead>
                                     <tbody>
+                                		<c:forEach items="${list}" var="a">
+                        					<c:forEach items="${a.foodDTO}" var="f">
                                         <tr>
                                             <th scope="row">
                                                 <div class="d-flex align-items-center mt-2">
-                                                    <img src="img/vegetable-item-2.jpg" class="img-fluid rounded-circle" style="width: 90px; height: 90px;" alt="">
+                                                    <img src="/resources/upload/foods/${f.storeImgFileDTO.file_name}" class="img-fluid rounded-circle" style="width: 90px; height: 90px;" alt="">
                                                 </div>
                                             </th>
-                                            <td class="py-5">Awesome Brocoli</td>
-                                            <td class="py-5">$69.00</td>
-                                            <td class="py-5">2</td>
-                                            <td class="py-5">$138.00</td>
+                                            <td class="py-5 foodName">${f.food_name}</td>
+                                            <td class="py-5">${f.food_price}원</td>
+                                            <td class="py-5 foodInfo" data-food-num="${f.food_num}">${a.cart_count}</td>
+                                            <td class="py-5 totalPrice" data-total-notice="${f.food_price*a.cart_count}">${f.food_price*a.cart_count}원</td>
                                         </tr>
-                                        <tr>
-                                            <th scope="row">
-                                                <div class="d-flex align-items-center mt-2">
-                                                    <img src="img/vegetable-item-5.jpg" class="img-fluid rounded-circle" style="width: 90px; height: 90px;" alt="">
-                                                </div>
-                                            </th>
-                                            <td class="py-5">Potatoes</td>
-                                            <td class="py-5">$69.00</td>
-                                            <td class="py-5">2</td>
-                                            <td class="py-5">$138.00</td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">
-                                                <div class="d-flex align-items-center mt-2">
-                                                    <img src="img/vegetable-item-3.png" class="img-fluid rounded-circle" style="width: 90px; height: 90px;" alt="">
-                                                </div>
-                                            </th>
-                                            <td class="py-5">Big Banana</td>
-                                            <td class="py-5">$69.00</td>
-                                            <td class="py-5">2</td>
-                                            <td class="py-5">$138.00</td>
-                                        </tr>
+                                          	</c:forEach>
+                   						 </c:forEach>
                                         <tr>
                                             <th scope="row">
                                             </th>
@@ -121,7 +96,7 @@
                                             <td class="py-5"></td>
                                             <td class="py-5">
                                                 <div class="py-3 border-bottom border-top">
-                                                    <p class="mb-0 text-dark">$135.00</p>
+                                                    <p class="mb-0 text-dark" id="totalNotice"></p>
                                                 </div>
                                             </td>
                                         </tr>
@@ -135,7 +110,7 @@
                                             <td class="py-5"></td>
                                             <td class="py-5">
                                                 <div class="py-3 border-bottom border-top">
-                                                    <p class="mb-0 text-dark">$135.00</p>
+                                                    <p class="mb-0 text-dark" id="deliveryPrice"></p>
                                                 </div>
                                             </td>
                                         </tr>
@@ -149,7 +124,7 @@
                                             <td class="py-5"></td>
                                             <td class="py-5">
                                                 <div class="py-3 border-bottom border-top">
-                                                    <p class="mb-0 text-dark">$135.00</p>
+                                                    <p class="mb-0 text-dark" id="finalPrice"></p>
                                                 </div>
                                             </td>
                                         </tr>
@@ -157,7 +132,7 @@
                                 </table>
                             </div>
                             <div class="row g-4 text-center align-items-center justify-content-center pt-4">
-                                <button type="button" class="btn border-secondary py-3 px-4 text-uppercase w-100 text-primary">결제 진행하기</button>
+                                <button type="button" class="btn border-secondary py-3 px-4 text-uppercase w-100 text-primary" id="payGo">결제 진행하기</button>
                             </div>
                         </div>
                     </div>
@@ -168,7 +143,8 @@
 
 
 <c:import url="/WEB-INF/views/templete/footer.jsp"></c:import>
-
+<script type="text/javascript" src="/resources/js/food/pay.js"></script>
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 
 </body>
 </html>
