@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
         <!-- Spinner Start -->
         <div id="spinner" class="show w-100 vh-100 bg-white position-fixed translate-middle top-50 start-50  d-flex align-items-center justify-content-center">
             <div class="spinner-grow text-primary" role="status"></div>
@@ -15,11 +17,23 @@
                         <small class="me-3"><i class="fas fa-map-marker-alt me-2 text-secondary"></i> <a href="#" class="text-white">123 Street, New York</a></small>
                         <small class="me-3"><i class="fas fa-envelope me-2 text-secondary"></i><a href="#" class="text-white">Email@Example.com</a></small>
                     </div>
-                    <div class="top-link pe-2">
-                        <a href="#" class="text-white"><small class="text-white mx-2">Privacy Policy</small>/</a>
-                        <a href="#" class="text-white"><small class="text-white mx-2">Terms of Use</small>/</a>
-                        <a href="#" class="text-white"><small class="text-white ms-2">Sales and Refunds</small></a>
-                    </div>
+					<c:choose>
+                    	<c:when test="${not empty member}">
+                    		<div class="top-link pe-2">
+		                        <a href="#" class="text-white"><small class="text-white mx-2">Privacy Policy</small>/</a>
+		                        <a href="#" class="text-white"><small class="text-white mx-2">Terms of Use</small>/</a>
+		                        <a href="/member/logout" class="text-white"><small class="text-white ms-2">로그아웃</small></a>
+                    		</div>
+                    	</c:when>
+                    	
+                    	<c:otherwise> 
+		                    <div class="top-link pe-2">
+		                        <a href="#" class="text-white"><small class="text-white mx-2">Privacy Policy</small>/</a>
+		                        <a href="#" class="text-white"><small class="text-white mx-2">Terms of Use</small>/</a>
+		                        <a href="/member/login" class="text-white"><small class="text-white ms-2">로그인</small></a>
+		                    </div>            		
+                    	</c:otherwise>
+                    </c:choose>
                 </div>
             </div>
             <div class="container px-0">

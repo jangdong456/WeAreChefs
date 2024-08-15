@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+    <mapper namespace="com.chef.app.recipe.RecipeDAO">
+    
+	   <select id="categoryCount" resultType="java.util.Map">
+		 SELECT RECIPE_CATEGORY,COUNT(*) 
+		 FROM RECIPE
+		 GROUP BY RECIPE_CATEGORY
+		 ORDER BY RECIPE_CATEGORY DESC
+	   </select>
+      <select id="getTotalCount" resultType="java.lang.Long"  parameterType="RecipePager">
+   		SELECT COUNT(RECIPE_NUM) FROM RECIPE
+   			<where>
+	
+				<choose>
+				<!-- 
+					<when test="kind=='k2'">
+						RECIPE_WRITER LIKE '%'||#{search}||'%'
+					</when> -->
+					
+						<otherwise>
+							RECIPE_NAME LIKE '%'||#{search}||'%'
+						</otherwise>
+					
+				</choose>
+	
+			</where>
+  	 </select>
+    
+    	<select id="recipeList" resultMap="recipeImgName" parameterType="com.chef.app.recipe.RecipePager"> 
+    		SELECT * 
+    		FROM 
+    			(
+    			SELECT ROWNUM R,B.* 
+    			FROM
+    			 (
+	    			SELECT *
+		            FROM RECIPE RC
+		           LEFT OUTER JOIN RECIPEIMG RI ON RC.RECIPE_NUM = RI.RECIPE_NUM
+		           WHERE 
+		          
+		           <choose>
+		           		<when test="kind=='한식'">
+										RECIPE_CATEGORY='한식'
+								</when>
+								<when test="kind=='일식'">
+										RECIPE_CATEGORY='일식'
+								</when>
+								<when test="kind=='양식'">
+										RECIPE_CATEGORY='양식'
+								</when>
+								<when test="kind=='중식'">
+										RECIPE_CATEGORY='중식'
+								</when>
+								<when test="kind=='디저트'">
+										RECIPE_CATEGORY='디저트'
+								</when>
+		           
+						<otherwise>
+							RECIPE_NAME LIKE '%'||#{search}||'%'
+						</otherwise>  
+						
+					 </choose>
+		
+		            ORDER BY 		      
+    			 	
+					<choose>
+					
+					 	<when test="order=='date_down'">
+					 		CREATE_DATE ASC
+					 	</when>
+					 	<when test="order=='hit'">
+					 		RECIPE_HIT DESC
+					 	</when>
+					 	<otherwise>
+					 		CREATE_DATE DESC
+					 	</otherwise> 
+					 </choose>
+					 	
+				
+				<!-- 		RECIPE_NAME LIKE '%'||#{search}||'%' -->
+						
+    			 
+	    			)B
+	    		)
+	    	WHERE R BETWEEN #{startRow} AND #{lastRow}
+     	</select> 
+    	
+    	 <resultMap type="RecipeDTO" id="recipeImgName">
+		   	<id column="RECIPE_NUM" property="recipe_num"/>
+		   	<result column="RECIPE_WRITER" property="recipe_writer"/>
+		   	<result column="RECIPE_NAME" property="recipe_name"/>
+		   	<result column="MENU_RECIPE" property="menu_recipe"/>
+		   	<result column="CREATE_DATE" property="create_date"/>
+		   	<result column="UPDATE_DATE" property="update_date"/>
+		   	<result column="RECIPE_CATEGORY" property="recipe_category"/>
+		   	<result column="RECIPE_LEVEL" property="recipe_level"/>
+		   	<result column="RECIPE_TIME" property="recipe_time"/>
+		   	<result column="RATING" property="rating"/>
+		   	<result column="RECIPE_LIKE" property="recipe_like"/>
+		   	<result column="RECIPE_HIT" property="recipe_hit"/>
+		    <association property="recipeImgFileDTO" javaType="RecipeImgFileDTO">
+    	<id column="RECIPE_IMG_NUM" property="file_num"/>
+    	<result column="RECIPE_FILE_NAME" property="file_name"/>
+   </association> 
+   </resultMap> 
+ <!--    <select id="getLastInsertId" resultType="Long">
+        SELECT RECIPE_SEQ.CURRVAL FROM DUAL
+    </select>
+    
+ -->
+
+    <!-- 레시피 등록 -->
+    	<insert id="recipeAdd" parameterType="RecipeDTO">
+    	<selectKey keyProperty="recipe_num" resultType="Long" order="BEFORE" >
+  			SELECT RECIPE_SEQ.NEXTVAL FROM DUAL
+  		</selectKey>
+    	INSERT INTO RECIPE(
+    						RECIPE_NUM 
+    						,RECIPE_WRITER 
+    						,RECIPE_NAME 
+    						,MENU_RECIPE
+    						,RECIPE_CATEGORY
+    						,RECIPE_LEVEL
+    						,RECIPE_TIME
+    						)
+					VALUES(
+					#{recipe_num}
+					,'ydb'
+					,#{recipe_name}
+					,#{menu_recipe}
+					,#{recipe_category}
+					,#{recipe_level}
+					,#{recipe_time}
+					)
+			
+	  </insert>
+	      	<insert id="mainImg" parameterType="RecipeImgFileDTO">
+		INSERT INTO RECIPEIMG(RECIPE_IMG_NUM, RECIPE_NUM, RECIPE_FILE_NAME) 
+		VALUES (RECIPEIMG_SEQ.NEXTVAL,#{recipe_num},#{file_name})
+	</insert>
+    
+    </mapper>

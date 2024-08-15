@@ -27,6 +27,10 @@
 				width: 100%;
 		}
 
+		#join_span {
+			color: red;
+		}
+
 	</style>
 </head>
 <body>
@@ -39,18 +43,18 @@
 		<div class="container py-5">
 			<div class="form-container">
 				<div class="form-wrapper">
-					<form action="/join" method="post">
+					<form action="join" method="post">
 						<div class="row g-5">
 							<div class="col-12 ">
 								<div class="row">
 									<div class="col-md-12 col-lg-6">
-										<div class="form-item w-100">
+										<div class="form-item w-100 " id="name_span">
 											<label class="form-label my-3">이름<sup>*</sup></label>
 											<input type="text" class="form-control member_join" id="member_name" name="member_name">
-										</div>
+										</div>					
 									</div>
 								</div>
-								<div class="form-item">
+								<div class="form-item" id="nick_name_span">
 									<label class="form-label my-3">닉네임<sup>*</sup></label>
 									<input type="text" class="form-control member_join" id="member_nickname" name="member_nickname">
 								</div>
@@ -61,7 +65,7 @@
 								<div class="form-item">
 									<label class="form-label my-3">비밀번호<sup>*</sup></label>
 									<input type="text" class="form-control member_join" id="member_pwd" name="member_pwd">
-								<!-- </div>
+								</div>
 								<div class="form-item">
 									<label class="form-label my-3">비밀번호확인<sup>*</sup></label>
 									<input type="text" class="form-control member_join">
@@ -72,16 +76,17 @@
 								</div>
 								<div class="form-item">
 									<label class="form-label my-3">이메일 인증하기<sup>*</sup></label>
-									<input type="tel" class="form-control member_join">
+									<input type="text" class="form-control member_join">
 								</div>
 								<div class="form-item">
 									<label class="form-label my-3">전화번호<sup>*</sup></label>
-									<input type="email" class="form-control member_join" id="member_phone" name="member_phone">
+									<input type="text" class="form-control member_join" id="member_phone" name="member_phone">
 								</div>
-								<input type="hidden" class="form-control member_join" id="member_lev" name="member_lev" value="0"> -->
+
+								<input type="hidden" class="form-control member_join" id="member_lev" name="member_lev" value="0">
 
 								<div class="row g-4 text-center align-items-center justify-content-center pt-4">
-									<button id="join_btn" type="button" class="btn border-secondary py-3 px-4 text-uppercase w-100 text-primary">회원가입</button>
+									<button id="join_btn" type="submit" class="btn border-secondary py-3 px-4 text-uppercase w-100 text-primary">회원가입</button>
 								</div>
 							</div>
 						</div> 

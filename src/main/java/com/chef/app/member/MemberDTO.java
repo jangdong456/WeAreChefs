@@ -3,7 +3,7 @@ package com.chef.app.member;
 public class MemberDTO {
 	private String member_id;
 	private String member_name;
-	private String membere_mail;
+	private String member_mail;
 	private String member_pwd;
 	private String member_phone;
 	private String member_nickname;
@@ -25,10 +25,10 @@ public class MemberDTO {
 		this.member_name = member_name;
 	}
 	public String getMembere_mail() {
-		return membere_mail;
+		return member_mail;
 	}
 	public void setMembere_mail(String membere_mail) {
-		this.membere_mail = membere_mail;
+		this.member_mail = membere_mail;
 	}
 	public String getMember_pwd() {
 		return member_pwd;
