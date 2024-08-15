@@ -22,10 +22,19 @@
         <div class="container-fluid py-5">
             <div class="container py-5">
                 <h1 class="mb-4">주문/결제</h1>
-                <h3 class="mb-4">🥕받는사람 정보</h3>
                 <form action="#">
                     <div class="row g-5">
                         <div class="col-md-12 col-lg-6 col-xl-7">
+                            <h3 class="mb-3">🥑주문자 정보</h3>
+                            <div class="form-item">
+                                <label class="form-label my-3">주문자 ID<sup>*</sup></label>
+                                <input type="text" class="form-control" style="background-color: transparent;" readonly>
+                            </div>
+                            <div class="form-item">
+                                <label class="form-label my-3">이름<sup>*</sup></label>
+                                <input type="text" class="form-control" style="background-color: transparent;" readonly>
+                            </div>
+                            <h3 class="mb-3 mt-4">🥕받는사람 정보</h3>
                             <div class="form-item">
                                 <label class="form-label my-3">이름<sup>*</sup></label>
                                 <input type="text" class="form-control" id="nameInput">
@@ -140,7 +149,6 @@
             </div>
         </div>
         <!-- Checkout Page End -->
-
 
 <c:import url="/WEB-INF/views/templete/footer.jsp"></c:import>
 <script type="text/javascript" src="/resources/js/food/pay.js"></script>

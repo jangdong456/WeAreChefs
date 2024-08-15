@@ -146,5 +146,23 @@ public class FoodService {
 		return result;
 		
 	}
+	
+	public int orderInsert (StoreOrderDTO storeOrderDTO) throws Exception {
+		
+		int result = foodDAO.orderInsert(storeOrderDTO);
+		
+		
+		List<StoreMidOrderDTO> list = storeOrderDTO.getStore_ar();
+		
+		for(StoreMidOrderDTO a : list) {
+			a.setOrder_num(storeOrderDTO.getOrder_num());
+			result = foodDAO.midOrderInsert(a);
+		}
+		
+		result = foodDAO.orderFinishCartDelete(storeOrderDTO);
+	
+		return result;
+		
+	}
 
 }

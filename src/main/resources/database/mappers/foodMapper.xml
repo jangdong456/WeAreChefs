@@ -201,4 +201,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
    	UPDATE STORECART SET CART_COUNT = #{cart_count} WHERE MEMBER_ID=#{member_id} AND FOOD_NUM=#{food_num}
    </update>
    
+   <insert id="orderInsert" parameterType="StoreOrderDTO">
+   	INSERT INTO STOREORDER VALUES 
+	(#{order_num},#{member_id},#{order_price},'결제완료',#{delivery_address},'배송준비중',SYSDATE,#{order_name},#{order_phone},#{order_mail},#{order_post})
+   </insert>
+   
+   <insert id="midOrderInsert" parameterType="StoreMidOrderDTO">
+   	INSERT INTO MIDORDER VALUES (MID_ORD_SEQ.NEXTVAL,#{order_num},#{food_num},#{cart_count})
+   </insert>
+   
+   <delete id="orderFinishCartDelete" parameterType="StoreOrderDTO">
+   	DELETE STORECART WHERE MEMBER_ID=#{member_id}
+   </delete>
+   
 </mapper>

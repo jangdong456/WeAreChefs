@@ -3,7 +3,7 @@ package com.chef.app.food;
 public class StoreMidOrderDTO {
 
 	private Long mid_num;
-	private Long order_num;
+	private String order_num;
 	private Long food_num;
 	private Long cart_count;
 	
@@ -13,10 +13,10 @@ public class StoreMidOrderDTO {
 	public void setMid_num(Long mid_num) {
 		this.mid_num = mid_num;
 	}
-	public Long getOrder_num() {
+	public String getOrder_num() {
 		return order_num;
 	}
-	public void setOrder_num(Long order_num) {
+	public void setOrder_num(String order_num) {
 		this.order_num = order_num;
 	}
 	public Long getFood_num() {

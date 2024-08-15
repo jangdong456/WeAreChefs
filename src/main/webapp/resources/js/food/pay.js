@@ -86,31 +86,28 @@ payGo.addEventListener("click",()=>{
         let a = confirm("상세 주소를 입력하지 않았습니다. 이대로 진행하시겠습니까?")
             if(a){
 
-                    IMP.request_pay(
-                        {
-                            pg: "html5_inicis.INIpayTest",
-                            pay_method: "card",
-                            merchant_uid: orderNum, // 주문 고유 번호
-                            name: preName + " 외 " + listLength + "건",
-                            amount: 1,
-                            buyer_email: mailInput.value,
-                            buyer_name: nameInput.value,
-                            buyer_tel: phoneInput.value,
-                            buyer_addr: firstAddress.value + secondAddress.value,
-                            buyer_postcode: postInput.value,
-                        },
-                        function (response) {
-                            if (response.error_code != null) {
-                                return alert("결제에 실패했습니다");
-                            }
-                    
+                IMP.request_pay(
+                    {
+                        pg: "html5_inicis.INIpayTest",
+                        pay_method: "card",
+                        merchant_uid: orderNum, // 주문 고유 번호
+                        name: preName + " 외 " + listLength + "건",
+                        amount: 1,
+                        buyer_email: mailInput.value,
+                        buyer_name: nameInput.value,
+                        buyer_tel: phoneInput.value,
+                        buyer_addr: firstAddress.value + " " + secondAddress.value,
+                        buyer_postcode: postInput.value,
+                    },
+                    function (response) {
+                        if (response.success) {
                             // 고객사 서버에서 /payment/complete 엔드포인트를 구현해야 합니다.
                             fetch("/food/payment/complete", {
                                 method: "POST",
                                 headers: {"Content-Type": "application/json"},
                                 body: JSON.stringify({
                                     order_num: response.merchant_uid,
-                                    order_price: response.amount,
+                                    order_price: response.paid_amount,
                                     delivery_address: response.buyer_addr,
                                     order_name: response.buyer_name,
                                     order_phone: response.buyer_tel,
@@ -120,10 +117,16 @@ payGo.addEventListener("click",()=>{
                                 }),
                             })
                             .then(r => r.text())
-                            .then(r => alert(r))
-
+                            .then(r=>{
+                                location.href=r
+                            })
+        
+                        } else {
+                            
+                            alert("결제에 실패했습니다");
                         }
-                    );
+                    }
+                );
                 
             }
             return;
@@ -132,44 +135,48 @@ payGo.addEventListener("click",()=>{
     if(nameInput.value!=""&&phoneInput.value!=""&&mailInput.value!=""&&postInput.value!=""&&firstAddress.value!=""&&secondAddress.value!=""){
 
 
-                    IMP.request_pay(
-                        {
-                            pg: "html5_inicis.INIpayTest",
-                            pay_method: "card",
-                            merchant_uid: orderNum, // 주문 고유 번호
-                            name: preName + " 외 " + listLength + "건",
-                            amount: 1,
-                            buyer_email: mailInput.value,
-                            buyer_name: nameInput.value,
-                            buyer_tel: phoneInput.value,
-                            buyer_addr: firstAddress.value + " "+ secondAddress.value,
-                            buyer_postcode: postInput.value,
-                        },
-                        function (response) {
-                            if (response.error_code != null) {
-                                return alert("결제에 실패했습니다");
-                            }
-                    
-                            // 고객사 서버에서 /payment/complete 엔드포인트를 구현해야 합니다.
-                            fetch("/food/payment/complete", {
-                                method: "POST",
-                                headers: {"Content-Type": "application/json"},
-                                body: JSON.stringify({
-                                    order_num: response.merchant_uid,
-                                    order_price: response.amount,
-                                    delivery_address: response.buyer_addr,
-                                    order_name: response.buyer_name,
-                                    order_phone: response.buyer_tel,
-                                    order_mail: response.buyer_email,
-                                    order_post: response.buyer_postcode,
-                                    store_ar: dataToSend
-                                }),
-                            })
-                            .then(r => r.text())
-                            .then(r => alert(r))
+        IMP.request_pay(
+            {
+                pg: "html5_inicis.INIpayTest",
+                pay_method: "card",
+                merchant_uid: orderNum, // 주문 고유 번호
+                name: preName + " 외 " + listLength + "건",
+                amount: 1,
+                buyer_email: mailInput.value,
+                buyer_name: nameInput.value,
+                buyer_tel: phoneInput.value,
+                buyer_addr: firstAddress.value + " " + secondAddress.value,
+                buyer_postcode: postInput.value,
+            },
+            function (response) {
+                
+                if (response.success) {
+                    // 고객사 서버에서 /payment/complete 엔드포인트를 구현해야 합니다.
+                    fetch("/food/payment/complete", {
+                        method: "POST",
+                        headers: {"Content-Type": "application/json"},
+                        body: JSON.stringify({
+                            order_num: response.merchant_uid,
+                            order_price: response.paid_amount,
+                            delivery_address: response.buyer_addr,
+                            order_name: response.buyer_name,
+                            order_phone: response.buyer_tel,
+                            order_mail: response.buyer_email,
+                            order_post: response.buyer_postcode,
+                            store_ar: dataToSend
+                        }),
+                    })
+                    .then(r => r.text())
+                    .then(r=>{
+                        location.href=r
+                    })
 
-                        }
-                    );
+                } else {
+                    
+                    alert("결제에 실패했습니다");
+                }
+            }
+        );
                 
     }
 

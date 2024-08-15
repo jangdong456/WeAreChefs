@@ -81,5 +81,17 @@ public class FoodDAO {
 	public int payUpdateCart(StoreCartDTO storeCartDTO) throws Exception{
 		return sqlSession.update(NAMESPACE+"payUpdateCart", storeCartDTO);
 	}
+	
+	public int orderInsert(StoreOrderDTO storeOrderDTO) throws Exception {
+		return sqlSession.insert(NAMESPACE+"orderInsert", storeOrderDTO);
+	}
 
+	public int midOrderInsert(StoreMidOrderDTO storeMidOrderDTO) throws Exception {
+		return sqlSession.insert(NAMESPACE+"midOrderInsert", storeMidOrderDTO);
+	}
+	
+	public int orderFinishCartDelete(StoreOrderDTO storeOrderDTO) throws Exception {
+		return sqlSession.delete(NAMESPACE+"orderFinishCartDelete", storeOrderDTO);
+	}
+	
 }
