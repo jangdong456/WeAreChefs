@@ -18,56 +18,52 @@ console.log("파람 확인: "+ code);
 
 // Restful : 708dbde015c2691a1b7eeac5da0b8b47
 
-let a = "authorization_code"; //  grant_type 타입 : 공홈에서 무조건 사용 하라고함 ->authorization_code
-let b = "708dbde015c2691a1b7eeac5da0b8b47"; // REST_API_KEY
-let c = "http://localhost/member/getcode"; // REDIRECT_URL
+let a = "authorization_code";
+let b = "708dbde015c2691a1b7eeac5da0b8b47";
+let c = "http://localhost/member/getcode";
 
-// REST API 방식
-// 토큰 받기 URL : https://kauth.kakao.com/oauth/token
-
-// https://kauth.kakao.com/oauth/authorize?
-
-// javaScrpit방식 : "grant_type="+a+"&"+"client_id="+b+"&"+"redirect_uri="+c+"&"+"code="+code
-
-// response_type=code&client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}
-// 
-
+// 토큰 받아오는 메서드
 img.addEventListener("click", () => {
     try {
         fetch("https://kauth.kakao.com/oauth/token", {
             
             method : "POST",
             headers : {
-                "Content-Type": "application/x-www-form-urlencoded; charset=utf-8"
+                "Content-Type": "application/x-www-form-urlencoded;charset=utf-8"
             },
-            body : "grant_type="+a+"&"+"client_id="+b+"&"+"redirect_uri="+c+"&"+"code="+code
-                
+            body : 
+                "grant_type="+a+"&"+"client_id="+b+"&"+"redirect_uri="+c+"&"+"code="+code
             
         })
         .then(res => res.json())
         .then(res =>  {
-            console.log(res.access_token);
-            
-            let token = res.access_token
-            const val = {token}
-            fetch("https://kapi.kakao.com/v1/oidc/userinfo", {
+            let token = res.access_token;
+            console.log("토큰발급확인 :"+ token);
+            localStorage.setItem("token",token);
+            fetch("https://kapi.kakao.com/v2/user/me", {
                 method : "GET",
-                headers : { Authorization: Bearer+val}
+                headers:{
+                    "Content-type":"application/x-www-form-urlencoded;charset=utf-8",
+                    "Authorization":"Bearer " + `${token}`
+                }
             })
-            // .then(res => res.json())
-            // .then(res => {
-            //     console.log("사용자 정보 확인")
-            //     console.log(res.name)
-            //     console.log(res.email)
-            // })
-            // fetch("kakaologin", {
-            //     method : "POST",
-            //     headers:{
-            //         "Content-type":"application/x-www-form-urlencoded"
-            //     },
-            //     body : "token="+res.access_token
+            .then(res => res.json())
+            .then(res => {
+                console.log("사용자정보 진입");
+                console.log("Bearer" + `${token}`);
+                console.log(res)
+                console.log(res.id)
+                console.log(res.properties.nickname)
+                console.log(res.properties.profile_image)
 
-            // })
+                // id와 nickname, profile_image를 db에 저장한다.
+                
+                // fetch("kakaologin", {
+                //     method : "POST",
+                //     headers : 
+                // })
+            })
+            
         }).catch((error) =>{
             console.log("에러발생 : " + error);
         })
