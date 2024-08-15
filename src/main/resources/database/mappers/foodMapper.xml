@@ -158,9 +158,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		 ON F.FOOD_NUM =S.FOOD_NUM
 		 INNER JOIN
 		 STORECART SC
-		 ON F.FOOD_NUM =SC.FOOD_NUM 
-	WHERE F.FOOD_NUM IN
-	(SELECT FOOD_NUM FROM STORECART WHERE MEMBER_ID=#{member_id})
+		 ON F.FOOD_NUM =SC.FOOD_NUM
+	WHERE SC.MEMBER_ID =#{member_id}
    </select>
    
    <!-- StoreCartDTO 맵핑 -->
