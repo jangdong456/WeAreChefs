@@ -29,7 +29,7 @@ img.addEventListener("click", () => {
             
             method : "POST",
             headers : {
-                "Content-Type": "application/x-www-form-urlencoded"
+                "Content-Type": "application/x-www-form-urlencoded;charset=utf-8"
             },
             body : 
                 "grant_type="+a+"&"+"client_id="+b+"&"+"redirect_uri="+c+"&"+"code="+code
@@ -37,16 +37,33 @@ img.addEventListener("click", () => {
         })
         .then(res => res.json())
         .then(res =>  {
-            console.log(res.access_token);
-            console.log("확인");
-            fetch("kakaologin", {
-                method : "POST",
+            let token = res.access_token;
+            console.log("토큰발급확인 :"+ token);
+            localStorage.setItem("token",token);
+            fetch("https://kapi.kakao.com/v2/user/me", {
+                method : "GET",
                 headers:{
-                    "Content-type":"application/x-www-form-urlencoded"
-                },
-                body : "token="+res.access_token
-
+                    "Content-type":"application/x-www-form-urlencoded;charset=utf-8",
+                    "Authorization":"Bearer " + `${token}`
+                }
             })
+            .then(res => res.json())
+            .then(res => {
+                console.log("사용자정보 진입");
+                console.log("Bearer" + `${token}`);
+                console.log(res)
+                console.log(res.id)
+                console.log(res.properties.nickname)
+                console.log(res.properties.profile_image)
+
+                // id와 nickname, profile_image를 db에 저장한다.
+                
+                // fetch("kakaologin", {
+                //     method : "POST",
+                //     headers : 
+                // })
+            })
+            
         }).catch((error) =>{
             console.log("에러발생 : " + error);
         })

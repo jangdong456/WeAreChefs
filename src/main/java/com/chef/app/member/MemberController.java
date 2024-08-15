@@ -27,6 +27,11 @@ public class MemberController {
 	@Autowired
 	private Email email;
 	
+	@GetMapping("mypage")
+	public void mypage() throws Exception {
+		System.out.println("== My Page ==");
+	}
+	
 	@GetMapping("sendEmail")
 	public void email(MemberDTO memberDTO, Model model, String member_mail) throws Exception {
 		System.out.println("== Email ==");

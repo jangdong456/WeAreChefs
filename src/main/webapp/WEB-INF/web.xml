@@ -23,6 +23,7 @@
       	<param-value>UTF-8</param-value>
     </init-param>
   	</filter>
+  	
 	<filter-mapping>
 		<filter-name>encode</filter-name>
 		<url-pattern>/*</url-pattern>
@@ -43,5 +44,17 @@
 		<servlet-name>appServlet</servlet-name>
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
+	
+	<filter>
+		<display-name>LoginFilter</display-name>
+		<filter-name>LoginFilter</filter-name>
+		<filter-class>com.chef.app.filters.LoginFilter</filter-class>
+	</filter>
+	
+	<filter-mapping>
+		<filter-name>LoginFilter</filter-name>
+		<url-pattern>/member/mypage</url-pattern>
+	</filter-mapping>
 
+	
 </web-app>
