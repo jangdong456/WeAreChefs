@@ -10,9 +10,22 @@ public class RecipeDTO {
 	private Date create_date;
 	private Date update_date;
 	private String recipe_category;
+	private String recipe_level;
+	private String recipe_time;
+	private Long rating;
+	private Long recipe_like;
 	private Long recipe_hit;
 
-	// db
+	private RecipeImgFileDTO recipeImgFileDTO;
+
+	public RecipeImgFileDTO getRecipeImgFileDTO() {
+		return recipeImgFileDTO;
+	}
+
+	public void setRecipeImgFileDTO(RecipeImgFileDTO recipeImgFileDTO) {
+		this.recipeImgFileDTO = recipeImgFileDTO;
+	}
+
 	public Long getRecipe_num() {
 		return recipe_num;
 	}
@@ -69,6 +82,38 @@ public class RecipeDTO {
 		this.recipe_category = recipe_category;
 	}
 
+	public String getRecipe_level() {
+		return recipe_level;
+	}
+
+	public void setRecipe_level(String recipe_level) {
+		this.recipe_level = recipe_level;
+	}
+
+	public String getRecipe_time() {
+		return recipe_time;
+	}
+
+	public void setRecipe_time(String recipe_time) {
+		this.recipe_time = recipe_time;
+	}
+
+	public Long getRating() {
+		return rating;
+	}
+
+	public void setRating(Long rating) {
+		this.rating = rating;
+	}
+
+	public Long getRecipe_like() {
+		return recipe_like;
+	}
+
+	public void setRecipe_like(Long recipe_like) {
+		this.recipe_like = recipe_like;
+	}
+
 	public Long getRecipe_hit() {
 		return recipe_hit;
 	}
@@ -76,5 +121,4 @@ public class RecipeDTO {
 	public void setRecipe_hit(Long recipe_hit) {
 		this.recipe_hit = recipe_hit;
 	}
-
 }

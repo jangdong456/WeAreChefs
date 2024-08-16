@@ -5,6 +5,10 @@
 
  <configuration>
  	<typeAliases>
+ 		<!-- 공용 -->
+ 		<typeAlias type="com.chef.app.util.Pager" alias="Pager"/>
+ 		<typeAlias type="com.chef.app.comment.CommentDTO" alias="CommentDTO"/>
+ 		
  		<!-- 동국 -->
  		<typeAlias type="com.chef.app.member.MemberDTO" alias="MemberDTO"/>
  		<typeAlias type="com.chef.app.member.MemberFileDTO" alias="MemberFileDTO"/>
@@ -14,7 +18,8 @@
  		<typeAlias type="com.chef.app.recipe.RecipeImgFileDTO" alias="RecipeImgFileDTO"/>
  		<typeAlias type="com.chef.app.recipe.RecipeReplyDTO" alias="RecipeReplyDTO"/>
  		<typeAlias type="com.chef.app.recipe.RecipeReviewDTO" alias="RecipeReviewDTO"/>
- 		
+ 		<typeAlias type="com.chef.app.recipe.RecipePager" alias="RecipePager"/>
+ 			<typeAlias type="java.util.Map" alias="Map"/>
  		<!-- 세령 -->
  		<typeAlias type="com.chef.app.food.FoodDTO" alias="FoodDTO"/>
  		<typeAlias type="com.chef.app.food.StoreImgFileDTO" alias="StoreImgFileDTO"/>
@@ -26,6 +31,6 @@
  		<typeAlias type="com.chef.app.manager.BuyingHistoryDTO" alias="BuyingHistoryDTO"/>
  		<typeAlias type="com.chef.app.manager.NoticeDTO" alias="NoticeDTO"/>
  		<typeAlias type="com.chef.app.manager.NoticeFileDTO" alias="NoticeFileDTO"/>
- 		<typeAlias type="com.chef.app.manager.QnaDTO" alias="QnaDTO"/>
+ 		<typeAlias type="com.chef.app.manager.InquiryDTO" alias="InquiryDTO"/>
  	</typeAliases>
  </configuration>

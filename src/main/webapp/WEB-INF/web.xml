@@ -3,16 +3,17 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee https://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
 
-	<!-- The definition of the Root Spring Container shared by all Servlets and Filters -->
-	<context-param>
-		<param-name>contextConfigLocation</param-name>
-		<param-value>/WEB-INF/spring/*-context.xml</param-value>
-	</context-param>
 	
 	<!-- Creates the Spring Container shared by all Servlets and Filters -->
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
+
+	<!-- The definition of the Root Spring Container shared by all Servlets and Filters -->
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>/WEB-INF/spring/*-context.xml</param-value>
+	</context-param>
 
 	<filter>
 	    <filter-name>encode</filter-name>
@@ -22,6 +23,7 @@
       	<param-value>UTF-8</param-value>
     </init-param>
   	</filter>
+  	
 	<filter-mapping>
 		<filter-name>encode</filter-name>
 		<url-pattern>/*</url-pattern>
@@ -42,5 +44,17 @@
 		<servlet-name>appServlet</servlet-name>
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
+	
+	<filter>
+		<display-name>LoginFilter</display-name>
+		<filter-name>LoginFilter</filter-name>
+		<filter-class>com.chef.app.filters.LoginFilter</filter-class>
+	</filter>
+	
+	<filter-mapping>
+		<filter-name>LoginFilter</filter-name>
+		<url-pattern>/member/mypage</url-pattern>
+	</filter-mapping>
 
+	
 </web-app>

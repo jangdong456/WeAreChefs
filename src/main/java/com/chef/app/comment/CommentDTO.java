@@ -1,16 +1,16 @@
 package com.chef.app.comment;
 
-import oracle.sql.DATE;
+import java.sql.Date;
 
 //공통 댓글 dto
 public class CommentDTO {
 	
 	private	Long board_num;
 	private	String member_id;
-	private	DATE create_date;
-	private	DATE update_date;
+	private	Date create_date;
+	private	Date update_date;
 	private	String board_content;
-
+	
 	public Long getBoard_num() {
 		return board_num;
 	}
@@ -23,16 +23,16 @@ public class CommentDTO {
 	public void setMember_id(String member_id) {
 		this.member_id = member_id;
 	}
-	public DATE getCreate_date() {
+	public Date getCreate_date() {
 		return create_date;
 	}
-	public void setCreate_date(DATE create_date) {
+	public void setCreate_date(Date create_date) {
 		this.create_date = create_date;
 	}
-	public DATE getUpdate_date() {
+	public Date getUpdate_date() {
 		return update_date;
 	}
-	public void setUpdate_date(DATE update_date) {
+	public void setUpdate_date(Date update_date) {
 		this.update_date = update_date;
 	}
 	public String getBoard_content() {
@@ -41,5 +41,4 @@ public class CommentDTO {
 	public void setBoard_content(String board_content) {
 		this.board_content = board_content;
 	}
-
 }
