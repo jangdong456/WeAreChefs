@@ -44,11 +44,11 @@
 	    <div class="text-center">
 			${inquiryDetail.board_content}
 		</div>
-		<!-- & Todo Start : 이부분은 관리자 레벨만 보이도록 해야함. -->
-		<hr>
-		<a class="btn border-secondary rounded-pill px-4 py-3 text-primary" href="/board/${page}/update?board_num=${inquiryDetail.board_num}">Update</a>
-		<a class="btn border-secondary rounded-pill px-4 py-3 text-primary" href="/board/${page}/delete?board_num=${inquiryDetail.board_num}">Delete</a>
-		<!-- & Todo Final : 이부분은 관리자 레벨만 보이도록 해야함. -->
+		<c:if test="${member.member_lev > 0}">
+			<hr>
+			<a class="btn border-secondary rounded-pill px-4 py-3 text-primary" href="/board/${page}/update?board_num=${inquiryDetail.board_num}">Update</a>
+			<a class="btn border-secondary rounded-pill px-4 py-3 text-primary" href="/board/${page}/delete?board_num=${inquiryDetail.board_num}">Delete</a>
+		</c:if>
 		
 		<div id="commentList">
 			<c:if test="${inquiryDetail.board_type eq 2}">
@@ -57,23 +57,25 @@
             <h1>댓글 목록</h1>
 
         </div>
-        <input type="text" id="replyInput">
-        <button id="qnaReplyBtn">댓글 달기</button>
+        <span id="alBtn" data-alBtn="${member.member_id}">
+    		<input type="text" id="replyInput">
+		    <button id="qnaReplyBtn">댓글 달기</button>
+        </span>
             <c:forEach items="${inquiryDTOList}" var="list">
                 <table id="${list.board_num}">
                     <thead>
                         <tr >
                             <th>작성자 : ${list.member_id}</th>
                             <th>작성일 : ${list.create_date}</th>
-														<c:if test="${not empty list.update_date}">
-															<th>수정일 : ${list.update_date}</th>    
-														</c:if>
-														<c:if test="${empty list.del}">
-															<td><button id="replyUpdate${list.board_num}" data-replyBoardNum="${list.board_num}">수정</button></td>
-															<td><button id="replyDelete${list.board_num}" data-replyBoardNum="${list.board_num}">삭제</button></td>
-														</c:if>
-													<!-- <c:if test="${list.member_id} eq ${member.member_id}"> -->
-													<!-- </c:if> -->
+							<c:if test="${not empty list.update_date}">
+								<th>수정일 : ${list.update_date}</th>    
+							</c:if>
+							<c:if test="${list.member_id eq member.member_id}">
+								<c:if test="${empty list.del}">
+									<td><button id="replyUpdate${list.board_num}" data-replyBoardNum="${list.board_num}">수정</button></td>
+									<td><button id="replyDelete${list.board_num}" data-replyBoardNum="${list.board_num}">삭제</button></td>
+								</c:if>
+							</c:if>
                         </tr>
                     </thead>
                     <tbody>

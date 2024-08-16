@@ -52,7 +52,9 @@ margin-left: 0px
 								</select>
 								<input type="search" name="search">
 								<button type="submit">검색</button>
-								<a href="/board/${page}/add" class="btn border-secondary rounded-pill px-4 py-3 text-primary" type="button">add</a>
+								<c:if test="${member.member_lev > 0}">
+									<a href="/board/${page}/add" class="btn border-secondary rounded-pill px-4 py-3 text-primary" type="button">add</a>
+								</c:if>
 							</form>
 						</div>
 					</div>

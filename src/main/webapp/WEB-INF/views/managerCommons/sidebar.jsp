@@ -8,7 +8,7 @@
     <div class="logo-header" data-background-color="dark">
       <a href="index.html" class="logo">
         <img
-          src="/resources/assets/img/kaiadmin/logo_light.svg"
+          src="/resources/assets/img/kaiadmin/logo_light.png"
           alt="navbar brand"
           class="navbar-brand"
           height="20"
@@ -26,7 +26,7 @@
       
       <button class="topbar-toggler more">
         <i class="gg-more-vertical-alt"></i>
-      </button>
+      </button>	
     </div>
     <!-- End Logo Header -->
   </div>

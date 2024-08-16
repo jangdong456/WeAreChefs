@@ -5,6 +5,15 @@
 <head>
 	<meta charset="utf-8">
 	<c:import url="/WEB-INF/views/managerCommons/cssScript.jsp" ></c:import>
+<style type="text/css">
+.MouseShadow:hover {
+	box-shadow: 4px 4px 20px #ddd;
+}
+.MouseBlack:hover {
+    background: #F5F5F5;
+    border-radius: 10px;
+}
+</style>
 </head>
 <body>
 	<c:import url="/WEB-INF/views/managerCommons/sidebar.jsp"></c:import>
@@ -16,7 +25,7 @@
 			<!--@------------------------------------------------------------- Start 첫줄 -------------------------------------------------------------->
 			<div class="row">
 				<div class="col-sm-6 col-md-3">
-					<div class="card card-stats card-round">
+					<div class="MouseShadow card card-stats card-round" onClick="location.href='/manager/memberInfo'" style="cursor:pointer;">
 						<div class="card-body">
 							<div class="row align-items-center">
 								<div class="col-icon">
@@ -37,7 +46,7 @@
 					</div>
 				</div>
 				<div class="col-sm-6 col-md-3">
-					<div class="card card-stats card-round">
+					<div class="MouseShadow card card-stats card-round" onClick="location.href='#'" style="cursor:pointer;">
 						<div class="card-body">
 							<div class="row align-items-center">
 								<div class="col-icon">
@@ -58,7 +67,7 @@
 					</div>
 				</div>
 				<div class="col-sm-6 col-md-3">
-					<div class="card card-stats card-round">
+					<div class="MouseShadow card card-stats card-round" onClick="location.href='#'" style="cursor:pointer;">
 						<div class="card-body">
 							<div class="row align-items-center">
 								<div class="col-icon">
@@ -79,7 +88,7 @@
 					</div>
 				</div>
 				<div class="col-sm-6 col-md-3">
-					<div class="card card-stats card-round">
+					<div class="MouseShadow card card-stats card-round" onClick="location.href='#'" style="cursor:pointer;">
 						<div class="card-body">
 							<div class="row align-items-center">
 								<div class="col-icon">
@@ -106,7 +115,7 @@
 			<!--@-------------------------------------------------------------- Start 두번째 줄 -------------------------------------------------------------->
 			<c:forEach var="list" items="${monthTotalPurchase}" >
 				<c:set var="i" value="${i+1}"/>
-				<input type="hidden" id="${list.pur_month}" value="${list.pur_count}">
+				<input type="hidden" id="${list.pur_month}" value="${list.pur_price}">
 			</c:forEach>
 			<div class="row">
 				<!-- 메인 차트 -->
@@ -130,8 +139,8 @@
 					<div class="card card-primary card-round">
 						<div class="card-header">
 							<div class="card-head-row">
-								<div class="card-title">주간 매출액</div>
-								<div class="card-tools">&*4주간총매출액
+								<div class="card-title">주간 매출</div>
+								<div class="card-tools">&*4주간총매출
 								</div>
 							</div>
 							<!--&* 주간 날짜 넣어줘야함-->
@@ -149,8 +158,8 @@
 					</div>
 					<div class="card card-round">
 						<div class="card-body pb-0">
-							<div class="h1 fw-bold float-end text-primary">&*일간총매출액</div>
-							<h2 class="mb-1">일간 매출액</h2>
+							<div class="h1 fw-bold float-end text-primary">&*일간총매출</div>
+							<h2 class="mb-1">일간 매출</h2>
 							<div class="pull-in sparkline-fix">
 								<div id="lineChart"></div>
 							</div>
@@ -172,9 +181,9 @@
 							</div>
 
 							<div class="card-list py-4">
-							 	<!--@ Start 프로필 1세트 -->
-							 	<c:forEach items="${memberListDesc}" var="memberListDesc" begin="0" end="7" step="1">
-									<div class="item-list">
+							<!--@ Start 프로필 1세트 -->
+							<c:forEach items="${memberListDesc}" var="memberListDesc" begin="0" end="7" step="1">
+									<div class="MouseBlack item-list" onClick="location.href='/manager/memberDetail?member_id=${memberListDesc.member_id}'" style="cursor:pointer;">
 										<div class="avatar">
 											<img
 												src="/resources/img/avatar.jpg"
@@ -210,9 +219,9 @@
 							</div>
 						</div>
 						<div class="card-body p-0">
-							<div class="table-responsive">
+							<div class="table-responsive">	
 								<!-- Projects table -->
-								<table class="table align-items-center mb-0">
+								<table class="table table-hover align-items-center mb-0 ">
 									<thead class="thead-light">
 										<tr>
 											<th scope="col">주문 번호</th>
@@ -222,97 +231,21 @@
 										</tr>
 									</thead>
 									<tbody>
-										<tr>
-											<th scope="row">
-												<button
+										<c:forEach items="${orderListDesc}" var="order" begin="0" end="9" step="1">
+											<tr class="MouseBlack">
+												<th scope="row">
+													<button
 													class="btn btn-icon btn-round btn-success btn-sm me-2"
-												>
+													>
 													<i class="fa fa-check"></i>
 												</button>
-												&* 주문 번호
+												${order.order_num}
 											</th>
-											<td class="text-end">&*주문자 아이디</td>
-											<td class="text-end">&*주문 날짜</td>
-											<td class="text-end">&*주문 금액</td>
+											<td class="t	ext-end">${order.member_id}</td>
+											<td class="text-end">${order.order_date}</td>
+											<td class="text-end">${order.order_price}</td>
 										</tr>
-										<tr>
-											<th scope="row">
-												<button
-													class="btn btn-icon btn-round btn-success btn-sm me-2"
-												>
-													<i class="fa fa-check"></i>
-												</button>
-												&* 주문 번호
-											</th>
-											<td class="text-end">&*주문자 아이디</td>
-											<td class="text-end">&*주문 날짜</td>
-											<td class="text-end">&*주문 금액</td>
-										</tr>
-										<tr>
-											<th scope="row">
-												<button
-													class="btn btn-icon btn-round btn-success btn-sm me-2"
-												>
-													<i class="fa fa-check"></i>
-												</button>
-												&* 주문 번호
-											</th>
-											<td class="text-end">&*주문자 아이디</td>
-											<td class="text-end">&*주문 날짜</td>
-											<td class="text-end">&*주문 금액</td>
-										</tr>
-										<tr>
-											<th scope="row">
-												<button
-													class="btn btn-icon btn-round btn-success btn-sm me-2"
-												>
-													<i class="fa fa-check"></i>
-												</button>
-												&* 주문 번호
-											</th>
-											<td class="text-end">&*주문자 아이디</td>
-											<td class="text-end">&*주문 날짜</td>
-											<td class="text-end">&*주문 금액</td>
-										</tr>
-										<tr>
-											<th scope="row">
-												<button
-													class="btn btn-icon btn-round btn-success btn-sm me-2"
-												>
-													<i class="fa fa-check"></i>
-												</button>
-												&* 주문 번호
-											</th>
-											<td class="text-end">&*주문자 아이디</td>
-											<td class="text-end">&*주문 날짜</td>
-											<td class="text-end">&*주문 금액</td>
-										</tr>
-										<tr>
-											<th scope="row">
-												<button
-													class="btn btn-icon btn-round btn-success btn-sm me-2"
-												>
-													<i class="fa fa-check"></i>
-												</button>
-												&* 주문 번호
-											</th>
-											<td class="text-end">&*주문자 아이디</td>
-											<td class="text-end">&*주문 날짜</td>
-											<td class="text-end">&*주문 금액</td>
-										</tr>
-										<tr>
-											<th scope="row">
-												<button
-													class="btn btn-icon btn-round btn-success btn-sm me-2"
-												>
-													<i class="fa fa-check"></i>
-												</button>
-												&* 주문 번호
-											</th>
-											<td class="text-end">&*주문자 아이디</td>
-											<td class="text-end">&*주문 날짜</td>
-											<td class="text-end">&*주문 금액</td>
-										</tr>
+									</c:forEach>
 									</tbody>
 								</table>
 							</div>
@@ -329,7 +262,7 @@
 	<!-- index 밑에 있어야 한느 것들임..-->
 	<c:import url="/WEB-INF/views/managerCommons/footer.jsp"></c:import>
 	<!-- Index Js-->
-  <script src="/resources/js/jerry/memberindex.js"></script>
+  <script src="/resources/js/jerry/memberIndex.js"></script>
 	
 	<!-- Chart JS -->
 	<script src="/resources/assets/js/plugin/chart.js/chart.min.js"></script>

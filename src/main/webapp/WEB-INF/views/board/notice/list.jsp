@@ -38,7 +38,9 @@
 								</select>
 								<input type="search" name="search" value="${pager.search}"	>
 								<button type="submit">검색</button>
-								<a href="/board/notice/add" class="btn border-secondary rounded-pill px-4 py-3 text-primary ml-1" type="button">add</a>
+								<c:if test="${member.member_lev > 0 }">
+									<a href="/board/notice/add" class="btn border-secondary rounded-pill px-4 py-3 text-primary ml-1" type="button">add</a>
+								</c:if>
 							</form>
 						</div>
 					</div>

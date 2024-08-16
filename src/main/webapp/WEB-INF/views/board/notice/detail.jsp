@@ -44,14 +44,16 @@
 	        </tbody>
 	    </table>
 
-        <div class="text-center">
-       		${noticeDetail.board_content}
-			<hr>
-		<!-- & Todo Start : 이부분은 관리자 레벨만 보이도록 해야함. -->			
-			<a class="btn border-secondary rounded-pill px-4 py-3 text-primary" href="/board/notice/update?board_num=${noticeDetail.board_num}">Update</a>
-			<a class="btn border-secondary rounded-pill px-4 py-3 text-primary" href="/board/notice/delete?board_num=${noticeDetail.board_num}">Delete</a>
-		<!-- & Todo Final : 이부분은 관리자 레벨만 보이도록 해야함. -->
-        </div>
+	        <div class="text-center">
+	       		${noticeDetail.board_content}
+				<hr>
+		<c:if test="${member.member_lev > 0}">
+			<!-- & Todo Start : 이부분은 관리자 레벨만 보이도록 해야함. -->			
+				<a class="btn border-secondary rounded-pill px-4 py-3 text-primary" href="/board/notice/update?board_num=${noticeDetail.board_num}">Update</a>
+				<a class="btn border-secondary rounded-pill px-4 py-3 text-primary" href="/board/notice/delete?board_num=${noticeDetail.board_num}">Delete</a>
+			<!-- & Todo Final : 이부분은 관리자 레벨만 보이도록 해야함. -->
+        </c:if>
+	        </div>
 	</div>
 	</div>
 

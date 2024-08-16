@@ -2,6 +2,8 @@ package com.chef.app.board.fna;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.chef.app.comment.CommentDTO;
 import com.chef.app.manager.InquiryDTO;
+import com.chef.app.member.MemberDTO;
 import com.chef.app.util.Pager;
 
 import oracle.jdbc.proxy.annotation.Post;
@@ -29,16 +32,33 @@ public class FnaController {
 	}
 	
 	@GetMapping("list")
-	public String fnaList(Pager pager, Model model) throws Exception {
-		List<InquiryDTO> InquiryList = fnaService.fnaList(pager);
+	public String fnaList(Pager pager, Model model, HttpSession session) throws Exception {
+		Long lev = 0L;
+		if(((MemberDTO) session.getAttribute("member")) != null) {
+			lev = ((MemberDTO) session.getAttribute("member")).getMember_lev();
+		}
+		MemberDTO memberDTO = new MemberDTO();
+		memberDTO.setMember_lev(lev);
+		model.addAttribute("member", memberDTO);
+
 		
+		List<InquiryDTO> InquiryList = fnaService.fnaList(pager);
 		model.addAttribute("pager", pager);
 		model.addAttribute("inquiryList", InquiryList);
 		return "board/inquiry/list";
 	}
 	
 	@GetMapping("detail")
-	public String fnaDetail(CommentDTO commentDTO, Model model) throws Exception{
+	public String fnaDetail(CommentDTO commentDTO, Model model, HttpSession session) throws Exception{
+		Long lev = 0L;
+		if(((MemberDTO) session.getAttribute("member")) != null) {
+			lev = ((MemberDTO) session.getAttribute("member")).getMember_lev();
+		}
+		MemberDTO memberDTO = new MemberDTO();
+		memberDTO.setMember_lev(lev);
+		model.addAttribute("member", memberDTO);
+
+		
 		InquiryDTO inquiryDTO = fnaService.fnaDetail(commentDTO);
 		model.addAttribute("inquiryDetail", inquiryDTO);
 		

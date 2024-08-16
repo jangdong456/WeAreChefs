@@ -3,7 +3,7 @@ package com.chef.app.manager;
 public class MonthTotalPurchaseDTO {
 	
 	private String pur_month;
-	private Long pur_count;
+	private Long pur_price;
 	
 	
 	public String getPur_month() {
@@ -12,13 +12,10 @@ public class MonthTotalPurchaseDTO {
 	public void setPur_month(String pur_month) {
 		this.pur_month = pur_month;
 	}
-	public Long getPur_count() {
-		return pur_count;
+	public Long getPur_price() {
+		return pur_price;
 	}
-	public void setPur_count(Long pur_count) {
-		this.pur_count = pur_count;
+	public void setPur_price(Long pur_price) {
+		this.pur_price = pur_price;
 	}
-	
-	
-	
 }

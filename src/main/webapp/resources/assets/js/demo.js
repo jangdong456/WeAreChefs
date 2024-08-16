@@ -282,7 +282,7 @@ var statisticsChart = new Chart(ctx, {
 			legendColor: '#f3545d',
 			fill: true,
 			borderWidth: 2,
-			data: [154, 184, 175, 203, 210, 231, 240, 278, 252, 312, 320, 374]
+			data: [154, 184, 175, 999, 210, 231, 240, 278, 252, 312, 320, 374]
 		}, {
 			label: "New Visitors",
 			borderColor: '#fdaf4b',

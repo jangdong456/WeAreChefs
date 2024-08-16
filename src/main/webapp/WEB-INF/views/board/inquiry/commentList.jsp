@@ -9,8 +9,10 @@
     <h1>댓글 목록</h1>
 
 </div>
-<input type="text" id="replyInput">
-<button id="qnaReplyBtn">댓글 달기</button>
+<span id="alBtn" data-alBtn="${member.member_id}">
+    <input type="text" id="replyInput">
+    <button id="qnaReplyBtn">댓글 달기</button>
+</span>
     <c:forEach items="${inquiryDTOList}" var="list">
         <table id="${list.board_num}">
             <thead>
@@ -20,12 +22,12 @@
                     <c:if test="${not empty list.update_date}">
                         <th>수정일 : ${list.update_date}</th>    
                     </c:if>
-                    <c:if test="${empty list.del}">
-                        <td><button id="replyUpdate${list.board_num}" data-replyBoardNum="${list.board_num}">수정</button></td>
-                        <td><button id="replyDelete${list.board_num}" data-replyBoardNum="${list.board_num}">삭제</button></td>
+                    <c:if test="${list.member_id eq member.member_id}">
+                        <c:if test="${empty list.del}">
+                            <td><button id="replyUpdate${list.board_num}" data-replyBoardNum="${list.board_num}">수정</button></td>
+                            <td><button id="replyDelete${list.board_num}" data-replyBoardNum="${list.board_num}">삭제</button></td>
+                        </c:if>
                     </c:if>
-                    <!-- <c:if test="${list.member_id} eq ${member.member_id}"> -->
-                    <!-- </c:if> -->
                 </tr>
             </thead>
             <tbody>

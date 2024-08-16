@@ -40,30 +40,50 @@ public class NoticeController {
 	}
 	
 	@GetMapping("list")
-	public void noticeList(Pager pager, Model model) throws Exception{
-		// & Todo : 페이징 처리 해야함.
-		List<NoticeDTO> list = noticeService.noticeList(pager);
-		System.out.println("@@ NUM");
-		System.out.println(pager.getStartNum());
-		System.out.println(pager.getLastNum());
+	public void noticeList(Pager pager, Model model, HttpSession session) throws Exception{
+		Long lev = 0L;
+		if(((MemberDTO) session.getAttribute("member")) != null) {
+			lev = ((MemberDTO) session.getAttribute("member")).getMember_lev();
+		}
+		MemberDTO memberDTO = new MemberDTO();
+		memberDTO.setMember_lev(lev);
+		model.addAttribute("member", memberDTO);
 		
-		model.addAttribute("pager", pager);
+		List<NoticeDTO> list = noticeService.noticeList(pager);
 		model.addAttribute("noticeList", list);
+		model.addAttribute("pager", pager);
+
+		
 	}
 	
 	@GetMapping("detail")
-	public String noticeDetail(CommentDTO commentDTO, Model model) throws Exception{
+	public String noticeDetail(CommentDTO commentDTO, Model model, HttpSession session) throws Exception{
+		// & Todo : session에서 member_lev 가져오고 관리자인지 아닌지를 판별해야함.
+		Long lev = 0L;
+		if(((MemberDTO) session.getAttribute("member")) != null) {
+			lev = ((MemberDTO) session.getAttribute("member")).getMember_lev();
+		}
+		MemberDTO memberDTO = new MemberDTO();
+		memberDTO.setMember_lev(lev);
+		model.addAttribute("member", memberDTO);
+		
 		NoticeDTO noticeDTO = noticeService.noticeDetail(commentDTO);
 		model.addAttribute("noticeDetail", noticeDTO);
 		return "board/notice/detail";
 	}
 	
 	@GetMapping("update")
-	public String noticeUpdate(CommentDTO commentDTO, Model model) throws Exception{
-		// & Todo : session에서 member_lev 가져오고 관리자인지 아닌지를 판별해야함.
-		NoticeDTO noticeDTO = noticeService.noticeDetail(commentDTO);
-		model.addAttribute("noticeDetail", noticeDTO);
-		return "board/notice/update";
+	public String noticeUpdate(CommentDTO commentDTO, Model model, HttpSession session) throws Exception{
+		String memberId = "";
+		if(((MemberDTO) session.getAttribute("member")) != null) {
+			NoticeDTO noticeDTO = noticeService.noticeDetail(commentDTO);
+			model.addAttribute("noticeDetail", noticeDTO);
+			return "board/notice/update";
+		}else {
+			model.addAttribute("msg", "잘못된 접근입니다.");
+			model.addAttribute("url", "/member/login");
+			return "commons/message";
+		}
 	}
 	
 	@PostMapping("update")
@@ -82,25 +102,37 @@ public class NoticeController {
 	}
 	
 	@GetMapping("delete")
-	public String noticeDelete(CommentDTO commentDTO, Model model) throws Exception{
-		// & Todo : session에서 member_lev 가져오고 관리자인지 아닌지를 판별해야함.
-		int result = noticeService.noticeDelete(commentDTO);
-		
-		String msg = "삭제를 실패 하였습니다.";
-		String url = "/board/notice/detail";
-		if (result >= 1) {
-			msg = "삭제를 성공 하였습니다.";
-			url = "/board/notice/list";
+	public String noticeDelete(CommentDTO commentDTO, Model model, HttpSession session) throws Exception{
+		String memberId = "";
+		if(((MemberDTO) session.getAttribute("member")) != null) {
+			int result = noticeService.noticeDelete(commentDTO);
+			
+			String msg = "삭제를 실패 하였습니다.";
+			String url = "/board/notice/detail";
+			if (result >= 1) {
+				msg = "삭제를 성공 하였습니다.";
+				url = "/board/notice/list";
+			}
+			model.addAttribute("msg", msg);
+			model.addAttribute("url", url);
+			return "commons/message";
+		}else {
+			model.addAttribute("msg", "잘못된 접근입니다.");
+			model.addAttribute("url", "/member/login");
+			return "commons/message";
 		}
-		model.addAttribute("msg", msg);
-		model.addAttribute("url", url);
-		return "commons/message";
 	}
 	
 	@GetMapping("add")
-	public String noticeAdd() throws Exception{
-		// & Todo : session에서 member_lev 가져오고 관리자인지 아닌지를 판별해야함.
-		return "board/notice/add";
+	public String noticeAdd(Model model, HttpSession session) throws Exception{
+		String memberId = "";
+		if(((MemberDTO) session.getAttribute("member")) != null) {
+			return "board/notice/add";
+		}else {
+			model.addAttribute("msg", "잘못된 접근입니다.");
+			model.addAttribute("url", "/member/login");
+			return "commons/message";
+		}
 	}
 	
 	@PostMapping("add")

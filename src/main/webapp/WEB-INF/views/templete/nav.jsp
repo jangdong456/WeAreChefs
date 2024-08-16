@@ -29,7 +29,7 @@
                     	<c:otherwise> 
 		                    <div class="top-link pe-2">
 		                        <a href="#" class="text-white"><small class="text-white mx-2">Privacy Policy</small>/</a>
-		                        <a href="#" class="text-white"><small class="text-white mx-2">Terms of Use</small>/</a>
+		                        <a href="/member/join" class="text-white"><small class="text-white mx-2">회원가입</small>/</a>
 		                        <a href="/member/login" class="text-white"><small class="text-white ms-2">로그인</small></a>
 		                    </div>            		
                     	</c:otherwise>

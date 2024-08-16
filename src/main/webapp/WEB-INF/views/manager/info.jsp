@@ -4,9 +4,6 @@
 <html>
 <head>
 	<meta charset="utf-8">
-  table, td, th {
-    border: 1px solid black;
-  }
   
 	<c:import url="/WEB-INF/views/managerCommons/cssScript.jsp" ></c:import>
 </head>
@@ -61,9 +58,9 @@
                             <th>레벨</th>
                           </tr>
                         </thead>
-                        <tbody>
+                        <tbody >
                           <c:forEach items="${memberListDesc}" var="memberListDesc">
-                            <tr id="memberDetailTr" data-memberId="${memberListDesc.member_id}" style="cursor:pointer;">
+                            <tr onClick="location.href='/manager/memberDetail?member_id=${memberListDesc.member_id}'">
                               <td>${memberListDesc.member_id}</td>
                               <td>${memberListDesc.member_mail}</td>
                               <td>${memberListDesc.member_phone}</td>

@@ -1,6 +1,7 @@
-let memberDetailTr = document.getElementById("memberDetailTr")
-let memberId = memberDetailTr.getAttribute("data-memberId");
+let memberDetailTbody = document.getElementById("memberDetailTbody")
 
-memberDetailTr.addEventListener("click", (e)=>{
-  
-})
+memberDetailTbody.addEventListener("click", (e)=>{
+  let memberId = e.target.getAttribue("data-memberId");
+
+  alert("하하" + memberId);
+});

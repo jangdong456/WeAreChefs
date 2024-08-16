@@ -36,7 +36,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- index 차트 정보 -->
 	<select id="getMonthTotalPurchase" resultType="MonthTotalPurchaseDTO">
-		SELECT TO_CHAR(ORDER_DATE , 'MM') PUR_MONTH, COUNT(ORDER_NUM)  PUR_COUNT
+		SELECT TO_CHAR(ORDER_DATE , 'MM') PUR_MONTH, SUM(ORDER_PRICE)  PUR_PRICE
 		FROM
 		    STOREORDER
 		WHERE TO_CHAR(ORDER_DATE, 'YYYY') = TO_CHAR(SYSDATE, 'YYYY')
@@ -44,7 +44,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		    TO_CHAR(ORDER_DATE , 'MM')
 	</select>
 	
-		
+	<!-- index 멤버 정보 -->
 	<select id="getMemberListAsc" resultType="MemberDTO">
 		SELECT MM.*
 		FROM 
@@ -61,5 +61,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			ORDER BY ROWNUM DESC) MM
 	</select>
 	
+	<!-- index 주문 정보 -->
+	<select id="getOrderListDesc" resultType="StoreOrderDTO">
+		SELECT *
+		FROM STOREORDER 
+		WHERE ORDER_STATUS = '결제완료'
+		ORDER BY ORDER_DATE DESC
+	</select>
+	
+	<!-- managerDetail member 정보 -->
+	<select id="getMemberDetail" parameterType="MemberDTO" resultType="MemberDTO">
+		SELECT *
+		FROM "MEMBER"
+		WHERE MEMBER_ID = #{member_id}
+	</select>
 	
 </mapper>
