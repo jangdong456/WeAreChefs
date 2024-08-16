@@ -29,11 +29,11 @@ public class FoodDAO {
 		return sqlSession.insert(NAMESPACE+"mainImg", storeImgFileDTO);
 	}
 	
-	public List<FoodDTO> getList(FoodPager pager) throws Exception{
+	public List<FoodDTO> getList(Pager pager) throws Exception{
 		return sqlSession.selectList(NAMESPACE+"getList", pager);
 	}
 	
-	public Long getTotalCount(FoodPager pager) throws Exception{
+	public Long getTotalCount(Pager pager) throws Exception{
 		return sqlSession.selectOne(NAMESPACE+"getTotalCount", pager);
 	}
 	
@@ -44,5 +44,54 @@ public class FoodDAO {
 	public FoodDTO getDetail(FoodDTO foodDTO) throws Exception{
 		return sqlSession.selectOne(NAMESPACE+"getDetail", foodDTO);
 	}
+	
+	public int updateDetail (FoodDTO foodDTO) throws Exception {
+		return sqlSession.update(NAMESPACE+"updateDetail", foodDTO);
+	}
+	
+	public int updateFoodImg (StoreImgFileDTO storeImgFileDTO) throws Exception {
+		return sqlSession.update(NAMESPACE+"updateFoodImg", storeImgFileDTO);
+	}
+	
+	public int detailDelete(FoodDTO foodDTO) throws Exception {
+		return sqlSession.update(NAMESPACE+"detailDelete", foodDTO);
+	}
+	
+	public int cartAdd(Map<String, Object>map) throws Exception {
+		return sqlSession.insert(NAMESPACE+"cartAdd", map);
+	}
+	
+	public List<FoodDTO> selectCart(Map<String, Object>map) throws Exception {
+		return sqlSession.selectList(NAMESPACE+"selectCart", map);
+	}
+	
+	public int updateCart(Map<String, Object>map) throws Exception {
+		return sqlSession.update(NAMESPACE+"updateCart", map);
+	
+	}
+	
+	public List<StoreCartDTO> cartList(StoreCartDTO storeCartDTO) throws Exception{
+		return sqlSession.selectList(NAMESPACE+"cartList", storeCartDTO);
+	}
+	
+	public int deleteCart(StoreCartDTO storeCartDTO) throws Exception {
+		return sqlSession.delete(NAMESPACE+"deleteCart", storeCartDTO);
+	}
+	
+	public int payUpdateCart(StoreCartDTO storeCartDTO) throws Exception{
+		return sqlSession.update(NAMESPACE+"payUpdateCart", storeCartDTO);
+	}
+	
+	public int orderInsert(StoreOrderDTO storeOrderDTO) throws Exception {
+		return sqlSession.insert(NAMESPACE+"orderInsert", storeOrderDTO);
+	}
 
+	public int midOrderInsert(StoreMidOrderDTO storeMidOrderDTO) throws Exception {
+		return sqlSession.insert(NAMESPACE+"midOrderInsert", storeMidOrderDTO);
+	}
+	
+	public int orderFinishCartDelete(StoreOrderDTO storeOrderDTO) throws Exception {
+		return sqlSession.delete(NAMESPACE+"orderFinishCartDelete", storeOrderDTO);
+	}
+	
 }

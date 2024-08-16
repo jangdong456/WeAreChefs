@@ -8,6 +8,7 @@
  		<!-- 공용 -->
  		<typeAlias type="com.chef.app.util.Pager" alias="Pager"/>
  		<typeAlias type="com.chef.app.comment.CommentDTO" alias="CommentDTO"/>
+ 		<typeAlias type="java.util.Map" alias="Map"/>
  		
 
  		<!-- 동국 -->
@@ -20,13 +21,14 @@
  		<typeAlias type="com.chef.app.recipe.RecipeReplyDTO" alias="RecipeReplyDTO"/>
  		<typeAlias type="com.chef.app.recipe.RecipeReviewDTO" alias="RecipeReviewDTO"/>
  		<typeAlias type="com.chef.app.recipe.RecipePager" alias="RecipePager"/>
- 			<typeAlias type="java.util.Map" alias="Map"/>
+ 		
  		<!-- 세령 -->
  		<typeAlias type="com.chef.app.food.FoodDTO" alias="FoodDTO"/>
  		<typeAlias type="com.chef.app.food.StoreImgFileDTO" alias="StoreImgFileDTO"/>
  		<typeAlias type="com.chef.app.food.StoreMidOrderDTO" alias="StoreMidOrderDTO"/>
  		<typeAlias type="com.chef.app.food.StoreOrderDTO" alias="StoreOrderDTO"/>
  		<typeAlias type="com.chef.app.food.StoreReplyDTO" alias="StoreReplyDTO"/>
+ 		<typeAlias type="com.chef.app.food.StoreCartDTO" alias="StoreCartDTO"/>
  		
  		<!-- 정민 -->
  		<typeAlias type="com.chef.app.manager.BuyingHistoryDTO" alias="BuyingHistoryDTO"/>

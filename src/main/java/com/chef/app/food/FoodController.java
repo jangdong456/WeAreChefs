@@ -10,11 +10,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.chef.app.util.Pager;
+
+import oracle.jdbc.proxy.annotation.Post;
 
 @Controller
 @RequestMapping("/food/*")
@@ -70,7 +74,7 @@ public class FoodController {
 	}
 	
 	@GetMapping("list")
-	public void getList(FoodPager pager,Model model) throws Exception{
+	public void getList(Pager pager,Model model) throws Exception{
 		List<FoodDTO> ar =foodService.getList(pager);
 		List<Map<String, Object>> categoryCount =foodService.categoryCount();
 		model.addAttribute("pager", pager);
@@ -79,7 +83,7 @@ public class FoodController {
 	}
 	
 	@PostMapping("list")
-	public String getListSearch(FoodPager pager,Model model) throws Exception{
+	public String getListSearch(Pager pager,Model model) throws Exception{
 
 		List<FoodDTO> ar =foodService.getList(pager);
 		List<Map<String, Object>> categoryCount =foodService.categoryCount();
@@ -97,6 +101,144 @@ public class FoodController {
 		foodDTO = foodService.getDetail(foodDTO);
 		model.addAttribute("dto", foodDTO);
 
+	}
+	
+	@GetMapping("update")
+	public void updateDetail(FoodDTO foodDTO,Model model) throws Exception{
+		
+		foodDTO = foodService.getDetail(foodDTO);
+		model.addAttribute("dto", foodDTO);
+		
+	}
+	
+	@PostMapping("update")
+	public String updateDetail(MultipartFile attach,HttpSession session,FoodDTO foodDTO,Model model) throws Exception {
+		
+		int result = foodService.updateDetail(attach, session, foodDTO);
+		
+		if (result>0) {
+			model.addAttribute("result", "게시글 수정이 완료 됐습니다");
+			model.addAttribute("url", "/food/list");
+			return "food/message";
+			
+		}
+			model.addAttribute("result", "게시글 수정에 실패 했습니다");
+			model.addAttribute("url", "/food/list");
+			return "food/message";
+		
+	}
+	
+	@GetMapping("delete")
+	public String detailDelete(FoodDTO foodDTO,Model model) throws Exception {
+		
+		int result = foodService.detailDelete(foodDTO);
+		
+		if (result>0) {
+			model.addAttribute("result", "게시글 삭제가 완료 됐습니다");
+			model.addAttribute("url", "/food/list");
+			return "food/message";
+			
+		}
+			model.addAttribute("result", "게시글 삭제에 실패 했습니다");
+			model.addAttribute("url", "/food/list");
+			return "food/message";
+		
+	}
+	
+	@GetMapping("cartAdd")
+	public String cartAdd (Long food_num,Long cart_count,Model model) throws Exception {
+		String memberId = "ksr";
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("member_id", memberId);
+		map.put("food_num", food_num);
+		map.put("cart_count", cart_count);
+		
+		int result = foodService.cartAdd(map);
+		
+		if (result>0) {
+			model.addAttribute("result", "장바구니 추가 완료, 장바구니로 이동하시겠습니까?");
+			model.addAttribute("urlTrue", "/food/cart");
+			model.addAttribute("urlFalse", "/food/detail?food_num="+food_num);
+			return "food/confirm";
+			
+		}
+			model.addAttribute("result", "장바구니 추가에 실패했습니다");
+			model.addAttribute("url", "/food/list");
+			return "food/message";
+		
+	}
+	
+	@GetMapping("cart")
+	public void cartList(Model model) throws Exception{
+		
+		String member_id = "ksr";
+		StoreCartDTO storeCartDTO = new StoreCartDTO();
+		storeCartDTO.setMember_id(member_id);
+		List<StoreCartDTO> ar = foodService.cartList(storeCartDTO);
+		
+		model.addAttribute("list", ar);
+		
+	}
+	
+	@GetMapping("cartDelete")
+	public String deleteCart(StoreCartDTO storeCartDTO,Model model) throws Exception {
+		
+		String member_id = "ksr";
+		storeCartDTO.setMember_id(member_id);
+		
+		int result = foodService.deleteCart(storeCartDTO);
+		
+		return "redirect:/food/cart";
+
+	}
+	
+	@PostMapping("finalCart")
+	public String finalCart(@RequestBody List<StoreCartDTO> ar,Model model) throws Exception{
+		
+		String member_id = "ksr";
+		
+		for(StoreCartDTO a:ar) {
+			a.setMember_id(member_id);
+		}
+		
+		int result = foodService.payUpdateCart(ar);
+		
+		model.addAttribute("msg", "/food/pay");
+		
+		return "commons/result";
+		
+	}
+	
+	@GetMapping("pay")
+	public void payMain(Model model) throws Exception{
+		
+		String member_id = "ksr";
+		StoreCartDTO storeCartDTO = new StoreCartDTO();
+		storeCartDTO.setMember_id(member_id);
+		List<StoreCartDTO> ar = foodService.cartList(storeCartDTO);
+		
+		model.addAttribute("list", ar);
+		
+	}
+	
+	@PostMapping("payment/complete")
+	public String payComplete(@RequestBody StoreOrderDTO storeOrderDTO,Model model) throws Exception {
+		
+		String member_id = "ksr";
+		storeOrderDTO.setMember_id(member_id);
+			
+		foodService.orderInsert(storeOrderDTO);
+		model.addAttribute("msg", "/food/payComplete?order_num="+storeOrderDTO.getOrder_num());
+		return "commons/result";
+		
+	}
+	
+	@GetMapping("payComplete")
+	public void payComplete2(StoreOrderDTO storeOrderDTO,Model model) throws Exception{
+		
+		model.addAttribute("num", storeOrderDTO);
+		
 	}
 	
 }

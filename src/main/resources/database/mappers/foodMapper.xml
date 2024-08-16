@@ -7,7 +7,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<select id="searchFood" resultType="FoodDTO" parameterType="FoodDTO">
 		SELECT * FROM FOOD
-		WHERE FOOD_STOCK>0 AND FOOD_NAME LIKE '%'||#{food_name}||'%' AND ADD_CHECK IS NULL
+		WHERE FOOD_STOCK>0 AND FOOD_NAME LIKE '%'||#{food_name}||'%' AND (ADD_CHECK NOT IN ('A') OR ADD_CHECK IS NULL)
 	</select>
 	
 	<update id="add" parameterType="FoodDTO">
@@ -18,7 +18,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		INSERT INTO STOREIMG VALUES (STOREIMG_SEQ.NEXTVAL,#{food_num},#{file_name})
 	</insert>
 	
-   <select id="getList" resultMap="foodImgName" parameterType="com.chef.app.food.FoodPager">
+   <select id="getList" resultMap="foodImgName" parameterType="Pager">
   	 SELECT * FROM
 	(SELECT ROWNUM R,B.* FROM
 	(SELECT *
@@ -56,7 +56,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		FOOD_PRICE ASC
 		</when>
 		<otherwise>
-		CREATE_DATE DESC
+		UPDATE_DATE DESC
 		</otherwise>
 	</choose>
 	) B)
@@ -80,7 +80,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </association>
    </resultMap>
    
-   <select id="getTotalCount" parameterType="com.chef.app.food.FoodPager" resultType="java.lang.Long">
+   <select id="getTotalCount" parameterType="Pager" resultType="java.lang.Long">
    	SELECT COUNT(FOOD_NUM) FROM FOOD
    	WHERE ADD_CHECK = 'A' AND
 	<choose>
@@ -105,7 +105,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</choose>
    </select>
    
-   <select id="categoryCount" resultType="java.util.Map">
+   <select id="categoryCount" resultType="Map">
    	SELECT FOOD_CATEGORY, COUNT(*) AS COUNT
 	FROM FOOD
 	WHERE ADD_CHECK='A'
@@ -126,6 +126,91 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
    </resultMap>
    
-
- 
+   <update id="updateDetail" parameterType="FoodDTO">
+   	UPDATE FOOD SET FOOD_CONTENTS = #{food_contents} WHERE FOOD_NUM = #{food_num}
+   </update>
+   
+   <update id="updateFoodImg" parameterType="StoreImgFileDTO">
+   	UPDATE STOREIMG SET FOOD_FILE_NAME = #{file_name} WHERE FOOD_NUM = #{food_num}
+   </update>
+   
+   <update id="detailDelete" parameterType="FoodDTO">
+   	UPDATE FOOD SET ADD_CHECK = 'D' WHERE FOOD_NUM = #{food_num}
+   </update>
+   
+   <insert id="cartAdd" parameterType="Map">
+   	INSERT INTO STORECART VALUES (#{member_id},#{food_num},#{cart_count})
+   </insert>
+   
+   <select id="selectCart" parameterType="Map" resultType="FoodDTO">
+   	SELECT FOOD_NUM FROM STORECART WHERE MEMBER_ID = #{member_id} AND FOOD_NUM = #{food_num}
+   </select>
+   
+   <update id="updateCart" parameterType="Map">
+   	UPDATE STORECART SET CART_COUNT = CART_COUNT + #{cart_count} WHERE MEMBER_ID=#{member_id} AND FOOD_NUM=#{food_num}
+   </update>
+   
+   <select id="cartList" parameterType="StoreCartDTO" resultMap="storeCartMap">
+	SELECT *
+	FROM FOOD F
+		 INNER JOIN
+		 STOREIMG S
+		 ON F.FOOD_NUM =S.FOOD_NUM
+		 INNER JOIN
+		 STORECART SC
+		 ON F.FOOD_NUM =SC.FOOD_NUM
+	WHERE SC.MEMBER_ID =#{member_id}
+   </select>
+   
+   <!-- StoreCartDTO 맵핑 -->
+   <resultMap type="StoreCartDTO" id="storeCartMap">
+   	<id column="MEMBER_ID" property="member_id"/>
+   	<id column="FOOD_NUM" property="food_num"/>
+   	<result column="CART_COUNT" property="cart_count"/>
+   	<collection property="foodDTO" javaType="java.util.List" ofType="FoodDTO" resultMap="foodMap"></collection>
+   </resultMap>
+   
+	<!-- FoodDTO 맵핑  -->
+   <resultMap type="FoodDTO" id="foodMap">
+	<id column="FOOD_NUM" property="food_num"/>
+   	<result column="FOOD_CATEGORY" property="food_category"/>
+   	<result column="FOOD_NAME" property="food_name"/>
+   	<result column="FOOD_STOCK" property="food_stock"/>
+   	<result column="FOOD_BUYING" property="food_buying"/>
+   	<result column="FOOD_PRICE" property="food_price"/>
+   	<result column="FOOD_CONTENTS" property="food_contents"/>
+   	<result column="CREATE_DATE" property="create_date"/>
+   	<result column="UPDATE_DATE" property="update_date"/>
+   	<result column="RATING" property="rating"/>
+    <association property="storeImgFileDTO" javaType="StoreImgFileDTO" resultMap="storeImgFileMap"/>
+   </resultMap>
+   
+   <!-- StoreImgFileDTO 맵핑 -->
+   <resultMap type="StoreImgFileDTO" id="storeImgFileMap">
+   	<id column="FOOD_IMG_NUM" property="file_num"/>
+   	<result column="FOOD_FILE_NAME" property="file_name"/>
+   	<result column="FOOD_NUM" property="food_num"/>
+   </resultMap>
+   
+   <delete id="deleteCart" parameterType="StoreCartDTO">
+   	DELETE STORECART WHERE MEMBER_ID=#{member_id} AND FOOD_NUM=#{food_num}
+   </delete>
+   
+   <update id="payUpdateCart" parameterType="StoreCartDTO">
+   	UPDATE STORECART SET CART_COUNT = #{cart_count} WHERE MEMBER_ID=#{member_id} AND FOOD_NUM=#{food_num}
+   </update>
+   
+   <insert id="orderInsert" parameterType="StoreOrderDTO">
+   	INSERT INTO STOREORDER VALUES 
+	(#{order_num},#{member_id},#{order_price},'결제완료',#{delivery_address},'배송준비중',SYSDATE,#{order_name},#{order_phone},#{order_mail},#{order_post})
+   </insert>
+   
+   <insert id="midOrderInsert" parameterType="StoreMidOrderDTO">
+   	INSERT INTO MIDORDER VALUES (MID_ORD_SEQ.NEXTVAL,#{order_num},#{food_num},#{cart_count})
+   </insert>
+   
+   <delete id="orderFinishCartDelete" parameterType="StoreOrderDTO">
+   	DELETE STORECART WHERE MEMBER_ID=#{member_id}
+   </delete>
+   
 </mapper>
