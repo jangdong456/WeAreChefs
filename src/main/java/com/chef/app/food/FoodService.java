@@ -33,10 +33,10 @@ public class FoodService {
 		Long foodNum = foodDTO.getFood_num();
 				
 		ServletContext servletContext = session.getServletContext();
-		String path = servletContext.getRealPath("resources/upload/foods");
-		System.out.println(path);
+	    String absolutePath = servletContext.getRealPath("resources/upload/foods");
+		System.out.println(absolutePath);
 		
-		String fileName = fileManager.fileSave(path, attach);
+		String fileName = fileManager.fileSave(absolutePath, attach);
 		StoreImgFileDTO storeImgFileDTO = new StoreImgFileDTO();
 		storeImgFileDTO.setFile_name(fileName);
 		storeImgFileDTO.setFood_num(foodNum);
