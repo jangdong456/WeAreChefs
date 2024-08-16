@@ -142,6 +142,7 @@ public class QnaController {
 		inquiryDTO.setMember_id("aaa");
 		// 댓글 추가
 		int addResult = qnaService.addQnaReply(inquiryDTO);
+		
 		// 댓글 리스트 비동기식으로 불러오기
 		List<InquiryDTO> replyResult = qnaService.getQnaReply(inquiryDTO);
 		model.addAttribute("inquiryDTOList", replyResult);
@@ -169,6 +170,7 @@ public class QnaController {
 	@PostMapping("replyUpdate")
 	public String replyUpdate(InquiryDTO inquiryDTO, ReplyUpdateDTO replyUpdateDTO, Model model) throws Exception{
 		int result = qnaService.replyUpdate(inquiryDTO);
+		
 		CommentDTO commentDTO = new CommentDTO();
 		commentDTO.setBoard_num(replyUpdateDTO.getDetail_board_num());		
 		List<InquiryDTO> inquiryDTOList = qnaService.getQnaReply(commentDTO);

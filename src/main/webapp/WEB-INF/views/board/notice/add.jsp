@@ -6,7 +6,7 @@
 <meta charset="utf-8">
 <style type="text/css">
 	.ck.ck-editor{
-	   max-width: 1000px;
+	   max-width: 1500px;
   }
   .ck-editor__editable {
      min-height: 400px;

@@ -42,7 +42,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<delete id="qnaDelete" parameterType="CommentDTO">
 		DELETE FROM INQUIRY
-		WHERE BOARD_NUM = #{board_num}
+		WHERE BOARD_NUM = #{board_num} OR "REF" = #{board_num}
 	</delete>
 	
 	<insert id="qnaAdd" parameterType="InquiryDTO">

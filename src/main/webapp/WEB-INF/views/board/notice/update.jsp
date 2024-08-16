@@ -4,7 +4,18 @@
 <html>
 <head>
 <meta charset="utf-8">
-
+<style type="text/css">
+	.ck.ck-editor{
+	   max-width: 1500px;
+  }
+  .ck-editor__editable {
+     min-height: 400px;
+     max-height: 600px;
+  }
+  .ck-content { 
+	  font-size: 12px; 
+	 }
+</style>
 </head>
 <body>
 <c:import url="/WEB-INF/views/templete/header.jsp"></c:import>
@@ -32,7 +43,7 @@
 	            </div>
 	            <div class="form-item">
 	               <label class="form-label my-3">공지 내용</label>
-	               <textarea name="board_content" class="form-control" cols="30" rows="11">${noticeDetail.board_content}</textarea>
+	               <textarea name="board_content" class="form-control" cols="30" rows="11" id="editor">${noticeDetail.board_content}</textarea>
 	            </div>
 	            <hr>
 	            <button type="submit" class="btn border-secondary rounded-pill px-4 py-3 text-primary">수정완료</button>
@@ -41,5 +52,22 @@
      </div>
 <!-- End -->
 <c:import url="/WEB-INF/views/templete/footer.jsp"></c:import>
+<script src="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/ckeditor.js"></script>
+<script type="text/javascript" src="/resources/js/commons/ckeditor.js"></script>
+<script type="text/javascript">
+ClassicEditor.create( 
+		document.getElementById( 'editor' ), {
+			extraPlugins: [MyCustomUploadAdapterPlugin]
+       },
+	   
+     )
+	 .then(editor=>{	
+		window.editor=editor
+	 })
+	 
+	 .catch(error=>{
+			console.log('error')
+	 });
+</script>
 </body>
 </html>
