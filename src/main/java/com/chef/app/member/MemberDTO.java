@@ -29,6 +29,7 @@ public class MemberDTO {
 	}
 	public void setMembere_mail(String membere_mail) {
 		this.member_mail = membere_mail;
+
 	}
 	public String getMember_pwd() {
 		return member_pwd;

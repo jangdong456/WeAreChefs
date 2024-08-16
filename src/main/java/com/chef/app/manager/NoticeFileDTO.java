@@ -6,6 +6,7 @@ public class NoticeFileDTO extends FileDTO {
 
 	private Long board_num;
 
+
 	public Long getBoard_num() {
 		return board_num;
 	}
@@ -13,4 +14,8 @@ public class NoticeFileDTO extends FileDTO {
 	public void setBoard_num(Long board_num) {
 		this.board_num = board_num;
 	}
-}
+
+
+	
+}       
+       
