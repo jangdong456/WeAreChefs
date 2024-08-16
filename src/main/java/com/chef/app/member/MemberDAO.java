@@ -12,6 +12,18 @@ public class MemberDAO {
 	
 	private final String NAMESPACE = "com.chef.app.member.MemberDAO.";
 	
+	public int introducesDelete(MemberDTO memberDTO) throws Exception {
+		return sqlSession.update(NAMESPACE + "introducesDelete", memberDTO);
+	}
+	
+	public int mypageUpdate(MemberDTO memberDTO)throws Exception {
+		return sqlSession.update(NAMESPACE + "mypageUpdate", memberDTO);
+	}
+	
+	public MemberDTO mypage(MemberDTO memberDTO) throws Exception {
+		return sqlSession.selectOne(NAMESPACE + "mypage", memberDTO);
+	}
+	
 	public void kakao() throws Exception {
 		System.out.println("== Kakao DAO ==");
 	}

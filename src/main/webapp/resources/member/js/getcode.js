@@ -40,7 +40,9 @@ img.addEventListener("click", () => {
             let token = res.access_token;
             console.log("토큰발급확인 :"+ token);
             localStorage.setItem("token",token);
-            fetch("https://kapi.kakao.com/v2/user/me", {
+
+            // 토큰으로 사용자 정보 받오는 코드
+            return fetch("https://kapi.kakao.com/v2/user/me", {
                 method : "GET",
                 headers:{
                     "Content-type":"application/x-www-form-urlencoded;charset=utf-8",
@@ -55,13 +57,16 @@ img.addEventListener("click", () => {
                 console.log(res.id)
                 console.log(res.properties.nickname)
                 console.log(res.properties.profile_image)
-
+                let kakaoId = res.id
+                let kakaoNickname = res.properties.nickname
+                let kakaoImage = res.properties.profile_image
                 // id와 nickname, profile_image를 db에 저장한다.
                 
-                // fetch("kakaologin", {
-                //     method : "POST",
-                //     headers : 
-                // })
+                fetch("kakaologin", {
+                    method : "POST",
+                    headers : { "Content-type":"application/x-www-form-urlencoded" },
+                    body: "kakaoId="+kakaoId+"&kakaoNickname="+kakaoNickname+"&kakaoImage="+kakaoImage+"&token="+token
+                })
             })
             
         }).catch((error) =>{

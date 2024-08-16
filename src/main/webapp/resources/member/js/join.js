@@ -8,19 +8,20 @@ const memberPwd = document.getElementById("member_pwd");
 const memberEmail = document.getElementById("membere_mail");
 const memberPhone = document.getElementById("member_phone");
 
+const joinForm = document.getElementById("joinForm");
+
 const regexpName     = /^[가-힣a-zA-Z]+$/;
 const regexpNickname = /^[가-힣|a-z|A-Z|0-9|]{2,10}$/;
 const regexpId = /^[a-z|A-Z|0-9|]{2,12}$/;
 const regexpPassword = /^(?=.*\d)(?=.*[a-z])(?=.*[a-zA-Z]).{8,12}$/;
 const regexpEmail    = /^(\w{1,20})+@(\w{1,20})+\.([a-zA-Z]{2,4}$)+$/;
+
 const regexpPhone    = /^[010|011|016|017|018|019]{3}-\d{3,4}-\d{4}$/;
 
 
 joinBtn.addEventListener("click", ()=> {
     
-    if(regexpName.test(memberName.value)) {
-        
-    } else {
+    if(!regexpName.test(memberName.value)) {
         let span = document.createElement('span');
         span.id = 'join_span';
         span.innerHTML = "한글 또는 영문으로 값을 입력해주세요";
@@ -28,9 +29,8 @@ joinBtn.addEventListener("click", ()=> {
         memberName.focus();
         memberName.addEventListener("click", () =>{
             span.remove();
-            return;
         });
-    };
+    }
 
 
     if(regexpNickname.test(memberNickname.value)){
@@ -89,9 +89,7 @@ joinBtn.addEventListener("click", ()=> {
         });
     };
 
-    if(regexpPhone.test(memberPhone.value)){
-        
-    } else {
+    if(!regexpPhone.test(memberPhone.value)){
         let span = document.createElement('span');
         span.id = 'join_span';
         span.innerHTML = "전화번호 형식이 틀립니다";
@@ -99,10 +97,14 @@ joinBtn.addEventListener("click", ()=> {
         memberPhone.focus();
         memberPhone.addEventListener("click", () =>{
             span.remove();
-            return;
-        });
-    };
+        }) 
+    }
+})
+    // joinForm.submit(); -> submit()함수를 사용하면 강제로 form에 id걸렸던걸 보낼수있다.
     
+    // 서버를 보내지기전에 
+
+
     // fetch("join", {
     //     method : "POST",
     //     // contentType: "application/json",
@@ -127,4 +129,3 @@ joinBtn.addEventListener("click", ()=> {
 
     //     });
     
-});

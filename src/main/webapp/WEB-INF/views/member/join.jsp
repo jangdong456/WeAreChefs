@@ -43,7 +43,7 @@
 		<div class="container py-5">
 			<div class="form-container">
 				<div class="form-wrapper">
-					<form action="join" method="post">
+					<form action="join" method="post" id="joinForm">
 						<div class="row g-5">
 							<div class="col-12 ">
 								<div class="row">
@@ -86,7 +86,7 @@
 								<input type="hidden" class="form-control member_join" id="member_lev" name="member_lev" value="0">
 
 								<div class="row g-4 text-center align-items-center justify-content-center pt-4">
-									<button id="join_btn" type="submit" class="btn border-secondary py-3 px-4 text-uppercase w-100 text-primary">회원가입</button>
+									<button id="join_btn" type="button" class="btn border-secondary py-3 px-4 text-uppercase w-100 text-primary">회원가입</button>
 								</div>
 							</div>
 						</div> 

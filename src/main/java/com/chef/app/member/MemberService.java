@@ -11,6 +11,19 @@ public class MemberService {
 	private MemberDAO memberDAO;
 	
 	
+	
+	public int introducesDelete(MemberDTO memberDTO) throws Exception {
+		return memberDAO.introducesDelete(memberDTO);
+	}
+	
+	public int mypageUpdate(MemberDTO memberDTO) throws Exception {
+		return memberDAO.mypageUpdate(memberDTO);
+	}
+	
+	public MemberDTO mypage(MemberDTO memberDTO) throws Exception {
+		return memberDAO.mypage(memberDTO);
+	}
+	
 	public void kakao() throws Exception {
 		System.out.println("== Kakao Service ==");
 		memberDAO.kakao();
@@ -41,6 +54,5 @@ public class MemberService {
 		
 		return memberDAO.join(memberDTO);
 	}
-	
 	
 }

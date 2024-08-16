@@ -35,6 +35,7 @@
 </head>
 <body>
     <c:import url="/WEB-INF/views/templete/nav.jsp"></c:import>
+	
 	<div class="container-fluid page-header py-5">
 		<h1 class="text-center text-white display-6">로그인</h1>
 	</div>
@@ -60,6 +61,14 @@
 								<div class="row g-4 text-center align-items-center justify-content-center pt-4">
 									<button id="login_btn" type="button" class="btn border-secondary py-3 px-4 text-uppercase w-100 text-primary">로그인</button>
 								</div>
+
+								<div class="row g-4 text-center align-items-center justify-content-center pt-4">
+									<img src="/resources/member/img/kakao_login_medium_narrow.png" id="img">
+								</div>
+
+								<div class="form-item">
+									<a href="join">회원가입</a>
+								</div>
 							</div>
 						</div> 
 					</form>
@@ -69,6 +78,10 @@
 	</div> 
 <c:import url="/WEB-INF/views/templete/footer.jsp"></c:import>
 <script src="/resources/member/js/login.js"></script>
+<script src="/resources/member/js/kakaologin.js"></script>
+<script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.2/kakao.min.js" 
+		integrity="sha384-TiCUE00h649CAMonG018J2ujOgDKW/kVWlChEuu4jK2vxfAAD0eZxzCKakxg55G4" crossorigin="anonymous">
+</script>
 </body>
 </html>
 <!-- placeholder="House Number Street Name" -->

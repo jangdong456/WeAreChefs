@@ -27,10 +27,55 @@ public class MemberController {
 	@Autowired
 	private Email email;
 	
-	@GetMapping("mypage")
-	public void mypage() throws Exception {
-		System.out.println("== My Page ==");
+	
+	@GetMapping("introducesDelete")
+	public String introducesDelete(MemberDTO memberDTO, HttpSession session) throws Exception {
+		System.out.println("멤버 id 값:"+ memberDTO.getMember_id() );
+		MemberDTO memberdto = (MemberDTO)session.getAttribute("member");
+		memberdto.setMember_id(memberDTO.getMember_id());
+		int result = memberService.introducesDelete(memberdto);
+		System.out.println("결과 :" + result);
+		
+		String url = "";
+		if(result > 0) {
+			url = "member/test";
+		}
+		return url;
 	}
+	
+	
+	@GetMapping("mypage")
+	public void mypage(HttpSession session, Model model) throws Exception {
+		System.out.println("== My Page ==");
+		MemberDTO memberdto = (MemberDTO)session.getAttribute("member");
+		memberdto = memberService.mypage(memberdto);
+		System.out.println("반환 객체 :" + memberdto);
+		model.addAttribute("member", memberdto);
+	}
+	
+	@PostMapping("mypage")
+	public String mypageUpdate(MemberDTO memberDTO, HttpSession session, Model model) throws Exception {
+		
+//		MemberDTO memberdto = (MemberDTO)session.getAttribute("member");
+//		memberdto.setProfile_about_me(profile_about_me);
+//		memberdto.setMember_id(member_id);
+
+		MemberDTO memberdto = (MemberDTO)session.getAttribute("member");
+		memberdto.setMember_id(memberDTO.getMember_id());
+		memberdto.setProfile_about_me(memberDTO.getProfile_about_me());;
+		
+		int result = memberService.mypageUpdate(memberdto);
+		
+		String url = "";
+		if(result > 0) {
+			
+			url = "member/test";
+		}
+		return url;
+	}
+	
+	
+	
 	
 	@GetMapping("sendEmail")
 	public void email(MemberDTO memberDTO, Model model, String member_mail) throws Exception {
@@ -53,9 +98,13 @@ public class MemberController {
 	}
 	
 	@PostMapping("kakaologin")
-	public void kakao(String token) throws Exception {
+	public void kakao(String token, String kakaoId, String kakaoNickname, String kakaoImage) throws Exception {
 		System.out.println("== Kakao Controller ==");
-		System.out.println(token);
+		System.out.println("1번 값:" + token);
+		System.out.println("2번 값:" +kakaoId);
+		System.out.println("3번 값:" +kakaoNickname);
+		System.out.println("4번 값:" +kakaoImage);
+		
 //		memberService.kakao();
 	}
 	
