@@ -50,7 +50,7 @@ img.addEventListener("click", () => {
             .then(res => res.json())
             .then(res => {
                 console.log("사용자정보 진입");
-                console.log("Bearer" + `${token}`);
+                console.log("Bearer " + `${token}`);
                 console.log(res)
                 console.log(res.id)
                 console.log(res.properties.nickname)
