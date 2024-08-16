@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.chef.app.manager.main.ManagerDAO">
+	<!-- index 첫줄 정보 -->
+	<select id="getMemberTotalCount" resultType="java.lang.Long">
+		SELECT COUNT(MEMBER_ID)
+		FROM "MEMBER"
+	</select>
+	
+	<select id="getOrderCompleteCount" resultType="java.lang.Long">
+		SELECT COUNT(*)
+		FROM(SELECT ORDER_NUM , ORDER_STATUS, TO_CHAR(ORDER_DATE , 'YYYY-MM-DD') AS TODAY
+			FROM STOREORDER
+			) ST
+		WHERE ST.TODAY = TO_CHAR(SYSDATE, 'YYYY-MM-DD') AND ST.ORDER_STATUS = '결제완료'
+	</select>
+	
+	<select id="getDeliveryCount" resultType="java.lang.Long">
+		SELECT COUNT(*)
+		FROM(SELECT ORDER_NUM , DELIVERY_STATUS, TO_CHAR(ORDER_DATE , 'YYYY-MM-DD') AS TODAY
+			FROM STOREORDER
+			) ST
+		WHERE ST.TODAY = TO_CHAR(SYSDATE, 'YYYY-MM-DD') AND ST.DELIVERY_STATUS = '배송중'
+	</select>	
+	
+	<select id="getRequiredFoodStockOrderCount" resultType="java.lang.Long">
+		SELECT COUNT(FOOD_STOCK)
+		FROM FOOD
+		<![CDATA[
+			WHERE FOOD_STOCK < 0
+		]]>
+	</select>
+	
+	<!-- index 차트 정보 -->
+	<select id="getMonthTotalPurchase" resultType="MonthTotalPurchaseDTO">
+		SELECT TO_CHAR(ORDER_DATE , 'MM') PUR_MONTH, COUNT(ORDER_NUM)  PUR_COUNT
+		FROM
+		    STOREORDER
+		WHERE TO_CHAR(ORDER_DATE, 'YYYY') = TO_CHAR(SYSDATE, 'YYYY')
+		GROUP BY
+		    TO_CHAR(ORDER_DATE , 'MM')
+	</select>
+	
+		
+	<select id="getMemberListAsc" resultType="MemberDTO">
+		SELECT MM.*
+		FROM 
+			(SELECT ROWNUM, M.*
+			FROM (SELECT * FROM "MEMBER") M
+			ORDER BY ROWNUM ASC) MM
+	</select>
+	
+	<select id="getMemberListDesc" resultType="MemberDTO">
+		SELECT MM.*
+		FROM 
+			(SELECT ROWNUM, M.*
+			FROM (SELECT * FROM "MEMBER") M
+			ORDER BY ROWNUM DESC) MM
+	</select>
+	
+	
+</mapper>

@@ -10,6 +10,7 @@
  		<typeAlias type="com.chef.app.comment.CommentDTO" alias="CommentDTO"/>
  		<typeAlias type="java.util.Map" alias="Map"/>
  		
+
  		<!-- 동국 -->
  		<typeAlias type="com.chef.app.member.MemberDTO" alias="MemberDTO"/>
  		<typeAlias type="com.chef.app.member.MemberFileDTO" alias="MemberFileDTO"/>
@@ -34,5 +35,8 @@
  		<typeAlias type="com.chef.app.manager.NoticeDTO" alias="NoticeDTO"/>
  		<typeAlias type="com.chef.app.manager.NoticeFileDTO" alias="NoticeFileDTO"/>
  		<typeAlias type="com.chef.app.manager.InquiryDTO" alias="InquiryDTO"/>
+ 		<typeAlias type="com.chef.app.manager.MonthTotalPurchaseDTO" alias="MonthTotalPurchaseDTO"/>
+ 		
+
  	</typeAliases>
  </configuration>
