@@ -7,7 +7,7 @@
 	<c:import url="/WEB-INF/views/managerCommons/cssScript.jsp" ></c:import>
 <style type="text/css">
 .MouseShadow:hover {
-	box-shadow: 4px 4px 20px #ddd;
+	box-shadow: 4px 4px 40px #ddd;
 }
 .MouseBlack:hover {
     background: #F5F5F5;
@@ -112,11 +112,19 @@
 			<!--------------------------------------------------------------- End 첫줄 -------------------------------------------------------------->
 
 
-			<!--@-------------------------------------------------------------- Start 두번째 줄 -------------------------------------------------------------->
-			<c:forEach var="list" items="${monthTotalPurchase}" >
-				<c:set var="i" value="${i+1}"/>
-				<input type="hidden" id="${list.pur_month}" value="${list.pur_price}">
+			<!--@-------------------------------------------------------------- Start 두번째 줄(차트) -------------------------------------------------------------->
+			<!-- 1년 매출 차트 정보-->
+			<c:forEach var="i" begin="0" end="11">
+				<c:choose>
+						<c:when test="${i < monthSales.size()}">
+								<input type="hidden" class="purSales" value="${monthSales[i].pur_price}">
+						</c:when>
+						<c:otherwise>
+								<input type="hidden" class="purSales" value="0">
+						</c:otherwise>
+				</c:choose>
 			</c:forEach>
+			<!--주간 매출 차트 정보-->
 			<div class="row">
 				<!-- 메인 차트 -->
 				<div class="col-md-8">
@@ -232,7 +240,7 @@
 									</thead>
 									<tbody>
 										<c:forEach items="${orderListDesc}" var="order" begin="0" end="9" step="1">
-											<tr class="MouseBlack">
+											<tr onmouseover="style.background='#F5F5F5'" onclick="alert('하이하이')" style="cursor:pointer;">
 												<th scope="row">
 													<button
 													class="btn btn-icon btn-round btn-success btn-sm me-2"
@@ -241,7 +249,7 @@
 												</button>
 												${order.order_num}
 											</th>
-											<td class="t	ext-end">${order.member_id}</td>
+											<td class="text-end">${order.member_id}</td>
 											<td class="text-end">${order.order_date}</td>
 											<td class="text-end">${order.order_price}</td>
 										</tr>

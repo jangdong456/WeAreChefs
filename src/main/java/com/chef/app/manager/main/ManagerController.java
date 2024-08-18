@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.chef.app.food.StoreOrderDTO;
-import com.chef.app.manager.MonthTotalPurchaseDTO;
+import com.chef.app.manager.TotalPurchaseDTO;
 import com.chef.app.member.MemberDTO;
 
 @Controller
@@ -24,11 +24,11 @@ public class ManagerController {
 		List<Long> indexFirstRowInfo = managerService.getIndexFirstRowInfo();
 		model.addAttribute("indexFirstRowInfo", indexFirstRowInfo);
 
-		List<MemberDTO> MemberListDesc = managerService.getMemberListDesc();
-		model.addAttribute("memberListDesc", MemberListDesc);
+		List<TotalPurchaseDTO> monthSales = managerService.getMonthSales();
+		model.addAttribute("monthSales", monthSales);
 		
-		List<MonthTotalPurchaseDTO> MonthTotalPurchase = managerService.getMonthTotalPurchase();
-		model.addAttribute("monthTotalPurchase", MonthTotalPurchase);
+		List<MemberDTO> memberListDesc = managerService.getMemberListDesc();
+		model.addAttribute("memberListDesc", memberListDesc);
 		
 		List<StoreOrderDTO> orderListDesc = managerService.getOrderListDesc();
 		model.addAttribute("orderListDesc", orderListDesc);
@@ -51,6 +51,13 @@ public class ManagerController {
 		model.addAttribute("memberDetail", managerService.getMemberDetail(memberDTO));
 		
 		return "manager/memberDetail";
+	}
+	
+	// memberDetail 회원 정보 수정
+	@GetMapping("memberDetailUpdate")
+	public String memberDetailUpdate(MemberDTO memberDTO, Model model) throws Exception{
+		model.addAttribute("memberDetail", managerService.getMemberDetail(memberDTO));
+		return "manager/memberDetailUpdate";
 	}
 
 }

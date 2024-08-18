@@ -58,9 +58,9 @@
                             <th>레벨</th>
                           </tr>
                         </thead>
-                        <tbody >
+                        <tbody>
                           <c:forEach items="${memberListDesc}" var="memberListDesc">
-                            <tr onClick="location.href='/manager/memberDetail?member_id=${memberListDesc.member_id}'">
+                            <tr onClick="location.href='/manager/memberDetail?member_id=${memberListDesc.member_id}'" style="cursor:pointer;">
                               <td>${memberListDesc.member_id}</td>
                               <td>${memberListDesc.member_mail}</td>
                               <td>${memberListDesc.member_phone}</td>

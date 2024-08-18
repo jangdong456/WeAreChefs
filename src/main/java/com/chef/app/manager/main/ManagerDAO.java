@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.chef.app.food.StoreOrderDTO;
-import com.chef.app.manager.MonthTotalPurchaseDTO;
+import com.chef.app.manager.TotalPurchaseDTO;
 import com.chef.app.member.MemberDTO;
 
 @Repository
@@ -36,8 +36,8 @@ public class ManagerDAO {
 	}
 	
 	// index 차트 정보
-	public List<MonthTotalPurchaseDTO> getMonthTotalPurchase() throws Exception{
-		return sqlSession.selectList(NAMESPACE + "getMonthTotalPurchase");
+	public List<TotalPurchaseDTO> getMonthSales() throws Exception{
+		return sqlSession.selectList(NAMESPACE + "getMonthSales");
 	}
 	
 	// index 멤버 정보

@@ -49,11 +49,6 @@
                   <span class="sub-item">회원 정보</span>
                 </a>
               </li>
-              <li>
-                <a href="#">
-                  <span class="sub-item">회원 등급</span>
-                </a>
-              </li>
             </ul>
           </div>
         </li>

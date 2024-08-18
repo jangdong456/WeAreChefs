@@ -268,13 +268,21 @@ var world_map = new jsVectorMap({
 //Chart
 
 var ctx = document.getElementById('statisticsChart').getContext('2d');
+// 월별 정보
+let purSales = document.getElementsByClassName('purSales');
+for(i=0;i<12;i++){
+	if(purSales[i] === undefined || purSales[i] === null){
+		purSales[i] = 0;
+	}
+	console.log(i + '하하' + purSales[i].value);
+}
 
 var statisticsChart = new Chart(ctx, {
 	type: 'line',
 	data: {
 		labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
 		datasets: [ {
-			label: "Subscribers",
+			label: "지출",
 			borderColor: '#f3545d',
 			pointBackgroundColor: 'rgba(243, 84, 93, 0.6)',
 			pointRadius: 0,
@@ -284,7 +292,7 @@ var statisticsChart = new Chart(ctx, {
 			borderWidth: 2,
 			data: [154, 184, 175, 999, 210, 231, 240, 278, 252, 312, 320, 374]
 		}, {
-			label: "New Visitors",
+			label: "차익",
 			borderColor: '#fdaf4b',
 			pointBackgroundColor: 'rgba(253, 175, 75, 0.6)',
 			pointRadius: 0,
@@ -294,7 +302,7 @@ var statisticsChart = new Chart(ctx, {
 			borderWidth: 2,
 			data: [256, 230, 245, 287, 240, 250, 230, 295, 331, 431, 456, 521]
 		}, {
-			label: "Active Users",
+			label: "매출",
 			borderColor: '#177dff',
 			pointBackgroundColor: 'rgba(23, 125, 255, 0.6)',
 			pointRadius: 0,
@@ -302,7 +310,7 @@ var statisticsChart = new Chart(ctx, {
 			legendColor: '#177dff',
 			fill: true,
 			borderWidth: 2,
-			data: [542, 480, 430, 550, 530, 453, 380, 434, 568, 610, 700, 900]
+			data: [purSales[0].value, purSales[1].value, purSales[2].value, purSales[3].value, purSales[4].value, purSales[5].value, purSales[6].value, purSales[7].value, purSales[8].value, purSales[9].value, purSales[10].value, purSales[11].value]
 		}]
 	},
 	options : {

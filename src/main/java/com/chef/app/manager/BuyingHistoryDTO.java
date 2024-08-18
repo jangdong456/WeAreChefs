@@ -1,11 +1,22 @@
 package com.chef.app.manager;
 
+import java.sql.Date;
+
 public class BuyingHistoryDTO {
 	
 	private Long buying_num;
 	private Long food_num;
 	private Long buying_count;
+	private Date buying_date;
 	
+	
+	
+	public Date getBuying_date() {
+		return buying_date;
+	}
+	public void setBuying_date(Date buying_date) {
+		this.buying_date = buying_date;
+	}
 	public Long getBuying_num() {
 		return buying_num;
 	}
