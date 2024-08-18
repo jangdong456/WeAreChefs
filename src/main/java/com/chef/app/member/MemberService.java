@@ -31,9 +31,9 @@ public class MemberService {
 		return memberDAO.mypage(memberDTO);
 	}
 	
-	public void kakao() throws Exception {
+	public void kakao(MemberDTO memberDTO) throws Exception {
 		System.out.println("== Kakao Service ==");
-		memberDAO.kakao();
+		memberDAO.kakao(memberDTO);
 	}
 	
 	public MemberDTO login(MemberDTO memberDTO) throws Exception {

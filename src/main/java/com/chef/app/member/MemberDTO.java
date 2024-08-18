@@ -11,7 +11,35 @@ public class MemberDTO {
 	private String profile_about_me;
 	private String profile_sns_url;
 	private Long profile_hit;
+	private String member_type;
+	private String kakao_nickname;
+	private String kakao_profile_img;
+	private String profile_name;
 	
+	public String getMember_type() {
+		return member_type;
+	}
+	public void setMember_type(String member_type) {
+		this.member_type = member_type;
+	}
+	public String getKakao_nickname() {
+		return kakao_nickname;
+	}
+	public void setKakao_nickname(String kakao_nickname) {
+		this.kakao_nickname = kakao_nickname;
+	}
+	public String getKakao_profile_img() {
+		return kakao_profile_img;
+	}
+	public void setKakao_profile_img(String kakao_profile_img) {
+		this.kakao_profile_img = kakao_profile_img;
+	}
+	public String getProfile_name() {
+		return profile_name;
+	}
+	public void setProfile_name(String profile_name) {
+		this.profile_name = profile_name;
+	}
 	public String getMember_id() {
 		return member_id;
 	}

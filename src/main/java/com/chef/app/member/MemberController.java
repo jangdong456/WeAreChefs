@@ -1,7 +1,5 @@
 package com.chef.app.member;
 
-import java.util.HashMap;
-
 import javax.crypto.Cipher;
 import javax.servlet.http.HttpSession;
 
@@ -15,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.chef.app.util.Email;
-
 
 @Controller
 @RequestMapping("/member/*")
@@ -109,14 +106,17 @@ public class MemberController {
 	}
 	
 	@PostMapping("kakaologin")
-	public void kakao(String token, String kakaoId, String kakaoNickname, String kakaoImage) throws Exception {
+	public void kakao(String token, MemberDTO memberDTO) throws Exception {
 		System.out.println("== Kakao Controller ==");
 		System.out.println("1번 값:" + token);
-		System.out.println("2번 값:" +kakaoId);
-		System.out.println("3번 값:" +kakaoNickname);
-		System.out.println("4번 값:" +kakaoImage);
+		System.out.println("2번 값:" + memberDTO.getMember_id());
+		System.out.println("3번 값:" + memberDTO.getKakao_nickname());
+		System.out.println("4번 값:" + memberDTO.getKakao_profile_img());
 		
-//		memberService.kakao();
+		
+		if(token != null) {
+			memberService.kakao(memberDTO);
+		}
 	}
 	
 	@GetMapping("kakaologin")

@@ -29,7 +29,7 @@ public class MemberDAO {
 		return sqlSession.selectOne(NAMESPACE + "mypage", memberDTO);
 	}
 	
-	public void kakao() throws Exception {
+	public void kakao(MemberDTO memberDTO) throws Exception {
 		System.out.println("== Kakao DAO ==");
 	}
 	
