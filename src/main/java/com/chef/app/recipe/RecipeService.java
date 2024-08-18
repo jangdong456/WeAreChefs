@@ -110,4 +110,14 @@ public class RecipeService {
 		return recipeDAO.hit(recipeDTO);
 	}
 
+	public int recipeReply(RecipeReplyDTO recipeReplyDTO) {
+		
+		return recipeDAO.recipeReply(recipeReplyDTO);
+	}
+	
+	public List<RecipeReviewDTO> replyList(RecipeReplyDTO recipeReplyDTO) {
+
+		return recipeDAO.replyList(recipeReplyDTO);
+	}
+
 }

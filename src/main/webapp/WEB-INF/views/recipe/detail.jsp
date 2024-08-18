@@ -107,6 +107,10 @@
                                         <button class="nav-link border-white border-bottom-0" type="button" role="tab"
                                             id="nav-mission-tab" data-bs-toggle="tab" data-bs-target="#nav-mission"
                                             aria-controls="nav-mission" aria-selected="false">Reviews</button>
+                                            
+                                            <button class="nav-link border-white border-bottom-0" type="button" role="tab"
+                                            id="nav-mission2-tab" data-bs-toggle="tab" data-bs-target="#nav-mission2"
+                                            aria-controls="nav-mission2" aria-selected="false">Qna</button>
                                     </div>
                                 </nav>
                                 <div class="tab-content mb-5">
@@ -143,20 +147,51 @@
                                            </c:forEach> 
                                         
                                        </div>
+                                 <!-- qna  -->
+                                        <div class="tab-pane" id="nav-mission2" role="tabpanel" aria-labelledby="nav-mission2-tab">
+                                       	<c:forEach items="${ar2}" var="ar" >
+                                        <div class="d-flex">
+                                            <img src="/resources/img/avatar.jpg" class="img-fluid rounded-circle p-3" style="width: 100px; height: 100px;" alt="">
+                                            <div class="replyListParent">
+                                                <p class="mb-2" style="font-size: 14px;">${ar.create_date}</p>
+                                                <div class="d-flex justify-content-between align-items-center">
+                                                    <h5 class="mb-0">${ar.member_id}</h5>
+                                                    <button class ="btn text-primary rounded-pill ms-20" id="replyBtn" style="font-size: 14px;">|답글|</button>
+                                                    
+                                                </div>
+                                                <p>${ar.board_content}</p>
+                                                <!--  답글달림 -->
+                                                <div class="replyList">
+                                                
+                                                
+                                                </div>
+                                            </div>
+                                          
+                                        </div>
+                                            <hr>
+                                           </c:forEach> 
+                                        
+                                       </div>
                                     </div>
                                 </div>
                             </div>
-                            <c:if test="${not empty result}">
-    							<div class="alert alert-success">${result}</div>
-							</c:if>
-                         	<form action="./review" method="post" id ="re_frm">
-                                <h4 class="mb-5 fw-bold">review📌</h4>
+                         	<form action="/recipe/review" method="post" id ="re_frm">
+                                <h4 class="mb-5 fw-bold">review&QnA📌</h4>
                      
                                    <div class="row g-4">
                                    
                                    <div class="border-bottom rounded">
                                         <input type="hidden" class="form-control border-0 me-4" value="${dto.recipe_num}" name="recipe_num"> 
-                                        </div>
+                                   </div>
+							        <!-- Review or QnA -->
+							        <div class="col-lg-12">
+						                 <div class="col-lg-12">
+								            <label><input type="radio" id="review" name="post_type" value="review" checked> Review</label>&nbsp&nbsp&nbsp
+								            <label><input type="radio" id="reply" name="post_type" value="qna">QnA</label>
+								            <br>
+								            
+							       		 </div>
+							        </div>
                                     <div class="col-lg-6">
                                         <div class="border-bottom rounded">
                                             <input type="text" class="form-control border-0 me-4" placeholder="작성자" name="member_id" >
@@ -177,7 +212,7 @@
                                              <div class="d-flex align-items-center">
     
                                        	  </div>
-                                            <button type="button" class="btn border border-secondary text-primary rounded-pill px-4 py-3" id="reviewBtn"> Post Comment</button>
+                                            <button type="button" class="btn border border-secondary text-primary rounded-pill px-4 py-3" id="reBtn"> Post Comment</button>
                                         </div>
                                     </div>
                                 </div>
@@ -199,6 +234,7 @@
 <script src="/resources/lib/lightbox/js/lightbox.min.js"></script> 
 <script src="/resources/lib/owlcarousel/owl.carousel.min.js"></script>
 <script src="/resources/js/recipe/recipeDetail.js"></script>
+<script src="/resources/js/recipe/recipeReply.js"></script>
 <!-- Template Javascript -->
 <script src="/resources/js/main.js"></script>
 

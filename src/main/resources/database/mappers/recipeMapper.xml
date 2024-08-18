@@ -206,5 +206,36 @@
    	SET RECIPE_HIT = RECIPE_HIT + 1 
    	WHERE RECIPE_NUM = #{recipe_num}
    </update>
-	    
+   
+   <insert id="recipeReply"  parameterType="RecipeReplyDTO" >
+	    INSERT INTO RECIPEREPLY(
+								   RECIPE_REPLY_NUM
+								 , RECIPE_NUM
+								 , MEMBER_ID
+								 , BOARD_TITLE	
+								 , BOARD_CONTENT	
+								 , REF
+						   		 , STEP
+						   		 , DEPTH
+								 )
+							VALUES
+   									(
+   									  RECIPEREPLY_SEQ.NEXTVAL
+   									, #{recipe_num}
+   									, #{member_id}
+   									, #{board_title}
+   									, #{board_content}
+   									, RECIPEREPLY_SEQ.CURRVAL
+									, 0
+									, 0
+   									)
+   									
+  </insert>
+  	<select id="replyList" parameterType="recipeReplyDTO" resultType="recipeReplyDTO" >
+		SELECT *
+		FROM RECIPEREPLY
+		WHERE RECIPE_NUM = #{recipe_num}
+		ORDER BY CREATE_DATE DESC
+
+	</select>
     </mapper>

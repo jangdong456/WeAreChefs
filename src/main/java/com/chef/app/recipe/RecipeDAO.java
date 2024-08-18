@@ -72,4 +72,14 @@ public class RecipeDAO {
 		return sqlSession.update(NAMESPACE + "hit", recipeDTO);
 	}
 
+	public int recipeReply(RecipeReplyDTO recipeReplyDTO) {
+		
+		return sqlSession.insert(NAMESPACE + "recipeReply", recipeReplyDTO);
+	}
+
+	public List<RecipeReviewDTO> replyList(RecipeReplyDTO recipeReplyDTO) {
+		
+		return sqlSession.selectList(NAMESPACE + "replyList", recipeReplyDTO);
+	}
+
 }
