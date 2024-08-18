@@ -54,21 +54,25 @@
 										</div>					
 									</div>
 								</div>
+								
 								<div class="form-item" id="nick_name_span">
 									<label class="form-label my-3">닉네임<sup>*</sup></label>
-									<input type="text" class="form-control member_join" id="member_nickname" name="member_nickname">
+									<input type="text" class="form-control member_join" id="member_nickname" name="member_nickname" maxlength="10">
+									<button id="nickNameCheck" type="button" class="btn border-secondary py-2 px-4 text-uppercase w-80 text-primary">중복확인</button>
 								</div>
+
 								<div class="form-item">
 									<label class="form-label my-3">아이디<sup>*</sup></label> 
-									<input type="text" class="form-control member_join" id="member_id" name="member_id">
+									<input type="text" class="form-control member_join" id="member_id" name="member_id" maxlength="12">
+									<button id="idCheck" type="button" class="btn border-secondary py-2 px-4 text-uppercase w-80 text-primary">중복확인</button>
 								</div>
 								<div class="form-item">
 									<label class="form-label my-3">비밀번호<sup>*</sup></label>
-									<input type="text" class="form-control member_join" id="member_pwd" name="member_pwd">
+									<input type="password" class="form-control member_join" id="member_pwd" name="member_pwd" maxlength="12">
 								</div>
 								<div class="form-item">
 									<label class="form-label my-3">비밀번호확인<sup>*</sup></label>
-									<input type="text" class="form-control member_join">
+									<input type="text" class="form-control member_join" id="pwdCheck" maxlength="12">
 								</div>
 								<div class="form-item">
 									<label class="form-label my-3">이메일<sup>*</sup></label>
@@ -80,7 +84,8 @@
 								</div>
 								<div class="form-item">
 									<label class="form-label my-3">전화번호<sup>*</sup></label>
-									<input type="text" class="form-control member_join" id="member_phone" name="member_phone">
+									<input type="text" class="form-control member_join" id="member_phone" name="member_phone" maxlength="13">
+									<button id="phoneCheck" type="button" class="btn border-secondary py-2 px-4 text-uppercase w-80 text-primary">중복확인</button>
 								</div>
 
 								<input type="hidden" class="form-control member_join" id="member_lev" name="member_lev" value="0">

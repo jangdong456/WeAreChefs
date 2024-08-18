@@ -10,7 +10,14 @@ public class MemberService {
 	@Autowired
 	private MemberDAO memberDAO;
 	
-	
+	public int duplication(MemberDTO memberDTO)throws Exception {
+		int check = memberDAO.duplication(memberDTO);
+		System.out.println("서비스 테스트");
+		System.out.println("반환 값 :"+ check);
+		
+		return check;
+
+	}
 	
 	public int introducesDelete(MemberDTO memberDTO) throws Exception {
 		return memberDAO.introducesDelete(memberDTO);

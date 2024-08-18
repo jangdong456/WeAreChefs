@@ -28,6 +28,17 @@ public class MemberController {
 	private Email email;
 	
 	
+	@GetMapping("duplication")
+	public String duplication(MemberDTO memberDTO, Model model) throws Exception {
+		System.out.println("== duplication ==");
+		System.out.println(memberDTO.getMember_nickname());
+		int check = memberService.duplication(memberDTO);
+		
+		model.addAttribute("msg", check);
+		
+		return "commons/result";
+	}
+	
 	@GetMapping("introducesDelete")
 	public String introducesDelete(MemberDTO memberDTO, HttpSession session) throws Exception {
 		System.out.println("멤버 id 값:"+ memberDTO.getMember_id() );
@@ -155,16 +166,16 @@ public class MemberController {
 	}
 	
 	@PostMapping("join")
-	public String join(MemberDTO memberDTO) throws Exception {
+	public String join(MemberDTO memberDTO, Model model) throws Exception {
 		System.out.println("== Post Join Controller ==");
-		
+
 		int result = memberService.join(memberDTO);
-		System.out.println("DAO 반환값 :" + result);
-		String url = "";
-		if(result >0) {
-			url = "redirect:/member/join";
+		System.out.println("Join 반환값 :" + result);
+		
+		if(result > 0) {
+			model.addAttribute("msg", result);
 		}
-		return url;
+		return "commons/result";
 	}
 	
 	

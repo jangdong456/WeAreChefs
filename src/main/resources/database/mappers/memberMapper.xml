@@ -5,6 +5,24 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="com.chef.app.member.MemberDAO">
 	
+	<select id="duplication" parameterType="MemberDTO" resultType="int">
+		SELECT 
+			<choose>
+				<when test="member_nickname != null">
+					COUNT(MEMBER_NICKNAME) FROM MEMBER
+					WHERE MEMBER_NICKNAME = #{member_nickname}
+				</when>
+				<when test="member_phone != null">
+					COUNT(MEMBER_PHONE) FROM MEMBER
+					WHERE MEMBER_PHONE = #{member_phone}
+				</when>
+				<otherwise>
+					COUNT(MEMBER_ID) FROM MEMBER
+					WHERE MEMBER_ID = #{member_id}
+				</otherwise>
+			</choose>			
+	</select>
+	
 	<update id="introducesDelete" parameterType="MemberDTO">
 		UPDATE MEMBER SET PROFILE_ABOUT_ME = NULL
 		WHERE MEMBER_ID = #{member_id}

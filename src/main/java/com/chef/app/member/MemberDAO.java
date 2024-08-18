@@ -12,6 +12,11 @@ public class MemberDAO {
 	
 	private final String NAMESPACE = "com.chef.app.member.MemberDAO.";
 	
+	
+	public int duplication(MemberDTO memberDTO)throws Exception {
+		return sqlSession.selectOne(NAMESPACE+ "duplication" ,memberDTO);
+	}
+	
 	public int introducesDelete(MemberDTO memberDTO) throws Exception {
 		return sqlSession.update(NAMESPACE + "introducesDelete", memberDTO);
 	}

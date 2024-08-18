@@ -24,10 +24,10 @@ public class MemberDTO {
 	public void setMember_name(String member_name) {
 		this.member_name = member_name;
 	}
-	public String getMembere_mail() {
+	public String getMember_mail() {
 		return member_mail;
 	}
-	public void setMembere_mail(String membere_mail) {
+	public void setMember_mail(String membere_mail) {
 		this.member_mail = membere_mail;
 
 	}
