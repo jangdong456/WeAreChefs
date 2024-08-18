@@ -31,9 +31,26 @@ public class MemberService {
 		return memberDAO.mypage(memberDTO);
 	}
 	
-	public void kakao(MemberDTO memberDTO) throws Exception {
+	public MemberDTO kakaologin2(MemberDTO memberDTO) throws Exception {
 		System.out.println("== Kakao Service ==");
-		memberDAO.kakao(memberDTO);
+		return memberDAO.kakaologin2(memberDTO);
+	}
+	
+	public int kakaologin(MemberDTO memberDTO) throws Exception {
+		System.out.println("== Kakao Service ==");
+		int result = 0;
+		if(memberDTO.getMember_id() != null) {
+			result = memberDAO.kakaoCheck(memberDTO);
+			
+			// result이 1이면 회원가입된 상태 | 0이면 가입안된 상태
+			if(result < 0) {
+				// 가입된 회원이 없어서 kakaologin(생성하는 메서드 실행)
+				result = memberDAO.kakaologin(memberDTO);
+			} else {
+				System.out.println("가입된 상태(1이여야함) :" +result);
+			}
+		}
+		return result;
 	}
 	
 	public MemberDTO login(MemberDTO memberDTO) throws Exception {

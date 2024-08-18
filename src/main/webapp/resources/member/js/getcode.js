@@ -65,8 +65,8 @@ img.addEventListener("click", () => {
                 fetch("kakaologin", {
                     method : "POST",
                     headers : { "Content-type":"application/x-www-form-urlencoded" },
-                    body: "kakaoId="+kakaoId+"&kakaoNickname="+kakaoNickname+"&kakaoImage="+kakaoImage+"&token="+token
-                })
+                    body: "member_id="+kakaoId+"&kakao_nickname="+kakaoNickname+"&kakao_profile_img="+kakaoImage+"&token="+token
+                })  
             })
             
         }).catch((error) =>{

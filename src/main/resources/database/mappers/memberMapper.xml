@@ -37,11 +37,27 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SELECT * FROM MEMBER
 		WHERE MEMBER_ID = #{member_id}
 	</select>
-
+	
+	<select id="kakaoCheck" parameterType="MemberDTO" resultType="int">
+		SELECT 
+		COUNT(MEMBER_ID) FROM MEMBER
+		WHERE MEMBER_ID = #{member_id}
+	</select>
+	
+	<insert id="kakaologin" parameterType="MemberDTO">
+		INSERT INTO MEMBER (member_id, member_nickname, kakao_profile_img, member_type)
+		VALUES (#{member_id}, #{member_nickname}, #{kakao_profile_img}, #{member_type})
+	</insert>
+	
 	<insert id="join" parameterType="MemberDTO">
 		INSERT INTO MEMBER (member_id, member_name, member_mail , member_pwd, member_phone, member_nickname)
 		VALUES (#{member_id}, #{member_name}, #{member_mail}, #{member_pwd}, #{member_phone}, #{member_nickname})
 	</insert>
+	
+	<select id="kakaologin2" parameterType="MemberDTO" resultType="MemberDTO">
+		SELECT * FROM MEMBER
+		WHERE member_id = #{member_id}
+	</select>
 	
 	<select id="login" parameterType="MemberDTO" resultType="MemberDTO">
 		SELECT * FROM MEMBER

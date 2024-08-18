@@ -106,17 +106,28 @@ public class MemberController {
 	}
 	
 	@PostMapping("kakaologin")
-	public void kakao(String token, MemberDTO memberDTO) throws Exception {
+	public String kakaologin(String token, MemberDTO memberDTO, Model model, HttpSession session) throws Exception {
 		System.out.println("== Kakao Controller ==");
-		System.out.println("1번 값:" + token);
-		System.out.println("2번 값:" + memberDTO.getMember_id());
-		System.out.println("3번 값:" + memberDTO.getKakao_nickname());
-		System.out.println("4번 값:" + memberDTO.getKakao_profile_img());
-		
+		int num = 0;
+		String result = "";
 		
 		if(token != null) {
-			memberService.kakao(memberDTO);
+			System.out.println("1번 값:" + token);
+			System.out.println("2번 값:" + memberDTO.getMember_id());
+			System.out.println("3번 값:" + memberDTO.getMember_nickname());
+			System.out.println("4번 값:" + memberDTO.getKakao_profile_img());
+			System.out.println("5번 값:" + memberDTO.getMember_type());
+			num = memberService.kakaologin(memberDTO);
 		}
+		
+		if(num > 0) {
+			MemberDTO memberdto = memberService.kakaologin2(memberDTO);
+			System.out.println(memberdto);
+			session.setAttribute("member", memberdto);
+			model.addAttribute("msg", num);
+			result = "commons/result";
+		}
+		return result;
 	}
 	
 	@GetMapping("kakaologin")

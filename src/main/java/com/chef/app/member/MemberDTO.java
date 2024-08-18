@@ -8,12 +8,14 @@ public class MemberDTO {
 	private String member_phone;
 	private String member_nickname;
 	private Long member_lev;
+	
 	private String profile_about_me;
 	private String profile_sns_url;
 	private Long profile_hit;
+	
 	private String member_type;
-	private String kakao_nickname;
 	private String kakao_profile_img;
+	
 	private String profile_name;
 	
 	public String getMember_type() {
@@ -22,12 +24,7 @@ public class MemberDTO {
 	public void setMember_type(String member_type) {
 		this.member_type = member_type;
 	}
-	public String getKakao_nickname() {
-		return kakao_nickname;
-	}
-	public void setKakao_nickname(String kakao_nickname) {
-		this.kakao_nickname = kakao_nickname;
-	}
+
 	public String getKakao_profile_img() {
 		return kakao_profile_img;
 	}

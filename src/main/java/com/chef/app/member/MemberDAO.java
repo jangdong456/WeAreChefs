@@ -14,7 +14,7 @@ public class MemberDAO {
 	
 	
 	public int duplication(MemberDTO memberDTO)throws Exception {
-		return sqlSession.selectOne(NAMESPACE+ "duplication" ,memberDTO);
+		return sqlSession.selectOne(NAMESPACE+ "duplication" , memberDTO);
 	}
 	
 	public int introducesDelete(MemberDTO memberDTO) throws Exception {
@@ -29,8 +29,17 @@ public class MemberDAO {
 		return sqlSession.selectOne(NAMESPACE + "mypage", memberDTO);
 	}
 	
-	public void kakao(MemberDTO memberDTO) throws Exception {
+	public int kakaoCheck(MemberDTO memberDTO) throws Exception {
+		return sqlSession.selectOne(NAMESPACE + "kakaoCheck", memberDTO);
+	}
+	
+	public MemberDTO kakaologin2(MemberDTO memberDTO) throws Exception {
+		return sqlSession.selectOne(NAMESPACE + "kakaologin2", memberDTO);
+	}
+	
+	public int kakaologin(MemberDTO memberDTO) throws Exception {
 		System.out.println("== Kakao DAO ==");
+		return sqlSession.insert(NAMESPACE + "kakaologin", memberDTO);
 	}
 	
 	public MemberDTO login(MemberDTO memberDTO) throws Exception {
