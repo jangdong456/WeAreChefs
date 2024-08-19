@@ -43,11 +43,11 @@ public class MemberService {
 			result = memberDAO.kakaoCheck(memberDTO);
 			
 			// result이 1이면 회원가입된 상태 | 0이면 가입안된 상태
-			if(result < 0) {
+			if(result <= 0) {
 				// 가입된 회원이 없어서 kakaologin(생성하는 메서드 실행)
 				result = memberDAO.kakaologin(memberDTO);
 			} else {
-				System.out.println("가입된 상태(1이여야함) :" +result);
+				System.out.println("가입된 상태면(1이여야함) :" +result);
 			}
 		}
 		return result;
