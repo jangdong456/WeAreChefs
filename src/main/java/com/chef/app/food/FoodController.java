@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.chef.app.member.MemberDTO;
 import com.chef.app.util.Pager;
 
 import oracle.jdbc.proxy.annotation.Post;
@@ -74,12 +75,17 @@ public class FoodController {
 	}
 	
 	@GetMapping("list")
-	public void getList(Pager pager,Model model) throws Exception{
+	public void getList(Pager pager,Model model,HttpSession session) throws Exception{
+		
+		MemberDTO memberDTO = (MemberDTO)session.getAttribute("member");
+		
 		List<FoodDTO> ar =foodService.getList(pager);
 		List<Map<String, Object>> categoryCount =foodService.categoryCount();
 		model.addAttribute("pager", pager);
 		model.addAttribute("list", ar);
 		model.addAttribute("count", categoryCount);
+		model.addAttribute("admin", memberDTO);
+		
 	}
 	
 	@PostMapping("list")
@@ -96,10 +102,13 @@ public class FoodController {
 	}
 	
 	@GetMapping("detail")
-	public void getDetail(FoodDTO foodDTO,Model model) throws Exception {
+	public void getDetail(FoodDTO foodDTO,Model model,HttpSession session) throws Exception {
+		
+		MemberDTO memberDTO = (MemberDTO)session.getAttribute("member");
 		
 		foodDTO = foodService.getDetail(foodDTO);
 		model.addAttribute("dto", foodDTO);
+		model.addAttribute("admin", memberDTO);
 
 	}
 	
@@ -146,8 +155,10 @@ public class FoodController {
 	}
 	
 	@GetMapping("cartAdd")
-	public String cartAdd (Long food_num,Long cart_count,Model model) throws Exception {
-		String memberId = "ksr";
+	public String cartAdd (Long food_num,Long cart_count,Model model,HttpSession session) throws Exception {
+		
+		MemberDTO memberDTO = (MemberDTO)session.getAttribute("member");
+		String memberId = memberDTO.getMember_id();
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("member_id", memberId);
@@ -170,9 +181,11 @@ public class FoodController {
 	}
 	
 	@GetMapping("cart")
-	public void cartList(Model model) throws Exception{
+	public void cartList(Model model,HttpSession session) throws Exception{
 		
-		String member_id = "ksr";
+		MemberDTO memberDTO = (MemberDTO)session.getAttribute("member");
+		String member_id = memberDTO.getMember_id();
+		
 		StoreCartDTO storeCartDTO = new StoreCartDTO();
 		storeCartDTO.setMember_id(member_id);
 		List<StoreCartDTO> ar = foodService.cartList(storeCartDTO);
@@ -182,9 +195,11 @@ public class FoodController {
 	}
 	
 	@GetMapping("cartDelete")
-	public String deleteCart(StoreCartDTO storeCartDTO,Model model) throws Exception {
+	public String deleteCart(StoreCartDTO storeCartDTO,Model model,HttpSession session) throws Exception {
 		
-		String member_id = "ksr";
+		MemberDTO memberDTO = (MemberDTO)session.getAttribute("member");
+		String member_id = memberDTO.getMember_id();
+		
 		storeCartDTO.setMember_id(member_id);
 		
 		int result = foodService.deleteCart(storeCartDTO);
@@ -194,9 +209,10 @@ public class FoodController {
 	}
 	
 	@PostMapping("finalCart")
-	public String finalCart(@RequestBody List<StoreCartDTO> ar,Model model) throws Exception{
+	public String finalCart(@RequestBody List<StoreCartDTO> ar,Model model,HttpSession session) throws Exception{
 		
-		String member_id = "ksr";
+		MemberDTO memberDTO = (MemberDTO)session.getAttribute("member");
+		String member_id = memberDTO.getMember_id();
 		
 		for(StoreCartDTO a:ar) {
 			a.setMember_id(member_id);
@@ -211,21 +227,26 @@ public class FoodController {
 	}
 	
 	@GetMapping("pay")
-	public void payMain(Model model) throws Exception{
+	public void payMain(Model model,HttpSession session) throws Exception{
 		
-		String member_id = "ksr";
+		MemberDTO memberDTO = (MemberDTO)session.getAttribute("member");
+		String member_id = memberDTO.getMember_id();
+		
 		StoreCartDTO storeCartDTO = new StoreCartDTO();
 		storeCartDTO.setMember_id(member_id);
 		List<StoreCartDTO> ar = foodService.cartList(storeCartDTO);
 		
 		model.addAttribute("list", ar);
+		model.addAttribute("orderMember", memberDTO);
 		
 	}
 	
 	@PostMapping("payment/complete")
-	public String payComplete(@RequestBody StoreOrderDTO storeOrderDTO,Model model) throws Exception {
+	public String payComplete(@RequestBody StoreOrderDTO storeOrderDTO,Model model,HttpSession session) throws Exception {
 		
-		String member_id = "ksr";
+		MemberDTO memberDTO = (MemberDTO)session.getAttribute("member");
+		String member_id = memberDTO.getMember_id();
+
 		storeOrderDTO.setMember_id(member_id);
 			
 		foodService.orderInsert(storeOrderDTO);

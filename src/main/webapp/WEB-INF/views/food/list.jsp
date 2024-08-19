@@ -42,7 +42,7 @@
 
     <!-- Single Page Header start -->
     <div class="container-fluid page-header py-5">
-        <h1 class="text-center text-white display-6">상점</h1>
+        <h1 class="text-center text-white display-6"><a href="/food/list" style="color: #ffffff;">상점</a></h1>
     </div>
     <!-- Single Page Header End -->
 
@@ -105,6 +105,13 @@
                             </div>
                             <div class="col-lg-9">
                                 <div class="row g-4 justify-content-left">
+                                <c:choose>
+                                	<c:when test="${empty list}">
+                                	
+                                		<h1>&nbsp;&nbsp;&nbsp;&nbsp;검색 결과가 없습니다.</h1>
+                                	
+                                	</c:when>
+                                	<c:otherwise>
                                     <c:forEach items="${list}" var="a">
                                     
                                         <div class="col-md-6 col-lg-6 col-xl-4">
@@ -123,9 +130,10 @@
                                                     </div>
                                             </div>
                                             </div>
-                                        </div>
-                                            
+                                        </div>   
                                         </c:forEach>
+                                        </c:otherwise>
+                                </c:choose>
                                 </div>
                             </div>
                                     <div class="col-12">
@@ -144,6 +152,13 @@
                 </div>
 
         <!-- Fruits Shop End-->
+    
+    <c:if test="${admin.member_id=='12341234'}">
+    <div class="container form-group mt-5" align="right">
+        <a href="/food/add"><button class="btn border-secondary text-uppercase text-primary" type="button" id="foodAdd">상품 등록하기</button></a>
+    </div>
+    </c:if> 
+     
 </div>
 <script type="text/javascript" src="/resources/js/food/list.js"></script>
 <c:import url="/WEB-INF/views/templete/footer.jsp"></c:import>
