@@ -9,6 +9,7 @@ const foodCategory = document.getElementById("foodCategory")
 const foodStock = document.getElementById("foodStock")
 const foodPrice = document.getElementById("foodPrice")
 const attach = document.getElementById("attach")
+const imgDiv = document.getElementById("imgDiv")
 
 foodSearch.addEventListener("click",()=>{
     fetch("/food/searchFood?food_name="+searchName.value,{
@@ -60,5 +61,12 @@ attach.addEventListener("change",()=>{
         alert('이미지 파일만 업로드 가능합니다')
         attach.value=null
     }
+
+    const reader = new FileReader();
+  reader.onload = ({ target }) => {
+    imgDiv.innerHTML=''
+    imgDiv.innerHTML = `<img id="viewImg" src="${target.result}"/>`;
+  };
+  reader.readAsDataURL(attach.files[0]);
 
 })

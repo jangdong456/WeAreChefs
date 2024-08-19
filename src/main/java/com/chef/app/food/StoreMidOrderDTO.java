@@ -3,9 +3,9 @@ package com.chef.app.food;
 public class StoreMidOrderDTO {
 
 	private Long mid_num;
-	private Long order_num;
+	private String order_num;
 	private Long food_num;
-	private Long food_count;
+	private Long cart_count;
 	
 	public Long getMid_num() {
 		return mid_num;
@@ -13,10 +13,10 @@ public class StoreMidOrderDTO {
 	public void setMid_num(Long mid_num) {
 		this.mid_num = mid_num;
 	}
-	public Long getOrder_num() {
+	public String getOrder_num() {
 		return order_num;
 	}
-	public void setOrder_num(Long order_num) {
+	public void setOrder_num(String order_num) {
 		this.order_num = order_num;
 	}
 	public Long getFood_num() {
@@ -25,10 +25,11 @@ public class StoreMidOrderDTO {
 	public void setFood_num(Long food_num) {
 		this.food_num = food_num;
 	}
-	public Long getFood_count() {
-		return food_count;
+	public Long getCart_count() {
+		return cart_count;
 	}
-	public void setFood_count(Long food_count) {
-		this.food_count = food_count;
+	public void setCart_count(Long cart_count) {
+		this.cart_count = cart_count;
 	}
+
 }

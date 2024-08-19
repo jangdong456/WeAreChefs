@@ -17,6 +17,13 @@
   .ck-content { 
 	  font-size: 12px; 
 	 }
+
+     #viewImg {
+        width: 350px;
+        height: 350px;
+        object-fit: cover;
+    }
+
 </style>
 
 </head>
@@ -80,6 +87,10 @@
              <div class="form-group">
                 <label class="form-label mt-3 mr-3">* 대표 이미지</label>
                 <input type="file" name="attach" id="attach">
+            </div>
+
+            <div class="form-group" id="imgDiv">
+                
             </div>
 
             <div class="form-group" align="right">

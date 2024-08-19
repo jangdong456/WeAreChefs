@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.chef.app.board.fna.FnaDAO">
+	<select id="fnaList" parameterType="Pager" resultType="InquiryDTO">
+		SELECT * FROM
+			(
+				SELECT ROWNUM R, P.* FROM
+				(
+					SELECT * FROM INQUIRY
+					<where>
+						BOARD_NUM > 0 AND BOARD_TYPE = 1
+						<choose>
+							<when test="kind == 'board_title'">
+								AND BOARD_TITLE LIKE '%' || #{search} || '%' 
+							</when>
+							<otherwise>
+								AND MEMBER_ID LIKE '%' || #{search} || '%' 
+							</otherwise>
+						</choose>
+					</where>
+				ORDER BY BOARD_NUM DESC)
+				P)
+		WHERE R BETWEEN #{startRow} AND #{lastRow}
+	</select>
+	
+	<select id="getRowNum" parameterType="Pager" resultType="java.lang.Long">
+		SELECT COUNT(BOARD_NUM)
+		FROM INQUIRY
+		WHERE BOARD_TYPE = 1 AND
+			<choose>
+				<when test="kind == 'board_title'">
+					 BOARD_TITLE LIKE '%' || #{search} || '%' 
+				</when>
+				<otherwise>
+					 MEMBER_ID LIKE '%' || #{search} || '%' 
+				</otherwise>
+			</choose>
+	</select>
+	
+	<select id="fnaDetail" parameterType="CommentDTO" resultType="InquiryDTO">
+		SELECT * FROM INQUIRY
+		WHERE BOARD_NUM = #{board_num}
+	</select>
+	
+	<update id="fnaUpdate" parameterType="InquiryDTO">
+		UPDATE INQUIRY
+		SET
+			BOARD_TITLE = #{board_title},
+			BOARD_CONTENT = #{board_content},
+			UPDATE_DATE = SYSDATE
+		WHERE BOARD_NUM = #{board_num}
+	</update>
+	
+	<delete id="fnaDelete" parameterType="CommentDTO">
+		DELETE FROM INQUIRY
+		WHERE BOARD_NUM = #{board_num}
+	</delete>
+	
+	<insert id="fnaAdd" parameterType="InquiryDTO">
+		INSERT INTO INQUIRY(BOARD_NUM, MEMBER_ID, BOARD_TYPE, BOARD_TITLE, BOARD_CONTENT, CREATE_DATE)
+		VALUES(INQUIRY_SEQ.NEXTVAL, #{member_id}, 1, #{board_title}, #{board_content}, SYSDATE)
+		
+	</insert>
+</mapper>

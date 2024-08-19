@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.chef.app.board.qna.QnaDAO">
+	<select id="qnaList" parameterType="Pager" resultType="InquiryDTO">
+		SELECT * FROM
+			(
+				SELECT ROWNUM R, P.* FROM
+				(
+					SELECT * FROM INQUIRY
+					<where>
+						BOARD_NUM > 0 AND BOARD_TYPE = 2 AND STEP IS NULL
+						<choose>
+							<when test="kind == 'board_title'">
+								AND BOARD_TITLE LIKE '%' || #{search} || '%' 
+							</when>
+							<otherwise>
+								AND MEMBER_ID LIKE '%' || #{search} || '%' 
+							</otherwise>
+						</choose>
+					</where>
+				ORDER BY BOARD_NUM DESC)
+				P)
+		WHERE R BETWEEN #{startRow} AND #{lastRow}
+	</select>
+	
+ 	<select id="qnaDetail" parameterType="CommentDTO" resultType="InquiryDTO">
+		SELECT * FROM INQUIRY
+		WHERE BOARD_NUM = #{board_num}
+	</select>
+	
+	<update id="qnaUpdate" parameterType="InquiryDTO">
+		UPDATE INQUIRY
+		SET
+			BOARD_TITLE = #{board_title},
+			BOARD_CONTENT = #{board_content},
+			UPDATE_DATE = SYSDATE
+		WHERE BOARD_NUM = #{board_num}
+	</update>
+	
+	<delete id="qnaDelete" parameterType="CommentDTO">
+		DELETE FROM INQUIRY
+		WHERE BOARD_NUM = #{board_num} OR "REF" = #{board_num}
+	</delete>
+	
+	<insert id="qnaAdd" parameterType="InquiryDTO">
+		INSERT INTO INQUIRY(BOARD_NUM, MEMBER_ID, BOARD_TYPE, BOARD_TITLE, BOARD_CONTENT, CREATE_DATE, "REF")
+		VALUES(INQUIRY_SEQ.NEXTVAL, #{member_id}, 2, #{board_title}, #{board_content}, SYSDATE, INQUIRY_SEQ.CURRVAL)
+		
+	</insert>
+	
+	<select id="getRowNum" parameterType="Pager" resultType="java.lang.Long">
+		SELECT COUNT(BOARD_NUM)
+		FROM INQUIRY
+		WHERE BOARD_TYPE = 2 AND STEP IS NULL AND
+			<choose>
+				<when test="kind == 'board_title'">
+					 BOARD_TITLE LIKE '%' || #{search} || '%' 
+				</when>
+				<otherwise>
+					 MEMBER_ID LIKE '%' || #{search} || '%' 
+				</otherwise>
+			</choose>
+	</select>
+	
+	<insert id="addQnaReply" parameterType="InquiryDTO">
+		INSERT INTO INQUIRY(BOARD_NUM, MEMBER_ID, BOARD_TYPE, BOARD_TITLE, BOARD_CONTENT, CREATE_DATE, REF, STEP)
+		VALUES (INQUIRY_SEQ.NEXTVAL, #{member_id}, 2, '댓글', #{board_content}, SYSDATE, #{board_num}, INQUIRY_SEQ.NEXTVAL)
+	</insert>
+	
+	<select id="getQnaReply" parameterType="CommentDTO" resultType="InquiryDTO">
+		SELECT * FROM INQUIRY
+		WHERE BOARD_TYPE = 2 AND "REF" = #{board_num} AND STEP IS NOT NULL
+		ORDER BY STEP ASC
+	</select>
+	
+	
+	<select id="getReplyUpdate" parameterType="InquiryDTO" resultType="InquiryDTO">
+		SELECT * FROM INQUIRY
+		WHERE BOARD_NUM = #{board_num}
+	</select>
+	
+	<update id="replyUpdate" parameterType="InquiryDTO">
+		UPDATE INQUIRY
+			SET BOARD_CONTENT = #{board_content},
+				UPDATE_DATE = SYSDATE
+		WHERE BOARD_NUM = #{board_num}
+	</update>
+	
+	<update id="replyDeleteUpdate" parameterType="CommentDTO">
+		UPDATE INQUIRY
+		SET	DEL = 1,
+			BOARD_CONTENT = '삭제된 글입니다.'		
+		WHERE BOARD_NUM = #{board_num}
+	</update>
+</mapper>

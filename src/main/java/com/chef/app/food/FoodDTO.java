@@ -15,7 +15,7 @@ public class FoodDTO {
 	private Long rating;
 	private StoreImgFileDTO storeImgFileDTO;
 	
-	
+
 	public StoreImgFileDTO getStoreImgFileDTO() {
 		return storeImgFileDTO;
 	}

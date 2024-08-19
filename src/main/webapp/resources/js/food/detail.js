@@ -1,22 +1,44 @@
 const minusBtn = document.getElementById("minusBtn")
 const plusBtn = document.getElementById("plusBtn")
 const buyCount = document.getElementById("buyCount")
+const buyPrice = document.getElementById("buyPrice")
+const cartAdd = document.getElementById("cartAdd")
+const cartFrm = document.getElementById("cartFrm")
+const cartCount = document.getElementById("cartCount")
 
 buyCount.value=1
 
+minusBtn.addEventListener("click", (e) => {
 
-minusBtn.addEventListener("click",()=>{
+        e.stopPropagation();
+ 
+        let currentValue = parseInt(buyCount.value)
+        let currentPrice = parseInt(buyPrice.getAttribute("data-buy-price"))
+    
+        if (currentValue > 1) {
+            buyCount.value = currentValue - 1
+            buyPrice.innerHTML=parseInt(buyCount.value)*currentPrice+"원"
+            
+        } else {
+            buyCount.value = 1
+            buyPrice.innerHTML=parseInt(buyCount.value)*currentPrice+"원"
+        }
 
-    buyCount.value = buyCount.value-1
-    console.log(buyCount.value)
+},true);
 
-    // if(finalCount<1){
-    //     buyCount.value=1
-    // }
-    // buyCount.value=buyCount.value-1
+plusBtn.addEventListener("click",(e)=>{
 
-})
+    e.stopPropagation();
 
-plusBtn.addEventListener("click",()=>{
-    alert("플러스")
+    let currentValue = parseInt(buyCount.value)
+    let currentPrice = parseInt(buyPrice.getAttribute("data-buy-price"))
+
+    buyCount.value = currentValue + 1
+    buyPrice.innerHTML=parseInt(buyCount.value)*currentPrice+"원"
+
+},true)
+
+cartAdd.addEventListener("click",()=>{
+    cartCount.value=buyCount.value
+    cartFrm.submit();
 })

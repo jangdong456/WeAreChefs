@@ -4,20 +4,23 @@ import java.sql.Date;
 import java.util.List;
 
 public class StoreOrderDTO {
-	private Long order_num;
+	private String order_num;
 	private	String member_id;
-	private	String order_method;
 	private	Long order_price;
 	private	String order_status;
 	private	String delivery_address;
 	private	String delivery_stauts;
 	private	Date order_date;
+	private String order_name;
+	private String order_phone;
+	private String order_mail;
+	private String order_post;
 	private List<StoreMidOrderDTO> store_ar;
 	
-	public Long getOrder_num() {
+	public String getOrder_num() {
 		return order_num;
 	}
-	public void setOrder_num(Long order_num) {
+	public void setOrder_num(String order_num) {
 		this.order_num = order_num;
 	}
 	public String getMember_id() {
@@ -25,12 +28,6 @@ public class StoreOrderDTO {
 	}
 	public void setMember_id(String member_id) {
 		this.member_id = member_id;
-	}
-	public String getOrder_method() {
-		return order_method;
-	}
-	public void setOrder_method(String order_method) {
-		this.order_method = order_method;
 	}
 	public Long getOrder_price() {
 		return order_price;
@@ -68,5 +65,30 @@ public class StoreOrderDTO {
 	public void setStore_ar(List<StoreMidOrderDTO> store_ar) {
 		this.store_ar = store_ar;
 	}
+	public String getOrder_name() {
+		return order_name;
+	}
+	public void setOrder_name(String order_name) {
+		this.order_name = order_name;
+	}
+	public String getOrder_phone() {
+		return order_phone;
+	}
+	public void setOrder_phone(String order_phone) {
+		this.order_phone = order_phone;
+	}
+	public String getOrder_mail() {
+		return order_mail;
+	}
+	public void setOrder_mail(String order_mail) {
+		this.order_mail = order_mail;
+	}
+	public String getOrder_post() {
+		return order_post;
+	}
+	public void setOrder_post(String order_post) {
+		this.order_post = order_post;
+	}
+	
 }
 

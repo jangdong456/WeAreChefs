@@ -144,6 +144,11 @@ public class Pager {
 	
 
 	public String getOrder() {
+		
+		if (this.order == null) {
+			this.order = "";
+		}
+		
 		return order;
 	}
 

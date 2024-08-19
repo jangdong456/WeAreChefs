@@ -12,8 +12,34 @@ public class MemberDAO {
 	
 	private final String NAMESPACE = "com.chef.app.member.MemberDAO.";
 	
-	public void kakao() throws Exception {
+	
+	public int duplication(MemberDTO memberDTO)throws Exception {
+		return sqlSession.selectOne(NAMESPACE+ "duplication" , memberDTO);
+	}
+	
+	public int introducesDelete(MemberDTO memberDTO) throws Exception {
+		return sqlSession.update(NAMESPACE + "introducesDelete", memberDTO);
+	}
+	
+	public int mypageUpdate(MemberDTO memberDTO)throws Exception {
+		return sqlSession.update(NAMESPACE + "mypageUpdate", memberDTO);
+	}
+	
+	public MemberDTO mypage(MemberDTO memberDTO) throws Exception {
+		return sqlSession.selectOne(NAMESPACE + "mypage", memberDTO);
+	}
+	
+	public int kakaoCheck(MemberDTO memberDTO) throws Exception {
+		return sqlSession.selectOne(NAMESPACE + "kakaoCheck", memberDTO);
+	}
+	
+	public MemberDTO kakaologin2(MemberDTO memberDTO) throws Exception {
+		return sqlSession.selectOne(NAMESPACE + "kakaologin2", memberDTO);
+	}
+	
+	public int kakaologin(MemberDTO memberDTO) throws Exception {
 		System.out.println("== Kakao DAO ==");
+		return sqlSession.insert(NAMESPACE + "kakaologin", memberDTO);
 	}
 	
 	public MemberDTO login(MemberDTO memberDTO) throws Exception {
