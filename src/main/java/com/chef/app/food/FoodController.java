@@ -208,8 +208,27 @@ public class FoodController {
 
 	}
 	
-	@PostMapping("finalCart")
-	public String finalCart(@RequestBody List<StoreCartDTO> ar,Model model,HttpSession session) throws Exception{
+//	@PostMapping("finalCart")
+//	public void finalCart(@RequestBody List<StoreCartDTO> ar,Model model,HttpSession session) throws Exception{
+//		
+//		MemberDTO memberDTO = (MemberDTO)session.getAttribute("member");
+//		String member_id = memberDTO.getMember_id();
+//		
+//		for(StoreCartDTO a:ar) {
+//			a.setMember_id(member_id);
+//		}
+//		
+//		int result = foodService.payUpdateCart(ar);
+//		
+//		model.addAttribute("msg", "/food/pay");
+//		
+//		return "commons/result";
+//		
+//		
+//	}
+	
+	@PostMapping("pay")
+	public String payMain(@RequestBody List<StoreCartDTO> ar,Model model,HttpSession session) throws Exception{
 		
 		MemberDTO memberDTO = (MemberDTO)session.getAttribute("member");
 		String member_id = memberDTO.getMember_id();
@@ -218,26 +237,25 @@ public class FoodController {
 			a.setMember_id(member_id);
 		}
 		
-		int result = foodService.payUpdateCart(ar);
+		List<StoreCartDTO> cartAr = foodService.payCartList(ar);
 		
-		model.addAttribute("msg", "/food/pay");
+	    session.setAttribute("cartList", cartAr);
+	    session.setAttribute("orderMember", memberDTO);
+		
+	    model.addAttribute("msg", "/food/pay");
 		
 		return "commons/result";
 		
 	}
 	
 	@GetMapping("pay")
-	public void payMain(Model model,HttpSession session) throws Exception{
+	public void payMain(HttpSession session,Model model) throws Exception{
 		
+		List<StoreCartDTO> cartAr =(List<StoreCartDTO>)session.getAttribute("cartList");
 		MemberDTO memberDTO = (MemberDTO)session.getAttribute("member");
-		String member_id = memberDTO.getMember_id();
 		
-		StoreCartDTO storeCartDTO = new StoreCartDTO();
-		storeCartDTO.setMember_id(member_id);
-		List<StoreCartDTO> ar = foodService.cartList(storeCartDTO);
-		
-		model.addAttribute("list", ar);
 		model.addAttribute("orderMember", memberDTO);
+		model.addAttribute("list", cartAr);
 		
 	}
 	
@@ -260,6 +278,20 @@ public class FoodController {
 		
 		model.addAttribute("num", storeOrderDTO);
 		
+	}
+	
+	@GetMapping("cartCountChange")
+	public String cartCountChange(StoreCartDTO storeCartDTO,HttpSession session,Model model) throws Exception {
+		
+		MemberDTO memberDTO = (MemberDTO)session.getAttribute("member");
+		String member_id = memberDTO.getMember_id();
+		
+		storeCartDTO.setMember_id(member_id);
+		
+		int result = foodService.cartCountChange(storeCartDTO);
+		model.addAttribute("msg", result);
+		
+		return "commons/result";	
 	}
 	
 }

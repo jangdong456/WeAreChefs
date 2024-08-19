@@ -1,6 +1,7 @@
 package com.chef.app.food;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -132,20 +133,7 @@ public class FoodService {
 	
 	public int deleteCart(StoreCartDTO storeCartDTO) throws Exception {
 		return foodDAO.deleteCart(storeCartDTO);
-	}
-	
-	public int payUpdateCart(List<StoreCartDTO> ar) throws Exception {
-		
-		int result = 0;
-		
-		for(StoreCartDTO a:ar) {
-
-			result = foodDAO.payUpdateCart(a);
-		}
-		
-		return result;
-		
-	}
+	}	
 	
 	public int orderInsert (StoreOrderDTO storeOrderDTO) throws Exception {
 		
@@ -159,10 +147,32 @@ public class FoodService {
 			result = foodDAO.midOrderInsert(a);
 		}
 		
-		result = foodDAO.orderFinishCartDelete(storeOrderDTO);
+		String member_id = storeOrderDTO.getMember_id();
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("midList", list);
+		map.put("member_id", member_id);
+		
+		result = foodDAO.orderFinishCartDelete(map);
 	
 		return result;
 		
+	}
+	
+	public int cartCountChange(StoreCartDTO storeCartDTO) throws Exception {
+		
+		return foodDAO.cartCountChange(storeCartDTO);
+		
+	}
+	
+	public List<StoreCartDTO> payCartList(List<StoreCartDTO> ar) throws Exception{
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		String member_id = ar.get(0).getMember_id();
+		map.put("dto", ar);
+		map.put("member_id", member_id);
+		
+		return foodDAO.payCartList(map);
 	}
 
 }

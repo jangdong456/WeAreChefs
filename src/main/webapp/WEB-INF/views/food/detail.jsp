@@ -68,7 +68,7 @@
                     <i class="fa fa-minus"></i>
                 </button>
             </div>
-                <input type="text" class="form-control form-control-sm text-center border-0" id="buyCount" readonly style="background-color: transparent;border: 0px;">
+                <input type="text" class="form-control form-control-sm text-center border-0" id="buyCount" style="background-color: transparent;border: 0px;">
             <div class="input-group-btn" id="plusBtn">
                 <button class="btn btn-sm btn-plus rounded-circle bg-light border">
                     <i class="fa fa-plus"></i>

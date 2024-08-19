@@ -77,11 +77,7 @@ public class FoodDAO {
 	public int deleteCart(StoreCartDTO storeCartDTO) throws Exception {
 		return sqlSession.delete(NAMESPACE+"deleteCart", storeCartDTO);
 	}
-	
-	public int payUpdateCart(StoreCartDTO storeCartDTO) throws Exception{
-		return sqlSession.update(NAMESPACE+"payUpdateCart", storeCartDTO);
-	}
-	
+		
 	public int orderInsert(StoreOrderDTO storeOrderDTO) throws Exception {
 		return sqlSession.insert(NAMESPACE+"orderInsert", storeOrderDTO);
 	}
@@ -90,8 +86,16 @@ public class FoodDAO {
 		return sqlSession.insert(NAMESPACE+"midOrderInsert", storeMidOrderDTO);
 	}
 	
-	public int orderFinishCartDelete(StoreOrderDTO storeOrderDTO) throws Exception {
-		return sqlSession.delete(NAMESPACE+"orderFinishCartDelete", storeOrderDTO);
+	public int orderFinishCartDelete(Map<String, Object> map) throws Exception {
+		return sqlSession.delete(NAMESPACE+"orderFinishCartDelete", map);
+	}
+	
+	public int cartCountChange(StoreCartDTO storeCartDTO) throws Exception{
+		return sqlSession.update(NAMESPACE+"cartCountChange", storeCartDTO);
+	}
+	
+	public List<StoreCartDTO> payCartList(Map<String, Object> map) throws Exception {
+		return sqlSession.selectList(NAMESPACE+"payCartList", map);
 	}
 	
 }
