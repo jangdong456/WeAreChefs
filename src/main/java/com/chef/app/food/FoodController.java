@@ -237,6 +237,7 @@ public class FoodController {
 		List<StoreCartDTO> ar = foodService.cartList(storeCartDTO);
 		
 		model.addAttribute("list", ar);
+		model.addAttribute("orderMember", memberDTO);
 		
 	}
 	
