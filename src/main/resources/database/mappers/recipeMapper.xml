@@ -6,29 +6,57 @@
     <mapper namespace="com.chef.app.recipe.RecipeDAO">
     
 	   <select id="categoryCount" resultType="java.util.Map">
-		 SELECT RECIPE_CATEGORY,COUNT(*) 
+		 SELECT RECIPE_CATEGORY,COUNT(*) AS COUNT
 		 FROM RECIPE
-		 GROUP BY RECIPE_CATEGORY
-		 ORDER BY RECIPE_CATEGORY DESC
+		 GROUP BY RECIPE_CATEGORY 
 	   </select>
+	   
+	   
       <select id="getTotalCount" resultType="java.lang.Long"  parameterType="RecipePager">
    		SELECT COUNT(RECIPE_NUM) FROM RECIPE
    			<where>
 	
-				<choose>
-				<!-- 
-					<when test="kind=='k2'">
-						RECIPE_WRITER LIKE '%'||#{search}||'%'
-					</when> -->
-					
+				 <choose>
+	           				<when test="kind=='한식'">
+									RECIPE_CATEGORY='한식'
+							</when>
+							<when test="kind=='일식'">
+									RECIPE_CATEGORY='일식'
+							</when>
+							<when test="kind=='양식'">
+									RECIPE_CATEGORY='양식'
+							</when>
+							<when test="kind=='중식'">
+									RECIPE_CATEGORY='중식'
+							</when>
+							<when test="kind=='디저트'">
+									RECIPE_CATEGORY='디저트'
+							</when>
+		           
 						<otherwise>
 							RECIPE_NAME LIKE '%'||#{search}||'%'
-						</otherwise>
-					
-				</choose>
-	
+						</otherwise>  
+						
+					 </choose>
+		
 			</where>
   	 </select>
+    
+    <select id="recipeDetail" parameterType="com.chef.app.recipe.RecipeDTO" resultMap="recipeImgName">
+<!--     		    SELECT *
+    		     FROM RECIPE 
+	    		WHERE RECIPE_NUM = #{recipe_num}; -->
+	    		
+	    SELECT RC.*, RI.* 
+		FROM RECIPE RC
+		 	 LEFT OUTER JOIN
+  			 RECIPEIMG RI
+  			 
+  			 ON (RC.RECIPE_NUM = RI.RECIPE_NUM)
+		WHERE RC.RECIPE_NUM = #{recipe_num}  
+    
+    
+    </select>
     
     	<select id="recipeList" resultMap="recipeImgName" parameterType="com.chef.app.recipe.RecipePager"> 
     		SELECT * 
@@ -39,25 +67,27 @@
     			 (
 	    			SELECT *
 		            FROM RECIPE RC
-		           LEFT OUTER JOIN RECIPEIMG RI ON RC.RECIPE_NUM = RI.RECIPE_NUM
-		           WHERE 
-		          
+		           LEFT OUTER JOIN 
+		           RECIPEIMG RI ON 
+		           RC.RECIPE_NUM = RI.RECIPE_NUM
+		           WHERE
+
 		           <choose>
-		           		<when test="kind=='한식'">
-										RECIPE_CATEGORY='한식'
-								</when>
-								<when test="kind=='일식'">
-										RECIPE_CATEGORY='일식'
-								</when>
-								<when test="kind=='양식'">
-										RECIPE_CATEGORY='양식'
-								</when>
-								<when test="kind=='중식'">
-										RECIPE_CATEGORY='중식'
-								</when>
-								<when test="kind=='디저트'">
-										RECIPE_CATEGORY='디저트'
-								</when>
+	           				<when test="kind=='한식'">
+									RECIPE_CATEGORY='한식'
+							</when>
+							<when test="kind=='일식'">
+									RECIPE_CATEGORY='일식'
+							</when>
+							<when test="kind=='양식'">
+									RECIPE_CATEGORY='양식'
+							</when>
+							<when test="kind=='중식'">
+									RECIPE_CATEGORY='중식'
+							</when>
+							<when test="kind=='디저트'">
+									RECIPE_CATEGORY='디저트'
+							</when>
 		           
 						<otherwise>
 							RECIPE_NAME LIKE '%'||#{search}||'%'
@@ -138,9 +168,74 @@
 					)
 			
 	  </insert>
-	      	<insert id="mainImg" parameterType="RecipeImgFileDTO">
+	<insert id="mainImg" parameterType="RecipeImgFileDTO">
 		INSERT INTO RECIPEIMG(RECIPE_IMG_NUM, RECIPE_NUM, RECIPE_FILE_NAME) 
 		VALUES (RECIPEIMG_SEQ.NEXTVAL,#{recipe_num},#{file_name})
 	</insert>
-    
+	
+	<insert id="recipeReview" parameterType="RecipeReviewDTO">
+		INSERT INTO RECIPEREVIEW(
+								   REVIEW_NUM
+								 , RECIPE_NUM
+								 , MEMBER_ID
+								 , BOARD_TITLE	
+								 , BOARD_CONTENT	
+								 )
+							VALUES
+   									(
+   									RECIPEREVIEW_SEQ.NEXTVAL
+   									, #{recipe_num}
+   									, #{member_id}
+   									, #{board_title}
+   									, #{board_content}
+   									)
+
+	</insert>
+	
+	<select id="reviewList" parameterType="recipeReviewDTO" resultType="recipeReviewDTO">
+		SELECT *
+		FROM RECIPEREVIEW
+		WHERE RECIPE_NUM = #{recipe_num}
+		ORDER BY CREATE_DATE DESC
+
+	</select>
+	
+	  
+   <update id="hit" parameterType="RecipeDTO">
+   	UPDATE RECIPE 
+   	SET RECIPE_HIT = RECIPE_HIT + 1 
+   	WHERE RECIPE_NUM = #{recipe_num}
+   </update>
+   
+   <insert id="recipeReply"  parameterType="RecipeReplyDTO" >
+	    INSERT INTO RECIPEREPLY(
+								   RECIPE_REPLY_NUM
+								 , RECIPE_NUM
+								 , MEMBER_ID
+								 , BOARD_TITLE	
+								 , BOARD_CONTENT	
+								 , REF
+						   		 , STEP
+						   		 , DEPTH
+								 )
+							VALUES
+   									(
+   									  RECIPEREPLY_SEQ.NEXTVAL
+   									, #{recipe_num}
+   									, #{member_id}
+   									, #{board_title}
+   									, #{board_content}
+   									, RECIPEREPLY_SEQ.CURRVAL
+									, 0
+									, 0
+   									)
+   									
+  </insert>
+  	<select id="replyList" parameterType="recipeReplyDTO" resultType="recipeReplyDTO" >
+		SELECT *
+		FROM RECIPEREPLY
+		WHERE RECIPE_NUM = #{recipe_num}
+		ORDER BY CREATE_DATE DESC
+
+	</select>
     </mapper>

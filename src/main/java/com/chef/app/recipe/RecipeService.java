@@ -33,25 +33,32 @@ public class RecipeService {
 
 	public List<RecipeDTO> recipeList(RecipePager recipePager) throws Exception {
 //		1.rownum 계산
-		Long perBlock = 5L;
-
-		recipePager.makeRow(9L);
-
-		if (perBlock == 0) {
-			perBlock = 1L;
+		Long perBlock = 5L; // 페이지 버튼 몇개 보여줄건지
+		// 한페이지에 게시글 몇개 보여줄건지
+		Long totalRow = recipeDAO.getTotalCount(recipePager);
+		System.out.println("total " + totalRow);
+		if (totalRow == 0) {
+			totalRow = 1L;
 		}
 
 		// pager.makeNum(recipeDAO.getTotalCount(pager),9L,5L);
 		// Long totalCount = recipeDAO.getTotalCount(pager);
-		recipePager.makeNum(recipeDAO.getTotalCount(recipePager), 9L, perBlock);
+		recipePager.makeRow(9L);
+		recipePager.makeNum(totalRow, 9L, perBlock);
 
 		System.out.println("Start Row: " + recipePager.getStartRow());
 		System.out.println("Last Row: " + recipePager.getLastRow());
 		List<RecipeDTO> ar = recipeDAO.recipeList(recipePager);
-		
+
 		System.out.println("recipePager.getPage() " + recipePager.getPage());
 
 		return ar;
+	}
+
+	public RecipeDTO recipeDetail(RecipeDTO recipeDTO) {
+		int num = recipeDAO.hit(recipeDTO);
+		return recipeDAO.recipeDetail(recipeDTO);
+
 	}
 
 	@Transactional
@@ -85,9 +92,32 @@ public class RecipeService {
 
 	}
 
-	public List<Map<String, Object>> categoryCount(RecipePager recipePager) {
+	public List<Map<String, Object>> categoryCount() throws Exception {
+
+		return recipeDAO.categoryCount();
+	}
+
+	public int recipeReview(RecipeReviewDTO recipeReviewDTO) {
+		return recipeDAO.recipeReview(recipeReviewDTO);
+	}
+
+	public List<RecipeReviewDTO> reviewList(RecipeReviewDTO recipeReviewDTO) {
+
+		return recipeDAO.reviewList(recipeReviewDTO);
+	}
+
+	public int hit(RecipeDTO recipeDTO) {
+		return recipeDAO.hit(recipeDTO);
+	}
+
+	public int recipeReply(RecipeReplyDTO recipeReplyDTO) {
 		
-		return recipeDAO.categoryCount(recipePager);
+		return recipeDAO.recipeReply(recipeReplyDTO);
+	}
+	
+	public List<RecipeReviewDTO> replyList(RecipeReplyDTO recipeReplyDTO) {
+
+		return recipeDAO.replyList(recipeReplyDTO);
 	}
 
 }

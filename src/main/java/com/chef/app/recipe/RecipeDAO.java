@@ -25,6 +25,10 @@ public class RecipeDAO {
 //		return recipes;
 	}
 
+	public RecipeDTO recipeDetail(RecipeDTO recipeDTO) {
+		return sqlSession.selectOne(NAMESPACE + "recipeDetail", recipeDTO);
+	}
+
 	public int recipeAdd(RecipeDTO recipeDTO) {
 
 		int recipes = sqlSession.insert(NAMESPACE + "recipeAdd", recipeDTO);
@@ -40,17 +44,42 @@ public class RecipeDAO {
 
 	public Long getTotalCount(RecipePager recipePager) throws Exception {
 		// TODO Auto-generated method stub
+		System.out.println("DAO Recipe Num: " + recipePager.getLastNum());
 		return sqlSession.selectOne(NAMESPACE + "getTotalCount", recipePager);
+
 	}
 
 	public int mainImg(RecipeImgFileDTO recipeImgFileDTO) {
 
 		return sqlSession.insert(NAMESPACE + "mainImg", recipeImgFileDTO);
 	}
-	public List<Map<String, Object>> categoryCount(RecipePager recipePager) {
 
-		return sqlSession.selectList(NAMESPACE + "categoryCount",recipePager);
+	public List<Map<String, Object>> categoryCount() {
+
+		return sqlSession.selectList(NAMESPACE + "categoryCount");
 	}
 
+	public int recipeReview(RecipeReviewDTO recipeReviewDTO) {
+		return sqlSession.insert(NAMESPACE + "recipeReview", recipeReviewDTO);
+	}
+
+	public List<RecipeReviewDTO> reviewList(RecipeReviewDTO recipeReviewDTO) {
+
+		return sqlSession.selectList(NAMESPACE + "reviewList", recipeReviewDTO);
+	}
+
+	public int hit(RecipeDTO recipeDTO) {
+		return sqlSession.update(NAMESPACE + "hit", recipeDTO);
+	}
+
+	public int recipeReply(RecipeReplyDTO recipeReplyDTO) {
+		
+		return sqlSession.insert(NAMESPACE + "recipeReply", recipeReplyDTO);
+	}
+
+	public List<RecipeReviewDTO> replyList(RecipeReplyDTO recipeReplyDTO) {
+		
+		return sqlSession.selectList(NAMESPACE + "replyList", recipeReplyDTO);
+	}
 
 }
