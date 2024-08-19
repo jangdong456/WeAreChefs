@@ -2,7 +2,11 @@ const frm = document.getElementById("frm");
 const search_icon = document.getElementById("search_icon");
 const order = document.getElementById("order");
 const order_frm = document.getElementById("order_frm");
+const kindfrm = document.getElementById("kindfrm");
 
+let kindOrd = kindfrm.getAttribute("data-kind-frm");
+kindfrm.value=kindOrd;
+console.log(kindfrm.value);
 
 search_icon.addEventListener("click",function(){
      frm.submit();
@@ -19,13 +23,13 @@ function getQueryParameter(name) {
     return urlParams.get(name);
 }
 
-// Set the selected option based on the query parameter
+
 const selectedOrder = getQueryParameter('order');
 if (selectedOrder) {
     order.value = selectedOrder;
 }
 
-// Submit the form when the selected option changes
-order.addEventListener("change", function() {
-    order_frm.submit();
-});
+//console.log(kindfrm.getAttribute("data-kind-frm"));
+
+
+

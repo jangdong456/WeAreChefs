@@ -4,10 +4,60 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.chef.app.member.MemberDAO">
+	
+	<select id="duplication" parameterType="MemberDTO" resultType="int">
+		SELECT 
+			<choose>
+				<when test="member_nickname != null">
+					COUNT(MEMBER_NICKNAME) FROM MEMBER
+					WHERE MEMBER_NICKNAME = #{member_nickname}
+				</when>
+				<when test="member_phone != null">
+					COUNT(MEMBER_PHONE) FROM MEMBER
+					WHERE MEMBER_PHONE = #{member_phone}
+				</when>
+				<otherwise>
+					COUNT(MEMBER_ID) FROM MEMBER
+					WHERE MEMBER_ID = #{member_id}
+				</otherwise>
+			</choose>			
+	</select>
+	
+	<update id="introducesDelete" parameterType="MemberDTO">
+		UPDATE MEMBER SET PROFILE_ABOUT_ME = NULL
+		WHERE MEMBER_ID = #{member_id}
+	</update>
+	
+	<update id="mypageUpdate" parameterType="MemberDTO">
+		UPDATE MEMBER SET PROFILE_ABOUT_ME = #{profile_about_me}
+		WHERE MEMBER_ID = #{member_id}
+	</update>
+	
+	<select id="mypage" parameterType="MemberDTO" resultType="MemberDTO">
+		SELECT * FROM MEMBER
+		WHERE MEMBER_ID = #{member_id}
+	</select>
+	
+	<select id="kakaoCheck" parameterType="MemberDTO" resultType="int">
+		SELECT 
+		COUNT(MEMBER_ID) FROM MEMBER
+		WHERE MEMBER_ID = #{member_id}
+	</select>
+	
+	<insert id="kakaologin" parameterType="MemberDTO">
+		INSERT INTO MEMBER (member_id, member_nickname, kakao_profile_img, member_type)
+		VALUES (#{member_id}, #{member_nickname}, #{kakao_profile_img}, #{member_type})
+	</insert>
+	
 	<insert id="join" parameterType="MemberDTO">
 		INSERT INTO MEMBER (member_id, member_name, member_mail , member_pwd, member_phone, member_nickname)
 		VALUES (#{member_id}, #{member_name}, #{member_mail}, #{member_pwd}, #{member_phone}, #{member_nickname})
 	</insert>
+	
+	<select id="kakaologin2" parameterType="MemberDTO" resultType="MemberDTO">
+		SELECT * FROM MEMBER
+		WHERE member_id = #{member_id}
+	</select>
 	
 	<select id="login" parameterType="MemberDTO" resultType="MemberDTO">
 		SELECT * FROM MEMBER

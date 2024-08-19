@@ -64,7 +64,7 @@
                                     </div>
                                 </th>
                                 <td>
-                                    <p class="mb-0 mt-4">${f.food_name}</p>
+                                    <p class="mb-0 mt-4"><a href="/food/detail?food_num=${f.food_num}">${f.food_name}</a></p>
                                 </td>
                                 <td>
                                     <p class="mb-0 mt-4">${f.food_price}원</p>
@@ -137,7 +137,6 @@
 
 <c:import url="/WEB-INF/views/templete/footer.jsp"></c:import>
 <script type="text/javascript" src="/resources/js/food/cart.js"></script>
-
 
 </body>
 </html>

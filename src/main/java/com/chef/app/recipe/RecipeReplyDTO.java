@@ -2,7 +2,7 @@ package com.chef.app.recipe;
 
 import com.chef.app.comment.CommentDTO;
 
-public class RecipeReplyDTO extends CommentDTO{
+public class RecipeReplyDTO extends CommentDTO {
 	private Long recipe_num;
 	private Long ref;
 	private Long step;
@@ -48,6 +48,5 @@ public class RecipeReplyDTO extends CommentDTO{
 	public void setRecipe_num(Long recipe_num) {
 		this.recipe_num = recipe_num;
 	}
-	
 
 }

@@ -110,13 +110,15 @@
    <div class="container justify-content-center text-center mt-3">
    ${dto.food_contents}
 	</div>
-
+	
+	 <c:if test="${admin.member_id=='12341234'}">
     <div class="container form-group mt-5" align="right">
         <a href="/food/update?food_num=${dto.food_num}"><button class="btn border-secondary text-uppercase text-primary" type="button" id="foodAdd">수정하기</button></a>
     </div>
     <div class="container form-group mt-2" align="right">
         <a href="/food/delete?food_num=${dto.food_num}"><button class="btn border-secondary text-uppercase text-primary" type="button" id="foodAdd">삭제하기</button></a>
     </div>
+	</c:if>
 	
 <c:import url="/WEB-INF/views/templete/footer.jsp"></c:import>
 <script type="text/javascript" src="/resources/js/food/detail.js"></script>

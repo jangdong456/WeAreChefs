@@ -1,7 +1,5 @@
 package com.chef.app.member;
 
-import java.util.HashMap;
-
 import javax.crypto.Cipher;
 import javax.servlet.http.HttpSession;
 
@@ -16,7 +14,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.chef.app.util.Email;
 
-
 @Controller
 @RequestMapping("/member/*")
 public class MemberController {
@@ -27,10 +24,66 @@ public class MemberController {
 	@Autowired
 	private Email email;
 	
-	@GetMapping("mypage")
-	public void mypage() throws Exception {
-		System.out.println("== My Page ==");
+	
+	@GetMapping("duplication")
+	public String duplication(MemberDTO memberDTO, Model model) throws Exception {
+		System.out.println("== duplication ==");
+		System.out.println(memberDTO.getMember_nickname());
+		int check = memberService.duplication(memberDTO);
+		
+		model.addAttribute("msg", check);
+		
+		return "commons/result";
 	}
+	
+	@GetMapping("introducesDelete")
+	public String introducesDelete(MemberDTO memberDTO, HttpSession session) throws Exception {
+		System.out.println("멤버 id 값:"+ memberDTO.getMember_id() );
+		MemberDTO memberdto = (MemberDTO)session.getAttribute("member");
+		memberdto.setMember_id(memberDTO.getMember_id());
+		int result = memberService.introducesDelete(memberdto);
+		System.out.println("결과 :" + result);
+		
+		String url = "";
+		if(result > 0) {
+			url = "member/test";
+		}
+		return url;
+	}
+	
+	
+	@GetMapping("mypage")
+	public void mypage(HttpSession session, Model model) throws Exception {
+		System.out.println("== My Page ==");
+		MemberDTO memberdto = (MemberDTO)session.getAttribute("member");
+		memberdto = memberService.mypage(memberdto);
+		System.out.println("반환 객체 :" + memberdto);
+		model.addAttribute("member", memberdto);
+	}
+	
+	@PostMapping("mypage")
+	public String mypageUpdate(MemberDTO memberDTO, HttpSession session, Model model) throws Exception {
+		
+//		MemberDTO memberdto = (MemberDTO)session.getAttribute("member");
+//		memberdto.setProfile_about_me(profile_about_me);
+//		memberdto.setMember_id(member_id);
+
+		MemberDTO memberdto = (MemberDTO)session.getAttribute("member");
+		memberdto.setMember_id(memberDTO.getMember_id());
+		memberdto.setProfile_about_me(memberDTO.getProfile_about_me());;
+		
+		int result = memberService.mypageUpdate(memberdto);
+		
+		String url = "";
+		if(result > 0) {
+			
+			url = "member/test";
+		}
+		return url;
+	}
+	
+	
+	
 	
 	@GetMapping("sendEmail")
 	public void email(MemberDTO memberDTO, Model model, String member_mail) throws Exception {
@@ -53,10 +106,28 @@ public class MemberController {
 	}
 	
 	@PostMapping("kakaologin")
-	public void kakao(String token) throws Exception {
+	public String kakaologin(String token, MemberDTO memberDTO, Model model, HttpSession session) throws Exception {
 		System.out.println("== Kakao Controller ==");
-		System.out.println(token);
-//		memberService.kakao();
+		int num = 0;
+		String result = "";
+		
+		if(token != null) {
+			System.out.println("1번 값:" + token);
+			System.out.println("2번 값:" + memberDTO.getMember_id());
+			System.out.println("3번 값:" + memberDTO.getMember_nickname());
+			System.out.println("4번 값:" + memberDTO.getKakao_profile_img());
+			System.out.println("5번 값:" + memberDTO.getMember_type());
+			num = memberService.kakaologin(memberDTO);
+		}
+		
+		if(num > 0) {
+			MemberDTO memberdto = memberService.kakaologin2(memberDTO);
+			System.out.println(memberdto);
+			session.setAttribute("member", memberdto);
+			model.addAttribute("msg", num);
+			result = "commons/result";
+		}
+		return result;
 	}
 	
 	@GetMapping("kakaologin")
@@ -106,16 +177,16 @@ public class MemberController {
 	}
 	
 	@PostMapping("join")
-	public String join(MemberDTO memberDTO) throws Exception {
+	public String join(MemberDTO memberDTO, Model model) throws Exception {
 		System.out.println("== Post Join Controller ==");
-		
+
 		int result = memberService.join(memberDTO);
-		System.out.println("DAO 반환값 :" + result);
-		String url = "";
-		if(result >0) {
-			url = "redirect:/member/join";
+		System.out.println("Join 반환값 :" + result);
+		
+		if(result > 0) {
+			model.addAttribute("msg", result);
 		}
-		return url;
+		return "commons/result";
 	}
 	
 	

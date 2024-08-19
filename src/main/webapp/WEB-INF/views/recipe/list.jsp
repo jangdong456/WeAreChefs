@@ -70,8 +70,10 @@
                             <div class="col-6"></div>
                             <div class="col-xl-3">
                                 <div class="bg-light ps-3 py-3 rounded d-flex justify-content-between mb-4">
+                                <h3>${param.kind}</h3>
 									<label for="order">정렬</label>
-									<form action="/recipe/list" method="get" id="order_frm" name ="order_frm">
+									<form action="/recipe/list" method="get" id="order_frm">
+										<input type="hidden" id="kindfrm" data-kind-frm="${param.kind}" name="kind">
                                     	<select id="order" name="order" class="border-0 form-select-sm bg-light me-3">
 	                                        <option value="date_up" id="date_up">최신순</option>
 	                                        <option value="date_down" id="date_down">과거순</option>
@@ -87,9 +89,9 @@
                                     <div class="col-lg-12">
                                         <div class="mb-3">
                                             <h4>Categories</h4>
-                                            <h3>${cnt.COUNT}</h3>
                                             <ul class="list-unstyled fruite-categorie">
                                              <c:forEach items="${count}" var="cnt">
+                                          
                                                 <li>
                                                     <div class="d-flex justify-content-between fruite-name">
                                                         <a href="/recipe/list?kind=${cnt.RECIPE_CATEGORY}"><i class="fas fa-apple-alt me-2"></i>${cnt.RECIPE_CATEGORY}</a>
@@ -114,20 +116,20 @@
                             </div>
                             <div class="col-lg-9">
                                 <div class="row g-4 justify-content-center">
-                                   <c:forEach var="recipe" items="${ar}">
+                                   <c:forEach items="${ar}" var="recipe" >
                                     <div class="col-md-6 col-lg-6 col-xl-4">
                                         <div class="rounded position-relative fruite-item">
                                             <div class="fruite-img">
                                                <img src="/resources/upload/recipes/${recipe.recipeImgFileDTO.file_name}" class="img-fluid w-100 rounded-top" alt="">
                                                
                                             </div>
-                                            <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">${recipe.recipe_category}</div>
+                                           <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">${recipe.recipe_category}</div> 
                                             <div class="p-4 border border-secondary border-top-0 rounded-bottom">
                                                  <h4>${recipe.recipe_name}</h4>
 		                                                <p> ${recipe.menu_recipe}</p>
-                                                <div class="d-flex justify-content-between flex-lg-wrap">
-                                                    <p class="text-dark fs-5 fw-bold mb-0">$4.99 / kg</p>
-                                                    <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
+                                                <div class="d-flex justify-content-between flex-lg-wrap" style="margin-left: 33px;">
+                                                    
+                                                    <a href="/recipe/detail?recipe_num=${recipe.recipe_num}" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="fa me-2 text-primary"></i> 🧑‍🍳레시피 보러가기</a>
                                                 </div>
                                             </div>
                                         </div>
