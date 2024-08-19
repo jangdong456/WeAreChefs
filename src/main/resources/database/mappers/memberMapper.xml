@@ -5,6 +5,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="com.chef.app.member.MemberDAO">
 	
+	<select id="recipeReplyList" parameterType="MemberDTO" resultType="RecipeReplyDTO">
+		SELECT * FROM RECIPEREPLY
+		WHERE RECIPE_REPLY_NUM > 0
+	</select>
+	
+	<select id="recipeReviewList" parameterType="MemberDTO" resultType="RecipeReviewDTO">
+		SELECT * FROM RECIPEREVIEW
+		WHERE REVIEW_NUM > 0
+	</select>
+	
+	
+	<select id="recipeList" parameterType="MemberDTO" resultType="RecipeDTO">
+		SELECT * FROM RECIPE
+		WHERE RECIPE_NUM > 80
+	</select>
+	
 	<select id="duplication" parameterType="MemberDTO" resultType="int">
 		SELECT 
 			<choose>

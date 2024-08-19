@@ -1,8 +1,14 @@
 package com.chef.app.member;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
+
+import com.chef.app.recipe.RecipeDTO;
+import com.chef.app.recipe.RecipeReplyDTO;
+import com.chef.app.recipe.RecipeReviewDTO;
 
 @Service
 public class MemberService {
@@ -17,6 +23,18 @@ public class MemberService {
 		
 		return check;
 
+	}
+	
+	public List<RecipeReplyDTO> recipeReplyList() throws Exception {
+		return memberDAO.recipeReplyList();
+	}
+	
+	public List<RecipeReviewDTO> recipeReviewList() throws Exception {
+		return memberDAO.recipeReviewList();
+	}
+	
+	public List<RecipeDTO> recipeList() throws Exception {
+		return memberDAO.recipeList();
 	}
 	
 	public int introducesDelete(MemberDTO memberDTO) throws Exception {
@@ -56,10 +74,10 @@ public class MemberService {
 	public MemberDTO login(MemberDTO memberDTO) throws Exception {
 		System.out.println("== login Service ==");
 		
-//		MemberDTO result = memberDAO.login(memberDTO);
-		
+		MemberDTO result = memberDAO.login(memberDTO);
+
 		MemberDTO orignalPwd = memberDAO.login(memberDTO);
-				
+		
 		if(BCrypt.checkpw(memberDTO.getMember_pwd(), orignalPwd.getMember_pwd())) {
 			System.out.println("비밀번호 일치");
 			return orignalPwd;
@@ -67,6 +85,7 @@ public class MemberService {
 			System.out.println("비밀번호 불일치");
 			return null;
 		}
+		
 	}
 	
 	public int join(MemberDTO memberDTO)throws Exception {

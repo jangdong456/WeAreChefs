@@ -1,5 +1,7 @@
 package com.chef.app.member;
 
+import java.util.List;
+
 import javax.crypto.Cipher;
 import javax.servlet.http.HttpSession;
 
@@ -12,6 +14,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.chef.app.recipe.RecipeDTO;
+import com.chef.app.recipe.RecipeReplyDTO;
+import com.chef.app.recipe.RecipeReviewDTO;
 import com.chef.app.util.Email;
 
 @Controller
@@ -55,9 +60,21 @@ public class MemberController {
 	@GetMapping("mypage")
 	public void mypage(HttpSession session, Model model) throws Exception {
 		System.out.println("== My Page ==");
+
+		
 		MemberDTO memberdto = (MemberDTO)session.getAttribute("member");
 		memberdto = memberService.mypage(memberdto);
-		System.out.println("반환 객체 :" + memberdto);
+		
+		System.out.println("로그인 한 id:" + memberdto.getMember_id());
+		
+		
+		List<RecipeDTO> recipedto = memberService.recipeList();
+		List<RecipeReviewDTO> recipeReview = memberService.recipeReviewList(); 
+		List<RecipeReplyDTO> recipeReply = memberService.recipeReplyList(); 
+		
+		model.addAttribute("recipeReply", recipeReply);
+		model.addAttribute("reviewList", recipeReview);
+		model.addAttribute("list", recipedto);
 		model.addAttribute("member", memberdto);
 	}
 	
@@ -92,6 +109,7 @@ public class MemberController {
 //		int result = 1;
 //		model.addAttribute("msg", result);
 		email.mailTemplete(member_mail);
+		
 //		return "member/email";
 	}
 	

@@ -1,8 +1,14 @@
 package com.chef.app.member;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
+import com.chef.app.recipe.RecipeDTO;
+import com.chef.app.recipe.RecipeReplyDTO;
+import com.chef.app.recipe.RecipeReviewDTO;
 
 @Repository
 public class MemberDAO {
@@ -12,8 +18,19 @@ public class MemberDAO {
 	
 	private final String NAMESPACE = "com.chef.app.member.MemberDAO.";
 	
+	public List<RecipeReplyDTO> recipeReplyList() throws Exception {
+		return sqlSession.selectList(NAMESPACE + "recipeReplyList");
+	}
 	
-	public int duplication(MemberDTO memberDTO)throws Exception {
+	public List<RecipeReviewDTO> recipeReviewList() throws Exception {
+		return sqlSession.selectList(NAMESPACE + "recipeReviewList");
+	}
+	
+	public List<RecipeDTO> recipeList() throws Exception {
+		return sqlSession.selectList(NAMESPACE + "recipeList");
+	}
+	
+	public int duplication(MemberDTO memberDTO) throws Exception {
 		return sqlSession.selectOne(NAMESPACE+ "duplication" , memberDTO);
 	}
 	
