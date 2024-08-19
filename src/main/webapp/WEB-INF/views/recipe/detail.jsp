@@ -29,6 +29,7 @@
  .form-control {
         width: 100%;
     }
+   .form-control{}
     	.ck.ck-editor{
 	   max-width: 1000px;
   }
@@ -39,6 +40,16 @@
   .ck-content { 
 	  font-size: 12px; 
 	 }
+
+.d-flex.align-items-center h5 {
+    margin-right: 5px;
+}
+
+#replyBtn {
+    flex-shrink: 0;
+     margin-left: 0;
+    padding-left: 5px;
+}
 </style>
 </head>
 <body>
@@ -152,12 +163,13 @@
                                        	<c:forEach items="${ar2}" var="ar" >
                                         <div class="d-flex">
                                             <img src="/resources/img/avatar.jpg" class="img-fluid rounded-circle p-3" style="width: 100px; height: 100px;" alt="">
-                                            <div class="replyListParent">
+                                            <div class="replyListParent w-100">
                                                 <p class="mb-2" style="font-size: 14px;">${ar.create_date}</p>
-                                                <div class="d-flex justify-content-between align-items-center">
+                                                <div  class="d-flex align-items-center">
                                                     <h5 class="mb-0">${ar.member_id}</h5>
-                                                    <button class ="btn text-primary rounded-pill ms-20" id="replyBtn" style="font-size: 14px;">|답글|</button>
-                                                    
+                                                <!--   <div class="button-container"> -->
+                                                	<button class ="btn text-primary rounded-pill" id="replyBtn" style="font-size: 14px;">|답글|</button>
+                                                  <!-- </div> -->
                                                 </div>
                                                 <p>${ar.board_content}</p>
                                                 <!--  답글달림 -->
@@ -187,7 +199,7 @@
 							        <div class="col-lg-12">
 						                 <div class="col-lg-12">
 								            <label><input type="radio" id="review" name="post_type" value="review" checked> Review</label>&nbsp&nbsp&nbsp
-								            <label><input type="radio" id="reply" name="post_type" value="qna">QnA</label>
+								            <label><input type="radio" id="reply" name="post_type" value="qna"> QnA</label>
 								            <br>
 								            
 							       		 </div>
@@ -223,7 +235,10 @@
                     
     			 </div>
        		</div>
-    
+<!--     <script>
+
+setMax(1);
+    </script> -->
 
 <c:import url="/WEB-INF/views/templete/footer.jsp"></c:import>
 

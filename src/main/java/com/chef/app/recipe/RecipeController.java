@@ -53,7 +53,8 @@ public class RecipeController {
 	}
 
 	@GetMapping("detail")
-	public String recipeDetail(RecipeDTO recipeDTO, Model model, RecipeReviewDTO recipeReviewDTO, RecipeReplyDTO recipeReplyDTO) {
+	public String recipeDetail(RecipeDTO recipeDTO, Model model, RecipeReviewDTO recipeReviewDTO,
+			RecipeReplyDTO recipeReplyDTO) {
 		recipeDTO = recipeService.recipeDetail(recipeDTO);
 		List<RecipeReviewDTO> ar = recipeService.reviewList(recipeReviewDTO);
 		List<RecipeReviewDTO> ar2 = recipeService.replyList(recipeReplyDTO);
@@ -103,7 +104,7 @@ public class RecipeController {
 		recipeReviewDTO.setMember_id("ydb");
 		int result = recipeService.recipeReview(recipeReviewDTO);
 
-		if (result > 0) {  
+		if (result > 0) {
 			model.addAttribute("result", "소중한 리뷰가 등록됐습니다!");
 			model.addAttribute("url", "/recipe/detail?recipe_num=" + recipeReviewDTO.getRecipe_num());
 			return "/recipe/message";
@@ -115,12 +116,13 @@ public class RecipeController {
 		}
 
 	}
-	//qna
+
+	// qna
 	@PostMapping("reply")
-	public String recipeReply(RecipeReplyDTO recipeReplyDTO,Model model) {
+	public String recipeReply(RecipeReplyDTO recipeReplyDTO, Model model) {
 		recipeReplyDTO.setMember_id("ydb");
 		int result = recipeService.recipeReply(recipeReplyDTO);
-		if (result > 0) {  
+		if (result > 0) {
 			model.addAttribute("result", "문의가 등록됐습니다!");
 			model.addAttribute("url", "/recipe/detail?recipe_num=" + recipeReplyDTO.getRecipe_num());
 			return "/recipe/message";
@@ -130,11 +132,14 @@ public class RecipeController {
 			model.addAttribute("url", "/recipe/detail?recipe_num=" + recipeReplyDTO.getRecipe_num());
 			return "/recipe/message";
 		}
-		
-	}
-	
-	
-	
 
+	}
+
+	@PostMapping("comment")
+	@ResponseBody
+	public void recipeComment(RecipeReplyDTO recipeReplyDTO) {
+		recipeReplyDTO.setMember_id("ydb");
+
+	}
 
 }
