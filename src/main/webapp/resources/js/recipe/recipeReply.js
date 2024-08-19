@@ -1,4 +1,5 @@
 const replyBtn = document.getElementById("replyBtn");
+const recipe_num = document.getElementById("recipe_num");
 
 // const replyList = document.getElementsByClassName("replyList");
 let count=0;
@@ -39,22 +40,27 @@ replyBtn.addEventListener("click",function() {
     div.append(textarea);
     div.append(btn);
 
-    this.closest(".replyListParent").closest(".replyListParent").querySelector(".replyList").append(div);
+    this.closest(".replyListParent").querySelector(".replyList").append(div);
   //가장 가까운것의 replyList를 찾아서 추가
   count++;
 
   //댓글 서버로 보내기
  const replySave = document.getElementById("replySave");
  replySave.addEventListener("click",function(){
-     console.log(textarea.value);
-
-     fetch("comment"),{
+    //  console.log(textarea.value);
+     let recipe_reply_num = this.closest(".replyListParent").querySelector(".recipe_reply_num").value;
+    //  console.log(recipe_reply_num);
+     fetch("comment", {
           method:"POST",
-          headers:{
-            "Content-type":"application/x-www-form-urlencoded"
+          headers:{"Content-Type": "application/json",
+            // "Content-type":"application/x-www-form-urlencoded"
         },
-        body:"num=123&contents=test"
-     }
+        // body:"recipe_num="+recipe_num//+"&board_content="+textarea.value
+        body: JSON.stringify({"recipe_num": recipe_num.value
+             , "board_content":textarea.value
+             , "recipe_reply_num":recipe_reply_num
+            })
+     })
 
 
 

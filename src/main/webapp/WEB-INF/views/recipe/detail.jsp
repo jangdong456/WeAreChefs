@@ -164,7 +164,10 @@
                                         <div class="d-flex">
                                             <img src="/resources/img/avatar.jpg" class="img-fluid rounded-circle p-3" style="width: 100px; height: 100px;" alt="">
                                             <div class="replyListParent w-100">
-                                                <p class="mb-2" style="font-size: 14px;">${ar.create_date}</p>
+                                           
+                                       			<input type="hidden" class="form-control border-0 me-4 recipe_reply_num" value="${ar.recipe_reply_num}" name="recipe_reply_num" > 
+                                  			
+                                                <p class="mb-2" style="font-size: 14px;">${ar.recipe_reply_num}|| ${ar.create_date}</p>
                                                 <div  class="d-flex align-items-center">
                                                     <h5 class="mb-0">${ar.member_id}</h5>
                                                 <!--   <div class="button-container"> -->
@@ -174,6 +177,7 @@
                                                 <p>${ar.board_content}</p>
                                                 <!--  답글달림 -->
                                                 <div class="replyList">
+                                                
                                                 
                                                 
                                                 </div>
@@ -193,7 +197,7 @@
                                    <div class="row g-4">
                                    
                                    <div class="border-bottom rounded">
-                                        <input type="hidden" class="form-control border-0 me-4" value="${dto.recipe_num}" name="recipe_num"> 
+                                        <input type="hidden" class="form-control border-0 me-4" value="${dto.recipe_num}" name="recipe_num" id="recipe_num"> 
                                    </div>
 							        <!-- Review or QnA -->
 							        <div class="col-lg-12">
