@@ -27,7 +27,7 @@
 	        <thead>
 		        <tr>
 		            <th scope="col">공지번호</th>
-		            <th scope="col">회원아이디</th>
+		            <th scope="col">닉네임</th>
 		            <th scope="col">공지제목</th>
 		            <th scope="col">공지작성일</th>
 		            <th scope="col">공지수정일</th>
@@ -36,7 +36,7 @@
 	        <tbody>
 	          	<tr>
 	          		<th>${noticeDetail.board_num}</th>
-	          		<th>${noticeDetail.member_id}</th>
+	          		<th>${noticeDetail.member_nickname}</th>
 	          		<th>${noticeDetail.board_title}</th>
 	          		<th>${noticeDetail.create_date}</th>
 	          		<th>${noticeDetail.update_date}</th>

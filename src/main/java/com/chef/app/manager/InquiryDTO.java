@@ -4,11 +4,20 @@ import com.chef.app.comment.CommentDTO;
 
 public class InquiryDTO extends CommentDTO {
 	
+	private String member_nickname;
 	private String board_type; 
 	private Long ref;
 	private Long step;
 	private String del;
 	
+	
+	
+	public String getMember_nickname() {
+		return member_nickname;
+	}
+	public void setMember_nickname(String member_nickname) {
+		this.member_nickname = member_nickname;
+	}
 	public String getBoard_type() {
 		return board_type;
 	}

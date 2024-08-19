@@ -141,9 +141,10 @@ public class QnaController {
 	}
 	
 	@PostMapping("add")
-	public String qnaAdd(InquiryDTO inquiryDTO, Model model) throws Exception{
+	public String qnaAdd(InquiryDTO inquiryDTO, Model model, HttpSession session) throws Exception{
 		// & Todo : Session에서 memberID 받는 것으로 바꿔줘야함
-		inquiryDTO.setMember_id("admin1");
+		inquiryDTO.setMember_id(((MemberDTO) session.getAttribute("member")).getMember_id());
+		inquiryDTO.setMember_nickname(((MemberDTO) session.getAttribute("member")).getMember_nickname());
 		int result = qnaService.qnaAdd(inquiryDTO);
 		
 		String msg = "작성을 성공 하였습니다.";
@@ -162,10 +163,13 @@ public class QnaController {
 	@PostMapping("reply")
 	public String qnaReply(InquiryDTO inquiryDTO, Model model, HttpSession session) throws Exception{
 		String memberId = "";
+		String memberNickname = "";
 		if(((MemberDTO) session.getAttribute("member")) != null) {
 			memberId = ((MemberDTO) session.getAttribute("member")).getMember_id();
+			memberNickname = ((MemberDTO) session.getAttribute("member")).getMember_nickname();
 		}
 		inquiryDTO.setMember_id(memberId);
+		inquiryDTO.setMember_nickname(memberNickname);
 		model.addAttribute("member", inquiryDTO);
 		// 댓글 추가
 		int addResult = qnaService.addQnaReply(inquiryDTO);

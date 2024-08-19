@@ -1,6 +1,8 @@
 let divDetail = document.getElementById("divDetail");
 
 
+
+
 //== Class definition
 var SweetAlert2Demo = (function () {
   //== Demos

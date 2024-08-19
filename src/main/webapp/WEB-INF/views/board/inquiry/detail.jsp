@@ -25,7 +25,7 @@
 	        <thead>
 		        <tr>
 		            <th scope="col">문의번호</th>
-		            <th scope="col">회원아이디</th>
+		            <th scope="col">닉네임</th>
 		            <th scope="col">문의제목</th>
 		            <th scope="col">문의작성일</th>
 		            <th scope="col">문의수정일</th>
@@ -34,7 +34,7 @@
 	        <tbody>
 	          	<tr>
 	          		<th id="qnaBoardNum" data-qnaBoardNum="${inquiryDetail.board_num}">${inquiryDetail.board_num}</th>
-	          		<th>${inquiryDetail.member_id}</th>
+	          		<th>${inquiryDetail.member_nickname}</th>
 	          		<th>${inquiryDetail.board_title}</th>
 	          		<th>${inquiryDetail.create_date}</th>
 	          		<th>${inquiryDetail.update_date}</th>
@@ -65,7 +65,7 @@
                 <table id="${list.board_num}">
                     <thead>
                         <tr >
-                            <th>작성자 : ${list.member_id}</th>
+                            <th>닉네임 : ${list.member_nickname}</th>
                             <th>작성일 : ${list.create_date}</th>
 							<c:if test="${not empty list.update_date}">
 								<th>수정일 : ${list.update_date}</th>    

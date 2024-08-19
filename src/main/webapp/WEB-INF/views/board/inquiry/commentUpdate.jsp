@@ -6,7 +6,7 @@
 
 <thead>
     <tr>
-        <th >작성자 : ${getReplyUpdate.member_id}</th>
+        <th >닉네임 : ${getReplyUpdate.member_nickname}</th>
         <th>작성일 : ${getReplyUpdate.create_date}</th>
         <c:if test="${not empty getReplyUpdate.update_date}">
             <th>수정일 : ${getReplyUpdate.update_date}</th>    

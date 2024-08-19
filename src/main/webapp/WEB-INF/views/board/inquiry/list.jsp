@@ -63,7 +63,7 @@ margin-left: 0px
                         <thead>
                           <tr>
                             <th scope="col">문의번호</th>
-                            <th scope="col">회원아이디</th>
+                            <th scope="col">닉네임</th>
                             <th scope="col">문의제목</th>
                             <th scope="col">문의작성일</th>
                           </tr>
@@ -72,7 +72,7 @@ margin-left: 0px
                         	<c:forEach items="${inquiryList}" var="ar">
                             	<tr>
                             		<th>${ar.board_num}</th>
-                            		<th>${ar.member_id}</th>
+                            		<th>${ar.member_nickname}</th>
                             		<th><a href="/board/${page}/detail?board_num=${ar.board_num}">${ar.board_title}</a></th>
                             		<th>${ar.create_date}</th>
                            		</tr>

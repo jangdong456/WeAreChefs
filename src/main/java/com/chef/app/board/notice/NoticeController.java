@@ -136,18 +136,18 @@ public class NoticeController {
 	}
 	
 	@PostMapping("add")
-	public String noticeAdd(NoticeDTO noticeDTO, Model model) throws Exception{
+	public String noticeAdd(NoticeDTO noticeDTO, Model model, HttpSession session) throws Exception{
 		String msg = "작성을 실패 하였습니다.";
 		String url = "/board/notice/list";
 		// & Todo - admin1 - Start
 		// 세션 member의 id 값을 집어 넣을 수 있는 기능을 만들고 교체할것 
-		noticeDTO.setMember_id("aaa"); 
+		noticeDTO.setMember_id(((MemberDTO) session.getAttribute("member")).getMember_id());
+		noticeDTO.setMember_nickname(((MemberDTO) session.getAttribute("member")).getMember_nickname());
+		System.out.println("@@ Notice nickname : " + noticeDTO.getMember_nickname());
+		
 		// & Todo - admin1 - Finish
 		String title = noticeDTO.getBoard_title().trim();
-		System.out.println("length");
-		System.out.println(title.length());
 		if(title.length() == 0) {
-			System.out.println("title.length()가 실행됨");
 			model.addAttribute("msg", msg);
 			model.addAttribute("url", url);
 			return "commons/message";

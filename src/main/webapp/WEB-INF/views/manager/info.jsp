@@ -53,8 +53,8 @@
                             <th>아이디</th>
                             <th>이메일</th>
                             <th>전화번호</th>
-                            <th>이름</th>
                             <th>닉네임</th>
+                            <th>회원타입</th>
                             <th>레벨</th>
                           </tr>
                         </thead>
@@ -64,8 +64,8 @@
                               <td>${memberListDesc.member_id}</td>
                               <td>${memberListDesc.member_mail}</td>
                               <td>${memberListDesc.member_phone}</td>
-                              <td>${memberListDesc.member_name}</td>
                               <td>${memberListDesc.member_nickname}</td>
+                              <td>${memberListDesc.member_type}</td>
                               <td>${memberListDesc.member_lev}</td>
                             </tr>
                           </c:forEach>

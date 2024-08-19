@@ -46,8 +46,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</delete>
 	
 	<insert id="qnaAdd" parameterType="InquiryDTO">
-		INSERT INTO INQUIRY(BOARD_NUM, MEMBER_ID, BOARD_TYPE, BOARD_TITLE, BOARD_CONTENT, CREATE_DATE, "REF")
-		VALUES(INQUIRY_SEQ.NEXTVAL, #{member_id}, 2, #{board_title}, #{board_content}, SYSDATE, INQUIRY_SEQ.CURRVAL)
+		INSERT INTO INQUIRY(BOARD_NUM, MEMBER_ID, MEMBER_NICKNAME, BOARD_TYPE, BOARD_TITLE, BOARD_CONTENT, CREATE_DATE, "REF")
+		VALUES(INQUIRY_SEQ.NEXTVAL, #{member_id}, #{member_nickname}, 2, #{board_title}, #{board_content}, SYSDATE, INQUIRY_SEQ.CURRVAL)
 		
 	</insert>
 	
@@ -66,8 +66,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<insert id="addQnaReply" parameterType="InquiryDTO">
-		INSERT INTO INQUIRY(BOARD_NUM, MEMBER_ID, BOARD_TYPE, BOARD_TITLE, BOARD_CONTENT, CREATE_DATE, REF, STEP)
-		VALUES (INQUIRY_SEQ.NEXTVAL, #{member_id}, 2, '댓글', #{board_content}, SYSDATE, #{board_num}, INQUIRY_SEQ.NEXTVAL)
+		INSERT INTO INQUIRY(BOARD_NUM, MEMBER_ID, MEMBER_NICKNAME, BOARD_TYPE, BOARD_TITLE, BOARD_CONTENT, CREATE_DATE, REF, STEP)
+		VALUES (INQUIRY_SEQ.NEXTVAL, #{member_id},#{member_nickname}, 2, '댓글', #{board_content}, SYSDATE, #{board_num}, INQUIRY_SEQ.NEXTVAL)
 	</insert>
 	
 	<select id="getQnaReply" parameterType="CommentDTO" resultType="InquiryDTO">

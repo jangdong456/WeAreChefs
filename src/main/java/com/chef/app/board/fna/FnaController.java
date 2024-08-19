@@ -111,9 +111,11 @@ public class FnaController {
 	}
 	
 	@PostMapping("add")
-	public String fnaAdd(InquiryDTO inquiryDTO, Model model) throws Exception{
+	public String fnaAdd(InquiryDTO inquiryDTO, Model model, HttpSession session) throws Exception{
 		// & Todo : Session에서 memberID 받는 것으로 바꿔줘야함
-		inquiryDTO.setMember_id("admin1");
+		inquiryDTO.setMember_id(((MemberDTO) session.getAttribute("member")).getMember_id());
+		inquiryDTO.setMember_nickname(((MemberDTO) session.getAttribute("member")).getMember_nickname());
+	
 		int result = fnaService.fnaAdd(inquiryDTO);
 		
 		String msg = "작성을 성공 하였습니다.";

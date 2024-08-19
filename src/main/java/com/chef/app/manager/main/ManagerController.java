@@ -36,7 +36,7 @@ public class ManagerController {
 		return "manager/index";
 	}
 
-	// index 신규 회원 정보
+	// memberInfo 회원 정보 List
 	@GetMapping("memberInfo")
 	public String managerInfo(Model model) throws Exception{
 		List<MemberDTO> MemberListDesc = managerService.getMemberListDesc();

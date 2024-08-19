@@ -11,7 +11,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				(
 					SELECT * FROM NOTICE
 					<where>
-						BOARD_NUM > 0
+					BOARD_NUM > 0
 						<choose>
 							<when test="kind == 'board_title'">
 								AND BOARD_TITLE LIKE '%' || #{search} || '%' 
@@ -46,8 +46,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</delete>
 	
  	<insert id="noticeAdd" parameterType="NoticeDTO">
-		INSERT INTO NOTICE(BOARD_NUM, MEMBER_ID, BOARD_TITLE, BOARD_CONTENT, CREATE_DATE)
-		VALUES(NOTICE_SEQ.NEXTVAL, #{member_id}, #{board_title}, #{board_content}, SYSDATE)
+		INSERT INTO NOTICE(BOARD_NUM, MEMBER_ID, MEMBER_NICKNAME, BOARD_TITLE, BOARD_CONTENT, CREATE_DATE)
+		VALUES(NOTICE_SEQ.NEXTVAL, #{member_id}, #{member_nickname}, #{board_title}, #{board_content}, SYSDATE)
 	</insert>
 	
 	<select id="getRowNum" parameterType="Pager" resultType="java.lang.Long">

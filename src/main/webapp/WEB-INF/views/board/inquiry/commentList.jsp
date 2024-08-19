@@ -17,7 +17,7 @@
         <table id="${list.board_num}">
             <thead>
                 <tr >
-                    <th>작성자 : ${list.member_id}</th>
+                    <th>닉네임 : ${list.member_nickname}</th>
                     <th>작성일 : ${list.create_date}</th>
                     <c:if test="${not empty list.update_date}">
                         <th>수정일 : ${list.update_date}</th>    

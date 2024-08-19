@@ -48,7 +48,7 @@
                         <thead>
                           <tr>
                             <th scope="col">공지번호</th>
-                            <th scope="col">회원아이디</th>
+                            <th scope="col">닉네임</th>
                             <th scope="col">공지제목</th>
                             <th scope="col">공지작성일</th>
                           </tr>
@@ -57,7 +57,7 @@
                         	<c:forEach items="${noticeList}" var="ar">
                             	<tr>
                             		<th>${ar.board_num}</th>
-                            		<th>${ar.member_id}</th>
+                            		<th>${ar.member_nickname}</th>
                             		<th><a href="/board/notice/detail?board_num=${ar.board_num}">${ar.board_title}</a></th>
                             		<th>${ar.create_date}</th>
                            		</tr>
