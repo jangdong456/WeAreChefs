@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
- <!-- Sidebar -->
- <div class="sidebar" data-background-color="dark">
+<!-- Sidebar -->
+<div class="sidebar" data-background-color="dark">
   <div class="sidebar-logo">
     <!-- Logo Header -->
     <div class="logo-header" data-background-color="dark">
@@ -54,6 +54,23 @@
         </li>
 
         <li class="nav-item">
+          <a data-bs-toggle="collapse" href="#tables">
+            <i class="fas fa-exchange-alt"></i>
+            <p>주문&배송</p>
+            <span class="caret"></span>
+          </a>
+          <div class="collapse" id="tables">
+            <ul class="nav nav-collapse">
+              <li>
+                <a href="/manager/orderList">
+                  <span class="sub-item">주문&배송 관리</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </li>
+
+        <li class="nav-item">
           <a data-bs-toggle="collapse" href="#forms">
             <i class="fas fa-cubes"></i>
             <p>재고</p>
@@ -69,28 +86,6 @@
               <li>
                 <a href="#">
                   <span class="sub-item">재고 장바구니</span>
-                </a>
-              </li>
-            </ul>
-          </div>
-        </li>
-
-        <li class="nav-item">
-          <a data-bs-toggle="collapse" href="#tables">
-            <i class="fas fa-exchange-alt"></i>
-            <p>주문&배송</p>
-            <span class="caret"></span>
-          </a>
-          <div class="collapse" id="tables">
-            <ul class="nav nav-collapse">
-              <li>
-                <a href="#">
-                  <span class="sub-item">주문 관리</span>
-                </a>
-              </li>
-              <li>
-                <a href="#">
-                  <span class="sub-item">배송 관리</span>
                 </a>
               </li>
             </ul>

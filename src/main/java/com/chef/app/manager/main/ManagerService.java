@@ -16,7 +16,7 @@ public class ManagerService {
 	@Autowired
 	private ManagerDAO managerDAO;
 	
-	// index 첫줄 정보
+	// index 첫줄 정보-----------------------------------------------------------------------------
 	public List<Long> getIndexFirstRowInfo() throws Exception{
 		List<Long> indexFirstRowInfo = new ArrayList<Long>();
 		indexFirstRowInfo.add(managerDAO.getMemberTotalCount());
@@ -26,13 +26,13 @@ public class ManagerService {
 		return indexFirstRowInfo;
 	}
 	
-	// index 차트 정보
+	// index 차트 정보-----------------------------------------------------------------------------
 	public List<TotalPurchaseDTO> getMonthSales() throws Exception{
 		
 		return managerDAO.getMonthSales();
 	}
 	
-	// index 멤버 정보
+	// index 멤버 정보-----------------------------------------------------------------------------
 	public List<MemberDTO> getMemberListAsc() throws Exception{
 		return managerDAO.getMemberListAsc();
 	}
@@ -41,12 +41,12 @@ public class ManagerService {
 		return managerDAO.getMemberListDesc();
 	}
 	
-	// index 주문 정보
+	// index 주문 정보-----------------------------------------------------------------------------
 	public List<StoreOrderDTO> getOrderListDesc() throws Exception{
 		return managerDAO.getOrderListDesc();
 	}
 	
-	// MemberDetail 회원 정보
+	// MemberDetail 회원 정보-----------------------------------------------------------------------------
 	public MemberDTO getMemberDetail(MemberDTO memberDTO) throws Exception{
 		return managerDAO.getMemberDetail(memberDTO);
 	}
@@ -54,7 +54,7 @@ public class ManagerService {
 	public int postMemberDetailUpdate(OriMemberDTO memberDTO) throws Exception{
 		return managerDAO.postMemberDetailUpdate(memberDTO);
 	}
-	// 중복 확인
+	// 중복 확인-----------------------------------------------------------------------------
 	// Id
 	public Long confirmMemberId(MemberDTO memberDTO) throws Exception{
 		return managerDAO.confirmMemberId(memberDTO);
@@ -63,10 +63,6 @@ public class ManagerService {
 	public Long confirmMemberNickname(MemberDTO memberDTO) throws Exception{
 		return managerDAO.confirmMemberNickname(memberDTO);
 	}
-	// name
-	public Long confirmMemberName(MemberDTO memberDTO) throws Exception{
-		return managerDAO.confirmMemberName(memberDTO);
-	}
 	// mail
 	public Long confirmMemberMail(MemberDTO memberDTO) throws Exception{
 		return managerDAO.confirmMemberMail(memberDTO);
@@ -74,5 +70,22 @@ public class ManagerService {
 	// phone
 	public Long confirmMemberPhone(MemberDTO memberDTO) throws Exception{
 		return managerDAO.confirmMemberPhone(memberDTO);
+	}
+	// ORDER-----------------------------------------------------------------------------
+	// order List
+	public List<StoreOrderDTO> getOrderList() throws Exception{
+		return managerDAO.getOrderList();
+	}	
+	// CANCEL ORDER
+	public List<StoreOrderDTO> getCancelOrderList() throws Exception{
+		return managerDAO.getCancelOrderList();
+	}
+	//cancelOk
+	public int cancelOk(StoreOrderDTO storeOrderDTO) throws Exception{
+		return managerDAO.cancelOk(storeOrderDTO);
+	}
+	//cancelNo
+	public int cancelNo(StoreOrderDTO storeOrderDTO) throws Exception{
+		return managerDAO.cancelNo(storeOrderDTO);
 	}
 }

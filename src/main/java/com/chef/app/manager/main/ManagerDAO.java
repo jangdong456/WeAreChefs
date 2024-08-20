@@ -19,7 +19,7 @@ public class ManagerDAO {
 	
 	private final String NAMESPACE = "com.chef.app.manager.main.ManagerDAO.";
 
-	// index 상단 첫줄 정보 4개
+	// index 상단 첫줄 정보 4개 -----------------------------------------------------------------------------
 	public Long getMemberTotalCount() throws Exception{
 		return sqlSession.selectOne(NAMESPACE + "getMemberTotalCount");
 	}
@@ -36,12 +36,12 @@ public class ManagerDAO {
 		return sqlSession.selectOne(NAMESPACE + "getRequiredFoodStockOrderCount");
 	}
 	
-	// index 차트 정보
+	// index 차트 정보 -----------------------------------------------------------------------------
 	public List<TotalPurchaseDTO> getMonthSales() throws Exception{
 		return sqlSession.selectList(NAMESPACE + "getMonthSales");
 	}
 	
-	// index 멤버 정보
+	// index 멤버 정보 -----------------------------------------------------------------------------
 	public List<MemberDTO> getMemberListAsc() throws Exception{
 		return sqlSession.selectList(NAMESPACE + "getMemberListAsc");
 	}
@@ -50,12 +50,12 @@ public class ManagerDAO {
 		return sqlSession.selectList(NAMESPACE + "getMemberListDesc");
 	}
 	
-	// index 주문 정보
+	// index 주문 정보 -----------------------------------------------------------------------------
 	public List<StoreOrderDTO> getOrderListDesc() throws Exception{
 		return sqlSession.selectList(NAMESPACE + "getOrderListDesc");
 	}
 	
-	// memeberDetail 회원 정보
+	// memeberDetail 회원 정보 -----------------------------------------------------------------------------
 	public MemberDTO getMemberDetail(MemberDTO memberDTO) throws Exception{
 		return sqlSession.selectOne(NAMESPACE + "getMemberDetail", memberDTO);
 	}
@@ -64,7 +64,7 @@ public class ManagerDAO {
 		return sqlSession.update(NAMESPACE + "postMemberDetailUpdate", memberDTO);
 	}
 	
-	// 중복 확인
+	// 중복 확인-----------------------------------------------------------------------------
 	//아이디
 	public Long confirmMemberId(MemberDTO memberDTO) throws Exception{
 		return sqlSession.selectOne(NAMESPACE + "confirmMemberId", memberDTO);
@@ -72,10 +72,6 @@ public class ManagerDAO {
 	//닉네임
 	public Long confirmMemberNickname(MemberDTO memberDTO) throws Exception{
 		return sqlSession.selectOne(NAMESPACE + "confirmMemberNickname", memberDTO);
-	}
-	//이름
-	public Long confirmMemberName(MemberDTO memberDTO) throws Exception{
-		return sqlSession.selectOne(NAMESPACE + "confirmMemberName", memberDTO);
 	}
 	//메일
 	public Long confirmMemberMail(MemberDTO memberDTO) throws Exception{
@@ -86,4 +82,21 @@ public class ManagerDAO {
 		return sqlSession.selectOne(NAMESPACE + "confirmMemberPhone", memberDTO);
 	}
 	
+	// ORDER-----------------------------------------------------------------------------
+	// order List
+	public List<StoreOrderDTO> getOrderList() throws Exception{
+		return sqlSession.selectList(NAMESPACE + "getOrderList");
+	}	
+	// CANCEL ORDER
+	public List<StoreOrderDTO> getCancelOrderList() throws Exception{
+		return sqlSession.selectList(NAMESPACE + "getCancelOrderList");
+	}
+	//cancelOk
+	public int cancelOk(StoreOrderDTO storeOrderDTO) throws Exception{
+		return sqlSession.update(NAMESPACE + "cancelOk", storeOrderDTO);
+	}
+	// cancelNo
+	public int cancelNo(StoreOrderDTO storeOrderDTO) throws Exception{
+		return sqlSession.update(NAMESPACE + "cancelNo", storeOrderDTO);
+	}
 }

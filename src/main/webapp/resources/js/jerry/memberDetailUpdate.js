@@ -16,7 +16,7 @@ const regexpId = /^[a-zA-Z0-9]+$/;
 const regexpPassword = /^(?=.*\d)(?=.*[a-z])(?=.*[a-zA-Z]).{8,12}$/;
 const regexpEmail    = /^(\w{1,20})+@(\w{1,20})+\.([a-zA-Z]{2,4}$)+$/;
 const regexpPhone    = /^[010|011|016|017|018|019]{3}-\d{3,4}-\d{4}$/;
-// 제약조건 참 거짓 구분
+// 제약조건 충족 불충족 구분
 let bMemberNickname = false;
 let bMemberName = false;
 let bMemberMail = false;
@@ -27,7 +27,6 @@ let bMemberPhone = false;
 
 divDetail.addEventListener('keyup',()=>{
   
-  let memberId = document.getElementById("inputMemberId");
   let memberNickname = document.getElementById("inputMemberNickname");
   let memberName = document.getElementById("inputMemberName");
   let memberMail = document.getElementById("inputMemberMail");

@@ -22,7 +22,7 @@ public class ManagerController {
 	@Autowired
 	private ManagerService managerService;
 	
-	// index 첫줄 정보 4가지
+	// index 첫줄 정보 4가지 --------------------------------------------------------------------------
 	@GetMapping("index")
 	public String managerIndex(Model model) throws Exception{
 		List<Long> indexFirstRowInfo = managerService.getIndexFirstRowInfo();
@@ -40,7 +40,7 @@ public class ManagerController {
 		return "manager/index";
 	}
 
-	// memberInfo 회원 정보 List
+	// memberInfo 회원 정보 List --------------------------------------------------------------------------
 	@GetMapping("memberInfo")
 	public String managerInfo(Model model) throws Exception{
 		List<MemberDTO> MemberListDesc = managerService.getMemberListDesc();
@@ -49,7 +49,7 @@ public class ManagerController {
 		return "manager/info";
 	}
 	
-	// memberDetail 회원 정보
+	// memberDetail 회원 정보 --------------------------------------------------------------------------
 	@GetMapping("memberDetail")
 	public String memberDetail(MemberDTO memberDTO, Model model) throws Exception{
 		model.addAttribute("memberDetail", managerService.getMemberDetail(memberDTO));
@@ -64,7 +64,7 @@ public class ManagerController {
 		return "manager/memberDetailSample";
 	}
 	
-	// memberDetail 회원 정보 수정
+	// memberDetail 회원 정보 수정 --------------------------------------------------------------------------
 	@GetMapping("memberDetailUpdate")
 	public String memberDetailUpdate(MemberDTO memberDTO, Model model) throws Exception{
 		model.addAttribute("memberDetail", managerService.getMemberDetail(memberDTO));
@@ -85,7 +85,7 @@ public class ManagerController {
 		}
 	}
 	
-	// 회원정보 수정 
+	// 회원정보 수정 제약조건 --------------------------------------------------------------------------
 	// 아이디 검사
 	@PostMapping("memberIdConfirm")
 	public String memberUpdateConfirm(MemberDTO memberDTO, OriMemberDTO oriMemberDTO, Model model) throws Exception{
@@ -107,18 +107,6 @@ public class ManagerController {
 		}else {
 			Long memberNickname = managerService.confirmMemberNickname(memberDTO);
 			model.addAttribute("msg", memberNickname);	
-			return "commons/result";
-		}
-	}
-	// 이름 검사
-	@PostMapping("memberNameConfirm")
-	public String memberNameConfirm(MemberDTO memberDTO, OriMemberDTO oriMemberDTO, Model model) throws Exception{
-		if(memberDTO.getMember_name().equals(oriMemberDTO.getOriMember_name())) {
-			model.addAttribute("msg", 0);
-			return "commons/result";
-		}else {
-			Long memberName = managerService.confirmMemberName(memberDTO);
-			model.addAttribute("msg", memberName);	
 			return "commons/result";
 		}
 	}
@@ -145,6 +133,45 @@ public class ManagerController {
 			model.addAttribute("msg", memberPhone);	
 			return "commons/result";
 		}
+	}
+	
+	// 주문 & 배송
+	// 주문
+	// orderList
+	@GetMapping("orderList")
+	public String orderList(Model model) throws Exception{
+		model.addAttribute("orderList", managerService.getOrderList());
+		model.addAttribute("cancelOrderList", managerService.getCancelOrderList());
+		return "manager/orderList";
+	}
+	// orderList cancelOk
+	@PostMapping("cancelOk")
+	public String cancelOk(StoreOrderDTO storeOrderDTO, Model model) throws Exception{
+		int result = managerService.cancelOk(storeOrderDTO);
+		if(result>0){
+			model.addAttribute("cancelOrderList", managerService.getCancelOrderList());
+			return "manager/cancelOrderListSample";
+		}else {
+			model.addAttribute("result", 1);
+			return "commons/result";
+		}
+	}
+	// orderList cancelNo
+	@PostMapping("cancelNo")
+	public String cancelNo(StoreOrderDTO storeOrderDTO, Model model) throws Exception{
+		int result = managerService.cancelNo(storeOrderDTO);
+		if(result>0){
+			model.addAttribute("cancelOrderList", managerService.getCancelOrderList());
+			return "manager/cancelOrderListSample";
+		}else {
+			model.addAttribute("result", 1);
+			return "commons/result";
+		}
+	}
+	// orderDetail
+	@GetMapping("orderDetail")
+	public String orderDetail(StoreOrderDTO storeOrderDTO) throws Exception{
+		return "manager/orderDetail";
 	}
 //끝
 }
