@@ -5,6 +5,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="com.chef.app.member.MemberDAO">
 	
+<!-- 	<insert id="profileChange"> -->
+		
+<!-- 	</insert> -->
+	
 	<select id="recipeReplyList" parameterType="MemberDTO" resultType="RecipeReplyDTO">
 		SELECT * FROM RECIPEREPLY
 		WHERE RECIPE_REPLY_NUM > 0

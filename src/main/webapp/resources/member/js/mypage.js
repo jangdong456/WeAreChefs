@@ -4,19 +4,35 @@ const introductionAdd = document.getElementById("introduction_add");
 const introductionDelete = document.getElementById("introduction_delete");
 const introduces_text = document.getElementById("introduces_text");
 
-let id = introductionAdd.getAttribute("data-member-id");
+const profileAdd = document.getElementById("profile_picture_add");
+
+let introductionId = introductionAdd.getAttribute("data-member-id");
+
+let profileId = profileAdd.getAttribute("data-member-id");
+
+
+
+
+// profileAdd.addEventListener("click", ()=> {
+
+//     fetch("profileChange", {
+//         method : "POST",
+//         headers : { "Content-type":"application/x-www-form-urlencoded" },
+     
+//     })
+// })
 
 introductionAdd.addEventListener("click", () =>{
     
     console.log(commentContents.value);
-    console.log(id)
+    console.log(introductionId)
 
-    // introduces_text.style.display="none";
+    introduces_text.style.display="none";
 
     fetch("mypage", {
         method : "POST",
         headers : { "Content-type":"application/x-www-form-urlencoded" },
-        body : "profile_about_me="+commentContents.value+"&member_id="+id
+        body : "profile_about_me="+commentContents.value+"&member_id="+introductionId
         
     })
     .then(res => res.text())
@@ -29,8 +45,8 @@ introductionAdd.addEventListener("click", () =>{
 })
 
 introductionDelete.addEventListener("click", () => {
-    console.log(id)
-    fetch("introducesDelete?member_id="+id, {
+    console.log(introductionId)
+    fetch("introducesDelete?member_id="+introductionId, {
         method : "GET"
     })
     .then(res => res.text())

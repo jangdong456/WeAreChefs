@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.chef.app.recipe.RecipeDTO;
 import com.chef.app.recipe.RecipeReplyDTO;
@@ -29,6 +30,16 @@ public class MemberController {
 	@Autowired
 	private Email email;
 	
+	@PostMapping("profileChange")
+	public void profileChange(MemberDTO memberDTO, MultipartFile multipartFile, HttpSession session) throws Exception {
+		System.out.println("파일 확인@@@@@@@@@@@@");
+		MemberDTO memberdto = (MemberDTO)session.getAttribute("member");
+		memberDTO.setMember_id(memberdto.getMember_id());
+		
+//		System.out.println(memberDTO.getMember_id());
+		
+		memberService.profileChange(memberDTO, multipartFile, session);
+	}								
 	
 	@GetMapping("duplication")
 	public String duplication(MemberDTO memberDTO, Model model) throws Exception {

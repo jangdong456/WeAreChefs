@@ -18,6 +18,10 @@ public class MemberDAO {
 	
 	private final String NAMESPACE = "com.chef.app.member.MemberDAO.";
 	
+	public void profileChange(MemberDTO memberDTO) throws Exception {
+		sqlSession.insert(NAMESPACE + "profileChange", memberDTO);
+	}
+	
 	public List<RecipeReplyDTO> recipeReplyList() throws Exception {
 		return sqlSession.selectList(NAMESPACE + "recipeReplyList");
 	}

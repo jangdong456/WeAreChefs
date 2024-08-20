@@ -2,10 +2,15 @@ package com.chef.app.member;
 
 import java.util.List;
 
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.chef.app.file.FileManager;
 import com.chef.app.recipe.RecipeDTO;
 import com.chef.app.recipe.RecipeReplyDTO;
 import com.chef.app.recipe.RecipeReviewDTO;
@@ -16,6 +21,9 @@ public class MemberService {
 	@Autowired
 	private MemberDAO memberDAO;
 	
+	@Autowired
+	private FileManager fileManager;
+	
 	public int duplication(MemberDTO memberDTO)throws Exception {
 		int check = memberDAO.duplication(memberDTO);
 		System.out.println("서비스 테스트");
@@ -24,6 +32,22 @@ public class MemberService {
 		return check;
 
 	}
+	
+	public void profileChange(MemberDTO memberDTO, MultipartFile multipartFile, HttpSession session) throws Exception {
+		
+		ServletContext servletContext = session.getServletContext();
+		String path = servletContext.getRealPath("resources/upload/member");
+		
+		String fileName = fileManager.fileSave(path, multipartFile);
+		
+		MemberDTO memberdto = new MemberDTO();
+		memberdto.setFile_name(fileName);
+		memberdto.setMember_id(memberDTO.getMember_id());
+		
+		memberDAO.profileChange(memberdto);
+		
+	}
+				
 	
 	public List<RecipeReplyDTO> recipeReplyList() throws Exception {
 		return memberDAO.recipeReplyList();

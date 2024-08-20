@@ -1,6 +1,8 @@
 package com.chef.app.member;
 
-public class MemberDTO {
+import com.chef.app.file.FileDTO;
+
+public class MemberDTO extends FileDTO {
 	private String member_id;
 	private String member_name;
 	private String member_mail;
