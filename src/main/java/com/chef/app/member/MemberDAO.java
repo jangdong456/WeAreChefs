@@ -1,8 +1,13 @@
 package com.chef.app.member;
 
+import java.util.List;
+import java.util.Map;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
+import com.chef.app.food.StoreOrderDTO;
 
 @Repository
 public class MemberDAO {
@@ -52,5 +57,11 @@ public class MemberDAO {
 		return sqlSession.insert(NAMESPACE + "join", memberDTO);
 	}
 	
+	public List<StoreOrderDTO> buyList(Map<String, Object> comeMap) throws Exception {
+		return sqlSession.selectList(NAMESPACE+"buyList", comeMap);
+	}
 	
+	public int cancleRequest (StoreOrderDTO storeOrderDTO) throws Exception{
+		return sqlSession.update(NAMESPACE+"cancleRequest", storeOrderDTO);
+	}
 }

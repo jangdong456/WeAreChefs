@@ -1,12 +1,21 @@
 package com.chef.app.food;
 
+import java.util.List;
+
 public class StoreMidOrderDTO {
 
 	private Long mid_num;
 	private String order_num;
 	private Long food_num;
 	private Long cart_count;
+	private List<FoodDTO> foodDTOs;
 	
+	public List<FoodDTO> getFoodDTOs() {
+		return foodDTOs;
+	}
+	public void setFoodDTOs(List<FoodDTO> foodDTOs) {
+		this.foodDTOs = foodDTOs;
+	}
 	public Long getMid_num() {
 		return mid_num;
 	}

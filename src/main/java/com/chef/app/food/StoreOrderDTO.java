@@ -9,7 +9,7 @@ public class StoreOrderDTO {
 	private	Long order_price;
 	private	String order_status;
 	private	String delivery_address;
-	private	String delivery_stauts;
+	private	String delivery_status;
 	private	Date order_date;
 	private String order_name;
 	private String order_phone;
@@ -47,11 +47,11 @@ public class StoreOrderDTO {
 	public void setDelivery_address(String delivery_address) {
 		this.delivery_address = delivery_address;
 	}
-	public String getDelivery_stauts() {
-		return delivery_stauts;
+	public String getDelivery_status() {
+		return delivery_status;
 	}
-	public void setDelivery_stauts(String delivery_stauts) {
-		this.delivery_stauts = delivery_stauts;
+	public void setDelivery_status(String delivery_status) {
+		this.delivery_status = delivery_status;
 	}
 	public Date getOrder_date() {
 		return order_date;
