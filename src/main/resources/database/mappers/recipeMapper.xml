@@ -215,8 +215,6 @@
 								 , BOARD_TITLE	
 								 , BOARD_CONTENT	
 								 , REF
-						   		 , STEP
-						   		 , DEPTH
 								 )
 							VALUES
    									(
@@ -226,8 +224,7 @@
    									, #{board_title}
    									, #{board_content}
    									, RECIPEREPLY_SEQ.CURRVAL
-									, 0
-									, 0
+									
    									)
    									
   </insert>
@@ -238,4 +235,26 @@
 		ORDER BY CREATE_DATE DESC
 
 	</select>
+	
+	<insert id="recipeComment" parameterType="RecipeReplyDTO">
+	INSERT INTO RECIPEREPLY(
+								   RECIPE_REPLY_NUM
+								 , RECIPE_NUM
+								 , MEMBER_ID
+								 , BOARD_CONTENT	
+								 , REF
+						   		 , STEP	
+						   					   		
+								 )
+							VALUES
+   									(
+   									  RECIPEREPLY_SEQ.NEXTVAL
+   									, #{recipe_num}
+   									, #{member_id}
+   									, #{board_content}
+   									, #{recipe_reply_num}
+									, RECIPEREPLY_SEQ.NEXTVAL
+										
+   									)
+	</insert>
     </mapper>

@@ -1,6 +1,7 @@
 package com.chef.app.recipe;
 
 import java.sql.Date;
+import java.util.List;
 
 public class RecipeDTO {
 	private Long recipe_num;
@@ -15,6 +16,15 @@ public class RecipeDTO {
 	private Long rating;
 	private Long recipe_like;
 	private Long recipe_hit;
+	private List<RecipeReplyDTO> ar;
+
+	public List<RecipeReplyDTO> getAr() {
+		return ar;
+	}
+
+	public void setAr(List<RecipeReplyDTO> ar) {
+		this.ar = ar;
+	}
 
 	private RecipeImgFileDTO recipeImgFileDTO;
 

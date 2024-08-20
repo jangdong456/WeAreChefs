@@ -239,10 +239,10 @@
                     
     			 </div>
        		</div>
-<!--     <script>
+   <script>
 
 setMax(1);
-    </script> -->
+    </script> 
 
 <c:import url="/WEB-INF/views/templete/footer.jsp"></c:import>
 

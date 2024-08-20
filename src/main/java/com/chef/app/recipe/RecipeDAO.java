@@ -73,13 +73,18 @@ public class RecipeDAO {
 	}
 
 	public int recipeReply(RecipeReplyDTO recipeReplyDTO) {
-		
+
 		return sqlSession.insert(NAMESPACE + "recipeReply", recipeReplyDTO);
 	}
 
 	public List<RecipeReviewDTO> replyList(RecipeReplyDTO recipeReplyDTO) {
-		
+
 		return sqlSession.selectList(NAMESPACE + "replyList", recipeReplyDTO);
+	}
+
+	public int recipeComment(RecipeReplyDTO recipeReplyDTO) {
+
+		return sqlSession.insert(NAMESPACE + "recipeComment", recipeReplyDTO);
 	}
 
 }

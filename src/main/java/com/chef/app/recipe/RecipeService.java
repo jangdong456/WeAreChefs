@@ -111,13 +111,27 @@ public class RecipeService {
 	}
 
 	public int recipeReply(RecipeReplyDTO recipeReplyDTO) {
-		
+
 		return recipeDAO.recipeReply(recipeReplyDTO);
 	}
-	
-	public List<RecipeReviewDTO> replyList(RecipeReplyDTO recipeReplyDTO) {
+
+	public List<RecipeReviewDTO> replyList(RecipeReplyDTO recipeReplyDTO, RecipeDTO recipeDTO) {
 
 		return recipeDAO.replyList(recipeReplyDTO);
+	}
+
+	public int recipeComment(RecipeReplyDTO recipeReplyDTO) {
+		// RecipeDTO recipeDTO;
+
+		RecipeDTO recipeDTO = new RecipeDTO();
+		recipeDTO.setRecipe_num(recipeReplyDTO.getRecipe_num());
+
+		RecipeDTO parent = recipeDAO.recipeDetail(recipeDTO);
+
+		// System.out.println("원본글 " + parent.getAr().get(0).getRef());
+
+		return recipeDAO.recipeComment(recipeReplyDTO);
+
 	}
 
 }
