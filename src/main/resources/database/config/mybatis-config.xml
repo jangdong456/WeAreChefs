@@ -36,6 +36,8 @@
  		<typeAlias type="com.chef.app.manager.NoticeFileDTO" alias="NoticeFileDTO"/>
  		<typeAlias type="com.chef.app.manager.InquiryDTO" alias="InquiryDTO"/>
  		<typeAlias type="com.chef.app.manager.TotalPurchaseDTO" alias="TotalPurchaseDTO"/>
+ 		<typeAlias type="com.chef.app.manager.OriMemberDTO" alias="OriMemberDTO"/>
+ 		
  		
 
  	</typeAliases>

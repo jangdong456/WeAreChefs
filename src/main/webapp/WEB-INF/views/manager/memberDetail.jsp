@@ -7,7 +7,7 @@
 	<c:import url="/WEB-INF/views/managerCommons/cssScript.jsp" ></c:import>
 	<style>
 		.boxOne{
-			width: 720px;
+			width: 700px;
 			height: 650px;
 			background-color:white;
 			border-radius: 10px;
@@ -16,13 +16,31 @@
 			left:50%;
 			transform: translate(-50%,-50%);
 		}
+		.boxTwo{
+			width: 700px;
+			height: 650px;
+			background-color: #FFFFB4;
+			border-radius: 10px;
+			position: absolute;
+			top:55%;
+			left:50%;
+			transform: translate(-50%,-50%);
+		}
 		.correctionBtn{
 			position:absolute;
-			right: 13.0%;
+			right: 12.0%;
 		}
 		.deleteBtn{
 			position:absolute;
-			right: 2.8%;
+			right: 1.5%;
+		}
+		.foreHtag{
+			color: red;
+			font-size: 15px;
+		}
+		.afterHtag{
+			color: blue;
+			font-size: 15px;
 		}
 	</style>
 </head>
@@ -54,71 +72,82 @@
 	            </li>
 	          </ul>
 	        </div>
-					<div class="container boxOne" id="divDetail" style="margin: 0;">
-						<div class="form-group" style="width: 700px;">
-							<h1>아이디</h1>
-							<input
-								type="text"
-								class="form-control form-control-lg"
-								id="inputMemberId"
-								value="${memberDetail.member_id}"
-								disabled
-							/>
-							<h1>닉네임</h1>
-							<input
-								type="text"
-								class="form-control form-control-lg"
-								id="inputMemberNickname"
-								value="${memberDetail.member_nickname}"
-								disabled
-							/>
-							<h1>이름</h1>
-							<input
-								type="text"
-								class="form-control form-control-lg"
-								id="inputMemberName"
-								value="${memberDetail.member_name}"
-								disabled
-							/>
-							<h1>메일</h1>
-							<input
-								type="text"
-								class="form-control form-control-lg"
-								id="inputMemberMail"
-								value="${memberDetail.member_mail}"
-								disabled
-							/>
-							<h1>연락처</h1>
-							<input
-								type="text"
-								class="form-control form-control-lg"
-								id="inputMemberPhone"
-								value="${memberDetail.member_phone}"
-								disabled
-							/>
-							<h1>권한 등급</h1>
-							<input
-								type="text"
-								class="form-control form-control-lg"
-								id="inputMemberLev"
-								value="${memberDetail.member_lev}"
-								disabled
-							/>
-						</div>
-						<button
+					<div id="divDetail">
+						<c:choose>
+							<c:when test="${memberDetail.member_type eq '일반회원'}"> <div class="Constainer boxOne" style="margin: 0;"></c:when>
+							<c:otherwise><div class="Constainer boxTwo" style="margin: 0;"></c:otherwise>
+						</c:choose>
+							<div class="form-group" style="width: 700px;">
+								<h1>아이디</h1>
+								<input
+									type="text"
+									class="form-control form-control-lg"
+									id="inputMemberId"
+									value="${memberDetail.member_id}"
+									required
+									disabled
+								/>
+								<h1>닉네임</h1>
+								<input
+									type="text"
+									class="form-control form-control-lg"
+									id="inputMemberNickname"
+									value="${memberDetail.member_nickname}"
+									required
+									disabled
+								/>
+								<h1>이름</h1>
+								<input
+									type="text"
+									class="form-control form-control-lg"
+									id="inputMemberName"
+									value="${memberDetail.member_name}"
+									required
+									disabled
+								/>
+								<h1>메일</h1>
+								<input
+									type="email"
+									class="form-control form-control-lg"
+									id="inputMemberMail"
+									value="${memberDetail.member_mail}"
+									required
+									disabled
+								/>
+								<h1>연락처</h1>
+								<input
+									type="text"
+									class="form-control form-control-lg"
+									id="inputMemberPhone"
+									value="${memberDetail.member_phone}"
+									required
+									disabled
+								/>
+								<h1>권한 등급</h1>
+								<input
+									type="text"
+									class="form-control form-control-lg"
+									id="inputMemberLev"
+									value="${memberDetail.member_lev}"
+									required
+									disabled
+								/>
+							</div>
+							<button
+								type="button"
+								class="btn btn-success correctionBtn"
+								id="updateBtn"
+							>
+								수정
+							</button>
+							<button
 							type="button"
-							class="btn btn-success correctionBtn"
-							id="alert_demo_7"
-						>
-							수정
-						</button>
-						<button
-						type="button"
-						class="btn btn-danger deleteBtn"
-						id="alert_demo_8"
-						>
-							삭제
-						</button>
+							class="btn btn-danger deleteBtn"
+							id="deleteBtn"
+							>
+								삭제
+							</button>
+						</div>
 					</div>
 
 

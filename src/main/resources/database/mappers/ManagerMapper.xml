@@ -77,4 +77,42 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE MEMBER_ID = #{member_id}
 	</select>
 	
+	<!-- 수정 확인 시 실행되는 Update 쿼리 -->
+	<update id="postMemberDetailUpdate" parameterType="OriMemberDTO">
+		UPDATE "MEMBER"
+		SET
+			MEMBER_ID = #{member_id},
+			MEMBER_NICKNAME = #{member_nickname},
+			MEMBER_NAME = #{member_name},
+			MEMBER_MAIL = #{member_mail},
+			MEMBER_PHONE = #{member_phone},
+			MEMBER_LEV = #{member_lev}
+		WHERE MEMBER_ID = #{oriMember_id}
+	</update>
+	
+	<!-- keyup 시 중복을 확인하는 쿼리 목록 -->
+	<!-- MemberId -->
+	<select id="confirmMemberId" parameterType="MemberDTO" resultType="java.lang.Long">
+		SELECT COUNT(*)
+		FROM "MEMBER"
+		WHERE MEMBER_ID = #{member_id} 
+	</select>
+	<!-- MemberNickname -->
+	<select id="confirmMemberNickname" parameterType="MemberDTO" resultType="java.lang.Long">
+		SELECT COUNT(*)
+		FROM "MEMBER"
+		WHERE MEMBER_NICKNAME = #{member_nickname} 
+	</select>
+	<!-- Mail -->
+	<select id="confirmMemberMail" parameterType="MemberDTO" resultType="java.lang.Long">
+		SELECT COUNT(*)
+		FROM "MEMBER"
+		WHERE MEMBER_Mail = #{member_mail} 
+	</select>
+	<!-- Phone -->
+	<select id="confirmMemberPhone" parameterType="MemberDTO" resultType="java.lang.Long">
+		SELECT COUNT(*)
+		FROM "MEMBER"
+		WHERE MEMBER_PHONE = #{member_phone} 
+	</select>
 </mapper>
