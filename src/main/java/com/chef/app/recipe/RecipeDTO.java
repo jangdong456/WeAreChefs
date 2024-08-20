@@ -17,6 +17,17 @@ public class RecipeDTO {
 	private Long recipe_like;
 	private Long recipe_hit;
 	private List<RecipeReplyDTO> ar;
+	private Long Child_ref;
+	
+	
+
+	public Long getChild_ref() {
+		return Child_ref;
+	}
+
+	public void setChild_ref(Long child_ref) {
+		Child_ref = child_ref;
+	}
 
 	public List<RecipeReplyDTO> getAr() {
 		return ar;

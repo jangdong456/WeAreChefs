@@ -87,4 +87,8 @@ public class RecipeDAO {
 		return sqlSession.insert(NAMESPACE + "recipeComment", recipeReplyDTO);
 	}
 
+	public int replyUpdate(RecipeDTO recipeDTO) {
+		return sqlSession.update(NAMESPACE + "replyUpdate",recipeDTO);
+	}
+
 }

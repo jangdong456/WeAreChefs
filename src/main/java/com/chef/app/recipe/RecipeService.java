@@ -119,7 +119,7 @@ public class RecipeService {
 
 		return recipeDAO.replyList(recipeReplyDTO);
 	}
-
+	
 	public int recipeComment(RecipeReplyDTO recipeReplyDTO) {
 		// RecipeDTO recipeDTO;
 
@@ -127,6 +127,23 @@ public class RecipeService {
 		recipeDTO.setRecipe_num(recipeReplyDTO.getRecipe_num());
 
 		RecipeDTO parent = recipeDAO.recipeDetail(recipeDTO);
+		
+		
+	  
+		 int result = recipeDAO.replyUpdate(parent);
+		//parent.setChild_ref(((RecipeReplyDTO)parent.getAr()).getRef());
+		//System.out.println("getChild_ref " + parent.getChild_ref());
+		//int result = recipeDAO.replyUpdate(parent);
+		
+		/*
+		 * recipeReplyDTO.setRef(parentReply.getRef());
+		 * recipeReplyDTO.setStep(parentReply.getStep() + 1);
+		 * recipeReplyDTO.setDepth(parentReply.getDepth() + 1);
+		 */
+		
+		System.out.println("getRef" + ((RecipeReplyDTO) parent.getAr()).getRef());
+		System.out.println("getStep" +((RecipeReplyDTO) parent.getAr()).getStep());
+		System.out.println("getDepth" + ((RecipeReplyDTO) parent.getAr()).getDepth());
 
 		// System.out.println("원본글 " + parent.getAr().get(0).getRef());
 

@@ -193,7 +193,14 @@
 	</insert>
 	
 	<select id="reviewList" parameterType="recipeReviewDTO" resultType="recipeReviewDTO">
-		SELECT *
+		SELECT 	REVIEW_NUM
+				 , RECIPE_NUM
+				 , MEMBER_ID
+				 , CREATE_DATE
+				 , UPDATE_DATE
+				 , BOARD_TITLE
+				 , BOARD_CONTENT
+				 , RECIPE_RATING
 		FROM RECIPEREVIEW
 		WHERE RECIPE_NUM = #{recipe_num}
 		ORDER BY CREATE_DATE DESC
@@ -229,7 +236,18 @@
    									
   </insert>
   	<select id="replyList" parameterType="recipeReplyDTO" resultType="recipeReplyDTO" >
-		SELECT *
+		SELECT 	RECIPE_REPLY_NUM
+				 , RECIPE_NUM
+				 , MEMBER_ID
+				 , CREATE_DATE
+				 , UPDATE_DATE
+				 , BOARD_TITLE
+				 , BOARD_CONTENT
+				 , REF
+				 , STEP
+				 , DEPTH
+				 , DEL
+				 
 		FROM RECIPEREPLY
 		WHERE RECIPE_NUM = #{recipe_num}
 		ORDER BY CREATE_DATE DESC
@@ -257,4 +275,12 @@
 										
    									)
 	</insert>
+	<update id="replyUpdate" parameterType="RecipeDTO">
+	   	UPDATE RECIPEREPLY 
+		   SET STEP = STEP +1
+		 WHERE REF = #{ref}
+		   AND STEP > #{step}
+   	</update>
+   	
+	
     </mapper>
