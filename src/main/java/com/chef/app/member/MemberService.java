@@ -33,7 +33,7 @@ public class MemberService {
 
 	}
 	
-	public void profileChange(MemberDTO memberDTO, MultipartFile multipartFile, HttpSession session) throws Exception {
+	public int profileChange(MemberDTO memberDTO, MultipartFile multipartFile, HttpSession session) throws Exception {
 		
 		ServletContext servletContext = session.getServletContext();
 		String path = servletContext.getRealPath("resources/upload/member");
@@ -44,21 +44,21 @@ public class MemberService {
 		memberdto.setFile_name(fileName);
 		memberdto.setMember_id(memberDTO.getMember_id());
 		
-		memberDAO.profileChange(memberdto);
-		
+		int result = memberDAO.profileChange(memberdto);
+		return result;
 	}
 				
 	
-	public List<RecipeReplyDTO> recipeReplyList() throws Exception {
-		return memberDAO.recipeReplyList();
+	public List<RecipeReplyDTO> recipeReplyList(MemberDTO test) throws Exception {
+		return memberDAO.recipeReplyList(test);
 	}
 	
-	public List<RecipeReviewDTO> recipeReviewList() throws Exception {
-		return memberDAO.recipeReviewList();
+	public List<RecipeReviewDTO> recipeReviewList(MemberDTO test) throws Exception {
+		return memberDAO.recipeReviewList(test);
 	}
 	
-	public List<RecipeDTO> recipeList() throws Exception {
-		return memberDAO.recipeList();
+	public List<RecipeDTO> recipeList(MemberDTO test) throws Exception {
+		return memberDAO.recipeList(test);
 	}
 	
 	public int introducesDelete(MemberDTO memberDTO) throws Exception {

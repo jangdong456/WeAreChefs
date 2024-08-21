@@ -18,20 +18,22 @@ public class MemberDAO {
 	
 	private final String NAMESPACE = "com.chef.app.member.MemberDAO.";
 	
-	public void profileChange(MemberDTO memberDTO) throws Exception {
-		sqlSession.insert(NAMESPACE + "profileChange", memberDTO);
+	public int profileChange(MemberDTO memberDTO) throws Exception {
+		System.out.println("dao 넘어옴?@@@@@@@@");
+		
+		return sqlSession.update(NAMESPACE + "profileChange", memberDTO);
 	}
 	
-	public List<RecipeReplyDTO> recipeReplyList() throws Exception {
-		return sqlSession.selectList(NAMESPACE + "recipeReplyList");
+	public List<RecipeReplyDTO> recipeReplyList(MemberDTO test) throws Exception {
+		return sqlSession.selectList(NAMESPACE + "recipeReplyList" ,test);
 	}
 	
-	public List<RecipeReviewDTO> recipeReviewList() throws Exception {
-		return sqlSession.selectList(NAMESPACE + "recipeReviewList");
+	public List<RecipeReviewDTO> recipeReviewList(MemberDTO test) throws Exception {
+		return sqlSession.selectList(NAMESPACE + "recipeReviewList" ,test);
 	}
 	
-	public List<RecipeDTO> recipeList() throws Exception {
-		return sqlSession.selectList(NAMESPACE + "recipeList");
+	public List<RecipeDTO> recipeList(MemberDTO test) throws Exception {
+		return sqlSession.selectList(NAMESPACE + "recipeList", test);
 	}
 	
 	public int duplication(MemberDTO memberDTO) throws Exception {

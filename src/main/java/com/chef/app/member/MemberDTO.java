@@ -1,6 +1,9 @@
 package com.chef.app.member;
 
+import java.util.List;
+
 import com.chef.app.file.FileDTO;
+import com.chef.app.recipe.RecipeDTO;
 
 public class MemberDTO extends FileDTO {
 	private String member_id;
@@ -20,6 +23,14 @@ public class MemberDTO extends FileDTO {
 	
 	private String profile_name;
 	
+	private List<RecipeDTO> recipedtos;
+	
+	public List<RecipeDTO> getRecipedtos() {
+		return recipedtos;
+	}
+	public void setRecipedtos(List<RecipeDTO> recipedtos) {
+		this.recipedtos = recipedtos;
+	}
 	public String getMember_type() {
 		return member_type;
 	}

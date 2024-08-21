@@ -12,16 +12,6 @@ let profileId = profileAdd.getAttribute("data-member-id");
 
 
 
-
-// profileAdd.addEventListener("click", ()=> {
-
-//     fetch("profileChange", {
-//         method : "POST",
-//         headers : { "Content-type":"application/x-www-form-urlencoded" },
-     
-//     })
-// })
-
 introductionAdd.addEventListener("click", () =>{
     
     console.log(commentContents.value);

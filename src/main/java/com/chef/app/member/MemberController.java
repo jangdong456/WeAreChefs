@@ -31,14 +31,24 @@ public class MemberController {
 	private Email email;
 	
 	@PostMapping("profileChange")
-	public void profileChange(MemberDTO memberDTO, MultipartFile multipartFile, HttpSession session) throws Exception {
-		System.out.println("파일 확인@@@@@@@@@@@@");
+	public String profileChange(MemberDTO memberDTO, MultipartFile multipartFile, HttpSession session, Model model) throws Exception {
 		MemberDTO memberdto = (MemberDTO)session.getAttribute("member");
 		memberDTO.setMember_id(memberdto.getMember_id());
 		
-//		System.out.println(memberDTO.getMember_id());
+		System.out.println("파일확인:" + multipartFile);
+		System.out.println("id:" + memberDTO.getMember_id());
 		
-		memberService.profileChange(memberDTO, multipartFile, session);
+		int result = 0;
+		String url = "";
+		
+		result = memberService.profileChange(memberDTO, multipartFile, session);			
+		
+		if(result > 0) {
+			url = "redirect:/member/mypage";
+			
+		}
+		return url;
+
 	}								
 	
 	@GetMapping("duplication")
@@ -62,7 +72,7 @@ public class MemberController {
 		
 		String url = "";
 		if(result > 0) {
-			url = "member/test";
+			url = "member/profileAboutMe";
 		}
 		return url;
 	}
@@ -72,20 +82,27 @@ public class MemberController {
 	public void mypage(HttpSession session, Model model) throws Exception {
 		System.out.println("== My Page ==");
 
-		
 		MemberDTO memberdto = (MemberDTO)session.getAttribute("member");
 		memberdto = memberService.mypage(memberdto);
 		
 		System.out.println("로그인 한 id:" + memberdto.getMember_id());
 		
+//		test.setRecipe_writer(memberdto.getMember_id());
 		
-		List<RecipeDTO> recipedto = memberService.recipeList();
-		List<RecipeReviewDTO> recipeReview = memberService.recipeReviewList(); 
-		List<RecipeReplyDTO> recipeReply = memberService.recipeReplyList(); 
+//		MemberDTO list = memberService.recipeList(memberdto);
 		
-		model.addAttribute("recipeReply", recipeReply);
+		// 작성한 레시피 리스트
+		List<RecipeDTO> recipedto = memberService.recipeList(memberdto);
+		model.addAttribute("recipeList", recipedto);
+
+		// 상대방 레시피에 작성한 리뷰
+		List<RecipeReviewDTO> recipeReview = memberService.recipeReviewList(memberdto);
 		model.addAttribute("reviewList", recipeReview);
-		model.addAttribute("list", recipedto);
+		
+		// 상대방 레시피에 작성한 댓글
+		List<RecipeReplyDTO> recipeReply = memberService.recipeReplyList(memberdto); 
+		model.addAttribute("recipeReply", recipeReply);
+		
 		model.addAttribute("member", memberdto);
 	}
 	
@@ -105,7 +122,7 @@ public class MemberController {
 		String url = "";
 		if(result > 0) {
 			
-			url = "member/test";
+			url = "member/profileAboutMe";
 		}
 		return url;
 	}

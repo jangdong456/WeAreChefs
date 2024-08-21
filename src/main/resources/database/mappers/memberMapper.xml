@@ -5,26 +5,28 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="com.chef.app.member.MemberDAO">
 	
-<!-- 	<insert id="profileChange"> -->
-		
-<!-- 	</insert> -->
+	<update id="profileChange" parameterType="MemberDTO">
+		UPDATE MEMBER SET PROFILE_NAME = #{file_name} 
+		WHERE MEMBER_ID = #{member_id}
+	</update>
 	
 	<select id="recipeReplyList" parameterType="MemberDTO" resultType="RecipeReplyDTO">
 		SELECT * FROM RECIPEREPLY
-		WHERE RECIPE_REPLY_NUM > 0
+		WHERE RECIPE_REPLY_NUM > 0 AND MEMBER_ID = #{member_id}
 	</select>
 	
 	<select id="recipeReviewList" parameterType="MemberDTO" resultType="RecipeReviewDTO">
 		SELECT * FROM RECIPEREVIEW
-		WHERE REVIEW_NUM > 0
+		WHERE REVIEW_NUM > 0 AND MEMBER_ID = #{member_id}
 	</select>
 	
 	
 	<select id="recipeList" parameterType="MemberDTO" resultType="RecipeDTO">
 		SELECT * FROM RECIPE
-		WHERE RECIPE_NUM > 80
+		WHERE RECIPE_NUM > 80 AND RECIPE_WRITER = #{member_id}
 	</select>
 	
+
 	<select id="duplication" parameterType="MemberDTO" resultType="int">
 		SELECT 
 			<choose>
