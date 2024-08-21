@@ -5,8 +5,20 @@ const buyPrice = document.getElementById("buyPrice")
 const cartAdd = document.getElementById("cartAdd")
 const cartFrm = document.getElementById("cartFrm")
 const cartCount = document.getElementById("cartCount")
+const firstStar = document.getElementById("firstStar")
+const secondStar = document.getElementById("secondStar")
+const thirdStar = document.getElementById("thirdStar")
+const fourthStar = document.getElementById("fourthStar")
+const fifthStar = document.getElementById("fifthStar")
+const startValue = document.getElementById("startValue")
+const updateReply = document.getElementsByClassName("updateReply")
+const replyContent = document.getElementsByClassName("replyContent")
+const updateDiv = document.getElementsByClassName("updateDiv")
+const navmission = document.getElementById("navmission")
+
 
 buyCount.value=1
+startValue.value=5
 
 // 마이너스 버튼 눌렀을때
 minusBtn.addEventListener("click", (e) => {
@@ -54,4 +66,198 @@ buyCount.addEventListener("change",()=>{
 cartAdd.addEventListener("click",()=>{
     cartCount.value=buyCount.value
     cartFrm.submit();
+})
+
+firstStar.addEventListener("click",(e)=>{
+
+    firstStar.classList.add("text-secondary")
+    secondStar.classList.remove("text-secondary")
+    thirdStar.classList.remove("text-secondary")
+    fourthStar.classList.remove("text-secondary")
+    fifthStar.classList.remove("text-secondary")
+
+    startValue.value=1
+
+})
+
+secondStar.addEventListener("click",(e)=>{
+
+    firstStar.classList.add("text-secondary")
+    secondStar.classList.add("text-secondary")
+    thirdStar.classList.remove("text-secondary")
+    fourthStar.classList.remove("text-secondary")
+    fifthStar.classList.remove("text-secondary")
+
+    startValue.value=2
+
+})
+
+thirdStar.addEventListener("click",(e)=>{
+
+    firstStar.classList.add("text-secondary")
+    secondStar.classList.add("text-secondary")
+    thirdStar.classList.add("text-secondary")
+    fourthStar.classList.remove("text-secondary")
+    fifthStar.classList.remove("text-secondary")
+
+    startValue.value=3
+
+})
+
+fourthStar.addEventListener("click",(e)=>{
+
+    firstStar.classList.add("text-secondary")
+    secondStar.classList.add("text-secondary")
+    thirdStar.classList.add("text-secondary")
+    fourthStar.classList.add("text-secondary")
+    fifthStar.classList.remove("text-secondary")
+
+    startValue.value=4
+
+})
+
+fifthStar.addEventListener("click",(e)=>{
+
+    firstStar.classList.add("text-secondary")
+    secondStar.classList.add("text-secondary")
+    thirdStar.classList.add("text-secondary")
+    fourthStar.classList.add("text-secondary")
+    fifthStar.classList.add("text-secondary")
+
+    startValue.value=5
+
+})
+
+navmission.addEventListener("click",(e)=>{
+
+// 수정 버튼 눌렀을때 수정 input 띄우기
+    if(e.target.classList.contains('updateReply')){
+
+        let num = e.target.getAttribute("data-reply-num");
+        let memid = e.target.getAttribute("data-reply-writer");
+        let conentup = e.target.getAttribute("data-reply-content");
+        let starup = e.target.getAttribute("data-reply-start");
+
+        if(e.target.id=="updateReply"+num){
+            
+            fetch("/food/replyUpdate", {
+                method:"POST",
+                headers:{"Content-type":"application/x-www-form-urlencoded"},
+                body:"food_reply_num="+num+"&member_id="+memid+"&reply_content="+conentup+"&food_rating="+starup
+              })
+              
+              .then(r=>r.text())
+              .then(r=>{
+                for(let div of updateDiv){
+                    if(div.getAttribute("data-reply-num")==num){
+                        div.innerHTML=r;
+                    }
+                }
+              })
+        }
+    }
+
+
+    let updateStarValue = document.getElementById("updateStarValue")
+
+    if(e.target.classList.contains('stars')){
+
+        let firstUpdate2 = document.getElementById("firstUpdate")
+        let secondUpdate = document.getElementById("secondUpdate")
+        let thirdUpdate = document.getElementById("thirdUpdate")
+        let fourthUpdate = document.getElementById("fourthUpdate")
+        let fifthUpdate = document.getElementById("fifthUpdate")
+
+        if(e.target.id=='firstUpdate'){
+
+            firstUpdate2.classList.add("text-secondary")
+            secondUpdate.classList.remove("text-secondary")
+            thirdUpdate.classList.remove("text-secondary")
+            fourthUpdate.classList.remove("text-secondary")
+            fifthUpdate.classList.remove("text-secondary")
+
+            updateStarValue.value=1;
+      
+        }
+
+        if(e.target.id=='secondUpdate'){
+
+            firstUpdate2.classList.add("text-secondary")
+            secondUpdate.classList.add("text-secondary")
+            thirdUpdate.classList.remove("text-secondary")
+            fourthUpdate.classList.remove("text-secondary")
+            fifthUpdate.classList.remove("text-secondary")
+
+            updateStarValue.value=2;
+      
+        }
+                
+        if(e.target.id=='thirdUpdate'){
+
+            firstUpdate2.classList.add("text-secondary")
+            secondUpdate.classList.add("text-secondary")
+            thirdUpdate.classList.add("text-secondary")
+            fourthUpdate.classList.remove("text-secondary")
+            fifthUpdate.classList.remove("text-secondary")
+
+            updateStarValue.value=3;
+      
+        }
+                
+        if(e.target.id=='fourthUpdate'){
+
+            firstUpdate2.classList.add("text-secondary")
+            secondUpdate.classList.add("text-secondary")
+            thirdUpdate.classList.add("text-secondary")
+            fourthUpdate.classList.add("text-secondary")
+            fifthUpdate.classList.remove("text-secondary")
+
+            updateStarValue.value=4;
+      
+        }
+                
+        if(e.target.id=='fifthUpdate'){
+
+            firstUpdate2.classList.add("text-secondary")
+            secondUpdate.classList.add("text-secondary")
+            thirdUpdate.classList.add("text-secondary")
+            fourthUpdate.classList.add("text-secondary")
+            fifthUpdate.classList.add("text-secondary")
+
+            updateStarValue.value=5;
+      
+        }
+
+    }
+
+    if(e.target.id=='newUpdate'){
+
+        e.target.addEventListener("click",()=>{
+            alert("새 수정 버튼");
+        })
+
+        let updateContent = document.getElementById("updateContent")
+        let memid = updateContent.getAttribute("data-reply-writer")
+        let num = updateContent.getAttribute("data-reply-num")
+    
+        fetch("/food/replyUpdateInsert", {
+            method:"POST",
+            headers:{"Content-type":"application/x-www-form-urlencoded"},
+            body:"food_reply_num="+num+"&member_id="+memid+"&reply_content="+updateContent.value+"&food_rating="+updateStarValue.value+"&food_num="+navmission.getAttribute("data-food-num")
+          })
+
+          .then((r)=>{return r.text()})
+          .then((r)=>{
+            console.log(r)
+            if(r>0){
+                alert("댓글 수정 완료")
+                location.href="/food/detail?food_num="+navmission.getAttribute("data-food-num")
+            }else{
+                alert("댓글 수정 실패")
+                location.href="/food/detail?food_num="+navmission.getAttribute("data-food-num")
+            }
+          })
+
+    }
+
 })

@@ -44,30 +44,30 @@
     <h5 class="mb-4">🌱대표 이미지는 변동사항이 없을 시, 기존의 이미지가 표시 됩니다.</h5>
             
             <form action="/food/update" method="post" enctype="multipart/form-data">
-                <input type="hidden" id="foodNum" name="food_num" value="${dto.food_num}">
+                <input type="hidden" id="foodNum" name="food_num" value="${map.dto.food_num}">
             <div class="form-group">
                 <label class="form-label mt-3 mr-3">* 상품명</label>
-                <input type="text" class="form-control w-50" readonly id="foodName" value="${dto.food_name}">
+                <input type="text" class="form-control w-50" readonly id="foodName" value="${map.dto.food_name}">
             </div>
 
             <div class="form-group">
                 <label class="form-label mt-3 mr-3">* 카테고리</label>
-                <input type="text" class="form-control w-50" readonly id="foodCategory" value="${dto.food_category}">
+                <input type="text" class="form-control w-50" readonly id="foodCategory" value="${map.dto.food_category}">
             </div>
             
             <div class="form-group">
                 <label class="form-label mt-3 mr-3">* 재고</label>
-                <input type="text" class="form-control w-50" readonly id="foodStock" value="${dto.food_stock}">
+                <input type="text" class="form-control w-50" readonly id="foodStock" value="${map.dto.food_stock}">
             </div>
             
             <div class="form-group">
                 <label class="form-label mt-3 mr-3">* 판매가</label>
-                <input type="text" class="form-control w-50" readonly id="foodPrice" value="${dto.food_price}">
+                <input type="text" class="form-control w-50" readonly id="foodPrice" value="${map.dto.food_price}">
             </div>
  
            <div class="form-group">
                 <label class="form-label mt-3 mr-3">* 상품 설명</label>
-                <textarea id="editor" name="food_contents">${dto.food_contents}</textarea>
+                <textarea id="editor" name="food_contents">${map.dto.food_contents}</textarea>
             </div>
             
              <div class="form-group">
@@ -76,8 +76,8 @@
             </div>
 
             <div class="form-group" id="imgDiv">
-                <input type="hidden" id="foodNum" name="storeImgFileDTO.file_name" value="${dto.storeImgFileDTO.file_name}">
-                <img id="viewImg" src="/resources/upload/foods/${dto.storeImgFileDTO.file_name}"/>
+                <input type="hidden" id="foodNum" name="storeImgFileDTO.file_name" value="${map.dto.storeImgFileDTO.file_name}">
+                <img id="viewImg" src="/resources/upload/foods/${map.dto.storeImgFileDTO.file_name}"/>
             </div>
 
             <div class="form-group" align="right">

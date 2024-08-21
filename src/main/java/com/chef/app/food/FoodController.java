@@ -106,17 +106,22 @@ public class FoodController {
 		
 		MemberDTO memberDTO = (MemberDTO)session.getAttribute("member");
 		
-		foodDTO = foodService.getDetail(foodDTO);
-		model.addAttribute("dto", foodDTO);
-		model.addAttribute("admin", memberDTO);
+		Map<String, Object> map = foodService.getDetail(foodDTO);
+		map.put("admin", memberDTO);
+		
+		List<StoreReplyDTO> ar = (List<StoreReplyDTO>) map.get("reply");
+	
+			
+		model.addAttribute("map", map);
 
 	}
 	
 	@GetMapping("update")
 	public void updateDetail(FoodDTO foodDTO,Model model) throws Exception{
 		
-		foodDTO = foodService.getDetail(foodDTO);
-		model.addAttribute("dto", foodDTO);
+		Map<String, Object> map = foodService.getDetail(foodDTO);
+		
+		model.addAttribute("map", map);
 		
 	}
 	
@@ -208,24 +213,6 @@ public class FoodController {
 
 	}
 	
-//	@PostMapping("finalCart")
-//	public void finalCart(@RequestBody List<StoreCartDTO> ar,Model model,HttpSession session) throws Exception{
-//		
-//		MemberDTO memberDTO = (MemberDTO)session.getAttribute("member");
-//		String member_id = memberDTO.getMember_id();
-//		
-//		for(StoreCartDTO a:ar) {
-//			a.setMember_id(member_id);
-//		}
-//		
-//		int result = foodService.payUpdateCart(ar);
-//		
-//		model.addAttribute("msg", "/food/pay");
-//		
-//		return "commons/result";
-//		
-//		
-//	}
 	
 	@PostMapping("pay")
 	public String payMain(@RequestBody List<StoreCartDTO> ar,Model model,HttpSession session) throws Exception{
@@ -292,6 +279,34 @@ public class FoodController {
 		model.addAttribute("msg", result);
 		
 		return "commons/result";	
+	}
+	
+	@PostMapping("replyAdd")
+	public String replyAdd (StoreReplyDTO storeReplyDTO) throws Exception {
+		
+		int result  = foodService.replyAdd(storeReplyDTO);
+		
+		return "redirect:/food/detail?food_num="+storeReplyDTO.getFood_num();
+		
+	}
+	
+	@PostMapping("replyUpdate")
+	public String replyUpdate (StoreReplyDTO storeReplyDTO,Model model) throws Exception {
+		
+		model.addAttribute("dto", storeReplyDTO);
+		
+		return "food/replyUpdate";
+		
+	}
+	
+	@PostMapping("replyUpdateInsert")
+	public String replyUpdateInsert (StoreReplyDTO storeReplyDTO,Model model) throws Exception {
+		
+		int result = foodService.replyUpdateInsert(storeReplyDTO);
+		
+			model.addAttribute("msg", result);
+			return "commons/result";
+			
 	}
 	
 }

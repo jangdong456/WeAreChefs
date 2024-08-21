@@ -204,7 +204,7 @@ public class MemberController {
 	public void buyList(HttpSession session,Model model,Pager pager,String startDate,String endDate) throws Exception {
 			
 		if(startDate==null) {
-			startDate="1990-01-01";
+			startDate="1900-01-01";
 		}
 		if(endDate==null) {
 			endDate="2100-12-31";

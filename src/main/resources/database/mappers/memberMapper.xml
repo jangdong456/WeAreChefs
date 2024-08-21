@@ -76,7 +76,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	 	INNER JOIN
 	 	STOREIMG SI
 	 	ON F.FOOD_NUM =SI.FOOD_NUM
-	 	WHERE SO.MEMBER_ID = #{memberDTO.member_id} AND SO.ORDER_DATE BETWEEN #{startDate} AND #{endDate}
+	 	WHERE SO.MEMBER_ID = #{memberDTO.member_id} AND TO_CHAR(SO.ORDER_DATE,'YYYY-MM-DD') BETWEEN #{startDate} AND #{endDate}
 	 	ORDER BY SO.ORDER_DATE DESC
 	</select>
 	

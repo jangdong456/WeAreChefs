@@ -77,8 +77,16 @@ public class FoodService {
 		return foodDAO.categoryCount();
 	}
 	
-	public FoodDTO getDetail(FoodDTO foodDTO) throws Exception {
-		return foodDAO.getDetail(foodDTO);
+	public Map<String, Object> getDetail(FoodDTO foodDTO) throws Exception {
+		
+		FoodDTO foodDTO2 =foodDAO.getDetail(foodDTO);
+		List<StoreReplyDTO> storeReplyDTOs = foodDAO.replyList(foodDTO);
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("dto", foodDTO2);
+		map.put("reply", storeReplyDTOs);
+		
+		return map;
 	}
 	
 	public int updateDetail(MultipartFile attach,HttpSession session,FoodDTO foodDTO) throws Exception {
@@ -173,6 +181,20 @@ public class FoodService {
 		map.put("member_id", member_id);
 		
 		return foodDAO.payCartList(map);
+	}
+	
+	public int replyAdd(StoreReplyDTO storeReplyDTO) throws Exception {
+		
+		Long num = foodDAO.getNum();
+		
+		storeReplyDTO.setBoard_num(num);
+		
+		return foodDAO.replyAdd(storeReplyDTO);
+		
+	}
+	
+	public int replyUpdateInsert(StoreReplyDTO storeReplyDTO) throws Exception {
+		return foodDAO.replyUpdateInsert(storeReplyDTO);
 	}
 
 }

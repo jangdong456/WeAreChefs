@@ -249,5 +249,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
    <resultMap type="StoreImgFileDTO" id="storeImgFileMapEx" extends="storeImgFileMap">
    </resultMap>
    
+   <select id="getNum" resultType="java.lang.Long">
+   		SELECT RECIPEREPLY_SEQ.NEXTVAL FROM DUAL
+   </select>
+   
+   <insert id="replyAdd" parameterType="StoreReplyDTO">
+   	INSERT INTO STOREREPLY
+   	VALUES (#{board_num},#{food_num},#{member_id},SYSDATE,SYSDATE,#{board_content},#{food_rating},#{board_num},0,0,'N')
+   </insert>
+   
+   <select id="replyList" parameterType="FoodDTO" resultType="StoreReplyDTO">
+   	SELECT * FROM STOREREPLY WHERE FOOD_NUM =#{food_num}
+   </select>
+   
+   <update id="replyUpdateInsert" parameterType="StoreReplyDTO">
+   	UPDATE STOREREPLY SET UPDATE_DATE =SYSDATE ,REPLY_CONTENT =#{reply_content},FOOD_RATING =#{food_rating} WHERE FOOD_REPLY_NUM = #{food_reply_num}
+   </update>
    
 </mapper>

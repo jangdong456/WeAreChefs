@@ -98,4 +98,20 @@ public class FoodDAO {
 		return sqlSession.selectList(NAMESPACE+"payCartList", map);
 	}
 	
+	public Long getNum() throws Exception {
+		return sqlSession.selectOne(NAMESPACE+"getNum");
+	}
+	
+	public int replyAdd(StoreReplyDTO storeReplyDTO) throws Exception {
+		return sqlSession.insert(NAMESPACE+"replyAdd", storeReplyDTO);
+	}
+	
+	public List<StoreReplyDTO> replyList(FoodDTO foodDTO) throws Exception {
+		return sqlSession.selectList(NAMESPACE+"replyList", foodDTO);
+	}
+	
+	public int replyUpdateInsert(StoreReplyDTO storeReplyDTO) throws Exception {
+		return sqlSession.update(NAMESPACE+"replyUpdateInsert", storeReplyDTO);
+	}
+	
 }
