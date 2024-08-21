@@ -46,7 +46,7 @@
 					</div>
 				</div>
 				<div class="col-sm-6 col-md-3">
-					<div class="MouseShadow card card-stats card-round" onClick="location.href='#'" style="cursor:pointer;">
+					<div class="MouseShadow card card-stats card-round" onClick="location.href='/manager/orderList'" style="cursor:pointer;">
 						<div class="card-body">
 							<div class="row align-items-center">
 								<div class="col-icon">
@@ -67,19 +67,19 @@
 					</div>
 				</div>
 				<div class="col-sm-6 col-md-3">
-					<div class="MouseShadow card card-stats card-round" onClick="location.href='#'" style="cursor:pointer;">
+					<div class="MouseShadow card card-stats card-round" onClick="location.href='/manager/orderList'" style="cursor:pointer;">
 						<div class="card-body">
 							<div class="row align-items-center">
 								<div class="col-icon">
 									<div
 										class="icon-big text-center icon-success bubble-shadow-small"
 									>
-										<i class="fas fa-luggage-cart"></i>
+										<i class="fas fa-times"></i>
 									</div>
 								</div>
 								<div class="col col-stats ms-3 ms-sm-0">
 									<div class="numbers">
-										<p class="card-category">금일 배송중</p>
+										<p class="card-category">결제 취소 요청</p>
 										<h4 class="card-title">${indexFirstRowInfo[2]} 건</h4>
 									</div>
 								</div>
@@ -88,7 +88,7 @@
 					</div>
 				</div>
 				<div class="col-sm-6 col-md-3">
-					<div class="MouseShadow card card-stats card-round" onClick="location.href='#'" style="cursor:pointer;">
+					<div class="MouseShadow card card-stats card-round" onClick="location.href='/manager/stockList'" style="cursor:pointer;">
 						<div class="card-body">
 							<div class="row align-items-center">
 								<div class="col-icon">

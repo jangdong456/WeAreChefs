@@ -53,24 +53,23 @@
 			id="inputMemberLev"
 			required
 		>
-		<c:choose>
-			<c:when test="${memberDetail.member_lev eq 0}">
-				<option selected>0</option>
-				<option>1</option>
-				<option>2</option>
-			</c:when>
-			<c:when test="${memberDetail.member_lev eq 1}">
-				<option>0</option>
-				<option selected>1</option>
-				<option>2</option>
-			</c:when>
-			<c:when test="${memberDetail.member_lev eq 2}">
-				<option>0</option>
-				<option>1</option>
-				<option selected>2</option>
-			</c:when>
-		</c:choose>
-
+			<c:choose>
+				<c:when test="${memberDetail.member_lev eq 0}">
+					<option selected>0</option>
+					<option>1</option>
+					<option>2</option>
+				</c:when>
+				<c:when test="${memberDetail.member_lev eq 1}">
+					<option>0</option>
+					<option selected>1</option>
+					<option>2</option>
+				</c:when>
+				<c:when test="${memberDetail.member_lev eq 2}">
+					<option>0</option>
+					<option>1</option>
+					<option selected>2</option>
+				</c:when>
+			</c:choose>
 		</select>
 	</div>
 	<button

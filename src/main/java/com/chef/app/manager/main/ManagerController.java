@@ -170,8 +170,63 @@ public class ManagerController {
 	}
 	// orderDetail
 	@GetMapping("orderDetail")
-	public String orderDetail(StoreOrderDTO storeOrderDTO) throws Exception{
+	public String orderDetail(StoreOrderDTO storeOrderDTO, Model model) throws Exception{
+		model.addAttribute("orderDetail", managerService.orderDetail(storeOrderDTO));
+		
+		if(managerService.orderFoodDetail(storeOrderDTO).size() == 0){
+			model.addAttribute("foodSize", 0);
+		}else {
+			model.addAttribute("orderFoodDetail", managerService.orderFoodDetail(storeOrderDTO));			
+		}
 		return "manager/orderDetail";
+	}
+	// orderDetail Update Page loading
+	@PostMapping("orderDetailUpdate")
+	public String orderDetailUpdate(StoreOrderDTO storeOrderDTO, Model model) throws Exception{
+		model.addAttribute("orderDetail", managerService.orderDetail(storeOrderDTO));
+		if(managerService.orderFoodDetail(storeOrderDTO).size() == 0){
+			model.addAttribute("foodSize", 0);
+		}else {
+			model.addAttribute("orderFoodDetail", managerService.orderFoodDetail(storeOrderDTO));			
+		}
+		return "manager/orderDetailUpdate";
+	}
+	// 수정 완료 버튼 클릭 시
+	@PostMapping("completeOrderDetailUpdate")
+	public String completeOrderDetailUpdate(StoreOrderDTO storeOrderDTO, Model model) throws Exception{
+		int result = managerService.completeOrderDetailUpdate(storeOrderDTO);
+		if(result > 0) {
+			model.addAttribute("orderDetail", managerService.orderDetail(storeOrderDTO));
+			if(managerService.orderFoodDetail(storeOrderDTO).size() == 0){
+				model.addAttribute("foodSize", 0);
+			}else {
+				model.addAttribute("orderFoodDetail", managerService.orderFoodDetail(storeOrderDTO));			
+			}
+			return "manager/orderDetailSample";
+		}else {
+			model.addAttribute("msg", 0);
+			return "commons/result";
+		}
+
+	}
+	// 수정 취소 버튼 클릭 시 발생
+	@GetMapping("cancelOrderDetailUpdate")
+	public String cancelOrderDetailUpdate(StoreOrderDTO storeOrderDTO, Model model) throws Exception{
+		model.addAttribute("orderDetail", managerService.orderDetail(storeOrderDTO));
+		
+		if(managerService.orderFoodDetail(storeOrderDTO).size() == 0){
+			model.addAttribute("foodSize", 0);
+		}else {
+			model.addAttribute("orderFoodDetail", managerService.orderFoodDetail(storeOrderDTO));			
+		}
+		return "manager/orderDetailSample";
+	}
+	
+	// stockList-------------------------------------------------------------------------------------
+	@GetMapping("stockList")
+	public String stockList(Model model) throws Exception{
+		model.addAttribute("stockList", managerService.stockList());
+		return "manager/stockList";
 	}
 //끝
 }

@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.chef.app.food.FoodDTO;
 import com.chef.app.food.StoreOrderDTO;
 import com.chef.app.manager.OriMemberDTO;
 import com.chef.app.manager.TotalPurchaseDTO;
@@ -21,7 +22,7 @@ public class ManagerService {
 		List<Long> indexFirstRowInfo = new ArrayList<Long>();
 		indexFirstRowInfo.add(managerDAO.getMemberTotalCount());
 		indexFirstRowInfo.add(managerDAO.getOrderCompleteCount());
-		indexFirstRowInfo.add(managerDAO.getDeliveryCount());
+		indexFirstRowInfo.add(managerDAO.getCancelOrderCount());
 		indexFirstRowInfo.add(managerDAO.getRequiredFoodStockOrderCount());
 		return indexFirstRowInfo;
 	}
@@ -87,5 +88,22 @@ public class ManagerService {
 	//cancelNo
 	public int cancelNo(StoreOrderDTO storeOrderDTO) throws Exception{
 		return managerDAO.cancelNo(storeOrderDTO);
+	}
+	// orderDetail
+	public StoreOrderDTO orderDetail(StoreOrderDTO storeOrderDTO) throws Exception{
+		return managerDAO.orderDetail(storeOrderDTO);
+	}
+	// orderFoodDetail
+	public List<FoodDTO> orderFoodDetail(StoreOrderDTO storeOrderDTO) throws Exception{
+		return managerDAO.orderFoodDetail(storeOrderDTO);
+	}
+	// 주문 배송 정보 수정
+	public int completeOrderDetailUpdate(StoreOrderDTO storeOrderDTO) throws Exception{
+		return managerDAO.completeOrderDetailUpdate(storeOrderDTO);
+	}
+	
+	// STOCK LIST ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+	public List<FoodDTO> stockList() throws Exception{
+		return managerDAO.stockList();
 	}
 }

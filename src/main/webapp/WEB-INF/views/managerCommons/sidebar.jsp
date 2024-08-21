@@ -79,12 +79,12 @@
           <div class="collapse" id="forms">
             <ul class="nav nav-collapse">
               <li>
-                <a href="#">
-                  <span class="sub-item">재고 현황</span>
+                <a href="/manager/stockList">
+                  <span class="sub-item">재고 목록</span>
                 </a>
               </li>
               <li>
-                <a href="#">
+                <a href="/manager/stockCart">
                   <span class="sub-item">재고 장바구니</span>
                 </a>
               </li>

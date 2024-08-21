@@ -12,7 +12,7 @@
 	<div class="container">
 		<div class="page-inner">
 			<div class="page-header">
-				<h3 class="fw-bold mb-3">주문&배송 목록</h3>
+				<h3 class="fw-bold mb-3">재고 목록</h3>
 				<ul class="breadcrumbs mb-3">
 					<li class="nav-home">
 						<a href="/manager/index">
@@ -23,13 +23,13 @@
 						<i class="icon-arrow-right"></i>
 					</li>
 					<li class="nav-item">
-						<a href="#">주문</a>
+						<a href="#">재고</a>
 					</li>
 					<li class="separator">
 						<i class="icon-arrow-right"></i>
 					</li>
 					<li class="nav-item">
-						<a href="#">주문&배송 목록</a>
+						<a href="#">재고 목록</a>
 					</li>
 				</ul>
 			</div>
@@ -38,7 +38,7 @@
 		<div class="card">
 			<div class="card-header">
 				<div class="d-flex align-items-center">
-					<h4 class="card-title">결제 취소 요청 목록</h4>
+					<h4 class="card-title">재고 부족 목록</h4>
 				</div>
 			</div>
 			<div  class="card-body">
@@ -49,46 +49,23 @@
 					>
 						<thead>
 							<tr>
-								<th> 결제 날짜</th>
-								<th style="width: 20%">주문 번호</th>
-								<th style="width: 10%">주문자 ID</th>
-								<th> 결제 금액</th>
-								<th> 주문 상태</th>
-								<th style="width: 8%">결체 취소 승인</th>
+								<th> 종류</th>
+								<th style="width: 20%">이름</th>
+								<th style="width: 10%">구매가</th>
+								<th> 보유 수량</th>
+								<th> 주문</th>
 							</tr>
 						</thead>
 						<tbody id="cancelList">
 							<c:forEach items="${cancelOrderList}" var="list">
 								<tr style="cursor:pointer;">
-									<td onclick="location.href='/manager/orderDetail?order_num=${list.order_num}'">${list.order_date}</td>
-									<td onclick="location.href='/manager/orderDetail?order_num=${list.order_num}'">${list.order_num}</td>
-									<td onclick="location.href='/manager/orderDetail?order_num=${list.order_num}'">${list.member_id}</td>
-									<td onclick="location.href='/manager/orderDetail?order_num=${list.order_num}'">${list.order_price}</td>
-									<td onclick="location.href='/manager/orderDetail?order_num=${list.order_num}'">${list.order_status}</td>
+									<td>${list.order_num}</td>
+									<td>${list.member_id}</td>
+									<td>${list.order_date}</td>
+									<td>${list.order_price}</td>
 									<td>
-										<div class="form-button-action">
-											<button
-												id="cancelOk${list.order_num}"
-												data-cancel="${list.order_num}"
-												type="button"
-												data-bs-toggle="tooltip"
-												title="결제 취소 승인"
-												class="btn btn-link btn-primary btn-lg"
-												data-original-title="Edit Task"
-											>
-												<i class="fas fa-check"></i>
-											</button>
-											<button
-											id="cancelNo${list.order_num}"
-											data-cancel="${list.order_num}"
-												type="button"
-												data-bs-toggle="tooltip"
-												title="결제 취소 거절"
-												class="btn btn-link btn-danger"
-												data-original-title="Remove"
-											>
-												<i class="fa fa-times"></i>
-											</button>
+										<div>
+											<!--이 부분에 주문  - 수량 +  넣어줘여함-->
 										</div>
 									</td>
 								</tr>

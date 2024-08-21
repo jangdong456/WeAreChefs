@@ -2,7 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <c:forEach items="${cancelOrderList}" var="list">
-  <tr>
+  <tr style="cursor:pointer;">
     <td>${list.order_date}</td>
     <td>${list.order_num}</td>
     <td>${list.member_id}</td>

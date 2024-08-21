@@ -6,6 +6,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.chef.app.food.FoodDTO;
 import com.chef.app.food.StoreOrderDTO;
 import com.chef.app.manager.OriMemberDTO;
 import com.chef.app.manager.TotalPurchaseDTO;
@@ -28,8 +29,8 @@ public class ManagerDAO {
 		return sqlSession.selectOne(NAMESPACE + "getOrderCompleteCount");
 	}
 	
-	public Long getDeliveryCount() throws Exception{
-		return sqlSession.selectOne(NAMESPACE + "getDeliveryCount");
+	public Long getCancelOrderCount() throws Exception{
+		return sqlSession.selectOne(NAMESPACE + "getCancelOrderCount");
 	}
 	
 	public Long getRequiredFoodStockOrderCount() throws Exception{
@@ -99,4 +100,22 @@ public class ManagerDAO {
 	public int cancelNo(StoreOrderDTO storeOrderDTO) throws Exception{
 		return sqlSession.update(NAMESPACE + "cancelNo", storeOrderDTO);
 	}
+	// orderDetail 주문 상세 정보
+	public StoreOrderDTO orderDetail(StoreOrderDTO storeOrderDTO) throws Exception{
+		return sqlSession.selectOne(NAMESPACE + "orderDetail", storeOrderDTO);				
+	}
+	// orderDetail의 주문한 Food 정보
+	public List<FoodDTO> orderFoodDetail(StoreOrderDTO storeOrderDTO) throws Exception{
+		return sqlSession.selectList(NAMESPACE + "orderFoodDetail", storeOrderDTO);
+	}
+	// orderDetail Update
+	public int completeOrderDetailUpdate(StoreOrderDTO storeOrderDTO) throws Exception{
+		return sqlSession.update(NAMESPACE + "completeOrderDetailUpdate", storeOrderDTO);
+	}
+	
+	// STOCK LIST ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+	public List<FoodDTO> stockList() throws Exception{
+		return sqlSession.selectList(NAMESPACE + "stockList");
+	}
+	
 }
