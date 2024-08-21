@@ -156,7 +156,7 @@
                                 <div class="row g-4">
                                     <div class="col-lg-12">
                                         <div class="border-bottom rounded my-4">
-                                            <textarea name="board_content" id="" class="form-control border-0" cols="30" rows="8" placeholder="받아보신 상품은 어떠셨나요?" spellcheck="false"></textarea>
+                                            <textarea name="board_content" id="areaIs" class="form-control border-0" cols="30" rows="8" placeholder="받아보신 상품은 어떠셨나요?" spellcheck="false"></textarea>
                                         </div>
                                     </div>
                                     <div class="col-lg-12">
@@ -258,15 +258,25 @@
                                            </c:if>
                                            
                                         </div>
-                                        <div class="container justify-content-center">
+
                                             <hr class="border opacity-100 mb-5">
-                                         </div>
+
 									</c:forEach>
                                         
                                     </div>
                                     </c:otherwise>
                                  </c:choose>
 
+
+            <div class="col-12">
+                <div class="pagination d-flex justify-content-center mt-5">
+                    <a href="#" class="rounded ${pager.pre?'':'disabled'}" >&laquo;</a>
+                    <c:forEach begin="${pager.startNum}" end="${pager.lastNum}" step="1" var="i">
+                        <a href="#" class="rounded">${i}</a>
+                    </c:forEach>
+                    <a href="#" class="rounded ${pager.next?'':'disabled'}">&raquo;</a>
+                </div>
+            </div>
 
                   
                                  
@@ -275,10 +285,10 @@
                              
     <c:if test="${map.admin.member_id=='12341234'}">
     <div class="container form-group mt-5" align="right">
-        <a href="/food/update?food_num=${map.dto.food_num}"><button class="btn border-secondary text-uppercase text-primary" type="button" id="foodAdd">수정하기</button></a>
+        <a href="/food/update?food_num=${map.dto.food_num}"><button class="btn border-secondary text-uppercase text-primary" type="button" id="foodAdd">글 수정하기</button></a>
     </div>
     <div class="container form-group mt-2" align="right">
-        <a href="/food/delete?food_num=${map.dto.food_num}"><button class="btn border-secondary text-uppercase text-primary" type="button" id="foodAdd">삭제하기</button></a>
+        <a href="/food/delete?food_num=${map.dto.food_num}"><button class="btn border-secondary text-uppercase text-primary" type="button" id="foodAdd">글 삭제하기</button></a>
     </div>
 	</c:if>
    

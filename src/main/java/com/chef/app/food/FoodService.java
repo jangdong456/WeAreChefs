@@ -185,6 +185,10 @@ public class FoodService {
 	
 	public int replyAdd(StoreReplyDTO storeReplyDTO) throws Exception {
 		
+		if(storeReplyDTO.getBoard_content().isEmpty()) {
+			storeReplyDTO.setBoard_content(" ");
+		}
+		
 		Long num = foodDAO.getNum();
 		
 		storeReplyDTO.setBoard_num(num);

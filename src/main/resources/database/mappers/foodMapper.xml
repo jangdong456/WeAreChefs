@@ -259,7 +259,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
    </insert>
    
    <select id="replyList" parameterType="FoodDTO" resultType="StoreReplyDTO">
-   	SELECT * FROM STOREREPLY WHERE FOOD_NUM =#{food_num}
+   	SELECT * FROM STOREREPLY WHERE FOOD_NUM =#{food_num} ORDER BY CREATE_DATE DESC
    </select>
    
    <update id="replyUpdateInsert" parameterType="StoreReplyDTO">

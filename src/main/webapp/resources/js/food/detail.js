@@ -15,6 +15,7 @@ const updateReply = document.getElementsByClassName("updateReply")
 const replyContent = document.getElementsByClassName("replyContent")
 const updateDiv = document.getElementsByClassName("updateDiv")
 const navmission = document.getElementById("navmission")
+const areaIs = document.getElementById("areaIs")
 
 
 buyCount.value=1
@@ -250,11 +251,11 @@ navmission.addEventListener("click",(e)=>{
           .then((r)=>{
             console.log(r)
             if(r>0){
-                alert("댓글 수정 완료")
-                location.href="/food/detail?food_num="+navmission.getAttribute("data-food-num")
+                alert("댓글 수정이 완료됐습니다")
+                location.reload()
             }else{
-                alert("댓글 수정 실패")
-                location.href="/food/detail?food_num="+navmission.getAttribute("data-food-num")
+                alert("댓글 수정에 실패했습니다")
+                location.reload()
             }
           })
 
