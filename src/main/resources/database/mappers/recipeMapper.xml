@@ -245,7 +245,7 @@
 				 , BOARD_CONTENT
 				 , REF
 				 , STEP
-				 , DEPTH
+				 , DEPTH        
 				 , DEL
 				 
 		FROM RECIPEREPLY
@@ -255,13 +255,14 @@
 	</select>
 	
 	<insert id="recipeComment" parameterType="RecipeReplyDTO">
-	INSERT INTO RECIPEREPLY(
+ 	INSERT INTO RECIPEREPLY(
 								   RECIPE_REPLY_NUM
 								 , RECIPE_NUM
 								 , MEMBER_ID
 								 , BOARD_CONTENT	
 								 , REF
 						   		 , STEP	
+						   		 
 						   					   		
 								 )
 							VALUES
@@ -273,14 +274,41 @@
    									, #{recipe_reply_num}
 									, RECIPEREPLY_SEQ.NEXTVAL
 										
-   									)
+   									) 
+   						<!-- 			  INSERT INTO RECIPEREPLY(
+								        RECIPE_REPLY_NUM,
+								        RECIPE_NUM,
+								        MEMBER_ID,
+								        BOARD_CONTENT,
+								        REF,
+								        STEP,
+								        DEPTH
+								    )
+								    VALUES (
+								        RECIPEREPLY_SEQ.NEXTVAL,
+								        #{recipe_num},
+								        #{member_id},
+								        #{board_content},
+								        #{ref},
+								        #{step},
+								        #{depth}
+											  ) -->
+								   							
 	</insert>
 	<update id="replyUpdate" parameterType="RecipeDTO">
-	   	UPDATE RECIPEREPLY 
-		   SET STEP = STEP +1
-		 WHERE REF = #{ref}
-		   AND STEP > #{step}
+			 UPDATE RECIPE
+		    SET STEP = STEP +1
+		    WHERE RECIPE_NUM = #{recipe_num}
+		    		AND 
+		    		REF = #{ref} 
+		   		    AND
+					STEP > #{step}
    	</update>
    	
-	
+   	<select id="getParentReply" parameterType="long" resultType="RecipeReplyDTO">
+	    SELECT  REF, STEP, DEPTH
+	    FROM RECIPEREPLY
+        WHERE RECIPE_REPLY_NUM = #{recipe_reply_num}
+	</select>
+
     </mapper>

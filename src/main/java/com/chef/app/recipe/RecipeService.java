@@ -119,36 +119,84 @@ public class RecipeService {
 
 		return recipeDAO.replyList(recipeReplyDTO);
 	}
-	
+
+	@Transactional
 	public int recipeComment(RecipeReplyDTO recipeReplyDTO) {
 		// RecipeDTO recipeDTO;
 
-		RecipeDTO recipeDTO = new RecipeDTO();
-		recipeDTO.setRecipe_num(recipeReplyDTO.getRecipe_num());
-
-		RecipeDTO parent = recipeDAO.recipeDetail(recipeDTO);
 		
-		
-	  
-		 int result = recipeDAO.replyUpdate(parent);
-		//parent.setChild_ref(((RecipeReplyDTO)parent.getAr()).getRef());
-		//System.out.println("getChild_ref " + parent.getChild_ref());
-		//int result = recipeDAO.replyUpdate(parent);
-		
-		/*
-		 * recipeReplyDTO.setRef(parentReply.getRef());
-		 * recipeReplyDTO.setStep(parentReply.getStep() + 1);
-		 * recipeReplyDTO.setDepth(parentReply.getDepth() + 1);
-		 */
-		
-		System.out.println("getRef" + ((RecipeReplyDTO) parent.getAr()).getRef());
-		System.out.println("getStep" +((RecipeReplyDTO) parent.getAr()).getStep());
-		System.out.println("getDepth" + ((RecipeReplyDTO) parent.getAr()).getDepth());
+		   if (recipeReplyDTO.getRecipe_reply_num() != null) {
+		        RecipeReplyDTO parent = recipeDAO.getParentReply(recipeReplyDTO.getRecipe_reply_num());
+		        
+		        if (parent != null) {
+		            recipeReplyDTO.setRef(parent.getRef());
+		            recipeReplyDTO.setStep(parent.getStep() + 1);
+		            recipeReplyDTO.setDepth(parent.getDepth() + 1);
+		        } else {
+		            throw new RuntimeException("Parent reply information is incomplete.");
+		        }
+		    } else {
+		        // If this is a top-level reply, set initial values
+		        recipeReplyDTO.setRef(null); // This will trigger the sequence value to be used
+		        recipeReplyDTO.setStep(0L);
+		        recipeReplyDTO.setDepth(0L);
+		    }
 
-		// System.out.println("원본글 " + parent.getAr().get(0).getRef());
-
-		return recipeDAO.recipeComment(recipeReplyDTO);
-
-	}
+		    return recipeDAO.recipeComment(recipeReplyDTO);
+		}
+		// 1. 부모 댓글 조회
+//		RecipeDTO parentRecipeDTO = new RecipeDTO();
+//		parentRecipeDTO.setRecipe_num(recipeReplyDTO.getRecipe_num());
+//
+//		// 부모 댓글 정보 조회
+//		RecipeDTO parent = recipeDAO.recipeDetail(parentRecipeDTO);
+//
+//		if (parent != null) {
+//			// 2. 부모 댓글의 ref, step, depth 가져오기
+//			Long parentRef = parent.getRef();
+//			Long parentStep = parent.getStep();
+//			Long parentDepth = parent.getDepth();
+//			
+//	        System.out.println("Parent Ref: " + parentRef);
+//	        System.out.println("Parent Step: " + parentStep);
+//	        System.out.println("Parent Depth: " + parentDepth);
+//
+//			// null 체크 추가
+//			if (parentRef != null && parentStep != null && parentDepth != null) {
+//				// 3. 대댓글의 ref, step, depth 설정
+//				recipeReplyDTO.setRef(parentRef);
+//				recipeReplyDTO.setStep(parentStep + 1); // parentStep에서 1을 더하기
+//				recipeReplyDTO.setDepth(parentDepth + 1); // parentDepth에서 1을 더하기
+//
+//				// 4. 대댓글 등록
+//				int result = recipeDAO.recipeComment(recipeReplyDTO);
+//
+//				if (result > 0) {
+//					recipeDAO.replyUpdate(parent);
+//				}
+//
+//				System.out.println(parent.getAr().get(result).getRef());
+//				// parent.setChild_ref(((RecipeReplyDTO)parent.getAr()).getRef());
+//				// System.out.println("getChild_ref " + parent.getChild_ref());
+//				// int result = recipeDAO.replyUpdate(parent);
+//
+//				/*
+//				 * recipeReplyDTO.setRef(parentReply.getRef());
+//				 * recipeReplyDTO.setStep(parentReply.getStep() + 1);
+//				 * recipeReplyDTO.setDepth(parentReply.getDepth() + 1);
+//				 */
+//				// System.out.println("원본글 " + parent.getAr().get(0).getRef());
+//
+//				return result;
+//			} else {
+//				System.out.println("Parent reply information is incomplete.");
+//				return 0;
+//			}
+//		} else {
+//			// 부모 댓글이 없을 경우 처리
+//			 System.out.println("Parent is null.");
+//			return 0;
+//		}
+//	}
 
 }
