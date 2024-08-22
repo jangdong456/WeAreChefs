@@ -1,5 +1,6 @@
 package com.chef.app.recipe;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -73,13 +74,27 @@ public class RecipeDAO {
 	}
 
 	public int recipeReply(RecipeReplyDTO recipeReplyDTO) {
-		
+
 		return sqlSession.insert(NAMESPACE + "recipeReply", recipeReplyDTO);
 	}
 
 	public List<RecipeReviewDTO> replyList(RecipeReplyDTO recipeReplyDTO) {
-		
+
 		return sqlSession.selectList(NAMESPACE + "replyList", recipeReplyDTO);
 	}
+
+	public int recipeComment(RecipeReplyDTO recipeReplyDTO) {
+
+		return sqlSession.insert(NAMESPACE + "recipeComment", recipeReplyDTO);
+	}
+
+	public int replyUpdate(RecipeDTO recipeDTO) {
+		return sqlSession.update(NAMESPACE + "replyUpdate",recipeDTO);
+	}
+	
+	public RecipeReplyDTO getParentReply(Long recipe_reply_num) {
+	    return sqlSession.selectOne(NAMESPACE + "getParentReply", recipe_reply_num);
+	}
+
 
 }

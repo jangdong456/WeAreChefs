@@ -70,8 +70,8 @@
                             <div class="col-6"></div>
                             <div class="col-xl-3">
                                 <div class="bg-light ps-3 py-3 rounded d-flex justify-content-between mb-4">
-                                <h3>${param.kind}</h3>
-									<label for="order">정렬</label>
+                               <%--  <h3>${param.kind}</h3> --%>
+									<label for="order">분류</label>
 									<form action="/recipe/list" method="get" id="order_frm">
 										<input type="hidden" id="kindfrm" data-kind-frm="${param.kind}" name="kind">
                                     	<select id="order" name="order" class="border-0 form-select-sm bg-light me-3">
@@ -127,9 +127,9 @@
                                             <div class="p-4 border border-secondary border-top-0 rounded-bottom">
                                                  <h4>${recipe.recipe_name}</h4>
 		                                                <p> ${recipe.menu_recipe}</p>
-                                                <div class="d-flex justify-content-between flex-lg-wrap" style="margin-left: 33px;">
+                                                <div class="d-flex justify-content-between flex-lg-wrap" style="margin-left:32px;">
                                                     
-                                                    <a href="/recipe/detail?recipe_num=${recipe.recipe_num}" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="fa me-2 text-primary"></i> 🧑‍🍳레시피 보러가기</a>
+                                                    <a href="/recipe/detail?recipe_num=${recipe.recipe_num}" class="btn border border-secondary rounded-pill px-3 text-primary" ><i class="fa me-2 text-primary"></i>🧑‍🍳레시피 보러가기 </a>
                                                 </div>
                                             </div>
                                         </div>
