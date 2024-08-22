@@ -60,7 +60,9 @@
     cursor: pointer;
 }
 
-
+.adminReply{
+    cursor: pointer;
+}
 
 </style>
 
@@ -192,10 +194,17 @@
                                     <h4 class="fw-bold mb-3">📖상품 후기들</h4>
                                     
                                     <c:forEach items="${map.reply}" var="a">
+                                            <c:if test="${a.member_id!='12341234'}">
+                                            <hr class="border opacity-100 mb-5">
+                                            </c:if>
                                         <div class="d-flex">   
                                             <div class="">
+                                            <c:if test="${a.member_id=='12341234'}">
+                                            	<h5>↪<운영자 답변>💕</h5>
+                                            </c:if>
                                                 <p class="mb-2" style="font-size: 14px;">${a.create_date}</p>
-                                                <div class="d-flex justify-content-between">
+                                                <!-- <div class="d-flex justify-content-between"> -->
+                                                    <c:if test="${a.member_id!='12341234'}">  
                                                     <h5>${a.member_id}</h5>
                                                     <c:choose>
                                                     	<c:when test="${a.food_rating=='1'}">
@@ -244,25 +253,57 @@
 	                                                    </div>
 	                                                    </c:otherwise>
 	                                                </c:choose>
-                                                </div>
-                                                <p class="replyContent">${a.reply_content}</p>       
+	                                                </c:if>  
+                                                
+                                                <c:choose>
+                                               <c:when test="${a.del=='N'}">                                               
+                                                <p class="replyContent">${a.reply_content}</p>
+                                               </c:when>
+                                               <c:otherwise>
+                                               <p class="replyContent">삭제된 댓글입니다.</p>
+                                               </c:otherwise>
+                                                </c:choose>     
                                             </div>
                                         </div>
 
-                                        <div class="updateDiv" data-reply-num="${a.food_reply_num}">
-                                            <c:if test="${member.member_id==a.member_id}">
-                                                <div class="button-container justify-content-end" align="right">
-                                                <p class="updateReply" id="updateReply${a.food_reply_num}" data-reply-num="${a.food_reply_num}" data-reply-writer="${a.member_id}" data-reply-content="${a.reply_content}" data-reply-start="${a.food_rating}">수정</p>
-                                                <p class="deleteReply">삭제</p>
-                                                </div>
-                                           </c:if>
-                                           
+                                        <div class="updateDiv" data-reply-num="${a.food_reply_num}" data-admin-num="${map.dto.food_num}">
+											<c:choose>
+											    <c:when test="${member.member_id == a.member_id}">
+													      <c:choose>
+												            <c:when test="${a.del == 'N'}">
+												                <div class="button-container justify-content-end" align="right">
+												                    <p class="updateReply" id="updateReply${a.food_reply_num}" data-reply-num="${a.food_reply_num}" data-reply-writer="${a.member_id}" data-reply-content="${a.reply_content}" data-reply-start="${a.food_rating}">수정</p>
+												                    <p class="deleteReply" id="deleteReply${a.food_reply_num}" data-reply-num="${a.food_reply_num}">삭제</p>
+												                </div>
+												            </c:when>
+												            <c:otherwise>
+												                <div class="button-container justify-content-end" align="right">
+												                </div>
+												            </c:otherwise>
+												        </c:choose>
+											    </c:when>
+											    <c:when test="${member.member_id == '12341234'}">
+											        <c:choose>
+											            <c:when test="${member.member_id == a.member_id}">
+											                <div class="button-container justify-content-end" align="right">
+											                    <p class="updateReply" id="updateReply${a.food_reply_num}" data-reply-num="${a.food_reply_num}" data-reply-writer="${a.member_id}" data-reply-content="${a.reply_content}" data-reply-start="${a.food_rating}">수정</p>
+											                    <p class="deleteReply" id="deleteReply${a.food_reply_num}" data-reply-num="${a.food_reply_num}">삭제</p>
+											                </div>
+											            </c:when>
+											
+											            <c:otherwise>
+											                <div class="button-container justify-content-end" align="right">
+											                    <p class="adminReply" id="admin${map.dto.food_num}" data-admin-num="${map.dto.food_num}" data-reply-num="${a.food_reply_num}">답글달기</p>
+											                </div>
+											            </c:otherwise>
+											        </c:choose>
+											    </c:when>
+											    <c:otherwise>
+											    </c:otherwise>
+											</c:choose>
                                         </div>
-
-                                            <hr class="border opacity-100 mb-5">
-
-									</c:forEach>
-                                        
+                                            
+									</c:forEach>                                      
                                     </div>
                                     </c:otherwise>
                                  </c:choose>
@@ -270,9 +311,9 @@
 
             <div class="col-12">
                 <div class="pagination d-flex justify-content-center mt-5">
-                    <a href="#" class="rounded ${pager.pre?'':'disabled'}" >&laquo;</a>
+                    <a href="/food/detail?food_page=${pager.startNum-1}" class="rounded ${pager.pre?'':'disabled'}" >&laquo;</a>
                     <c:forEach begin="${pager.startNum}" end="${pager.lastNum}" step="1" var="i">
-                        <a href="#" class="rounded">${i}</a>
+                        <a href="/food/detail?page=${i}" class="rounded">${i}</a>
                     </c:forEach>
                     <a href="#" class="rounded ${pager.next?'':'disabled'}">&raquo;</a>
                 </div>

@@ -15,7 +15,6 @@ const updateReply = document.getElementsByClassName("updateReply")
 const replyContent = document.getElementsByClassName("replyContent")
 const updateDiv = document.getElementsByClassName("updateDiv")
 const navmission = document.getElementById("navmission")
-const areaIs = document.getElementById("areaIs")
 
 
 buyCount.value=1
@@ -233,10 +232,6 @@ navmission.addEventListener("click",(e)=>{
 
     if(e.target.id=='newUpdate'){
 
-        e.target.addEventListener("click",()=>{
-            alert("새 수정 버튼");
-        })
-
         let updateContent = document.getElementById("updateContent")
         let memid = updateContent.getAttribute("data-reply-writer")
         let num = updateContent.getAttribute("data-reply-num")
@@ -260,5 +255,94 @@ navmission.addEventListener("click",(e)=>{
           })
 
     }
+
+    if(e.target.classList.contains('adminReply')){
+
+            let foodnum = e.target.getAttribute("data-admin-num")
+            let replynum = e.target.getAttribute("data-reply-num")
+            
+            console.log(replynum)
+
+                fetch("/food/adminReplyAdd", {
+                    method:"POST",
+                    headers:{"Content-type":"application/x-www-form-urlencoded"},
+                    body:"food_num="+foodnum+"&food_reply_num="+replynum
+                  })
+                  
+                  .then(r=>r.text())
+                  .then(r=>{
+                    for(let div of updateDiv){
+                        if(div.getAttribute("data-reply-num")==replynum){
+                            div.innerHTML=r;
+                        }
+                    }
+                  })
+            
+    }
+
+    if(e.target.classList.contains('adminComplete')){
+
+        let foodnum = e.target.getAttribute("data-admin-num")
+        let replynum = e.target.getAttribute("data-reply-num")
+        
+        let area = document.getElementsByClassName("areaContext")
+
+        for(let a of area){
+            if(a.getAttribute("data-reply-num")==replynum){
+                fetch("/food/adminReplySubmit", {
+                    method:"POST",
+                    headers:{"Content-type":"application/x-www-form-urlencoded"},
+                    body:"food_num="+foodnum+"&food_reply_num="+replynum+"&reply_content="+a.value
+                  })
+
+                  .then((r)=>{return r.text()})
+                  .then((r)=>{
+                    console.log(r)
+                    if(r>0){
+                        alert("댓글 등록이 완료됐습니다")
+                        location.reload()
+                    }else{
+                        alert("댓글 등록에 실패했습니다")
+                        location.reload()
+                    }
+                  })
+            }
+        }
+    }
+
+    if(e.target.classList.contains("deleteReply")){
+        
+        let replynum = e.target.getAttribute("data-reply-num")
+
+        if(e.target.id=='deleteReply'+replynum){
+
+            let check = confirm("댓글을 삭제하시겠습니까?")
+            
+            if(check){
+                fetch("/food/replyDelete",{
+                    method:"POST",
+                    headers:{"Content-type":"application/x-www-form-urlencoded"},
+                    body:"food_reply_num="+replynum
+                })
+
+                .then((r)=>{return r.text()})
+                .then((r)=>{
+                  console.log(r)
+                  if(r>0){
+                      alert("댓글을 삭제했습니다")
+                      location.reload()
+                  }else{
+                      alert("댓글 삭제에 실패했습니다")
+                      location.reload()
+                  }
+                })
+
+            }
+        }
+
+    }
+
+
+
 
 })

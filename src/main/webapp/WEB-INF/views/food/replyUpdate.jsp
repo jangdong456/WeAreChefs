@@ -3,6 +3,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
          <textarea class="form-control areaContext" cols="30" rows="8" id="updateContent" data-reply-num="${dto.food_reply_num}" data-reply-writer="${dto.member_id}">${dto.reply_content}</textarea>
+         <c:if test="${dto.member_id!='12341234'}">
          <p class="mt-2">*별점 수정하기</p>
                                                     <c:choose>
                                                     	<c:when test="${dto.food_rating=='1'}">
@@ -50,8 +51,9 @@
 	                                                        <i class="fa fa-star text-secondary stars" id="fifthUpdate"></i>
 	                                                    </div>
 	                                                    </c:otherwise>
-	                                                </c:choose>
-			<input type="hidden" id="updateStarValue">
+	                                                </c:choose>	                                                
+												</c:if>
+			<input type="hidden" id="updateStarValue" value="${dto.food_rating}">
              <div class="button-container justify-content-end" align="right" >
              <p class="updateReply" data-reply-num="${dto.food_reply_num}" id="newUpdate">수정 완료</p>
          </div>

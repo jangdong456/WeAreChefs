@@ -102,11 +102,12 @@ public class FoodController {
 	}
 	
 	@GetMapping("detail")
-	public void getDetail(FoodDTO foodDTO,Model model,HttpSession session) throws Exception {
+	public void getDetail(FoodDTO foodDTO,Model model,HttpSession session,Pager pager) throws Exception {
 		
 		MemberDTO memberDTO = (MemberDTO)session.getAttribute("member");
 		
-		Map<String, Object> map = foodService.getDetail(foodDTO);
+		Map<String, Object> map = foodService.getDetail(foodDTO,pager);
+
 		map.put("admin", memberDTO);
 		
 		List<StoreReplyDTO> ar = (List<StoreReplyDTO>) map.get("reply");
@@ -117,9 +118,9 @@ public class FoodController {
 	}
 	
 	@GetMapping("update")
-	public void updateDetail(FoodDTO foodDTO,Model model) throws Exception{
+	public void updateDetail(FoodDTO foodDTO,Model model,Pager pager) throws Exception{
 		
-		Map<String, Object> map = foodService.getDetail(foodDTO);
+		Map<String, Object> map = foodService.getDetail(foodDTO,pager);
 		
 		model.addAttribute("map", map);
 		
@@ -282,11 +283,14 @@ public class FoodController {
 	}
 	
 	@PostMapping("replyAdd")
-	public String replyAdd (StoreReplyDTO storeReplyDTO) throws Exception {
+	public String replyAdd (StoreReplyDTO storeReplyDTO,Model model) throws Exception {
 		
 		int result  = foodService.replyAdd(storeReplyDTO);
 		
-		return "redirect:/food/detail?food_num="+storeReplyDTO.getFood_num();
+		model.addAttribute("msg","소중한 후기 감사합니다!");
+		model.addAttribute("url", "/food/detail?food_num="+storeReplyDTO.getFood_num());
+		
+		return "commons/message";
 		
 	}
 	
@@ -307,6 +311,45 @@ public class FoodController {
 			model.addAttribute("msg", result);
 			return "commons/result";
 			
+	}
+	
+	@PostMapping("adminReplyAdd")
+	public String adminReplyAdd (StoreReplyDTO storeReplyDTO, Model model) throws Exception{
+		
+		model.addAttribute("dto", storeReplyDTO);
+				
+		return "food/adminReply";
+		
+	}
+	
+	@PostMapping("adminReplySubmit")
+	public String adminReplySubmit(StoreReplyDTO storeReplyDTO,HttpSession session,Model model) throws Exception{
+		
+		MemberDTO memberDTO = (MemberDTO)session.getAttribute("member");
+		String member_id = memberDTO.getMember_id();
+		
+		storeReplyDTO.setMember_id(member_id);
+		
+		int result = foodService.adminReplySubmit(storeReplyDTO);
+		
+		model.addAttribute("msg", result);
+		return "commons/result";
+		
+	}
+	
+	@PostMapping("replyDelete")
+	public String replyDelete(StoreReplyDTO storeReplyDTO,HttpSession session,Model model) throws Exception {
+		
+		MemberDTO memberDTO = (MemberDTO)session.getAttribute("member");
+		String member_id = memberDTO.getMember_id();
+		
+		storeReplyDTO.setMember_id(member_id);
+		
+		int result = foodService.replyDelete(storeReplyDTO);
+		
+		model.addAttribute("msg", result);
+		return "commons/result";
+		
 	}
 	
 }

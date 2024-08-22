@@ -3,6 +3,8 @@ package com.chef.app.food;
 import java.util.List;
 import java.util.Map;
 
+import javax.mail.Store;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -106,12 +108,36 @@ public class FoodDAO {
 		return sqlSession.insert(NAMESPACE+"replyAdd", storeReplyDTO);
 	}
 	
-	public List<StoreReplyDTO> replyList(FoodDTO foodDTO) throws Exception {
-		return sqlSession.selectList(NAMESPACE+"replyList", foodDTO);
+	public List<StoreReplyDTO> replyList(Map<String, Object> map) throws Exception {
+		return sqlSession.selectList(NAMESPACE+"replyList", map);
 	}
 	
 	public int replyUpdateInsert(StoreReplyDTO storeReplyDTO) throws Exception {
 		return sqlSession.update(NAMESPACE+"replyUpdateInsert", storeReplyDTO);
+	}
+	
+	public int adminReplySubmit(StoreReplyDTO storeReplyDTO) throws Exception{
+		return sqlSession.insert(NAMESPACE+"adminReplySubmit", storeReplyDTO);
+	}
+	
+	public List<StoreReplyDTO> findParent(StoreReplyDTO storeReplyDTO) throws Exception {
+		return sqlSession.selectList(NAMESPACE+"findParent", storeReplyDTO);
+	}
+	
+	public int stepUpdate(StoreReplyDTO storeReplyDTO) throws Exception {
+		return sqlSession.update(NAMESPACE+"stepUpdate", storeReplyDTO);
+	}
+	
+	public int replyDelete(StoreReplyDTO storeReplyDTO) throws Exception {
+		return sqlSession.update(NAMESPACE+"replyDelete", storeReplyDTO);
+	}
+	
+	public int replyDeleteAdmin(StoreReplyDTO storeReplyDTO) throws Exception {
+		return sqlSession.delete(NAMESPACE+"replyDeleteAdmin", storeReplyDTO);
+	}
+	
+	public Long getReplyNum(Map<String, Object> map) throws Exception {
+		return sqlSession.selectOne(NAMESPACE+"getReplyCount", map);
 	}
 	
 }
