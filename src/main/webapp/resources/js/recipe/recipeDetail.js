@@ -25,6 +25,7 @@ reBtn.addEventListener("click", () => {
 });
 
 rating.addEventListener('change', function() {
-    const selectedRating = document.querySelector('input[name="rating"]:checked').value; 
+    const selectedRating = document.querySelector('input[name="recipe_rating"]:checked').value; 
+    alert(selectedRating);
 });
 

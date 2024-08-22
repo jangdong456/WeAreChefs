@@ -270,34 +270,34 @@
                                                                     <c:when test="${ar.recipe_rating == 3}">
                                                                         <div class="col-lg-12 my-2" id="reviewRating">
                                                                             <input type="radio" name="recipe_rating"
-                                                                                id="rate3"><label for="rate3"  class="ck_rating">⭐⭐⭐</label>
+                                                                               ><label for="rate3"  class="ck_rating">⭐⭐⭐</label>
                                                                             <span id="tating2">
                                                                                 <input type="radio" name="recipe_rating"
-                                                                                    id="rate"><label for="rate" class="n_ck_rating">⭐⭐</label>
+                                                                                   ><label for="rate" class="n_ck_rating">⭐⭐</label>
                                                                             </span>
                                                                         </div>
                                                                     </c:when>
                                                                     <c:when test="${ar.recipe_rating ==4}">
                                                                         <div class="col-lg-12 my-2" id="reviewRating">
                                                                             <input type="radio" name="recipe_rating"
-                                                                                id="rate4"><label for="rate4"  class="ck_rating">⭐⭐⭐⭐</label>
+                                                                                ><label for="rate4"  class="ck_rating">⭐⭐⭐⭐</label>
                                                                             <span id="tating2">
                                                                                 <input type="radio" name="recipe_rating"
-                                                                                    id="rate"><label for="rate" class="n_ck_rating">⭐</label>
+                                                                                    ><label for="rate" class="n_ck_rating">⭐</label>
                                                                             </span>
                                                                         </div>
                                                                     </c:when>
                                                                     <c:when test="${ar.recipe_rating == 5}">
                                                                         <div class="col-lg-12 my-2" id="reviewRating">
                                                                             <input type="radio" name="recipe_rating"
-                                                                                id="rate5"><label for="rate5"  class="ck_rating">⭐⭐⭐⭐⭐</label>
+                                                                                ><label for="rate5"  class="ck_rating">⭐⭐⭐⭐⭐</label>
                                                                         </div>
                                                                     </c:when>
                                                                     <c:otherwise>
                                                                         <div class="col-lg-12 my-2" id="reviewRating">
                                                                             <span id="tating2">
                                                                                 <input type="radio" name="recipe_rating"
-                                                                                    id="rate"><label class="n_ck_rating"
+                                                                                    ><label class="n_ck_rating"
                                                                                     for="rate">⭐⭐⭐⭐⭐</label>
                                                                             </span>
                                                                         </div>
