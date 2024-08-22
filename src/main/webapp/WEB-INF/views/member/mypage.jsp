@@ -182,9 +182,12 @@
                                                                         <br>
                                                                         <c:choose>
                                                                             <c:when test="${not empty member.profile_sns_url}">
+                                                                                <a href="${member.profile_sns_url}" class="btn border border-secondary rounded-pill px-3 text-primary mt-2">
+                                                                                    <img src="/resources/member/img/youtube.png" style="width: 40px; height: 40px;">                                                                                               
+                                                                                </a>
                                                                                 <a id="modalpage" class="btn border border-secondary rounded-pill px-3 text-primary mt-2" data-bs-toggle="modal" data-bs-target="#SnsModal">
-                                                                                    <img src="/resources/member/img/youtube.png" style="width: 40px; height: 40px;">                                                      
-                                                                                </a>                                    
+                                                                                    <img src="/resources/member/img/change.png" style="width: 40px; height: 40px;">
+                                                                                </a>                                
                                                                             </c:when>
                                                                             <c:otherwise>
                                                                                 <a id="modalpage" class="btn border border-secondary rounded-pill px-3 text-primary mt-2" data-bs-toggle="modal" data-bs-target="#SnsModal">
@@ -228,8 +231,11 @@
                                                                         <br>
                                                                         <c:choose>
                                                                             <c:when test="${not empty member.profile_sns_url}">
+                                                                                <a href="${member.profile_sns_url}"  target="_blank" class="btn border border-secondary rounded-pill px-3 text-primary mt-2">
+                                                                                    <img src="/resources/member/img/youtube.png" style="width: 40px; height: 40px;">                                                                                               
+                                                                                </a>
                                                                                 <a id="modalpage" class="btn border border-secondary rounded-pill px-3 text-primary mt-2" data-bs-toggle="modal" data-bs-target="#SnsModal">
-                                                                                    <img src="/resources/member/img/youtube.png" style="width: 40px; height: 40px;">                                                                             
+                                                                                    <img src="/resources/member/img/change.png" style="width: 40px; height: 40px;">
                                                                                 </a>                                  
                                                                             </c:when>
                                                                             <c:otherwise>
