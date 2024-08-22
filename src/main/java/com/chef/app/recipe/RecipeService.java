@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.chef.app.file.FileManager;
+import com.chef.app.food.StoreReplyDTO;
 
 @Service
 public class RecipeService {
@@ -116,11 +117,12 @@ public class RecipeService {
 			recipeReplyDTO.setBoard_content(" ");
 		}
 
-		// Long num = recipeDAO.getNum();
-
-		// recipeReplyDTO.setBoard_num(num);
-
 		return recipeDAO.recipeReply(recipeReplyDTO);
+	}
+	
+	public int replyUpdateInsert(RecipeReplyDTO recipeReplyDTO) throws Exception {
+		
+		return recipeDAO.replyUpdateInsert(recipeReplyDTO);
 	}
 
 	public List<RecipeReviewDTO> replyList(RecipeReplyDTO recipeReplyDTO, RecipeDTO recipeDTO) {
@@ -131,77 +133,31 @@ public class RecipeService {
 	@Transactional
 	public int recipeComment(RecipeReplyDTO recipeReplyDTO) {
 		// RecipeDTO recipeDTO;
-
-		if (recipeReplyDTO.getRecipe_reply_num() != null) {
-			RecipeReplyDTO parent = recipeDAO.getParentReply(recipeReplyDTO.getRecipe_reply_num());
-
-			if (parent != null) {
-				recipeReplyDTO.setRef(parent.getRef());
-				recipeReplyDTO.setStep(parent.getStep() + 1);
-				recipeReplyDTO.setDepth(parent.getDepth() + 1);
-			}
-		} else {
-			// If this is a top-level reply, set initial values
-			recipeReplyDTO.setRef(null); // This will trigger the sequence value to be used
-			recipeReplyDTO.setStep(0L);
-			recipeReplyDTO.setDepth(0L);
+		Long ref = recipeReplyDTO.getRecipe_reply_num();
+		
+		recipeReplyDTO.setRef(ref);
+		
+		Long maxStep = 0L;
+		Long maxDepth = 0L;	
+		
+		List<RecipeReplyDTO> parents = recipeDAO.findParent(recipeReplyDTO);	
+		for(RecipeReplyDTO p : parents) {
+			
+		    if (p.getStep() > maxStep) {
+		        maxStep = p.getStep();
+		    }
+		    if (p.getDepth() > maxDepth) {
+		        maxDepth = p.getDepth();
+		    }
+			
+		    recipeDAO.stepUpdate(p);
 		}
-
-		return recipeDAO.recipeComment(recipeReplyDTO);
+		
+		recipeReplyDTO.setStep(maxStep+1);
+		recipeReplyDTO.setDepth(maxDepth+1);		
+		
+		return recipeDAO.adminReplySubmit(recipeReplyDTO);
 	}
-	// 1. 부모 댓글 조회
-//		RecipeDTO parentRecipeDTO = new RecipeDTO();
-//		parentRecipeDTO.setRecipe_num(recipeReplyDTO.getRecipe_num());
-//
-//		// 부모 댓글 정보 조회
-//		RecipeDTO parent = recipeDAO.recipeDetail(parentRecipeDTO);
-//
-//		if (parent != null) {
-//			// 2. 부모 댓글의 ref, step, depth 가져오기
-//			Long parentRef = parent.getRef();
-//			Long parentStep = parent.getStep();
-//			Long parentDepth = parent.getDepth();
-//			
-//	        System.out.println("Parent Ref: " + parentRef);
-//	        System.out.println("Parent Step: " + parentStep);
-//	        System.out.println("Parent Depth: " + parentDepth);
-//
-//			// null 체크 추가
-//			if (parentRef != null && parentStep != null && parentDepth != null) {
-//				// 3. 대댓글의 ref, step, depth 설정
-//				recipeReplyDTO.setRef(parentRef);
-//				recipeReplyDTO.setStep(parentStep + 1); // parentStep에서 1을 더하기
-//				recipeReplyDTO.setDepth(parentDepth + 1); // parentDepth에서 1을 더하기
-//
-//				// 4. 대댓글 등록
-//				int result = recipeDAO.recipeComment(recipeReplyDTO);
-//
-//				if (result > 0) {
-//					recipeDAO.replyUpdate(parent);
-//				}
-//
-//				System.out.println(parent.getAr().get(result).getRef());
-//				// parent.setChild_ref(((RecipeReplyDTO)parent.getAr()).getRef());
-//				// System.out.println("getChild_ref " + parent.getChild_ref());
-//				// int result = recipeDAO.replyUpdate(parent);
-//
-//				/*
-//				 * recipeReplyDTO.setRef(parentReply.getRef());
-//				 * recipeReplyDTO.setStep(parentReply.getStep() + 1);
-//				 * recipeReplyDTO.setDepth(parentReply.getDepth() + 1);
-//				 */
-//				// System.out.println("원본글 " + parent.getAr().get(0).getRef());
-//
-//				return result;
-//			} else {
-//				System.out.println("Parent reply information is incomplete.");
-//				return 0;
-//			}
-//		} else {
-//			// 부모 댓글이 없을 경우 처리
-//			 System.out.println("Parent is null.");
-//			return 0;
-//		}
-//	}
+
 
 }

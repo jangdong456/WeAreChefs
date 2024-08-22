@@ -95,6 +95,23 @@ public class RecipeDAO {
 		return sqlSession.selectOne(NAMESPACE + "getParentReply", recipe_reply_num);
 	}
 
+	public int replyUpdateInsert(RecipeReplyDTO recipeReplyDTO) {
+		return sqlSession.update(NAMESPACE+"replyUpdateInsert", recipeReplyDTO);
+	}
+
+	public List<RecipeReplyDTO> findParent(RecipeReplyDTO recipeReplyDTO) {
+		return sqlSession.selectList(NAMESPACE+"findParent", recipeReplyDTO);
+	}
+
+	public int stepUpdate(RecipeReplyDTO recipeReplyDTO) {
+		return sqlSession.update(NAMESPACE+"stepUpdate", recipeReplyDTO);
+		
+	}
+
+	public int adminReplySubmit(RecipeReplyDTO recipeReplyDTO) {
+		return sqlSession.insert(NAMESPACE+"adminReplySubmit", recipeReplyDTO);
+	}
+
 //	public Long getNum() {
 //
 //		return sqlSession.selectOne(NAMESPACE + "getNum");

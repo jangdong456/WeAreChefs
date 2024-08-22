@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.chef.app.food.StoreReplyDTO;
+
 @Controller
 @RequestMapping("/recipe/*")
 public class RecipeController {
@@ -136,6 +138,26 @@ public class RecipeController {
 		}
 
 	}
+	
+	
+	@PostMapping("replyUpdate")
+	public String replyUpdate (RecipeReplyDTO recipeReplyDTO,Model model) throws Exception {
+		
+		model.addAttribute("dto", recipeReplyDTO);
+		
+		return "recipe/replyUpdate";
+		
+	}
+	@PostMapping("replyUpdateInsert")
+	public String replyUpdateInsert (RecipeReplyDTO recipeReplyDTO, Model model) throws Exception {
+		
+		int result = recipeService.replyUpdateInsert(recipeReplyDTO);
+		
+			model.addAttribute("msg", result);
+			return "commons/result";
+			
+	}
+	
 
 	@PostMapping("comment")
 	@ResponseBody
@@ -148,17 +170,19 @@ public class RecipeController {
 		// System.out.println("원본글 " + recipeReplyDTO.getRef());
 
 		int result = recipeService.recipeComment(recipeReplyDTO);
+		model.addAttribute("msg", result);
+		return "commons/result";
 
-		if (result > 0) {
-			model.addAttribute("result", "답변이 등록됐습니다!");
-			model.addAttribute("url", "/recipe/detail?recipe_num=" + recipeReplyDTO.getRecipe_num());
-			return "/recipe/message";
-			// model.addAttribute("review",recipeReviewDTO);
-		} else {
-			model.addAttribute("result", "답변등록에 실패했습니다.");
-			model.addAttribute("url", "/recipe/detail?recipe_num=" + recipeReplyDTO.getRecipe_num());
-			return "/recipe/message";
-		}
+//		if (result > 0) {
+//			model.addAttribute("result", "답변이 등록됐습니다!");
+//			model.addAttribute("url", "/recipe/detail?recipe_num=" + recipeReplyDTO.getRecipe_num());
+//			return "/recipe/message";
+//			// model.addAttribute("review",recipeReviewDTO);
+//		} else {
+//			model.addAttribute("result", "답변등록에 실패했습니다.");
+//			model.addAttribute("url", "/recipe/detail?recipe_num=" + recipeReplyDTO.getRecipe_num());
+//			return "/recipe/message";
+//		}
 
 	}
 

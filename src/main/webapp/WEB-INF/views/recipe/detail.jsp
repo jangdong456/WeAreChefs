@@ -248,56 +248,56 @@
                                                             <div id="reviewRating" class="d-flex">
                                                                 <c:choose>
                                                                     <c:when test="${ar.recipe_rating == 1}">
-                                                                        <div class="col-lg-12 my-2" id="reviewRating">
-                                                                            <input type="radio" name="recipe_rating"
-                                                                                id="rate1"><label for="rate1" class="ck_rating">⭐</label>
-                                                                            <span id="tating2">
-                                                                                <input type="radio" name="recipe_rating"
-                                                                                    id="rate"><label for="rate" class="n_ck_rating">⭐⭐⭐⭐</label>
+                                                                        <div class="col-lg-12 my-2 reviewRating">
+                                                                            <input type="radio" name="recipe_rating">
+                                                                               <label for="rate1" class="ck_rating">⭐</label>
+                                                                            <span class="tating2">
+                                                                                <input type="radio" name="recipe_rating">
+                                                                                    <label for="rate" class="n_ck_rating">⭐⭐⭐⭐</label>
                                                                             </span>
                                                                         </div>
                                                                     </c:when>
                                                                     <c:when test="${ar.recipe_rating == 2}">
-                                                                        <div class="col-lg-12 my-2" id="reviewRating">
-                                                                            <input type="radio" name="recipe_rating"
-                                                                                id="rate2"><label for="rate2"  class="ck_rating">⭐⭐</label>
-                                                                            <span id="tating2">
-                                                                                <input type="radio" name="recipe_rating"
-                                                                                    id="rate"><label for="rate" class="n_ck_rating">⭐⭐⭐</label>
+                                                                        <div class="col-lg-12 my-2 reviewRating">
+                                                                            <input type="radio" name="recipe_rating">
+                                                                               <label for="rate2"  class="ck_rating">⭐⭐</label>
+                                                                            <span class="tating2">
+                                                                                <input type="radio" name="recipe_rating">
+                                                                                    <label for="rate" class="n_ck_rating">⭐⭐⭐</label>
                                                                             </span>
                                                                         </div>
                                                                     </c:when>
                                                                     <c:when test="${ar.recipe_rating == 3}">
-                                                                        <div class="col-lg-12 my-2" id="reviewRating">
-                                                                            <input type="radio" name="recipe_rating"
-                                                                               ><label for="rate3"  class="ck_rating">⭐⭐⭐</label>
-                                                                            <span id="tating2">
-                                                                                <input type="radio" name="recipe_rating"
-                                                                                   ><label for="rate" class="n_ck_rating">⭐⭐</label>
+                                                                        <div class="col-lg-12 my-2 reviewRating">
+                                                                            <input type="radio" name="recipe_rating">
+                                                                               <label for="rate3"  class="ck_rating">⭐⭐⭐</label>
+                                                                            <span class="tating2">
+                                                                                <input type="radio" name="recipe_rating">
+                                                                                   <label for="rate" class="n_ck_rating">⭐⭐</label>
                                                                             </span>
                                                                         </div>
                                                                     </c:when>
                                                                     <c:when test="${ar.recipe_rating ==4}">
-                                                                        <div class="col-lg-12 my-2" id="reviewRating">
+                                                                        <div class="col-lg-12 my-2 reviewRating">
                                                                             <input type="radio" name="recipe_rating"
                                                                                 ><label for="rate4"  class="ck_rating">⭐⭐⭐⭐</label>
-                                                                            <span id="tating2">
-                                                                                <input type="radio" name="recipe_rating"
-                                                                                    ><label for="rate" class="n_ck_rating">⭐</label>
+                                                                            <span class="tating2">
+                                                                                <input type="radio" name="recipe_rating">
+                                                                                    <label for="rate" class="n_ck_rating">⭐</label>
                                                                             </span>
                                                                         </div>
                                                                     </c:when>
                                                                     <c:when test="${ar.recipe_rating == 5}">
-                                                                        <div class="col-lg-12 my-2" id="reviewRating">
-                                                                            <input type="radio" name="recipe_rating"
-                                                                                ><label for="rate5"  class="ck_rating">⭐⭐⭐⭐⭐</label>
+                                                                        <div class="col-lg-12 my-2 reviewRating">
+                                                                            <input type="radio" name="recipe_rating">
+                                                                                <label for="rate5"  class="ck_rating">⭐⭐⭐⭐⭐</label>
                                                                         </div>
                                                                     </c:when>
                                                                     <c:otherwise>
-                                                                        <div class="col-lg-12 my-2" id="reviewRating">
+                                                                        <div class="col-lg-12 my-2 reviewRating">
                                                                             <span id="tating2">
-                                                                                <input type="radio" name="recipe_rating"
-                                                                                    ><label class="n_ck_rating"
+                                                                                <input type="radio" name="recipe_rating">
+                                                                                    <label class="n_ck_rating"
                                                                                     for="rate">⭐⭐⭐⭐⭐</label>
                                                                             </span>
                                                                         </div>

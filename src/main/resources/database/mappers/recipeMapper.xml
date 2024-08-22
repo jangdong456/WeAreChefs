@@ -305,6 +305,9 @@
 											  ) -->
 								   							
 	</insert>
+	<update id="replyUpdateInsert" parameterType="RecipeReplyDTO">
+   	UPDATE RECIPEREPLY SET UPDATE_DATE =SYSDATE ,BOARD_CONTENT =#{board_content} WHERE RECIPE_REPLY_NUM = #{recipe_reply_num}
+   </update>
 	<update id="replyUpdate" parameterType="RecipeDTO">
 			 UPDATE RECIPE
 		    SET STEP = STEP +1
@@ -320,5 +323,15 @@
 	    FROM RECIPEREPLY
         WHERE RECIPE_REPLY_NUM = #{recipe_reply_num}
 	</select>
+	  <insert id="adminReplySubmit" parameterType="RecipeReplyDTO">
+
+   	INSERT INTO RECIPEREPLY VALUES (RECIPEREPLY_SEQ.NEXTVAL,#{recipe_num},#{member_id},SYSDATE,SYSDATE,#{board_content},0,#{ref},#{step},#{depth},'N')
+   </insert>
+      <update id="stepUpdate" parameterType="RecipeReplyDTO">
+   	UPDATE RECIPEREPLY SET STEP=STEP+1
+   	WHERE REF=#{ref} AND STEP>#{step}
+   </update>
+   
+   
 
     </mapper>
