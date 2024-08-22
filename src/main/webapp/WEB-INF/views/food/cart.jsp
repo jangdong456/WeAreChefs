@@ -43,9 +43,10 @@
         <div class="container-fluid py-5">
             <div class="container py-5">
                 <div class="table-responsive">
-                    <table class="table">
+                    <table class="table justify-content-center text-center">
                         <thead>
                           <tr>
+                            <th scope="col"><input type="checkbox" name="" id="allCheck" checked="true">&emsp;(전체선택)</th>
                             <th scope="col">상품</th>
                             <th scope="col">상품명</th>
                             <th scope="col">가격</th>
@@ -58,18 +59,23 @@
                         	<c:forEach items="${list}" var="a">
                         		<c:forEach items="${a.foodDTO}" var="f">
                             <tr>
-                                <th scope="row">
-                                    <div class="d-flex align-items-center">
-                                        <img src="/resources/upload/foods/${f.storeImgFileDTO.file_name}" class="img-fluid me-5 rounded-circle" style="width: 80px; height: 80px;" alt="">
+                                <th align="center" valign="middle">
+                                    <div class="justify-content-center text-center">
+                                        <input type="checkbox" class="checkOther" data-food-num="${f.food_num}">
                                     </div>
                                 </th>
+                                <td scope="row">
+                                    <div class="justify-content-center text-center">
+                                        <img src="/resources/upload/foods/${f.storeImgFileDTO.file_name}" class="img-fluid me-5 rounded-circle" style="width: 80px; height: 80px;" alt="">
+                                    </div>
+                                </td>
                                 <td>
                                     <p class="mb-0 mt-4"><a href="/food/detail?food_num=${f.food_num}">${f.food_name}</a></p>
                                 </td>
                                 <td>
                                     <p class="mb-0 mt-4">${f.food_price}원</p>
                                 </td>
-                                <td>
+                                <td align="center">
                                     <div class="input-group quantity mt-4" style="width: 100px;">
                                         <div class="input-group-btn minusBtn" data-buy-price="${f.food_price}" data-food-num="${f.food_num}">
                                             <button class="btn btn-sm btn-minus rounded-circle bg-light border" >
@@ -77,7 +83,7 @@
                                             </button>
                                         </div>
                                         <input type="text" class="form-control form-control-sm text-center border-0 buyCount" value="${a.cart_count}" 
-                                        readonly style="background-color: transparent;border: 0px;" data-food-num="${f.food_num}">
+                                        style="background-color: transparent;border: 0px;" data-food-num="${f.food_num}" data-buy-price="${f.food_price}">
                                         <div class="input-group-btn plusBtn" data-buy-price="${f.food_price}" data-food-num="${f.food_num}">
                                             <button class="btn btn-sm btn-plus rounded-circle bg-light border">
                                                 <i class="fa fa-plus"></i>

@@ -28,9 +28,15 @@ for(let f of foodInfo) {
 
 }
 
-
 let preName = foodName[0].innerHTML
 let listLength = foodName.length-1
+let finalName=""
+
+if (listLength==0){
+    finalName=preName
+}else{
+    finalName=preName + " 외 " + listLength + "건"
+}
 
 let orderPre = new Date().getTime()
 let orderBack = Math.floor(Math.random() *1000000)
@@ -91,7 +97,7 @@ payGo.addEventListener("click",()=>{
                         pg: "html5_inicis.INIpayTest",
                         pay_method: "card",
                         merchant_uid: orderNum, // 주문 고유 번호
-                        name: preName + " 외 " + listLength + "건",
+                        name: finalName,
                         amount: 1,
                         buyer_email: mailInput.value,
                         buyer_name: nameInput.value,
@@ -140,7 +146,7 @@ payGo.addEventListener("click",()=>{
                 pg: "html5_inicis.INIpayTest",
                 pay_method: "card",
                 merchant_uid: orderNum, // 주문 고유 번호
-                name: preName + " 외 " + listLength + "건",
+                name: finalName,
                 amount: 1,
                 buyer_email: mailInput.value,
                 buyer_name: nameInput.value,

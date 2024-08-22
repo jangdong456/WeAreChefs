@@ -27,25 +27,21 @@
                         <div class="col-md-12 col-lg-6 col-xl-7">
                             <h3 class="mb-3">🥑주문자 정보</h3>
                             <div class="form-item">
-                                <label class="form-label my-3">주문자 ID<sup>*</sup></label>
-                                <input type="text" class="form-control" style="background-color: transparent;" readonly>
-                            </div>
-                            <div class="form-item">
-                                <label class="form-label my-3">이름<sup>*</sup></label>
-                                <input type="text" class="form-control" style="background-color: transparent;" readonly>
+                                <label class="form-label my-3">닉네임<sup>*</sup></label>
+                                <input type="text" class="form-control" readonly value="${orderMember.member_nickname}">
                             </div>
                             <h3 class="mb-3 mt-4">🥕받는사람 정보</h3>
                             <div class="form-item">
                                 <label class="form-label my-3">이름<sup>*</sup></label>
-                                <input type="text" class="form-control" id="nameInput">
+                                <input type="text" class="form-control" id="nameInput" value="${orderMember.member_name}">
                             </div>
                             <div class="form-item">
                                 <label class="form-label my-3">연락처<sup>*</sup></label>
-                                <input type="text" class="form-control" id="phoneInput">
+                                <input type="text" class="form-control" id="phoneInput" value="${orderMember.member_name}">
                             </div>
                             <div class="form-item">
                                 <label class="form-label my-3">이메일<sup>*</sup></label>
-                                <input type="text" class="form-control" id="mailInput">
+                                <input type="text" class="form-control" id="mailInput" value="${orderMember.member_mail}">
                             </div>
                            <div class="col-md-12 col-lg-6">
                             <div class="form-group">
