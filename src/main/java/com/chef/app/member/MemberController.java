@@ -1,5 +1,10 @@
 package com.chef.app.member;
 
+import java.time.LocalDate;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.List;
 
 import javax.crypto.Cipher;
@@ -15,10 +20,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.chef.app.food.StoreMidOrderDTO;
+import com.chef.app.food.StoreOrderDTO;
 import com.chef.app.recipe.RecipeDTO;
 import com.chef.app.recipe.RecipeReplyDTO;
 import com.chef.app.recipe.RecipeReviewDTO;
 import com.chef.app.util.Email;
+import com.chef.app.util.Pager;
+
+import oracle.jdbc.proxy.annotation.Post;
 
 @Controller
 @RequestMapping("/member/*")
@@ -281,5 +291,45 @@ public class MemberController {
 		return "commons/result";
 	}
 	
+	@GetMapping("buyList")
+	public void buyList(HttpSession session,Model model,Pager pager,String startDate,String endDate) throws Exception {
+			
+		if(startDate==null) {
+			startDate="1900-01-01";
+		}
+		if(endDate==null) {
+			endDate="2100-12-31";
+		}
+		
+		Map<String, Object> goService = new HashMap<String, Object>();
+		MemberDTO memberDTO = (MemberDTO)session.getAttribute("member");
+		
+		goService.put("memberDTO", memberDTO);
+		goService.put("pager", pager);
+		goService.put("startDate",startDate);
+		goService.put("endDate", endDate);
+		
+		Map<String, Object> map = memberService.buyList(goService);
+				
+		model.addAttribute("list", map.get("list"));
+		model.addAttribute("pager", map.get("pager"));
+		
+	}
+	
+	@GetMapping("cancleRequest")
+	public String cancleRequest(StoreOrderDTO storeOrderDTO,Model model) throws Exception {
+		
+		int result = memberService.cancleRequest(storeOrderDTO);
+		
+		if(result>0) {
+			model.addAttribute("msg", "결제취소 요청이 완료됐습니다");
+			model.addAttribute("url", "/member/buyList");
+		}else {
+			model.addAttribute("msg", "결제취소 요청에 실패했습니다");
+			model.addAttribute("url", "/member/buyList");	
+		}
+		
+		return "commons/message";
+	}
 	
 }

@@ -1,6 +1,7 @@
 package com.chef.app.food;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -76,8 +77,30 @@ public class FoodService {
 		return foodDAO.categoryCount();
 	}
 	
-	public FoodDTO getDetail(FoodDTO foodDTO) throws Exception {
-		return foodDAO.getDetail(foodDTO);
+	public Map<String, Object> getDetail(FoodDTO foodDTO,Pager pager) throws Exception {
+		
+		FoodDTO foodDTO2 =foodDAO.getDetail(foodDTO);
+		
+		Map<String, Object> replyList = new HashMap<String, Object>();
+		replyList.put("foodDTO", foodDTO);
+		replyList.put("pager", pager);
+		
+		Long totalRow = foodDAO.getReplyNum(replyList);
+		
+		if(totalRow==0) {
+			totalRow=1L;
+		}
+		
+		pager.makeRow(5L);
+		pager.makeNum(totalRow, 5L, 5L);	
+				
+		List<StoreReplyDTO> storeReplyDTOs = foodDAO.replyList(replyList);
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("dto", foodDTO2);
+		map.put("reply", storeReplyDTOs);
+		
+		return map;
 	}
 	
 	public int updateDetail(MultipartFile attach,HttpSession session,FoodDTO foodDTO) throws Exception {
@@ -132,20 +155,7 @@ public class FoodService {
 	
 	public int deleteCart(StoreCartDTO storeCartDTO) throws Exception {
 		return foodDAO.deleteCart(storeCartDTO);
-	}
-	
-	public int payUpdateCart(List<StoreCartDTO> ar) throws Exception {
-		
-		int result = 0;
-		
-		for(StoreCartDTO a:ar) {
-
-			result = foodDAO.payUpdateCart(a);
-		}
-		
-		return result;
-		
-	}
+	}	
 	
 	public int orderInsert (StoreOrderDTO storeOrderDTO) throws Exception {
 		
@@ -159,9 +169,89 @@ public class FoodService {
 			result = foodDAO.midOrderInsert(a);
 		}
 		
-		result = foodDAO.orderFinishCartDelete(storeOrderDTO);
+		String member_id = storeOrderDTO.getMember_id();
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("midList", list);
+		map.put("member_id", member_id);
+		
+		result = foodDAO.orderFinishCartDelete(map);
 	
 		return result;
+		
+	}
+	
+	public int cartCountChange(StoreCartDTO storeCartDTO) throws Exception {
+		
+		return foodDAO.cartCountChange(storeCartDTO);
+		
+	}
+	
+	public List<StoreCartDTO> payCartList(List<StoreCartDTO> ar) throws Exception{
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		String member_id = ar.get(0).getMember_id();
+		map.put("dto", ar);
+		map.put("member_id", member_id);
+		
+		return foodDAO.payCartList(map);
+	}
+	
+	public int replyAdd(StoreReplyDTO storeReplyDTO) throws Exception {
+		
+		if(storeReplyDTO.getBoard_content().isEmpty()) {
+			storeReplyDTO.setBoard_content(" ");
+		}
+		
+		Long num = foodDAO.getNum();
+		
+		storeReplyDTO.setBoard_num(num);
+		
+		return foodDAO.replyAdd(storeReplyDTO);
+		
+	}
+	
+	public int replyUpdateInsert(StoreReplyDTO storeReplyDTO) throws Exception {
+		
+		return foodDAO.replyUpdateInsert(storeReplyDTO);
+	}
+	
+	public int adminReplySubmit(StoreReplyDTO storeReplyDTO) throws Exception {
+		
+		Long ref = storeReplyDTO.getFood_reply_num();
+		
+		storeReplyDTO.setRef(ref);
+		
+		Long maxStep = 0L;
+		Long maxDepth = 0L;	
+		
+		List<StoreReplyDTO> parents = foodDAO.findParent(storeReplyDTO);	
+		for(StoreReplyDTO p : parents) {
+			
+		    if (p.getStep() > maxStep) {
+		        maxStep = p.getStep();
+		    }
+		    if (p.getDepth() > maxDepth) {
+		        maxDepth = p.getDepth();
+		    }
+			
+			foodDAO.stepUpdate(p);
+		}
+		
+		storeReplyDTO.setStep(maxStep+1);
+		storeReplyDTO.setDepth(maxDepth+1);		
+		
+		return foodDAO.adminReplySubmit(storeReplyDTO);
+		
+	}
+	
+	public int replyDelete(StoreReplyDTO storeReplyDTO) throws Exception{
+		
+		if(storeReplyDTO.getMember_id().equals("12341234")) {
+			return foodDAO.replyDeleteAdmin(storeReplyDTO);
+		}
+		
+		return foodDAO.replyDelete(storeReplyDTO);
 		
 	}
 

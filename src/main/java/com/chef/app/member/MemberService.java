@@ -1,5 +1,8 @@
 package com.chef.app.member;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.List;
 
 import javax.servlet.ServletContext;
@@ -14,6 +17,9 @@ import com.chef.app.file.FileManager;
 import com.chef.app.recipe.RecipeDTO;
 import com.chef.app.recipe.RecipeReplyDTO;
 import com.chef.app.recipe.RecipeReviewDTO;
+
+import com.chef.app.food.StoreOrderDTO;
+import com.chef.app.util.Pager;
 
 @Service
 public class MemberService {
@@ -131,6 +137,36 @@ public class MemberService {
 		memberDTO.setMember_pwd(hashpw);
 		
 		return memberDAO.join(memberDTO);
+	}
+	
+	public Map<String, Object> buyList(Map<String, Object> comeMap) throws Exception {
+		
+		List<StoreOrderDTO> ar = memberDAO.buyList(comeMap);
+		
+		Pager pagination =(Pager)comeMap.get("pager");
+	  
+		Long pageNumber = pagination.getPage();
+		int page_size = 5;
+		
+        int totalOrders = ar.size();
+        int startIndex = (int)(pageNumber - 1) * page_size;
+        int endIndex = Math.min(startIndex + page_size, totalOrders);
+
+        List<StoreOrderDTO> paginatedOrders = ar.subList(startIndex, endIndex);
+
+        Pager pager = new Pager();
+        pager.setPage((long) pageNumber);
+        pager.makeNum((long) totalOrders, (long) page_size, 1L);
+        
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("list", paginatedOrders);
+        map.put("pager", pager);
+		
+		return map;
+	}
+	
+	public int cancleRequest(StoreOrderDTO storeOrderDTO) throws Exception {
+		return memberDAO.cancleRequest(storeOrderDTO);
 	}
 	
 }

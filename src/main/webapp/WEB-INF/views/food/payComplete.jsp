@@ -25,7 +25,7 @@
                         <h1 class="mb-4">결제가</h1>
                         <h1 class="mb-4">완료됐습니다</h1>
                         <p class="mb-4">주문번호 : ${num.order_num}</p>
-                        <a class="btn border-secondary rounded-pill py-3 px-5" href="#">결제 내역 확인하러 가기</a>
+                        <a class="btn border-secondary rounded-pill py-3 px-5" href="/member/buyList">결제 내역 확인하러 가기</a>
                     </div>
                 </div>
             </div>

@@ -196,10 +196,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
    	DELETE STORECART WHERE MEMBER_ID=#{member_id} AND FOOD_NUM=#{food_num}
    </delete>
    
-   <update id="payUpdateCart" parameterType="StoreCartDTO">
-   	UPDATE STORECART SET CART_COUNT = #{cart_count} WHERE MEMBER_ID=#{member_id} AND FOOD_NUM=#{food_num}
-   </update>
-   
    <insert id="orderInsert" parameterType="StoreOrderDTO">
    	INSERT INTO STOREORDER VALUES 
 	(#{order_num},#{member_id},#{order_price},'결제완료',#{delivery_address},'배송준비중',SYSDATE,#{order_name},#{order_phone},#{order_mail},#{order_post})
@@ -209,8 +205,135 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
    	INSERT INTO MIDORDER VALUES (MID_ORD_SEQ.NEXTVAL,#{order_num},#{food_num},#{cart_count})
    </insert>
    
-   <delete id="orderFinishCartDelete" parameterType="StoreOrderDTO">
+   <delete id="orderFinishCartDelete" parameterType="Map">
    	DELETE STORECART WHERE MEMBER_ID=#{member_id}
+	AND FOOD_NUM IN
+	<foreach collection="midList" item="one" open="(" separator="," close=")">
+	#{one.food_num}
+	</foreach>
    </delete>
+   
+   <update id="cartCountChange" parameterType="StoreCartDTO">
+   	UPDATE STORECART SET CART_COUNT = #{cart_count} WHERE MEMBER_ID=#{member_id} AND FOOD_NUM=#{food_num}
+   </update>
+   
+    <select id="payCartList" parameterType="Map" resultMap="storeCartMapEx">
+	SELECT *
+	FROM FOOD F
+		 INNER JOIN
+		 STOREIMG S
+		 ON F.FOOD_NUM =S.FOOD_NUM
+		 INNER JOIN
+		 STORECART SC
+		 ON F.FOOD_NUM =SC.FOOD_NUM
+	WHERE SC.MEMBER_ID = #{member_id}
+	AND SC.FOOD_NUM IN
+	<foreach collection="dto" item="one" open="(" separator="," close=")">
+	#{one.food_num}
+	</foreach>
+   </select>
+   
+   <!-- 복사 -->
+   
+     <!-- StoreCartDTO 맵핑 -->
+   <resultMap type="StoreCartDTO" id="storeCartMapEx" extends="storeCartMap">
+   	<collection property="foodDTO" javaType="java.util.List" ofType="FoodDTO" resultMap="foodMapEx"></collection>
+   </resultMap>
+   
+	<!-- FoodDTO 맵핑  -->
+   <resultMap type="FoodDTO" id="foodMapEx" extends="foodMap">
+       <association property="storeImgFileDTO" javaType="StoreImgFileDTO" resultMap="storeImgFileMapEx"/>
+   </resultMap>
+   
+   <!-- StoreImgFileDTO 맵핑 -->
+   <resultMap type="StoreImgFileDTO" id="storeImgFileMapEx" extends="storeImgFileMap">
+   </resultMap>
+   
+   <select id="getNum" resultType="java.lang.Long">
+   		SELECT STOREREPLY_SEQ.NEXTVAL FROM DUAL
+   </select>
+   
+   <insert id="replyAdd" parameterType="StoreReplyDTO">
+   	INSERT INTO STOREREPLY
+   	VALUES (#{board_num},#{food_num},#{member_id},SYSDATE,SYSDATE,#{board_content},#{food_rating},#{board_num},0,0,'N')
+   </insert>
+   
+   <select id="replyList" parameterType="Map" resultType="StoreReplyDTO">
+	   	WITH RefCounts AS (
+	    SELECT REF, COUNT(*) AS comment_count
+	    FROM STOREREPLY
+	    WHERE FOOD_NUM = #{foodDTO.food_num}
+	    GROUP BY REF
+	),
+	PagedRefs AS (
+	    SELECT REF
+	    FROM (
+	        SELECT REF,
+	               ROWNUM AS rn
+	        FROM (
+	            SELECT REF
+	            FROM RefCounts
+	            ORDER BY REF DESC
+	        )
+	    )
+	    WHERE rn BETWEEN #{pager.startRow} AND #{pager.lastRow}
+	)
+	SELECT *
+	FROM STOREREPLY
+	WHERE REF IN (SELECT REF FROM PagedRefs)
+	  AND FOOD_NUM = #{foodDTO.food_num}
+	ORDER BY REF DESC, STEP ASC	
+   </select>
+   
+   <update id="replyUpdateInsert" parameterType="StoreReplyDTO">
+   	UPDATE STOREREPLY SET UPDATE_DATE =SYSDATE ,REPLY_CONTENT =#{reply_content},FOOD_RATING =#{food_rating} WHERE FOOD_REPLY_NUM = #{food_reply_num}
+   </update>
+   
+   <insert id="adminReplySubmit" parameterType="StoreReplyDTO">
+   	INSERT INTO STOREREPLY VALUES (STOREREPLY_SEQ.NEXTVAL,#{food_num},#{member_id},SYSDATE,SYSDATE,#{reply_content},0,#{ref},#{step},#{depth},'N')
+   </insert>
+   
+   <update id="stepUpdate" parameterType="StoreReplyDTO">
+   	UPDATE STOREREPLY SET STEP=STEP+1
+   	WHERE REF=#{ref} AND STEP>#{step}
+   </update>
+   
+   <select id="findParent" parameterType="StoreReplyDTO" resultType="StoreReplyDTO">
+   	SELECT * FROM STOREREPLY WHERE REF =#{ref} ORDER BY STEP ASC
+   </select>
+   
+   <update id="replyDelete" parameterType="StoreReplyDTO">
+   	UPDATE STOREREPLY SET DEL='D' WHERE FOOD_REPLY_NUM = #{food_reply_num}
+   </update>
+   
+   <delete id="replyDeleteAdmin" parameterType="StoreReplyDTO">
+   	DELETE STOREREPLY WHERE FOOD_REPLY_NUM = #{food_reply_num}
+   </delete>
+   
+   <select id="getReplyCount" parameterType="Map" resultType="java.lang.Long">
+   		   	WITH RefCounts AS (
+	    SELECT REF, COUNT(*) AS comment_count
+	    FROM STOREREPLY
+	    WHERE FOOD_NUM = #{foodDTO.food_num}
+	    GROUP BY REF
+	),
+	PagedRefs AS (
+	    SELECT REF
+	    FROM (
+	        SELECT REF,
+	               ROWNUM AS rn
+	        FROM (
+	            SELECT REF
+	            FROM RefCounts
+	            ORDER BY REF DESC
+	        )
+	    )
+	)
+	SELECT COUNT(*)
+	FROM STOREREPLY
+	WHERE REF IN (SELECT REF FROM PagedRefs)
+	  AND FOOD_NUM = #{foodDTO.food_num}
+	ORDER BY REF DESC, STEP ASC	
+   </select>
    
 </mapper>

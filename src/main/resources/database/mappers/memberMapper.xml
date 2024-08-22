@@ -100,4 +100,72 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SELECT * FROM MEMBER
 		WHERE member_id = #{member_id}
 	</select>
+	
+	<select id="buyList" parameterType="Map" resultMap="StoreOrderDTOMap">
+		SELECT *
+		FROM STOREORDER SO
+	 	INNER JOIN
+	 	MIDORDER MO
+		ON SO.ORDER_NUM =MO.ORDER_NUM
+	 	INNER JOIN
+	 	FOOD F
+	 	ON MO.FOOD_NUM =F.FOOD_NUM
+	 	INNER JOIN
+	 	STOREIMG SI
+	 	ON F.FOOD_NUM =SI.FOOD_NUM
+	 	WHERE SO.MEMBER_ID = #{memberDTO.member_id} AND TO_CHAR(SO.ORDER_DATE,'YYYY-MM-DD') BETWEEN #{startDate} AND #{endDate}
+	 	ORDER BY SO.ORDER_DATE DESC
+	</select>
+	
+	<!-- StoreOrderDTO 맵핑 -->
+	<resultMap type="StoreOrderDTO" id="StoreOrderDTOMap">
+		<id column="ORDER_NUM" property="order_num"/>
+		<result column="MEMBER_ID" property="member_id"/>
+		<result column="ORDER_PRICE" property="order_price"/>
+		<result column="ORDER_STATUS" property="order_status"/>
+		<result column="DELIVERY_ADDRESS" property="delivery_address"/>
+		<result column="DELIVERY_STATUS" property="delivery_status"/>
+		<result column="ORDER_DATE" property="order_date"/>
+		<result column="ORDER_NAME" property="order_name"/>
+		<result column="ORDER_PHONE" property="order_phone"/>
+		<result column="ORDER_MAIL" property="order_mail"/>
+		<result column="ORDER_POST" property="order_post"/>
+		<collection property="store_ar" javaType="java.util.List" ofType="StoreMidOrderDTO" resultMap="midMap"></collection>
+	</resultMap>
+	
+	<!-- StoreMidOrderDTO 맵핑 -->
+	<resultMap type="StoreMidOrderDTO" id="midMap">
+		<id column="MID_NUM" property="mid_num"/>
+		<result column="ORDER_NUM" property="order_num"/>
+		<result column="FOOD_NUM" property="food_num"/>
+		<result column="FOOD_COUNT" property="cart_count"/>
+		<collection property="foodDTOs" javaType="java.util.List" ofType="FoodDTO" resultMap="foodMap"></collection>
+	</resultMap>
+	
+	<!-- FoodDTO 맵핑 -->	
+   <resultMap type="FoodDTO" id="foodMap">
+	<id column="FOOD_NUM" property="food_num"/>
+   	<result column="FOOD_CATEGORY" property="food_category"/>
+   	<result column="FOOD_NAME" property="food_name"/>
+   	<result column="FOOD_STOCK" property="food_stock"/>
+   	<result column="FOOD_BUYING" property="food_buying"/>
+   	<result column="FOOD_PRICE" property="food_price"/>
+   	<result column="FOOD_CONTENTS" property="food_contents"/>
+   	<result column="CREATE_DATE" property="create_date"/>
+   	<result column="UPDATE_DATE" property="update_date"/>
+   	<result column="RATING" property="rating"/>
+    <association property="storeImgFileDTO" javaType="StoreImgFileDTO" resultMap="storeImgFileMap"/>
+   </resultMap>
+   
+   <!-- StoreImgFileDTO 맵핑 -->
+   <resultMap type="StoreImgFileDTO" id="storeImgFileMap">
+   	<id column="FOOD_IMG_NUM" property="file_num"/>
+   	<result column="FOOD_FILE_NAME" property="file_name"/>
+   	<result column="FOOD_NUM" property="food_num"/>
+   </resultMap>
+   
+   <update id="cancleRequest" parameterType="StoreOrderDTO">
+   	UPDATE STOREORDER SET ORDER_STATUS = '결제취소요청' WHERE ORDER_NUM=#{order_num}
+   </update>
+	
 </mapper>
