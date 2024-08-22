@@ -30,16 +30,62 @@ public class MemberController {
 	@Autowired
 	private Email email;
 	
+	@GetMapping("prfileSnsDelete")
+	public String prfileSnsDelete(MemberDTO memberDTO, Model model) throws Exception {
+		System.out.println("===== prfileSnsDelete =====");
+		System.out.println(memberDTO.getMember_id());
+		
+		String url = "";
+		int result = memberService.prfileSnsDelete(memberDTO);
+		
+		if(result > 0) {
+			model.addAttribute("msg", result);
+			url = "commons/result";
+		}
+		return url;
+	}
+	
+	@PostMapping("prfileSnsAdd")
+	public String prfileSnsAdd(MemberDTO memberDTO, Model model) throws Exception {
+		System.out.println("prfileSnsAdd 확인");
+		System.out.println(memberDTO.getMember_id());
+		System.out.println(memberDTO.getProfile_sns_url());
+		String url = "";
+		int result = memberService.prfileSnsAdd(memberDTO);
+		
+		if(result > 0) {
+			model.addAttribute("msg", result);
+			url = "commons/result";
+		}
+		return url;
+	}
+	
+	@GetMapping("profileDelete")
+	public String profileDelete(MemberDTO memberDTO, Model model) throws Exception {
+		int result = memberService.profileDelete(memberDTO);
+		
+		String url = "";
+		if(result > 0) {
+			model.addAttribute("msg", result);
+			url = "commons/result";
+		}
+		return url;
+	}
+	
 	@PostMapping("profileChange")
 	public String profileChange(MemberDTO memberDTO, MultipartFile multipartFile, HttpSession session, Model model) throws Exception {
 		MemberDTO memberdto = (MemberDTO)session.getAttribute("member");
 		memberDTO.setMember_id(memberdto.getMember_id());
 		
-		System.out.println("파일확인:" + multipartFile);
-		System.out.println("id:" + memberDTO.getMember_id());
-		
 		int result = 0;
 		String url = "";
+		
+		if(multipartFile.getSize() == 0) {
+			System.out.println("============= 파일 null 값 =============");
+			memberService.profileDelete(memberDTO);
+			return url = "redirect:/member/mypage";
+		}
+		
 		
 		result = memberService.profileChange(memberDTO, multipartFile, session);			
 		
@@ -112,7 +158,7 @@ public class MemberController {
 //		MemberDTO memberdto = (MemberDTO)session.getAttribute("member");
 //		memberdto.setProfile_about_me(profile_about_me);
 //		memberdto.setMember_id(member_id);
-
+		System.out.println("myapge 자기소개");
 		MemberDTO memberdto = (MemberDTO)session.getAttribute("member");
 		memberdto.setMember_id(memberDTO.getMember_id());
 		memberdto.setProfile_about_me(memberDTO.getProfile_about_me());;

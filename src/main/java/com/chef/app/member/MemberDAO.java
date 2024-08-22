@@ -18,6 +18,18 @@ public class MemberDAO {
 	
 	private final String NAMESPACE = "com.chef.app.member.MemberDAO.";
 	
+	public int prfileSnsDelete(MemberDTO memberDTO) throws Exception {
+		return sqlSession.update(NAMESPACE + "prfileSnsDelete", memberDTO);
+	}
+	
+	public int prfileSnsAdd(MemberDTO memberDTO) throws Exception {
+		return sqlSession.update(NAMESPACE + "prfileSnsAdd", memberDTO);
+	}
+	
+	public int profileDelete(MemberDTO memberDTO) throws Exception {
+		return sqlSession.update(NAMESPACE + "profileDelete", memberDTO);
+	}
+	
 	public int profileChange(MemberDTO memberDTO) throws Exception {
 		System.out.println("dao 넘어옴?@@@@@@@@");
 		

@@ -25,11 +25,23 @@
         height: 50px;
     }
 
+    .about_me {
+
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+
+    }
+
     .modal-body input[type="file"] {
         color: black; /* 파일 입력 필드의 텍스트 색상 */
         background-color: white; /* 배경 색상 */
         border: 1px solid #ccc; /* 테두리 색상 */
         padding: 5px; /* 패딩 */
+    }
+
+    .about_me {
+        text-align : center;
     }
 
 </style>
@@ -110,8 +122,8 @@
                                                         </c:if>
                                                         <c:if test="${member.member_type eq '카카오톡'}">
                                                             <c:choose>
-                                                                <c:when test="${not empty member.profile_name}">
-                                                                   <img src="/resources/upload/member/${member.kakao_profile_img}" class="profile" alt="">
+                                                                <c:when test="${not empty member.kakao_profile_img}">
+                                                                   <img src="${member.kakao_profile_img}" class="profile" alt="">
                                                                </c:when>
                                                                <c:otherwise>
                                                                    <img src = "/resources/member/img/base.jpg" class="profile">
@@ -121,6 +133,7 @@
                                                 </div>
                                                 <div class="text-white px-3 py-1 rounded position-absolute change" style="top: -10px; left: 170px;">
 
+                                                    <!-- 프로필 사진 modal -->
                                                     <a href="#" data-bs-toggle="modal" data-bs-target="#pictureModal">
                                                         <img class="profileChange" src="/resources/member/img/picture.png" style="width: 30px; height: 30px;">
                                                     </a>
@@ -159,18 +172,100 @@
                                                 </div>
                                                 <div class="p-4 border border-secondary border-top-0 rounded-bottom">
                                                     
-                                                    <!-- Modal -->
+                                                    <!--자기소개 Modal -->
                                                     <div>
                                                         <a href="#" class="" data-bs-toggle="modal" data-bs-target="#exampleModal">
                                                             <c:choose>                                                                                                      
                                                                 <c:when test="${not empty member.profile_about_me}">
-                                                                    <div id="change">
+                                                                    <div id="change" class="about_me">
                                                                         ${member.profile_about_me}
+                                                                        <br>
+                                                                        <c:choose>
+                                                                            <c:when test="${not empty member.profile_sns_url}">
+                                                                                <a id="modalpage" class="btn border border-secondary rounded-pill px-3 text-primary mt-2" data-bs-toggle="modal" data-bs-target="#SnsModal">
+                                                                                    <img src="/resources/member/img/youtube.png" style="width: 40px; height: 40px;">                                                      
+                                                                                </a>                                    
+                                                                            </c:when>
+                                                                            <c:otherwise>
+                                                                                <a id="modalpage" class="btn border border-secondary rounded-pill px-3 text-primary mt-2" data-bs-toggle="modal" data-bs-target="#SnsModal">
+                                                                                    <img src="/resources/member/img/social.png" style="width: 40px; height: 40px;">
+                                                                                    <br>
+                                                                                    <label for="fruits">SNS➕</label>
+                                                                                </a>
+                                                                            </c:otherwise>
+                                                                        </c:choose>
+                                                                          <!-- SNS Modal -->
+                                                                          <div class="modal fade" id="SnsModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                                            <div class="modal-dialog">
+                                                                              <div class="modal-content">
+                                                                                <div class="modal-header">
+                                                                                  <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                                                                                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                                                </div>
+                                                                                <div class="modal-body">
+                                                                                    <c:choose>
+                                                                                        <c:when test="${not empty member.profile_sns_url}">
+                                                                                            <input id="snsUrl" type="text" size="50" placeholder="${member.profile_sns_url}" class="ms-3">
+                                                                                        </c:when>
+                                                                                        <c:otherwise>
+                                                                                            <input id="snsUrl" type="text" size="50" placeholder="개인 SNS URL을 입력해주세요." class="ms-3">
+                                                                                        </c:otherwise>
+                                                                                    </c:choose>                                                                                
+                                                                                </div>
+                                                                                <div class="modal-footer">
+                                                                                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                                                  <button type="button" class="btn btn-primary" id="profile_sns_add" data-sns-member_id="${member.member_id}">등록</button>
+                                                                                  <button type="button" class="btn btn-danger" id="profile_sns_delete" data-sns-member_id="${member.member_id}">삭제</button>
+                                                                                </div>
+                                                                              </div>
+                                                                            </div>
+                                                                          </div>
                                                                     </div>
                                                                 </c:when>
                                                                 <c:otherwise>
-                                                                    <div id="introduces_text">
+                                                                    <div id="introduces_text" class="about_me">
                                                                         자기소개서를 등록할 수 있습니다
+                                                                        <br>
+                                                                        <c:choose>
+                                                                            <c:when test="${not empty member.profile_sns_url}">
+                                                                                <a id="modalpage" class="btn border border-secondary rounded-pill px-3 text-primary mt-2" data-bs-toggle="modal" data-bs-target="#SnsModal">
+                                                                                    <img src="/resources/member/img/youtube.png" style="width: 40px; height: 40px;">                                                                             
+                                                                                </a>                                  
+                                                                            </c:when>
+                                                                            <c:otherwise>
+                                                                                <a id="modalpage" class="btn border border-secondary rounded-pill px-3 text-primary mt-2" data-bs-toggle="modal" data-bs-target="#SnsModal">
+                                                                                    <img src="/resources/member/img/social.png" style="width: 40px; height: 40px;">
+                                                                                    <br>
+                                                                                    <label for="fruits">SNS➕</label>
+                                                                                </a>      
+                                                                            </c:otherwise>
+                                                                        </c:choose>                                  
+                                                                          <!-- SNS Modal -->
+                                                                          <div class="modal fade" id="SnsModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                                            <div class="modal-dialog">
+                                                                              <div class="modal-content">
+                                                                                <div class="modal-header">
+                                                                                  <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                                                                                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                                                </div>
+                                                                                <div class="modal-body">
+                                                                                    <c:choose>
+                                                                                        <c:when test="${not empty member.profile_sns_url}">
+                                                                                            <input id="snsUrl" type="text" size="50" placeholder="${member.profile_sns_url}" class="ms-3">
+                                                                                        </c:when>
+                                                                                        <c:otherwise>
+                                                                                            <input id="snsUrl" type="text" size="50" placeholder="개인 SNS URL을 입력해주세요." class="ms-3">
+                                                                                        </c:otherwise>
+                                                                                    </c:choose> 
+                                                                                </div>
+                                                                                <div class="modal-footer">
+                                                                                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                                                  <button type="button" class="btn btn-primary" id="profile_sns_add" data-sns-member_id="${member.member_id}">등록</button>
+                                                                                  <button type="button" class="btn btn-danger" id="profile_sns_delete" data-sns-member_id="${member.member_id}">삭제</button>
+                                                                                </div>
+                                                                              </div>
+                                                                            </div>
+                                                                          </div>
                                                                     </div>
                                                                 </c:otherwise>                                                   
                                                             </c:choose>
@@ -192,7 +287,7 @@
 
                                                                 <div class="modal-footer">
                                                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                                    <button type="button" class="btn btn-primary" id="introduction_add" data-member-id="${member.member_id}">등록</button>
+                                                                    <button type="button" class="btn btn-primary" id="introduction_add" data_member_id="${member.member_id}">등록</button>
                                                                     <button type="button" class="btn btn-danger" id="introduction_delete" data-member-id="${member.member_id}">삭제</button>
                                                                 </div>
                                                             </div>
@@ -205,7 +300,15 @@
 
                                                 
                                                 <div class="d-flex justify-content-between flex-lg-wrap">
-                                                    <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
+                                                    <c:choose>
+                                                        <c:when test="${empty member.profile_hit}">
+                                                            <a class="btn border border-secondary rounded-pill px-3 text-primary">❤️0</a>
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            <a class="btn border border-secondary rounded-pill px-3 text-primary">❤️${member.profile_hit}</a>
+                                                        </c:otherwise>
+                                                    </c:choose>
+                                                    
                                                     <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
                                                 </div>
                                             </div>

@@ -5,6 +5,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="com.chef.app.member.MemberDAO">
 	
+	<update id="prfileSnsDelete" parameterType="MemberDTO">
+		UPDATE MEMBER SET PROFILE_SNS_URL = NULL
+		WHERE MEMBER_ID = #{member_id}
+	</update>
+	
+	<update id="prfileSnsAdd" parameterType="MemberDTO">
+		UPDATE MEMBER SET PROFILE_SNS_URL = #{profile_sns_url}
+		WHERE MEMBER_ID = #{member_id}
+	</update>
+	
+	<update id="profileDelete" parameterType="MemberDTO">
+		UPDATE MEMBER SET PROFILE_NAME = NULL
+		WHERE MEMBER_ID = #{member_id}
+	</update>
+	
 	<update id="profileChange" parameterType="MemberDTO">
 		UPDATE MEMBER SET PROFILE_NAME = #{file_name} 
 		WHERE MEMBER_ID = #{member_id}

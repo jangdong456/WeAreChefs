@@ -24,13 +24,16 @@ public class MemberService {
 	@Autowired
 	private FileManager fileManager;
 	
-	public int duplication(MemberDTO memberDTO)throws Exception {
-		int check = memberDAO.duplication(memberDTO);
-		System.out.println("서비스 테스트");
-		System.out.println("반환 값 :"+ check);
-		
-		return check;
-
+	public int prfileSnsDelete(MemberDTO memberDTO) throws Exception {
+		return memberDAO.prfileSnsDelete(memberDTO);
+	}
+	
+	public int prfileSnsAdd(MemberDTO memberDTO) throws Exception {
+		return memberDAO.prfileSnsAdd(memberDTO);
+	}
+	
+	public int profileDelete(MemberDTO memberDTO) throws Exception {
+		return memberDAO.profileDelete(memberDTO);
 	}
 	
 	public int profileChange(MemberDTO memberDTO, MultipartFile multipartFile, HttpSession session) throws Exception {
@@ -47,8 +50,15 @@ public class MemberService {
 		int result = memberDAO.profileChange(memberdto);
 		return result;
 	}
-				
 	
+	public int duplication(MemberDTO memberDTO)throws Exception {
+		int check = memberDAO.duplication(memberDTO);
+		System.out.println("서비스 테스트");
+		System.out.println("반환 값 :"+ check);
+		
+		return check;
+	}
+				
 	public List<RecipeReplyDTO> recipeReplyList(MemberDTO test) throws Exception {
 		return memberDAO.recipeReplyList(test);
 	}
@@ -80,6 +90,7 @@ public class MemberService {
 	
 	public int kakaologin(MemberDTO memberDTO) throws Exception {
 		System.out.println("== Kakao Service ==");
+		
 		int result = 0;
 		if(memberDTO.getMember_id() != null) {
 			result = memberDAO.kakaoCheck(memberDTO);
