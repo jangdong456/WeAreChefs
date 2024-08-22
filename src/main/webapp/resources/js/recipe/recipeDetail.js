@@ -2,6 +2,7 @@ const reBtn = document.getElementById("reBtn");
 const re_frm = document.getElementById("re_frm");
 const review = document.getElementById("review");
 const reply = document.getElementById("reply");
+const rating = document.getElementById("rating");
 
 //reBtn.addEventListener("click",()=>{
     //alert("test");
@@ -22,3 +23,8 @@ reBtn.addEventListener("click", () => {
 
     re_frm.submit();
 });
+
+rating.addEventListener('change', function() {
+    const selectedRating = document.querySelector('input[name="rating"]:checked').value; 
+});
+
