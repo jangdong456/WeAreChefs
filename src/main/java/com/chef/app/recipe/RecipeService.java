@@ -124,27 +124,24 @@ public class RecipeService {
 	public int recipeComment(RecipeReplyDTO recipeReplyDTO) {
 		// RecipeDTO recipeDTO;
 
-		
-		   if (recipeReplyDTO.getRecipe_reply_num() != null) {
-		        RecipeReplyDTO parent = recipeDAO.getParentReply(recipeReplyDTO.getRecipe_reply_num());
-		        
-		        if (parent != null) {
-		            recipeReplyDTO.setRef(parent.getRef());
-		            recipeReplyDTO.setStep(parent.getStep() + 1);
-		            recipeReplyDTO.setDepth(parent.getDepth() + 1);
-		        } else {
-		            throw new RuntimeException("Parent reply information is incomplete.");
-		        }
-		    } else {
-		        // If this is a top-level reply, set initial values
-		        recipeReplyDTO.setRef(null); // This will trigger the sequence value to be used
-		        recipeReplyDTO.setStep(0L);
-		        recipeReplyDTO.setDepth(0L);
-		    }
+		if (recipeReplyDTO.getRecipe_reply_num() != null) {
+			RecipeReplyDTO parent = recipeDAO.getParentReply(recipeReplyDTO.getRecipe_reply_num());
 
-		    return recipeDAO.recipeComment(recipeReplyDTO);
+			if (parent != null) {
+				recipeReplyDTO.setRef(parent.getRef());
+				recipeReplyDTO.setStep(parent.getStep() + 1);
+				recipeReplyDTO.setDepth(parent.getDepth() + 1);
+			}
+		} else {
+			// If this is a top-level reply, set initial values
+			recipeReplyDTO.setRef(null); // This will trigger the sequence value to be used
+			recipeReplyDTO.setStep(0L);
+			recipeReplyDTO.setDepth(0L);
 		}
-		// 1. 부모 댓글 조회
+
+		return recipeDAO.recipeComment(recipeReplyDTO);
+	}
+	// 1. 부모 댓글 조회
 //		RecipeDTO parentRecipeDTO = new RecipeDTO();
 //		parentRecipeDTO.setRecipe_num(recipeReplyDTO.getRecipe_num());
 //

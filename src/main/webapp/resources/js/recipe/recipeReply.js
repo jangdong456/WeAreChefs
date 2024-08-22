@@ -1,6 +1,7 @@
 const replyBtn = document.getElementsByClassName("replyBtn");
 const recipe_num = document.getElementById("recipe_num");
 
+
 // const replyList = document.getElementsByClassName("replyList");
 let count=0;
 let max=1;

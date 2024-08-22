@@ -180,6 +180,7 @@
 								 , MEMBER_ID
 								 , BOARD_TITLE	
 								 , BOARD_CONTENT	
+								 , RECIPE_RATING	
 								 )
 							VALUES
    									(
@@ -188,6 +189,7 @@
    									, #{member_id}
    									, #{board_title}
    									, #{board_content}
+   									, #{recipe_rating}
    									)
 
 	</insert>

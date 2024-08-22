@@ -104,6 +104,7 @@ public class RecipeController {
 	public String recipeReview(RecipeReviewDTO recipeReviewDTO, Model model) {
 		recipeReviewDTO.setMember_id("ydb");
 		int result = recipeService.recipeReview(recipeReviewDTO);
+		System.out.println("getRecipe_rating" + recipeReviewDTO.getRecipe_rating());
 
 		if (result > 0) {
 			model.addAttribute("result", "소중한 리뷰가 등록됐습니다!");
