@@ -24,7 +24,6 @@ import com.chef.app.util.Pager;
 @Service
 public class MemberService {
 	
-	private static final int Pager = 0;
 	@Autowired
 	private MemberDAO memberDAO;
 	
