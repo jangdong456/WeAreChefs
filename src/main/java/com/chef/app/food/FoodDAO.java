@@ -136,8 +136,8 @@ public class FoodDAO {
 		return sqlSession.delete(NAMESPACE+"replyDeleteAdmin", storeReplyDTO);
 	}
 	
-	public Long getReplyNum(Map<String, Object> map) throws Exception {
-		return sqlSession.selectOne(NAMESPACE+"getReplyCount", map);
+	public Long getReplyNum(FoodDTO foodDTO) throws Exception {
+		return sqlSession.selectOne(NAMESPACE+"getReplyCount", foodDTO);
 	}
 	
 }

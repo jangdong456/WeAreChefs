@@ -106,13 +106,12 @@ public class FoodController {
 		
 		MemberDTO memberDTO = (MemberDTO)session.getAttribute("member");
 		
+		System.out.println("페이지:"+pager.getPage());
+		
 		Map<String, Object> map = foodService.getDetail(foodDTO,pager);
 
 		map.put("admin", memberDTO);
 		
-		List<StoreReplyDTO> ar = (List<StoreReplyDTO>) map.get("reply");
-	
-			
 		model.addAttribute("map", map);
 
 	}

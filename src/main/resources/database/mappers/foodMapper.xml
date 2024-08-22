@@ -310,30 +310,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
    	DELETE STOREREPLY WHERE FOOD_REPLY_NUM = #{food_reply_num}
    </delete>
    
-   <select id="getReplyCount" parameterType="Map" resultType="java.lang.Long">
-   		   	WITH RefCounts AS (
-	    SELECT REF, COUNT(*) AS comment_count
-	    FROM STOREREPLY
-	    WHERE FOOD_NUM = #{foodDTO.food_num}
-	    GROUP BY REF
-	),
-	PagedRefs AS (
-	    SELECT REF
-	    FROM (
-	        SELECT REF,
-	               ROWNUM AS rn
-	        FROM (
-	            SELECT REF
-	            FROM RefCounts
-	            ORDER BY REF DESC
-	        )
-	    )
-	)
-	SELECT COUNT(*)
-	FROM STOREREPLY
-	WHERE REF IN (SELECT REF FROM PagedRefs)
-	  AND FOOD_NUM = #{foodDTO.food_num}
-	ORDER BY REF DESC, STEP ASC	
+   <select id="getReplyCount" parameterType="FoodDTO" resultType="java.lang.Long">
+ 	 SELECT COUNT(*) FROM STOREREPLY WHERE FOOD_NUM=#{food_num}
    </select>
    
 </mapper>
