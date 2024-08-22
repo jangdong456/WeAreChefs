@@ -3,6 +3,8 @@ package com.chef.app.food;
 import java.util.List;
 import java.util.Map;
 
+import javax.mail.Store;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -77,11 +79,7 @@ public class FoodDAO {
 	public int deleteCart(StoreCartDTO storeCartDTO) throws Exception {
 		return sqlSession.delete(NAMESPACE+"deleteCart", storeCartDTO);
 	}
-	
-	public int payUpdateCart(StoreCartDTO storeCartDTO) throws Exception{
-		return sqlSession.update(NAMESPACE+"payUpdateCart", storeCartDTO);
-	}
-	
+		
 	public int orderInsert(StoreOrderDTO storeOrderDTO) throws Exception {
 		return sqlSession.insert(NAMESPACE+"orderInsert", storeOrderDTO);
 	}
@@ -90,8 +88,56 @@ public class FoodDAO {
 		return sqlSession.insert(NAMESPACE+"midOrderInsert", storeMidOrderDTO);
 	}
 	
-	public int orderFinishCartDelete(StoreOrderDTO storeOrderDTO) throws Exception {
-		return sqlSession.delete(NAMESPACE+"orderFinishCartDelete", storeOrderDTO);
+	public int orderFinishCartDelete(Map<String, Object> map) throws Exception {
+		return sqlSession.delete(NAMESPACE+"orderFinishCartDelete", map);
+	}
+	
+	public int cartCountChange(StoreCartDTO storeCartDTO) throws Exception{
+		return sqlSession.update(NAMESPACE+"cartCountChange", storeCartDTO);
+	}
+	
+	public List<StoreCartDTO> payCartList(Map<String, Object> map) throws Exception {
+		return sqlSession.selectList(NAMESPACE+"payCartList", map);
+	}
+	
+	public Long getNum() throws Exception {
+		return sqlSession.selectOne(NAMESPACE+"getNum");
+	}
+	
+	public int replyAdd(StoreReplyDTO storeReplyDTO) throws Exception {
+		return sqlSession.insert(NAMESPACE+"replyAdd", storeReplyDTO);
+	}
+	
+	public List<StoreReplyDTO> replyList(Map<String, Object> map) throws Exception {
+		return sqlSession.selectList(NAMESPACE+"replyList", map);
+	}
+	
+	public int replyUpdateInsert(StoreReplyDTO storeReplyDTO) throws Exception {
+		return sqlSession.update(NAMESPACE+"replyUpdateInsert", storeReplyDTO);
+	}
+	
+	public int adminReplySubmit(StoreReplyDTO storeReplyDTO) throws Exception{
+		return sqlSession.insert(NAMESPACE+"adminReplySubmit", storeReplyDTO);
+	}
+	
+	public List<StoreReplyDTO> findParent(StoreReplyDTO storeReplyDTO) throws Exception {
+		return sqlSession.selectList(NAMESPACE+"findParent", storeReplyDTO);
+	}
+	
+	public int stepUpdate(StoreReplyDTO storeReplyDTO) throws Exception {
+		return sqlSession.update(NAMESPACE+"stepUpdate", storeReplyDTO);
+	}
+	
+	public int replyDelete(StoreReplyDTO storeReplyDTO) throws Exception {
+		return sqlSession.update(NAMESPACE+"replyDelete", storeReplyDTO);
+	}
+	
+	public int replyDeleteAdmin(StoreReplyDTO storeReplyDTO) throws Exception {
+		return sqlSession.delete(NAMESPACE+"replyDeleteAdmin", storeReplyDTO);
+	}
+	
+	public Long getReplyNum(Map<String, Object> map) throws Exception {
+		return sqlSession.selectOne(NAMESPACE+"getReplyCount", map);
 	}
 	
 }

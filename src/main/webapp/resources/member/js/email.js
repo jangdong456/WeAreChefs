@@ -1,11 +1,11 @@
-const userEmail1 = document.getElementById("test");
-const userEmail2 = document.getElementById("userEmail2");
-const mailBtn = document.getElementById("mailBtn");
+
+const membere_mail = document.getElementById("membere_mail");
+const emailNumCheck = document.getElementById("emailNumCheck");
 
 console.log("asd");
 
-mailBtn.addEventListener("click", ()=>{
-    let email = userEmail1.value + userEmail2.value
+emailNumCheck.addEventListener("click", ()=>{
+    let email = membere_mail.value
     console.log(email);
     fetch("/member/sendEmail?member_mail="+email, {
         method : "GET"
@@ -23,4 +23,6 @@ mailBtn.addEventListener("click", ()=>{
     //     alert("오류발생");
     // });
 })
+
+
 

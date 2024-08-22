@@ -91,7 +91,7 @@ if(code != null) {
                 headers : { "Content-type":"application/x-www-form-urlencoded" },
                 body: "member_id="+ kakaoId + "&member_nickname=" + member_nickname + "&kakao_profile_img=" + kakaoImage + "&token=" + token + "&member_type=" + member_type
             }) 
-            .then(res => res.json())
+            .then(res => res.text())
             .then(res => {
               if(res > 0){
                 location.href = "/";

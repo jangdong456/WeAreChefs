@@ -1,5 +1,12 @@
 package com.chef.app.member;
 
+import java.time.LocalDate;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.List;
+
 import javax.crypto.Cipher;
 import javax.servlet.http.HttpSession;
 
@@ -11,8 +18,17 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.chef.app.food.StoreMidOrderDTO;
+import com.chef.app.food.StoreOrderDTO;
+import com.chef.app.recipe.RecipeDTO;
+import com.chef.app.recipe.RecipeReplyDTO;
+import com.chef.app.recipe.RecipeReviewDTO;
 import com.chef.app.util.Email;
+import com.chef.app.util.Pager;
+
+import oracle.jdbc.proxy.annotation.Post;
 
 @Controller
 @RequestMapping("/member/*")
@@ -24,6 +40,72 @@ public class MemberController {
 	@Autowired
 	private Email email;
 	
+	@GetMapping("prfileSnsDelete")
+	public String prfileSnsDelete(MemberDTO memberDTO, Model model) throws Exception {
+		System.out.println("===== prfileSnsDelete =====");
+		System.out.println(memberDTO.getMember_id());
+		
+		String url = "";
+		int result = memberService.prfileSnsDelete(memberDTO);
+		
+		if(result > 0) {
+			model.addAttribute("msg", result);
+			url = "commons/result";
+		}
+		return url;
+	}
+	
+	@PostMapping("prfileSnsAdd")
+	public String prfileSnsAdd(MemberDTO memberDTO, Model model) throws Exception {
+		System.out.println("prfileSnsAdd 확인");
+		System.out.println(memberDTO.getMember_id());
+		System.out.println(memberDTO.getProfile_sns_url());
+		String url = "";
+		int result = memberService.prfileSnsAdd(memberDTO);
+		
+		if(result > 0) {
+			model.addAttribute("msg", result);
+			url = "commons/result";
+		}
+		return url;
+	}
+	
+	@GetMapping("profileDelete")
+	public String profileDelete(MemberDTO memberDTO, Model model) throws Exception {
+		int result = memberService.profileDelete(memberDTO);
+		
+		String url = "";
+		if(result > 0) {
+			model.addAttribute("msg", result);
+			url = "commons/result";
+		}
+		return url;
+	}
+	
+	@PostMapping("profileChange")
+	public String profileChange(MemberDTO memberDTO, MultipartFile multipartFile, HttpSession session, Model model) throws Exception {
+		MemberDTO memberdto = (MemberDTO)session.getAttribute("member");
+		memberDTO.setMember_id(memberdto.getMember_id());
+		
+		int result = 0;
+		String url = "";
+		
+		if(multipartFile.getSize() == 0) {
+			System.out.println("============= 파일 null 값 =============");
+			memberService.profileDelete(memberDTO);
+			return url = "redirect:/member/mypage";
+		}
+		
+		
+		result = memberService.profileChange(memberDTO, multipartFile, session);			
+		
+		if(result > 0) {
+			url = "redirect:/member/mypage";
+			
+		}
+		return url;
+
+	}								
 	
 	@GetMapping("duplication")
 	public String duplication(MemberDTO memberDTO, Model model) throws Exception {
@@ -46,7 +128,7 @@ public class MemberController {
 		
 		String url = "";
 		if(result > 0) {
-			url = "member/test";
+			url = "member/profileAboutMe";
 		}
 		return url;
 	}
@@ -55,9 +137,28 @@ public class MemberController {
 	@GetMapping("mypage")
 	public void mypage(HttpSession session, Model model) throws Exception {
 		System.out.println("== My Page ==");
+
 		MemberDTO memberdto = (MemberDTO)session.getAttribute("member");
 		memberdto = memberService.mypage(memberdto);
-		System.out.println("반환 객체 :" + memberdto);
+		
+		System.out.println("로그인 한 id:" + memberdto.getMember_id());
+		
+//		test.setRecipe_writer(memberdto.getMember_id());
+		
+//		MemberDTO list = memberService.recipeList(memberdto);
+		
+		// 작성한 레시피 리스트
+		List<RecipeDTO> recipedto = memberService.recipeList(memberdto);
+		model.addAttribute("recipeList", recipedto);
+
+		// 상대방 레시피에 작성한 리뷰
+		List<RecipeReviewDTO> recipeReview = memberService.recipeReviewList(memberdto);
+		model.addAttribute("reviewList", recipeReview);
+		
+		// 상대방 레시피에 작성한 댓글
+		List<RecipeReplyDTO> recipeReply = memberService.recipeReplyList(memberdto); 
+		model.addAttribute("recipeReply", recipeReply);
+		
 		model.addAttribute("member", memberdto);
 	}
 	
@@ -67,7 +168,7 @@ public class MemberController {
 //		MemberDTO memberdto = (MemberDTO)session.getAttribute("member");
 //		memberdto.setProfile_about_me(profile_about_me);
 //		memberdto.setMember_id(member_id);
-
+		System.out.println("myapge 자기소개");
 		MemberDTO memberdto = (MemberDTO)session.getAttribute("member");
 		memberdto.setMember_id(memberDTO.getMember_id());
 		memberdto.setProfile_about_me(memberDTO.getProfile_about_me());;
@@ -77,7 +178,7 @@ public class MemberController {
 		String url = "";
 		if(result > 0) {
 			
-			url = "member/test";
+			url = "member/profileAboutMe";
 		}
 		return url;
 	}
@@ -92,6 +193,7 @@ public class MemberController {
 //		int result = 1;
 //		model.addAttribute("msg", result);
 		email.mailTemplete(member_mail);
+		
 //		return "member/email";
 	}
 	
@@ -189,5 +291,45 @@ public class MemberController {
 		return "commons/result";
 	}
 	
+	@GetMapping("buyList")
+	public void buyList(HttpSession session,Model model,Pager pager,String startDate,String endDate) throws Exception {
+			
+		if(startDate==null) {
+			startDate="1900-01-01";
+		}
+		if(endDate==null) {
+			endDate="2100-12-31";
+		}
+		
+		Map<String, Object> goService = new HashMap<String, Object>();
+		MemberDTO memberDTO = (MemberDTO)session.getAttribute("member");
+		
+		goService.put("memberDTO", memberDTO);
+		goService.put("pager", pager);
+		goService.put("startDate",startDate);
+		goService.put("endDate", endDate);
+		
+		Map<String, Object> map = memberService.buyList(goService);
+				
+		model.addAttribute("list", map.get("list"));
+		model.addAttribute("pager", map.get("pager"));
+		
+	}
+	
+	@GetMapping("cancleRequest")
+	public String cancleRequest(StoreOrderDTO storeOrderDTO,Model model) throws Exception {
+		
+		int result = memberService.cancleRequest(storeOrderDTO);
+		
+		if(result>0) {
+			model.addAttribute("msg", "결제취소 요청이 완료됐습니다");
+			model.addAttribute("url", "/member/buyList");
+		}else {
+			model.addAttribute("msg", "결제취소 요청에 실패했습니다");
+			model.addAttribute("url", "/member/buyList");	
+		}
+		
+		return "commons/message";
+	}
 	
 }

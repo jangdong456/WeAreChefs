@@ -78,10 +78,8 @@
 									<label class="form-label my-3">이메일<sup>*</sup></label>
 									<input type="text" class="form-control member_join" id="membere_mail" name="membere_mail">
 								</div>
-								<div class="form-item">
-									<label class="form-label my-3">이메일 인증하기<sup>*</sup></label>
-									<input type="text" class="form-control member_join">
-								</div>
+								<button id="emailNumCheck" type="button" class="btn border-secondary py-2 px-4 text-uppercase w-80 text-primary">이메일 인증하기</button>
+
 								<div class="form-item">
 									<label class="form-label my-3">전화번호<sup>*</sup></label>
 									<input type="text" class="form-control member_join" id="member_phone" name="member_phone" maxlength="13">
@@ -102,6 +100,7 @@
 	</div> 
 <c:import url="/WEB-INF/views/templete/footer.jsp"></c:import>
 <script src="/resources/member/js/join.js"></script>
+<script src="/resources/member/js/email.js"></script>
 </body>
 </html>
 <!-- placeholder="House Number Street Name" -->
