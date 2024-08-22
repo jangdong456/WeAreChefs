@@ -216,27 +216,35 @@
    	WHERE RECIPE_NUM = #{recipe_num}
    </update>
    
+   <select id="getNum" resultType="java.lang.Long">
+   		SELECT STOREREPLY_SEQ.NEXTVAL FROM DUAL
+   </select>
+   
    <insert id="recipeReply"  parameterType="RecipeReplyDTO" >
+   		<selectKey order="BEFORE" resultType="java.lang.Long" keyProperty="recipe_reply_num">
+  			SELECT NOTICE_SEQ.NEXTVAL FROM DUAL
+  		</selectKey>
 	    INSERT INTO RECIPEREPLY(
 								   RECIPE_REPLY_NUM
 								 , RECIPE_NUM
 								 , MEMBER_ID
-								 , BOARD_TITLE	
 								 , BOARD_CONTENT	
 								 , REF
+								 , STEP
+								 , DEPTH
 								 )
 							VALUES
    									(
-   									  RECIPEREPLY_SEQ.NEXTVAL
+   									 #{recipe_reply_num}
    									, #{recipe_num}
    									, #{member_id}
-   									, #{board_title}
    									, #{board_content}
-   									, RECIPEREPLY_SEQ.CURRVAL
-									
+									, #{recipe_reply_num}
+									, 0
+									, 0
    									)
    									
-  </insert>
+  	</insert>
   	<select id="replyList" parameterType="recipeReplyDTO" resultType="recipeReplyDTO" >
 		SELECT 	RECIPE_REPLY_NUM
 				 , RECIPE_NUM

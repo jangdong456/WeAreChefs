@@ -110,7 +110,15 @@ public class RecipeService {
 		return recipeDAO.hit(recipeDTO);
 	}
 
+	// 댓글달기
 	public int recipeReply(RecipeReplyDTO recipeReplyDTO) {
+		if (recipeReplyDTO.getBoard_content().isEmpty()) {
+			recipeReplyDTO.setBoard_content(" ");
+		}
+
+		// Long num = recipeDAO.getNum();
+
+		// recipeReplyDTO.setBoard_num(num);
 
 		return recipeDAO.recipeReply(recipeReplyDTO);
 	}
