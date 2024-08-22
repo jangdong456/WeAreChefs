@@ -15,6 +15,14 @@
 			value="${memberDetail.member_id}"
 			disabled
 		/>
+		<h1>비밀번호 <span class="foreHtag" id="confirmMemberPw"></span></h1>
+		<input
+			type="text"
+			class="form-control form-control-lg"
+			id="inputMemberPwd"
+			value="${memberDetail.member_pwd}"
+			required
+		/>	
 		<h1>닉네임 <span class="foreHtag" id="confirmMemberNickname"></span></h1>
 		<input
 			type="text"

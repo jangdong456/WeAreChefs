@@ -10,6 +10,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		FROM "MEMBER"
 	</select>
 	
+	<select id="getOneMember" parameterType="OriMemberDTO" resultType="MemberDTO">
+		SELECT *
+		FROM "MEMBER"
+		WHERE MEMBER_ID = #{member_id}
+	</select>
+	
 	<select id="getOrderCompleteCount" resultType="java.lang.Long">
 		SELECT COUNT(*)
 		FROM(SELECT ORDER_NUM , ORDER_STATUS, TO_CHAR(ORDER_DATE , 'YYYY-MM-DD') AS TODAY
@@ -80,6 +86,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		UPDATE "MEMBER"
 		SET
 			MEMBER_ID = #{member_id},
+			MEMBER_PWD = #{member_pwd},
 			MEMBER_NICKNAME = #{member_nickname},
 			MEMBER_NAME = #{member_name},
 			MEMBER_MAIL = #{member_mail},

@@ -8,7 +8,7 @@
 	<style>
 		.boxOne{
 			width: 700px;
-			height: 650px;
+			height: 750px;
 			background-color:white;
 			border-radius: 10px;
 			position: absolute;
@@ -84,6 +84,15 @@
 									class="form-control form-control-lg"
 									id="inputMemberId"
 									value="${memberDetail.member_id}"
+									required
+									disabled
+								/>
+								<h1>비밀번호</h1>
+								<input
+									type="text"
+									class="form-control form-control-lg"
+									id="inputMemberPw"
+									value="${memberDetail.member_pwd}"
 									required
 									disabled
 								/>

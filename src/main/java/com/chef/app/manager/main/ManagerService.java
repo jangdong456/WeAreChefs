@@ -4,12 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 
 import com.chef.app.food.FoodDTO;
 import com.chef.app.food.StoreOrderDTO;
 import com.chef.app.manager.OriMemberDTO;
 import com.chef.app.manager.TotalPurchaseDTO;
+import com.chef.app.member.MemberDAO;
 import com.chef.app.member.MemberDTO;
 
 @Service
@@ -53,6 +55,21 @@ public class ManagerService {
 	}
 	
 	public int postMemberDetailUpdate(OriMemberDTO memberDTO) throws Exception{
+		// 이전에 있던 비밀번호 값
+		String beforePw = managerDAO.getOneMember(memberDTO).getMember_pwd();
+		// 변경한 비밀번호 값
+		String afterPw = memberDTO.getMember_pwd();
+		System.out.println("비교");
+		System.out.println(beforePw);
+		System.out.println(afterPw);
+		
+		if(!beforePw.equals(afterPw)) {
+			String hashpw = BCrypt.hashpw(memberDTO.getMember_pwd(), BCrypt.gensalt());
+			memberDTO.setMember_pwd(hashpw);
+		}
+
+		
+		
 		return managerDAO.postMemberDetailUpdate(memberDTO);
 	}
 	// 중복 확인-----------------------------------------------------------------------------

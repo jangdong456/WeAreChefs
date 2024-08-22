@@ -65,6 +65,10 @@ public class ManagerDAO {
 		return sqlSession.update(NAMESPACE + "postMemberDetailUpdate", memberDTO);
 	}
 	
+	public MemberDTO getOneMember(OriMemberDTO memberDTO) throws Exception{
+		return sqlSession.selectOne(NAMESPACE + "getOneMember", memberDTO);
+	}
+	
 	// 중복 확인-----------------------------------------------------------------------------
 	//아이디
 	public Long confirmMemberId(MemberDTO memberDTO) throws Exception{

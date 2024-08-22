@@ -74,6 +74,7 @@ public class ManagerController {
 	@PostMapping("memberDetailUpdate")
 	public String postMemberDetailUpdate(OriMemberDTO memberDTO, Model model) throws Exception{
 		int result = managerService.postMemberDetailUpdate(memberDTO);
+		System.out.println("memberDetail Update Pw : " + memberDTO.getMember_pwd());
 		System.out.println("");
 		if(result > 0) {
 			model.addAttribute("memberDetail", managerService.getMemberDetail(memberDTO));

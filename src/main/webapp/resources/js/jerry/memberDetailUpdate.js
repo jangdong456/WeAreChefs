@@ -162,6 +162,7 @@ divDetail.addEventListener("click", (e)=>{
   let id = e.target.getAttribute("id");
 
   let memberId = document.getElementById("inputMemberId");
+  let memberPw = document.getElementById("inputMemberPwd");
   let memberNickname = document.getElementById("inputMemberNickname");
   let memberName = document.getElementById("inputMemberName");
   let memberMail = document.getElementById("inputMemberMail");
@@ -291,19 +292,17 @@ divDetail.addEventListener("click", (e)=>{
 
   // 수정 완료
   if(id == 'completeBtn'){
-    console.log(bMemberNickname);
-    console.log(bMemberName);
-    console.log(bMemberMail);
-    console.log(bMemberPhone);
+    console.log('비번' + memberPw.value);
     if(bMemberNickname == false && bMemberName == false && bMemberMail == false && bMemberPhone == false){
       let form = new FormData();
-      form.append("member_id", memberId.value)
-      form.append("oriMember_id", oriMemberId)
-      form.append("member_nickname", memberNickname.value)
-      form.append("member_name", memberName.value)
-      form.append("member_mail", memberMail.value)
-      form.append("member_phone", memberPhone.value)
-      form.append("member_lev", memberLev.value)
+      form.append("member_id", memberId.value);
+      form.append("member_pwd", memberPw.value);
+      form.append("oriMember_id", oriMemberId);
+      form.append("member_nickname", memberNickname.value);
+      form.append("member_name", memberName.value);
+      form.append("member_mail", memberMail.value);
+      form.append("member_phone", memberPhone.value);
+      form.append("member_lev", memberLev.value);
       fetch("memberDetailUpdate", {
         method: "POST",
         body: form

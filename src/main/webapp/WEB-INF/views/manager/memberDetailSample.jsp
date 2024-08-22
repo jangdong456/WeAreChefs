@@ -15,6 +15,15 @@
       required
       disabled
     />
+    <h1>비밀번호</h1>
+    <input
+      type="text"
+      class="form-control form-control-lg"
+      id="inputMemberPw"
+      value="${memberDetail.member_pwd}"
+      required
+      disabled
+    />
     <h1>닉네임</h1>
     <input
       type="text"
