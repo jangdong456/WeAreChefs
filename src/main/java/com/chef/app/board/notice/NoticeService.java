@@ -35,6 +35,10 @@ public class NoticeService {
 		return noticeDAO.noticeList(pager);
 	}
 	
+	public int hitUpdate(NoticeDTO noticeDTO) throws Exception{
+		return noticeDAO.hitUpdate(noticeDTO);
+	}
+	
 	public NoticeDTO noticeDetail(CommentDTO commentDTO) throws Exception{
 		return noticeDAO.noticeDetail(commentDTO);
 	}

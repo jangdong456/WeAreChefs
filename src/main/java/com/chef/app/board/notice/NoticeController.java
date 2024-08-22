@@ -52,8 +52,17 @@ public class NoticeController {
 		List<NoticeDTO> list = noticeService.noticeList(pager);
 		model.addAttribute("noticeList", list);
 		model.addAttribute("pager", pager);
-
+	}
+	
+	@GetMapping("hitUpdate")
+	public String hitUpdate(Pager pager, NoticeDTO noticeDTO, Model model) throws Exception{
+		int result = noticeService.hitUpdate(noticeDTO);
 		
+		List<NoticeDTO> list = noticeService.noticeList(pager);
+		model.addAttribute("noticeList", list);
+		System.out.println("hitUpdate result : " + result);
+		System.out.println("hitUpdate listSize : " + list.size());
+		return "board/notice/listUpdate";
 	}
 	
 	@GetMapping("detail")

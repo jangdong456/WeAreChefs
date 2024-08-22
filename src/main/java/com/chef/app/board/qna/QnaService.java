@@ -36,6 +36,10 @@ public class QnaService {
 		return qnaDAO.qnaList(pager);
 	}
 	
+	public int hitUpdate(InquiryDTO inquiryDTO) throws Exception{
+		return qnaDAO.hitUpdate(inquiryDTO);
+	}
+	
 	public InquiryDTO qnaDetail(CommentDTO commentDTO) throws Exception{
 		return qnaDAO.qnaDetail(commentDTO);
 	}

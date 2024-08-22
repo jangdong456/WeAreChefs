@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.chef.app.comment.CommentDTO;
 import com.chef.app.manager.InquiryDTO;
+import com.chef.app.manager.NoticeDTO;
 import com.chef.app.member.MemberDTO;
 import com.chef.app.util.Pager;
 
@@ -46,6 +47,16 @@ public class FnaController {
 		model.addAttribute("pager", pager);
 		model.addAttribute("inquiryList", InquiryList);
 		return "board/inquiry/list";
+	}
+	
+	@GetMapping("hitUpdate")
+	public String hitUpdate(Pager pager,InquiryDTO inquiryDTO, Model model) throws Exception{
+		int result = fnaService.hitUpdate(inquiryDTO);
+		
+		List<InquiryDTO> InquiryList = fnaService.fnaList(pager);
+		model.addAttribute("pager", pager);
+		model.addAttribute("inquiryList", InquiryList);
+		return "board/inquiry/inquiryUpdate";
 	}
 	
 	@GetMapping("detail")

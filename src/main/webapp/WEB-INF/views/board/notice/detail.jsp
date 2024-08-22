@@ -4,7 +4,14 @@
 <html>
 <head>
 <meta charset="utf-8">
-
+<style type="text/css">
+	li{
+		display: inline;
+	}
+	.centerTr{
+	text-align: center;
+	}
+</style>
 </head>
 <body>
 <c:import url="/WEB-INF/views/templete/header.jsp"></c:import>
@@ -25,21 +32,23 @@
     <div class="container py-5">
 	    <table class="table">
 	        <thead>
-		        <tr>
-		            <th scope="col">공지번호</th>
-		            <th scope="col">닉네임</th>
-		            <th scope="col">공지제목</th>
-		            <th scope="col">공지작성일</th>
-		            <th scope="col">공지수정일</th>
+		        <tr class="centerTr">
+							<th style="width: 5%;">번호</th>
+							<th style="width: 15%;">닉네임</th>
+							<th style="width: 50%;">문의제목</th>
+							<th style="width: 10%;">문의작성일</th>
+							<th style="width: 10%;">문의수정일</th>
+							<th style="width: 10%;" >조회수</th>
 		        </tr>
 	        </thead>
 	        <tbody>
-	          	<tr>
-	          		<th>${noticeDetail.board_num}</th>
-	          		<th>${noticeDetail.member_nickname}</th>
-	          		<th>${noticeDetail.board_title}</th>
-	          		<th>${noticeDetail.create_date}</th>
-	          		<th>${noticeDetail.update_date}</th>
+	          	<tr class="centerTr">
+	          		<th style="width: 5%;">${noticeDetail.board_num}</th>
+	          		<th style="width: 15%;">${noticeDetail.member_nickname}</th>
+	          		<th style="width: 50%;">${noticeDetail.board_title}</th>
+	          		<th style="width: 10%;">${noticeDetail.create_date}</th>
+	          		<th style="width: 10%;">${noticeDetail.update_date}</th>
+								<th style="width: 10%;">${noticeDetail.hit}</th>
 	         	</tr>
 	        </tbody>
 	    </table>
@@ -49,8 +58,10 @@
 				<hr>
 		<c:if test="${member.member_lev > 0}">
 			<!-- & Todo Start : 이부분은 관리자 레벨만 보이도록 해야함. -->			
+			<div style="text-align: right;">
 				<a class="btn border-secondary rounded-pill px-4 py-3 text-primary" href="/board/notice/update?board_num=${noticeDetail.board_num}">Update</a>
 				<a class="btn border-secondary rounded-pill px-4 py-3 text-primary" href="/board/notice/delete?board_num=${noticeDetail.board_num}">Delete</a>
+			</div>
 			<!-- & Todo Final : 이부분은 관리자 레벨만 보이도록 해야함. -->
         </c:if>
 	        </div>

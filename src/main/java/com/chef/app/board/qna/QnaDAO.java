@@ -22,6 +22,10 @@ public class QnaDAO {
 		return sqlSession.selectList(NAMESPACE + "qnaList", pager);
 	}
 	
+	public int hitUpdate(InquiryDTO inquiryDTO) throws Exception{
+		return sqlSession.update(NAMESPACE + "hitUpdate", inquiryDTO);
+	}
+	
 	public InquiryDTO qnaDetail(CommentDTO commentDTO) throws Exception{
 		return sqlSession.selectOne(NAMESPACE + "qnaDetail", commentDTO);
 	}

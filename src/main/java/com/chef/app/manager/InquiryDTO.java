@@ -9,9 +9,17 @@ public class InquiryDTO extends CommentDTO {
 	private Long ref;
 	private Long step;
 	private String del;
+	private Long hit;
 	
 	
 	
+	
+	public Long getHit() {
+		return hit;
+	}
+	public void setHit(Long hit) {
+		this.hit = hit;
+	}
 	public String getMember_nickname() {
 		return member_nickname;
 	}

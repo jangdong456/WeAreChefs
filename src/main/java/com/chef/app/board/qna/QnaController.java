@@ -67,6 +67,16 @@ public class QnaController {
 		return "board/inquiry/list";
 	}	
 	
+	@GetMapping("hitUpdate")
+	public String hitUpdate(Pager pager,InquiryDTO inquiryDTO, Model model) throws Exception{
+		int result = qnaService.hitUpdate(inquiryDTO);
+		
+		List<InquiryDTO> InquiryList = qnaService.qnaList(pager);
+		model.addAttribute("pager", pager);
+		model.addAttribute("inquiryList", InquiryList);
+		return "board/inquiry/inquiryUpdate";
+	}
+	
 	
 	@GetMapping("detail")
 	public String qnaDetail(CommentDTO commentDTO, Model model, HttpSession session) throws Exception{

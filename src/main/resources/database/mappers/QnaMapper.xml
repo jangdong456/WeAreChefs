@@ -25,6 +25,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				P)
 		WHERE R BETWEEN #{startRow} AND #{lastRow}
 	</select>
+	<update id="hitUpdate" parameterType="InquiryDTO">
+		UPDATE INQUIRY
+			SET HIT = HIT + 1
+		WHERE BOARD_NUM = #{board_num}
+	</update>
 	
  	<select id="qnaDetail" parameterType="CommentDTO" resultType="InquiryDTO">
 		SELECT * FROM INQUIRY

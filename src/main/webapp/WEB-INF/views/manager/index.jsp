@@ -240,7 +240,7 @@
 									</thead>
 									<tbody>
 										<c:forEach items="${orderListDesc}" var="order" begin="0" end="9" step="1">
-											<tr onmouseover="style.background='#F5F5F5'" onclick="alert('하이하이')" style="cursor:pointer;">
+											<tr onmouseover="style.background='#F5F5F5'" onclick="location.href='/manager/orderDetail?order_num=${order.order_num}'" style="cursor:pointer;">
 												<th scope="row">
 													<button
 													class="btn btn-icon btn-round btn-success btn-sm me-2"

@@ -26,6 +26,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE R BETWEEN #{startRow} AND #{lastRow}
 	</select>
 	
+	<update id="hitUpdate" parameterType="InquiryDTO">
+		UPDATE INQUIRY
+			SET HIT = HIT + 1
+		WHERE BOARD_NUM = #{board_num}
+	</update>
+	
 	<select id="getRowNum" parameterType="Pager" resultType="java.lang.Long">
 		SELECT COUNT(BOARD_NUM)
 		FROM INQUIRY

@@ -17,7 +17,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 								AND BOARD_TITLE LIKE '%' || #{search} || '%' 
 							</when>
 							<otherwise>
-								AND MEMBER_ID LIKE '%' || #{search} || '%' 
+								AND MEMBER_NICKNAME LIKE '%' || #{search} || '%' 
 							</otherwise>
 						</choose>
 					</where>
@@ -25,6 +25,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				P)
 		WHERE R BETWEEN #{startRow} AND #{lastRow}
 	</select>
+	
+	<update id="hitUpdate" parameterType="NoticeDTO">
+		UPDATE NOTICE
+			SET HIT = HIT + 1
+		WHERE BOARD_NUM = #{board_num}
+	</update>
 	
 	<select id="noticeDetail" parameterType="CommentDTO" resultType="NoticeDTO">
 		SELECT * FROM NOTICE
