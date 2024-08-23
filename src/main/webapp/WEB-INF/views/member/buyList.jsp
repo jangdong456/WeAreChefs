@@ -36,14 +36,17 @@
 	<c:when test="${empty list}">	
         <div class="container-fluid py-5">
             <div class="container py-5 text-center">
-                <div class="row justify-content-center">
-                    <div class="col-lg-6">
-                        <h1 class="mb-4">결제내역이</h1>
-                        <h1 class="mb-4">없습니다</h1>
-                    </div>
+                <div align="left">
+                <h5>📆기간별 주문내역 검색하기</h5>
+                <form action="/member/buyList" method="get">
+                <input type="date" name="startDate">&nbsp;~&nbsp;<input type="date" name="endDate">&nbsp;
+                <button class="btn border-secondary text-uppercase text-primary" type="submit">검색하기</button>
+                </form>
                 </div>
+                <h1 class="mb-4 mt-5">결제내역이 없습니다</h1>
+                <h1 class="mb-4">다시 검색하세요</h1>
+        </div>
             </div>
-        </div>	
 	</c:when>
 
 <c:otherwise>
