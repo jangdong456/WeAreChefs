@@ -28,20 +28,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
      ON F.FOOD_NUM =S.FOOD_NUM
 	WHERE ADD_CHECK = 'A' AND
 	<choose>
-		<when test="kind=='과일'">
-		FOOD_CATEGORY='과일'
+		<when test="kind=='식량작물'">
+		FOOD_CATEGORY='식량작물'
 		</when>
-		<when test="kind=='기타'">
-		FOOD_CATEGORY='기타'
+		<when test="kind=='채소류'">
+		FOOD_CATEGORY='채소류'
+		</when>
+		<when test="kind=='과일류'">
+		FOOD_CATEGORY='과일류'
+		</when>
+		<when test="kind=='축산물'">
+		FOOD_CATEGORY='축산물'
 		</when>
 		<when test="kind=='수산물'">
 		FOOD_CATEGORY='수산물'
-		</when>
-		<when test="kind=='채소'">
-		FOOD_CATEGORY='채소'
-		</when>
-		<when test="kind=='축산'">
-		FOOD_CATEGORY='축산'
 		</when>
 		<otherwise>
 		FOOD_NAME LIKE '%'||#{search}||'%'
@@ -84,20 +84,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
    	SELECT COUNT(FOOD_NUM) FROM FOOD
    	WHERE ADD_CHECK = 'A' AND
 	<choose>
-		<when test="kind=='과일'">
-		FOOD_CATEGORY='과일'
+		<when test="kind=='식량작물'">
+		FOOD_CATEGORY='식량작물'
 		</when>
-		<when test="kind=='기타'">
-		FOOD_CATEGORY='기타'
+		<when test="kind=='채소류'">
+		FOOD_CATEGORY='채소류'
+		</when>
+		<when test="kind=='과일류'">
+		FOOD_CATEGORY='과일류'
+		</when>
+		<when test="kind=='축산물'">
+		FOOD_CATEGORY='축산물'
 		</when>
 		<when test="kind=='수산물'">
 		FOOD_CATEGORY='수산물'
-		</when>
-		<when test="kind=='채소'">
-		FOOD_CATEGORY='채소'
-		</when>
-		<when test="kind=='축산'">
-		FOOD_CATEGORY='축산'
 		</when>
 		<otherwise>
 		FOOD_NAME LIKE '%'||#{search}||'%'
@@ -259,30 +259,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
    </insert>
    
    <select id="replyList" parameterType="Map" resultType="StoreReplyDTO">
-	   	WITH RefCounts AS (
-	    SELECT REF, COUNT(*) AS comment_count
-	    FROM STOREREPLY
-	    WHERE FOOD_NUM = #{foodDTO.food_num}
-	    GROUP BY REF
-	),
-	PagedRefs AS (
-	    SELECT REF
-	    FROM (
-	        SELECT REF,
-	               ROWNUM AS rn
-	        FROM (
-	            SELECT REF
-	            FROM RefCounts
-	            ORDER BY REF DESC
-	        )
-	    )
-	    WHERE rn BETWEEN #{pager.startRow} AND #{pager.lastRow}
+	SELECT * FROM STOREREPLY WHERE REF IN (
+	SELECT REF FROM (
+	SELECT RN, REF FROM (
+	SELECT ROWNUM RN,REF FROM
+	(
+	SELECT REF FROM STOREREPLY WHERE FOOD_NUM=#{foodDTO.food_num} GROUP BY REF  ORDER BY REF DESC
 	)
-	SELECT *
-	FROM STOREREPLY
-	WHERE REF IN (SELECT REF FROM PagedRefs)
-	  AND FOOD_NUM = #{foodDTO.food_num}
-	ORDER BY REF DESC, STEP ASC	
+	)
+	WHERE RN BETWEEN #{pager.startRow} AND #{pager.lastRow}
+	)
+	)ORDER BY REF DESC, STEP ASC
    </select>
    
    <update id="replyUpdateInsert" parameterType="StoreReplyDTO">
@@ -313,5 +300,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
    <select id="getReplyCount" parameterType="FoodDTO" resultType="java.lang.Long">
  	 SELECT COUNT(*) FROM STOREREPLY WHERE FOOD_NUM=#{food_num}
    </select>
+   
+   <select id="startAvg" parameterType="FoodDTO" resultType="java.lang.Double">
+   	SELECT TRUNC(AVG(FOOD_RATING),1) FROM STOREREPLY WHERE FOOD_NUM=#{food_num} AND MEMBER_ID NOT IN ('12341234')
+   </select>
+   
+   <update id="stockMinus" parameterType="StoreMidOrderDTO">
+   	UPDATE FOOD SET FOOD_STOCK = FOOD_STOCK - #{cart_count} WHERE FOOD_NUM = #{food_num}
+   </update>
+   
    
 </mapper>

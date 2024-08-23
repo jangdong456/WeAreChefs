@@ -138,11 +138,11 @@
                             </div>
                                     <div class="col-12">
                                         <div class="pagination d-flex justify-content-center mt-5">
-                                            <a href="/food/list?page=${pager.startNum-1}&search=${pager.search}&kind=${pager.kind}&order=${pager.order}" class="rounded ${pager.pre?'':'disabled'}" >&laquo;</a>
+                                            <a href="/food/list?page=${pager.startNum-1}&search=${pager.search}&kind=${pager.kind}&order=${pager.order}" class="btn rounded ${pager.pre?'':'disabled'}" >&laquo;</a>
                                             <c:forEach begin="${pager.startNum}" end="${pager.lastNum}" step="1" var="i">
                                                 <a href="/food/list?page=${i}&search=${pager.search}&kind=${pager.kind}&order=${pager.order}" class="rounded">${i}</a>
                                             </c:forEach>
-                                            <a href="/food/list?page=${pager.lastNum+1}&search=${pager.search}&kind=${pager.kind}&order=${pager.order}" class="rounded ${pager.next?'':'disabled'}">&raquo;</a>
+                                            <a href="/food/list?page=${pager.lastNum+1}&search=${pager.search}&kind=${pager.kind}&order=${pager.order}" class="btn rounded ${pager.next?'':'disabled'}">&raquo;</a>
                                         </div>
                                     </div>
                                 </div>

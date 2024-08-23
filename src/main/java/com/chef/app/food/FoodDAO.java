@@ -140,4 +140,12 @@ public class FoodDAO {
 		return sqlSession.selectOne(NAMESPACE+"getReplyCount", foodDTO);
 	}
 	
+	public Double startAvg(FoodDTO foodDTO) throws Exception {
+		return sqlSession.selectOne(NAMESPACE+"startAvg",foodDTO);
+	}
+	
+	public int stockMinus(StoreMidOrderDTO storeMidOrderDTO) throws Exception {
+		return sqlSession.update(NAMESPACE+"stockMinus", storeMidOrderDTO);
+	}
+	
 }

@@ -240,6 +240,7 @@ public class FoodService {
 		for(StoreMidOrderDTO a : list) {
 			a.setOrder_num(storeOrderDTO.getOrder_num());
 			result = foodDAO.midOrderInsert(a);
+			result = foodDAO.stockMinus(a);
 		}
 		
 		String member_id = storeOrderDTO.getMember_id();
@@ -334,6 +335,10 @@ public class FoodService {
 		
 		return foodDAO.replyDelete(storeReplyDTO);
 		
+	}
+	
+	public Double startAvg(FoodDTO foodDTO) throws Exception {
+		return foodDAO.startAvg(foodDTO);
 	}
 
 }

@@ -87,12 +87,57 @@
     	<h2 class="fw-bold mb-3">  <br/></h2>
         <p class="mb-3">*카테고리 : ${map.dto.food_category}</p>
         <h2 class="fw-bold mb-3">${map.dto.food_name}</h2>
-        <h5><i class="fa fa-star text-secondary"></i>
-        	<i class="fa fa-star text-secondary"></i>
-        	<i class="fa fa-star text-secondary"></i>
-        	<i class="fa fa-star text-secondary"></i>
-        	<i class="fa fa-star text-secondary"></i>
-        	(5.0)
+        <h5>
+                                                    <c:choose>
+                                                    	<c:when test="${map.avg<2}">
+	                                                        <i class="fa fa-star text-secondary"></i>
+	                                                        <i class="fa fa-star"></i>
+	                                                        <i class="fa fa-star"></i>
+	                                                        <i class="fa fa-star"></i>
+	                                                        <i class="fa fa-star"></i>
+	                                                        (${map.avg})
+	                                                    </c:when>
+                                                    	<c:when test="${map.avg<3}">
+	                                                        <i class="fa fa-star text-secondary"></i>
+	                                                        <i class="fa fa-star text-secondary"></i>
+	                                                        <i class="fa fa-star"></i>
+	                                                        <i class="fa fa-star"></i>
+	                                                        <i class="fa fa-star"></i>
+	                                                        (${map.avg})
+	                                                    </c:when>
+	                                                    <c:when test="${map.avg<4}">
+	                                                        <i class="fa fa-star text-secondary"></i>
+	                                                        <i class="fa fa-star text-secondary"></i>
+	                                                        <i class="fa fa-star text-secondary"></i>
+	                                                        <i class="fa fa-star"></i>
+	                                                        <i class="fa fa-star"></i>
+	                                                        (${map.avg})
+	                                                    </c:when>
+                                                    	<c:when test="${map.avg<5}">
+	                                                        <i class="fa fa-star text-secondary"></i>
+	                                                        <i class="fa fa-star text-secondary"></i>
+	                                                        <i class="fa fa-star text-secondary"></i>
+	                                                        <i class="fa fa-star text-secondary"></i>
+	                                                        <i class="fa fa-star"></i>
+	                                                        (${map.avg})
+	                                                    </c:when>
+	                                                    <c:when test="${map.avg==5}">
+	                                                        <i class="fa fa-star text-secondary"></i>
+	                                                        <i class="fa fa-star text-secondary"></i>
+	                                                        <i class="fa fa-star text-secondary"></i>
+	                                                        <i class="fa fa-star text-secondary"></i>
+	                                                        <i class="fa fa-star text-secondary"></i>
+	                                                        (${map.avg})
+	                                                    </c:when>
+               											<c:when test="${empty map.avg}">
+               												<i class="fa fa-star"></i>                                                    
+	                                                        <i class="fa fa-star"></i>
+	                                                        <i class="fa fa-star"></i>
+	                                                        <i class="fa fa-star"></i>
+	                                                        <i class="fa fa-star"></i>
+	                                                        (아직 후기가 없어요😎)
+	                                                    </c:when>
+	                                                </c:choose>
         </h5>
         <h3 class="fw-bold mb-3" id="buyPrice" data-buy-price="${map.dto.food_price}">${map.dto.food_price}원</h3>
     	<h5 class="fw-bold mb-3">  <br/></h5>
