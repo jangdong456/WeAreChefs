@@ -156,12 +156,23 @@
                                             <img src="/resources/upload/recipes/${dto.recipeImgFileDTO.file_name}"
                                                 class="img-fluid w-100 rounded-top" alt="">
                                         </a>
+                                   
                                         <div class="text-white bg-secondary px-3 py-1 rounded position-absolute"
                                             style="top: 10px; left: 10px;">
                                             <img src="/resources/upload/recipes/hit2.png" class="text-white"
                                                 style="width:20px; margin-right: 5px;margin-bottom: 2.4px;">
                                             ${dto.recipe_hit}
                                         </div>
+                                    </div><br><br>
+                                    <div>
+	                                    <c:if test="${dto.member_id eq member.member_id}">
+		                                     <a href="/recipe/update?recipe_num=${dto.recipe_num}"><button class="btn border-secondary text-uppercase text-primary"
+		                                     type="button" >레시피 수정</button></a>
+		                                        <a href="/recipe/delete?recipe_num=${dto.recipe_num}"><button class="btn border-secondary text-uppercase text-primary"
+		                                     type="button" >레시피 삭제</button></a>
+		                                </c:if>
+		                                <p>dto.member_id: ${dto.member_id}</p>
+<p>member.member_id: ${member.member_id}</p>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
@@ -197,6 +208,7 @@
                                     <a href="#"
                                         class="btn border border-secondary rounded-pill px-4 py-2 mb-4 text-primary"><i
                                             class="fa fa-shopping-bag me-2 text-primary"></i> 재료사러가기</a>
+                                 
                                 </div>
                                 <div class="col-lg-12">
                                     <nav>

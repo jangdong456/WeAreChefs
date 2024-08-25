@@ -5,7 +5,7 @@ import java.util.List;
 
 public class RecipeDTO {
 	private Long recipe_num;
-	private String recipe_writer;
+	private String member_id;
 	private String recipe_name;
 	private String menu_recipe;
 	private Date create_date;
@@ -73,12 +73,12 @@ public class RecipeDTO {
 		this.recipe_num = recipe_num;
 	}
 
-	public String getRecipe_writer() {
-		return recipe_writer;
+	public String getMember_id() {
+		return member_id;
 	}
 
-	public void setRecipe_writer(String recipe_writer) {
-		this.recipe_writer = recipe_writer;
+	public void setMember_id(String member_id) {
+		this.member_id = member_id;
 	}
 
 	public String getRecipe_name() {

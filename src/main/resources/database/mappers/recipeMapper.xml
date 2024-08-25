@@ -150,7 +150,7 @@
   		</selectKey>
     	INSERT INTO RECIPE(
     						RECIPE_NUM 
-    						,RECIPE_WRITER 
+    						,MEMBER_ID 
     						,RECIPE_NAME 
     						,MENU_RECIPE
     						,RECIPE_CATEGORY
@@ -168,6 +168,29 @@
 					)
 			
 	  </insert>
+	  <update id="recipeUpdate" parameterType="RecipeDTO">
+		UPDATE RECIPE 
+		SET
+	   	 RECIPE_NAME = #{recipe_name}
+	     ,MENU_RECIPE =#{menu_recipe}
+	   	 ,RECIPE_CATEGORY = #{recipe_category}
+	   	 ,RECIPE_LEVEL= #{recipe_level}
+    	 ,RECIPE_TIME = #{recipe_time}
+	    WHERE RECIPE_NUM =	#{recipe_num}
+	 </update>
+	  
+	<update id="updateRecipeImg" parameterType="RecipeImgFileDTO">
+	   	UPDATE RECIPEIMG 
+	   		SET 
+	   	RECIPE_FILE_NAME = #{file_name} 
+	   	WHERE RECIPE_NUM = #{recipe_num}
+   </update>
+    <update id="recipeDelete" parameterType="FoodDTO">
+   		DELETE 
+		RECIPE 
+		WHERE RECIPE_NUM = #{recipe_num}
+   </update>
+	  
 	<insert id="mainImg" parameterType="RecipeImgFileDTO">
 		INSERT INTO RECIPEIMG(RECIPE_IMG_NUM, RECIPE_NUM, RECIPE_FILE_NAME) 
 		VALUES (RECIPEIMG_SEQ.NEXTVAL,#{recipe_num},#{file_name})

@@ -7,6 +7,8 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.chef.app.food.StoreImgFileDTO;
+
 @Repository
 public class RecipeDAO {
 	@Autowired
@@ -111,6 +113,18 @@ public class RecipeDAO {
 	public int adminReplySubmit(RecipeReplyDTO recipeReplyDTO) {
 		return sqlSession.insert(NAMESPACE+"adminReplySubmit", recipeReplyDTO);
 	}
+
+	public int recipeUpdate(RecipeDTO recipeDTO) {
+		return sqlSession.update(NAMESPACE + "recipeUpdate", recipeDTO);
+	}
+	public int updateRecipeImg (RecipeImgFileDTO recipeImgFileDTO) throws Exception {
+		return sqlSession.update(NAMESPACE+"updateRecipeImg", recipeImgFileDTO);
+	}
+
+	public int recipeDelete(RecipeDTO recipeDTO) {
+		return sqlSession.update(NAMESPACE+"detailDelete", recipeDTO);
+	}
+	
 
 //	public Long getNum() {
 //

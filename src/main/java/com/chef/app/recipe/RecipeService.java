@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.chef.app.file.FileManager;
+import com.chef.app.food.StoreImgFileDTO;
 import com.chef.app.food.StoreMidOrderDTO;
 
 
@@ -167,6 +168,45 @@ public class RecipeService {
 	    recipeReplyDTO.setRecipe_reply_num(recipe_reply_num);
 	    
 	    return recipeDAO.findParent(recipeReplyDTO);
+	}
+
+	public int recipeUpdate(RecipeDTO recipeDTO,MultipartFile attach,HttpSession session) throws Exception {
+		
+
+		int result =  recipeDAO.recipeUpdate(recipeDTO);
+		Long recipeNum = recipeDTO.getRecipe_num();
+		
+		if(!attach.isEmpty()) {
+			
+			ServletContext servletContext = session.getServletContext();
+			String path = servletContext.getRealPath("resources/upload/recipes");
+			System.out.println(path);
+			
+			String fileName = fileManager.fileSave(path, attach);
+			RecipeImgFileDTO recipeImgFileDTO = new RecipeImgFileDTO();
+			recipeImgFileDTO.setFile_name(fileName);
+			recipeImgFileDTO.setRecipe_num(recipeNum);
+			
+			result = recipeDAO.updateRecipeImg(recipeImgFileDTO);
+
+			return result;
+		}	
+		String notChange = recipeDTO.getRecipeImgFileDTO().getFile_name();
+		
+		RecipeImgFileDTO recipeImgFileDTO = new RecipeImgFileDTO();
+		recipeImgFileDTO.setFile_name(notChange);
+		recipeImgFileDTO.setRecipe_num(recipeNum);
+		
+		result = recipeDAO.updateRecipeImg(recipeImgFileDTO);
+		
+		return result;
+		
+	
+		//return recipeDAO.recipeUpdate(recipeDTO);
+	}
+
+	public int recipeDelete(RecipeDTO recipeDTO) {
+		return recipeDAO.recipeDelete(recipeDTO);
 	}
 
 
