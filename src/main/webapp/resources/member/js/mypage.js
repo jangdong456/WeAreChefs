@@ -19,6 +19,8 @@ let introducesId = introductionAdd.getAttribute("data_member_id");
 let profileId = profileAdd.getAttribute("data-member-id");
 
 
+
+
 profileSnsDelete.addEventListener("click", () => {
 
     fetch("prfileSnsDelete?member_id="+profileSnsId, {

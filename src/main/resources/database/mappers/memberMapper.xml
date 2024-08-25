@@ -5,6 +5,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="com.chef.app.member.MemberDAO">
 	
+	
+<!-- 	<select id="recipeRecentList" parameterType="MemberDTO" resultType="RecipeDTO"> -->
+<!-- 		<if test="member_id != null"> -->
+<!-- 			SELECT * FROM (SELECT * FROM RECIPE ORDER BY CREATE_DATE DESC) -->
+<!-- 			WHERE ROWNUM <= 3; -->
+<!-- 		</if> -->
+<!-- 	</select> -->
+	
+	
 	<update id="prfileSnsDelete" parameterType="MemberDTO">
 		UPDATE MEMBER SET PROFILE_SNS_URL = NULL
 		WHERE MEMBER_ID = #{member_id}
@@ -38,7 +47,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<select id="recipeList" parameterType="MemberDTO" resultType="RecipeDTO">
 		SELECT * FROM RECIPE
-		WHERE RECIPE_NUM > 80 AND RECIPE_WRITER = #{member_id}
+		WHERE RECIPE_NUM > 80 AND MEMBER_ID = #{member_id}
 	</select>
 	
 

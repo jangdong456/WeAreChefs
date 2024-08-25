@@ -30,6 +30,10 @@ public class MemberService {
 	@Autowired
 	private FileManager fileManager;
 	
+	public void recipeRecentList(MemberDTO memberDTO) throws Exception {
+		memberDAO.recipeRecentList(memberDTO);
+	}
+	
 	public int prfileSnsDelete(MemberDTO memberDTO) throws Exception {
 		return memberDAO.prfileSnsDelete(memberDTO);
 	}

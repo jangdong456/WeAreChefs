@@ -20,6 +20,11 @@ public class MemberDAO {
 	
 	private final String NAMESPACE = "com.chef.app.member.MemberDAO.";
 	
+	
+	public void recipeRecentList(MemberDTO memberDTO) throws Exception {
+		sqlSession.selectList(NAMESPACE + "recipeRecentList", memberDTO);
+	}
+	
 	public int prfileSnsDelete(MemberDTO memberDTO) throws Exception {
 		return sqlSession.update(NAMESPACE + "prfileSnsDelete", memberDTO);
 	}

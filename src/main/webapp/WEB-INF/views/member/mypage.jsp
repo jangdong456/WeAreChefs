@@ -64,10 +64,10 @@
                         <div class="col-6 mt-3"></div>
                         <div class="col-xl-3">
                             <div class="bg-light ps-3 py-3 rounded d-flex justify-content-between mb-4 mt-3">
-                                <label for="fruits">Default Sorting:</label>
+                                <label for="fruits">분류:</label>
                                 <select id="fruits" name="fruitlist" class="border-0 form-select-sm bg-light me-3" form="fruitform">
-                                    <option value="volvo">최신순</option>
-                                    <option value="saab">오래된순</option>
+                                    <option value="recent">최신순</option>
+                                    <option value="old">오래된순</option>
                                 </select>
                             </div>
                         </div>
@@ -182,7 +182,7 @@
                                                                         <br>
                                                                         <c:choose>
                                                                             <c:when test="${not empty member.profile_sns_url}">
-                                                                                <a href="${member.profile_sns_url}" class="btn border border-secondary rounded-pill px-3 text-primary mt-2">
+                                                                                <a href="${member.profile_sns_url}" target="_blank" class="btn border border-secondary rounded-pill px-3 text-primary mt-2">
                                                                                     <img src="/resources/member/img/youtube.png" style="width: 40px; height: 40px;">                                                                                               
                                                                                 </a>
                                                                                 <a id="modalpage" class="btn border border-secondary rounded-pill px-3 text-primary mt-2" data-bs-toggle="modal" data-bs-target="#SnsModal">
@@ -333,6 +333,48 @@
                                 </div>
 
                                 <div class="col-lg-12">
+                                <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
+                                    <div class="carousel-indicators">
+                                      <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                                      <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                                      <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                                    </div>
+                                    <div class="carousel-inner">
+                                      <div class="carousel-item active">
+                                        <img src="/resources/img/baner-1.png" class="d-block w-100" alt="...">
+                                        <div class="carousel-caption d-none d-md-block">
+                                          <h5>First slide label</h5>
+                                          <p>Some representative placeholder content for the first slide.</p>
+                                        </div>
+                                      </div>
+                                      <div class="carousel-item">
+                                        <img src="/resources/img/best-product-4.jpg" class="d-block w-100" alt="...">
+                                        <div class="carousel-caption d-none d-md-block">
+                                          <h5>Second slide label</h5>
+                                          <p>Some representative placeholder content for the second slide.</p>
+                                        </div>
+                                      </div>
+                                      <div class="carousel-item">
+                                        <img src="/resources/img/best-product-4.jpg" class="d-block w-100" alt="...">
+                                        <div class="carousel-caption d-none d-md-block">
+                                          <h5>Third slide label</h5>
+                                          <p>Some representative placeholder content for the third slide.</p>
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+                                      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                      <span class="visually-hidden">Previous</span>
+                                    </button>
+                                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+                                      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                      <span class="visually-hidden">Next</span>
+                                    </button>
+                                  </div>
+                                </div>
+
+
+                                <!-- <div class="col-lg-12">
                                     <h4 class="mb-3">Featured products</h4>
                                     <div class="d-flex align-items-center justify-content-start">
                                         <div class="rounded me-4" style="width: 100px; height: 100px;">
@@ -352,18 +394,20 @@
                                                 <h5 class="text-danger text-decoration-line-through">4.11 $</h5>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> -->
+                                <!-- </div> -->
 
-                                </div>
-                                <div class="col-lg-12">
+                                <!-- <div class="col-lg-12">
                                     <div class="position-relative">
                                         <img src="/resources/img/banner-fruits.jpg" class="img-fluid w-100 rounded" alt="">
                                         <div class="position-absolute" style="top: 50%; right: 10px; transform: translateY(-50%);">
                                             <h3 class="text-secondary fw-bold">Fresh <br> Fruits <br> Banner</h3>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
+                                </div> -->
+                           
+                           
+                            </div>                                         
                         </div>
 
                         
@@ -488,14 +532,11 @@
 
                                 <div class="col-12">
                                     <div class="pagination d-flex justify-content-center mt-5">
-                                        <a href="#" class="rounded">&laquo;</a>
-                                        <a href="#" class="active rounded">1</a>
-                                        <a href="#" class="rounded">2</a>
-                                        <a href="#" class="rounded">3</a>
-                                        <a href="#" class="rounded">4</a>
-                                        <a href="#" class="rounded">5</a>
-                                        <a href="#" class="rounded">6</a>
-                                        <a href="#" class="rounded">&raquo;</a>
+                                        <a href="/member/mypage?page=${pager.startNum-1}&search=${pager.search}&kind=${pager.kind}&order=${pager.order}" class="rounded ${pager.pre?'':'disabled'}" >&laquo;</a>
+                                        <c:forEach begin="${pager.startNum}" end="${pager.lastNum}" step="1" var="i">
+                                            <a href="/member/mypage?page=${i}&search=${pager.search}&kind=${pager.kind}&order=${pager.order}" class="rounded">${i}</a>
+                                        </c:forEach>
+                                        <a href="/member/mypage?page=${pager.lastNum+1}&search=${pager.search}&kind=${pager.kind}&order=${pager.order}" class="rounded ${pager.next?'':'disabled'}">&raquo;</a>
                                     </div>
                                 </div>
                             </div>

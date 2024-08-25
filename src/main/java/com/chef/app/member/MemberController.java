@@ -40,6 +40,13 @@ public class MemberController {
 	@Autowired
 	private Email email;
 	
+	@GetMapping("recipeRecentList")
+	public void recipeRecentList(HttpSession session) throws Exception {
+		MemberDTO memberdto = (MemberDTO)session.getAttribute("member");
+		
+		memberService.recipeRecentList(memberdto);
+	}
+	
 	@GetMapping("prfileSnsDelete")
 	public String prfileSnsDelete(MemberDTO memberDTO, Model model) throws Exception {
 		System.out.println("===== prfileSnsDelete =====");
@@ -135,9 +142,10 @@ public class MemberController {
 	
 	
 	@GetMapping("mypage")
-	public void mypage(HttpSession session, Model model) throws Exception {
+	public void mypage(HttpSession session, Model model, Pager pager) throws Exception {
 		System.out.println("== My Page ==");
-
+		System.out.println(pager);
+		
 		MemberDTO memberdto = (MemberDTO)session.getAttribute("member");
 		memberdto = memberService.mypage(memberdto);
 		
