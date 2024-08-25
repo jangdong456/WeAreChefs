@@ -334,18 +334,37 @@
                                                             ${ar.recipe_reply_num}|| ${ar.create_date}</p>
                                                         <div class="d-flex align-items-center">
                                                             <h5 class="mb-0">${ar.member_id}</h5>
-                                                            <!--   <div class="button-container"> -->
-                                                            <button class="btn text-primary rounded-pill replyBtn"
+                                                                <button class="btn text-primary rounded-pill replyBtn"
                                                                 style="font-size: 14px;">|답글|</button>
+                                                            <!--   <div class="button-container"> -->
+                                                         
                                                             <!-- </div> -->
                                                         </div>
                                                         <p>${ar.board_content}</p>
+                                                       <!--  <div class="replyListParent"> -->
+                                                           <%--  <input type="hidden" class="recipe_reply_num" value="${ar.recipe_reply_num}"name="recipe_reply_num">
+                                                            <div class="comment" id="comment_1">
+                                                            <div class="parentReply">
+                                                              <!-- 부모글 내용 -->
+                                                            </div>
+                                                            <div class="replyList">
+                                                              <!-- 자식글이 이곳에 표시 -->
+                                                            </div>
+                                                            <!-- <button class="replyBtn">답글</button> -->
+                                                          </div> --%>
+                                                          <div class="comment" id="comment_1">
+															    <input type="hidden" class="recipe_reply_num" value="${ar.recipe_reply_num}">
+															    <div class="replyList"></div>
+															   
+															</div>
+	                                                          
+                                                    <!--  </div> -->
                                                         <!--  답글달림 -->
-                                                        <div class="replyList">
+                                                        <!-- <div class="replyList">
 
 
 
-                                                        </div>
+                                                        </div> -->
                                                     </div>
                                                 </div>
                                                 <hr>

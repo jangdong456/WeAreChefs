@@ -261,7 +261,7 @@
 		FROM RECIPEREPLY
 		WHERE RECIPE_NUM = #{recipe_num}
 		ORDER BY CREATE_DATE DESC
-
+		
 	</select>
 	
 	<insert id="recipeComment" parameterType="RecipeReplyDTO">
@@ -325,13 +325,44 @@
 	</select>
 	  <insert id="adminReplySubmit" parameterType="RecipeReplyDTO">
 
-   	INSERT INTO RECIPEREPLY VALUES (RECIPEREPLY_SEQ.NEXTVAL,#{recipe_num},#{member_id},SYSDATE,SYSDATE,#{board_content},0,#{ref},#{step},#{depth},'N')
+   	INSERT INTO RECIPEREPLY (
+		   	   RECIPE_REPLY_NUM
+			 , RECIPE_NUM
+			 , MEMBER_ID
+			 , BOARD_CONTENT
+			 , REF
+			 , STEP
+			 , DEPTH
+			
+   	)
+   	VALUES (
+   	RECIPEREPLY_SEQ.NEXTVAL
+   	,#{recipe_num}
+   	,'ydb'
+   	,#{board_content}
+   	,#{ref}
+   	,#{step}
+   	,#{depth}
+
+   	)
    </insert>
       <update id="stepUpdate" parameterType="RecipeReplyDTO">
    	UPDATE RECIPEREPLY SET STEP=STEP+1
    	WHERE REF=#{ref} AND STEP>#{step}
    </update>
    
-   
-
+   <select id="findParent" parameterType="RecipeReplyDTO" resultMap="RecipeReplyResultMap">
+   		SELECT * 
+   		FROM RECIPEREPLY 
+   		  <!-- WHERE RECIPE_REPLY_NUM = #{recipe_reply_num} -->
+	   	 WHERE 
+	   	 REF = #{ref, jdbcType=NUMERIC} 
+	   	 ORDER BY STEP ASC 
+	</select>
+<resultMap id="RecipeReplyResultMap" type="RecipeReplyDTO">
+    <id property="recipe_reply_num" column="recipe_reply_num" jdbcType="BIGINT"/>
+    <result property="ref" column="ref" jdbcType="BIGINT"/>
+    <result property="step" column="step" jdbcType="INTEGER"/>
+    <result property="board_content" column="board_content" jdbcType="VARCHAR"/>
+</resultMap>
     </mapper>

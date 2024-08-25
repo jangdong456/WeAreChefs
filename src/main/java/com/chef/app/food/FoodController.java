@@ -110,7 +110,7 @@ public class FoodController {
 
 		map.put("admin", memberDTO);
 		
-		List<StoreReplyDTO> ar = (List<StoreReplyDTO>) map.get("reply");
+		//List<StoreReplyDTO> ar = (List<StoreReplyDTO>) map.get("reply");
 	
 			
 		model.addAttribute("map", map);

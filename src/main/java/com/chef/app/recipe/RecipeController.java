@@ -7,16 +7,18 @@ import java.util.Map;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.chef.app.food.StoreReplyDTO;
+
 
 @Controller
 @RequestMapping("/recipe/*")
@@ -161,17 +163,30 @@ public class RecipeController {
 
 	@PostMapping("comment")
 	@ResponseBody
-	public String recipeComment(@RequestBody RecipeReplyDTO recipeReplyDTO, Model model, RecipeDTO recipeDTO) {
-		System.out.println(recipeReplyDTO.getRecipe_num());
-		System.out.println(recipeReplyDTO.getBoard_content());
-		System.out.println(recipeReplyDTO.getRecipe_reply_num());
-		recipeReplyDTO.setMember_id("ydb");
-
-		// System.out.println("원본글 " + recipeReplyDTO.getRef());
-
-		int result = recipeService.recipeComment(recipeReplyDTO);
-		model.addAttribute("msg", result);
-		return "commons/result";
+	public ResponseEntity<Map<String, Object>> recipeComment(@RequestBody RecipeReplyDTO recipeReplyDTO, Model model, RecipeDTO recipeDTO) {
+	 Map<String, Object> response = new HashMap<String, Object>();
+//		    
+//		System.out.println(recipeReplyDTO.getRecipe_num());
+//		System.out.println(recipeReplyDTO.getBoard_content());
+//		System.out.println(recipeReplyDTO.getRecipe_reply_num());
+//		recipeReplyDTO.setMember_id("ydb");
+//
+//		// System.out.println("원본글 " + recipeReplyDTO.getRef());
+//
+//		int result = recipeService.recipeComment(recipeReplyDTO);
+//		
+//	    if (result > 0) {
+//	        // If the insertion was successful, return success JSON
+//	        response.put("success", true);
+//	        response.put("message", "답글 등록이 완료됐습니다.");
+//	    } else {
+//	        // If the insertion failed, return failure JSON
+//	        response.put("success", false);
+//	        response.put("message", "답글 등록에 실패했습니다.");
+//	    }
+//	    return ResponseEntity.ok(response);
+//		model.addAttribute("msg", result);
+//		return "commons/result";
 
 //		if (result > 0) {
 //			model.addAttribute("result", "답변이 등록됐습니다!");
@@ -183,7 +198,33 @@ public class RecipeController {
 //			model.addAttribute("url", "/recipe/detail?recipe_num=" + recipeReplyDTO.getRecipe_num());
 //			return "/recipe/message";
 //		}
+		   try {
+		        // Print debug information
+		        System.out.println("recipe_num: " + recipeReplyDTO.getRecipe_num());
+		        System.out.println("board_content: " + recipeReplyDTO.getBoard_content());
+		        System.out.println("recipe_reply_num: " + recipeReplyDTO.getRecipe_reply_num());
 
+		        int result = recipeService.recipeComment(recipeReplyDTO);
+
+		        if (result > 0) {
+		            response.put("success", true);
+		            response.put("message", "답글 등록이 완료됐습니다.");
+		        } else {
+		            response.put("success", false);
+		            response.put("message", "답글 등록에 실패했습니다.");
+		        }
+		    } catch (Exception e) {
+		        e.printStackTrace();
+		        response.put("success", false);
+		        response.put("message", "서버 오류가 발생했습니다.");
+		    }
+
+		    return ResponseEntity.ok(response);
+	}
+	@GetMapping("getReplies")
+	public ResponseEntity<List<RecipeReplyDTO>> getReplies(@RequestParam Long recipe_reply_num) {
+	    List<RecipeReplyDTO> replies = recipeService.getReplies(recipe_reply_num);
+	    return ResponseEntity.ok(replies);
 	}
 
 }

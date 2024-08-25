@@ -12,7 +12,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.chef.app.file.FileManager;
-import com.chef.app.food.StoreReplyDTO;
+import com.chef.app.food.StoreMidOrderDTO;
+
 
 @Service
 public class RecipeService {
@@ -139,6 +140,7 @@ public class RecipeService {
 		
 		Long maxStep = 0L;
 		Long maxDepth = 0L;	
+		//List<RecipeReplyDTO> list = RecipeDTO.getRef();
 		
 		List<RecipeReplyDTO> parents = recipeDAO.findParent(recipeReplyDTO);	
 		for(RecipeReplyDTO p : parents) {
@@ -153,10 +155,18 @@ public class RecipeService {
 		    recipeDAO.stepUpdate(p);
 		}
 		
+		
 		recipeReplyDTO.setStep(maxStep+1);
 		recipeReplyDTO.setDepth(maxDepth+1);		
 		
 		return recipeDAO.adminReplySubmit(recipeReplyDTO);
+	}
+	//부모글의 모든 자식글 찾기
+	public List<RecipeReplyDTO> getReplies(Long recipe_reply_num) {
+	    RecipeReplyDTO recipeReplyDTO = new RecipeReplyDTO();
+	    recipeReplyDTO.setRecipe_reply_num(recipe_reply_num);
+	    
+	    return recipeDAO.findParent(recipeReplyDTO);
 	}
 
 
