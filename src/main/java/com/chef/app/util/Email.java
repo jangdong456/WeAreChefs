@@ -27,7 +27,7 @@ public class Email {
 	}
 	
 	
-	// 이메일 보낼 양식
+	// 이메일 보낼 양식 및 메일 보내기
 	public String mailTemplete(String member_mail) throws Exception {
 		randomNum();
 		// email-config에 설정한 자신의 이메일 주소를 입력
@@ -46,7 +46,7 @@ public class Email {
 		return Integer.toString(authNum);
 	}
 	
-	// 이메일 보내기 메서드
+	// 이메일에 어떠한 데이터를 보낼지 저장하는 메서드
 	public void sendMail(String myEmail, String toEmail, String title, String context) throws Exception {
 		// 보낼 메세지 내용 작성 
 		// MimeMessage 는 java에서 제공해주는 메세지 라이브러리 이다.
