@@ -270,11 +270,8 @@ var world_map = new jsVectorMap({
 var ctx = document.getElementById('statisticsChart').getContext('2d');
 // 월별 정보
 let purSales = document.getElementsByClassName('purSales');
-for(i=0;i<12;i++){
-	if(purSales[i] === undefined || purSales[i] === null){
-		purSales[i] = 0;
-	}
-}
+let purExpends = document.getElementsByClassName('purExpends');
+let purEarns = document.getElementsByClassName("purEarns")
 
 var statisticsChart = new Chart(ctx, {
 	type: 'line',
@@ -289,9 +286,9 @@ var statisticsChart = new Chart(ctx, {
 			legendColor: '#f3545d',
 			fill: true,
 			borderWidth: 2,
-			data: [154, 184, 175, 999, 210, 231, 240, 278, 252, 312, 320, 374]
+			data: [purExpends[0].value, purExpends[1].value, purExpends[2].value, purExpends[3].value, purExpends[4].value, purExpends[5].value, purExpends[6].value, purExpends[7].value, purExpends[8].value, purExpends[9].value, purExpends[10].value, purExpends[11].value]
 		}, {
-			label: "차익",
+			label: "순이익",
 			borderColor: '#fdaf4b',
 			pointBackgroundColor: 'rgba(253, 175, 75, 0.6)',
 			pointRadius: 0,
@@ -299,7 +296,7 @@ var statisticsChart = new Chart(ctx, {
 			legendColor: '#fdaf4b',
 			fill: true,
 			borderWidth: 2,
-			data: [256, 230, 245, 287, 240, 250, 230, 295, 331, 431, 456, 521]
+			data: [purEarns[0].value, purEarns[1].value, purEarns[2].value, purEarns[3].value, purEarns[4].value, purEarns[5].value, purEarns[6].value, purEarns[7].value, purEarns[8].value,  purEarns[9].value,  purEarns[10].value,  purEarns[11].value]
 		}, {
 			label: "매출",
 			borderColor: '#177dff',

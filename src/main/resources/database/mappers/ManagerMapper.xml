@@ -49,6 +49,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		ORDER BY PUR_PERIOD
 	</select>
 	
+	<select id="getMonthExpands" resultType="TotalPurchaseDTO">
+		SELECT TO_CHAR(BUYING_DATE, 'MM') PUR_PERIOD, SUM(BUYING_TOTAL_PRICE) PUR_PRICE
+		FROM STOCK_BUYING
+		WHERE TO_CHAR(BUYING_DATE, 'YYYY')  = TO_CHAR(SYSDATE, 'YYYY')
+		GROUP BY
+			TO_CHAR(BUYING_DATE, 'MM') 
+		ORDER BY PUR_PERIOD
+	</select>
+	
 	<!-- index 멤버 정보 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ -->
 	<select id="getMemberListAsc" resultType="MemberDTO">
 		SELECT MM.*

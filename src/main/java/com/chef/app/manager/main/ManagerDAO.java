@@ -1,5 +1,6 @@
 package com.chef.app.manager.main;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -43,6 +44,10 @@ public class ManagerDAO {
 	// index 차트 정보 -----------------------------------------------------------------------------
 	public List<TotalPurchaseDTO> getMonthSales() throws Exception{
 		return sqlSession.selectList(NAMESPACE + "getMonthSales");
+	}
+	
+	public List<TotalPurchaseDTO> getMonthExpend() throws Exception{
+		return sqlSession.selectList(NAMESPACE + "getMonthExpands");
 	}
 	
 	// index 멤버 정보 -----------------------------------------------------------------------------

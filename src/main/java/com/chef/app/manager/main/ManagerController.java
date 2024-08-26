@@ -1,5 +1,6 @@
 package com.chef.app.manager.main;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,15 +30,34 @@ public class ManagerController {
 	// index 첫줄 정보 4가지 --------------------------------------------------------------------------
 	@GetMapping("index")
 	public String managerIndex(Model model) throws Exception{
+		// 첫줄 정보
 		List<Long> indexFirstRowInfo = managerService.getIndexFirstRowInfo();
 		model.addAttribute("indexFirstRowInfo", indexFirstRowInfo);
-
+		// 매출
 		List<TotalPurchaseDTO> monthSales = managerService.getMonthSales();
 		model.addAttribute("monthSales", monthSales);
+		// 지출
+		List<TotalPurchaseDTO> monthExpends = managerService.getMonthExpend();
+		model.addAttribute("monthExpends", monthExpends);
+		// 차익
+		List<TotalPurchaseDTO> monthEarns = new ArrayList<TotalPurchaseDTO>();
+		for(int i =0; i < monthExpends.size(); i++) {
+			TotalPurchaseDTO result = new TotalPurchaseDTO();
+			// 월 추가
+			result.setPur_period(monthExpends.get(i).getPur_period());
+			// 금액 추가
+			Long earn = monthSales.get(i).getPur_price() - monthExpends.get(i).getPur_price();
+			result.setPur_price(earn);
+			
+			monthEarns.add(result);
+		}
+		model.addAttribute("monthEarns", monthEarns);
 		
+		// 회원 정보 리스트
 		List<MemberDTO> memberListDesc = managerService.getMemberListDesc();
 		model.addAttribute("memberListDesc", memberListDesc);
 		
+		// 결제 완료 리스트
 		List<StoreOrderDTO> orderListDesc = managerService.getOrderListDesc();
 		model.addAttribute("orderListDesc", orderListDesc);
 		
@@ -239,10 +259,16 @@ public class ManagerController {
 	// 재고 구매
 	@PostMapping("buyingStock")
 	public String buyingStock(@RequestBody StockMidBuyingDTO [] ar, Model model) throws Exception{
+		System.out.println("@@ 길이 : " + ar.length);
+		if(ar.length <= 0) {
+			model.addAttribute("msg", 0);
+			return "commons/result";
+		}else {
 		int result = managerService.buyingStock(ar);
 		System.out.println("최종 결과 : " + result);
 		model.addAttribute("msg", result);
 		return "commons/result";
+		}
 	}
 	
 	// add items to food table. When click addBtn.

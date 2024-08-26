@@ -34,9 +34,85 @@ public class ManagerService {
 	
 	// index 차트 정보-----------------------------------------------------------------------------
 	public List<TotalPurchaseDTO> getMonthSales() throws Exception{
+		List<TotalPurchaseDTO> monthSales = managerDAO.getMonthSales();
+		List<TotalPurchaseDTO> resultDTO = new ArrayList<TotalPurchaseDTO>();
 		
-		return managerDAO.getMonthSales();
+		if(monthSales.size() <= 11) {
+			int size = monthSales.size();
+			for(int i = 0; i < 12 - size; i++) {
+				TotalPurchaseDTO alpa = new TotalPurchaseDTO();
+				alpa.setPur_period("0");
+				alpa.setPur_price(0L);
+				monthSales.add(alpa);
+			}
+		}
+		int num = 0;
+		for(int i = 0; i <= 11; i++) {
+			TotalPurchaseDTO sample = new TotalPurchaseDTO();
+			int month = Integer.parseInt(monthSales.get(num).getPur_period());
+			if(i+1 == month) {
+				// i번째 값을 가져오면 안됨.
+				sample.setPur_period(monthSales.get(num).getPur_period());
+				sample.setPur_price(monthSales.get(num).getPur_price());
+				resultDTO.add(sample);
+				num++;
+			}else {
+				if(i+1<10) {					
+					String stringVal = "0" + String.valueOf(i+1);
+					sample.setPur_period(stringVal);
+					sample.setPur_price(0L);
+					resultDTO.add(sample);
+				}else {
+					String stringVal = "1" + String.valueOf(i+1);
+					sample.setPur_period(stringVal);
+					sample.setPur_price(0L);
+					resultDTO.add(sample);
+				}
+			}
+		}
+		return resultDTO;
 	}
+	
+	public List<TotalPurchaseDTO> getMonthExpend() throws Exception{
+		List<TotalPurchaseDTO> monthSales = managerDAO.getMonthExpend();
+		List<TotalPurchaseDTO> resultDTO = new ArrayList<TotalPurchaseDTO>();
+		
+		if(monthSales.size() <= 11) {
+			int size = monthSales.size();
+			for(int i = 0; i < 12 - size; i++) {
+				TotalPurchaseDTO alpa = new TotalPurchaseDTO();
+				alpa.setPur_period("0");
+				alpa.setPur_price(0L);
+				monthSales.add(alpa);
+			}
+		}
+		int num = 0;
+		for(int i = 0; i <= 11; i++) {
+			TotalPurchaseDTO sample = new TotalPurchaseDTO();
+			int month = Integer.parseInt(monthSales.get(num).getPur_period());
+			if(i+1 == month) {
+				// i번째 값을 가져오면 안됨.
+				sample.setPur_period(monthSales.get(num).getPur_period());
+				sample.setPur_price(monthSales.get(num).getPur_price());
+				resultDTO.add(sample);
+				num++;
+			}else {
+				if(i+1<10) {					
+					String stringVal = "0" + String.valueOf(i+1);
+					sample.setPur_period(stringVal);
+					sample.setPur_price(0L);
+					resultDTO.add(sample);
+				}else {
+					String stringVal = "1" + String.valueOf(i+1);
+					sample.setPur_period(stringVal);
+					sample.setPur_price(0L);
+					resultDTO.add(sample);
+				}
+			}
+		}
+		return resultDTO;
+	}
+	
 	
 	// index 멤버 정보-----------------------------------------------------------------------------
 	public List<MemberDTO> getMemberListAsc() throws Exception{

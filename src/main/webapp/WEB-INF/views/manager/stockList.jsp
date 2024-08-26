@@ -176,7 +176,6 @@
                     <div class="flex-container">
                         <span class="totalSumPrice">가격 총합 : <span id="stockOrderTotalPrice">0</span></span>
                         <span id="stockOrderTotalBtn">
-                            <button id="goCart">장바구니 담기</button>
                             <button id="goOrder" class="btn btn-success">주문하기</button>
                         </span>
                     </div>
@@ -326,13 +325,38 @@
                             .then(r => {
                                 hideSpinner();
                                 if (r > 0) {
-                                    alert("성공");
-                                    showSmailCat();
+                                    swal({
+                                        title: "알림",
+                                        text: "재고 주문을 성공하였습니다.",
+                                        type: "warning",
+                                        buttons: {
+                                            confirm: {
+                                                text: "OK",
+                                                className: "btn btn-success",
+                                            }
+                                        }
+                                    })
+                                    .then(()=>{
+                                        location.href = "/manager/stockList";
+                                        showSmailCat();
+                                    })
                                 } else {
-                                    alert("실패");
-                                    showSadCat();
+                                    swal({
+                                        title: "알림",
+                                        text: "재고 주문을 실패하였습니다.",
+                                        type: "warning",
+                                        buttons: {
+                                            confirm: {
+                                                text: "OK",
+                                                className: "btn btn-success",
+                                            }
+                                        }
+                                    })
+                                    .then(()=>{
+                                        location.href = "/manager/stockList";
+                                        showSadCat();
+                                    })
                                 }
-                                location.href = "/manager/stockList";
                             })
                     });
 
@@ -442,7 +466,7 @@
                         const allChecked = Array.from(checkboxes).every(checkbox => checkbox.checked);
                         selectAllCheckbox.checked = allChecked;
                     }
-                    // 대기중 보여주는 로딩창    
+                    // 대기중 보여주는 고양이
                     function showSpinner() {
                         document.getElementById('loadingSpinner').style.display = 'block';
                     }
@@ -452,19 +476,25 @@
                     }
 
                     // 성공했을 때 웃는 고양이
-                    function showSmailCat(){
+                    function showSmailCat() {
                         document.getElementById('loadingSmailCat').style.display = 'block';
                     }
-                    function hideSmailCat(){
+                    function hideSmailCat() {
                         document.getElementById('loadingSmailCat').style.display = 'none';
                     }
 
                     // 실패했을 때 억울한 고양이
-                    function showSadCat(){
+                    function showSadCat() {
                         document.getElementById('loadingSadCat').style.display = 'block';
                     }
-                    function hideSadCat(){
+                    function hideSadCat() {
                         document.getElementById('loadingSadCat').style.display = 'none';
+                    }
+
+                    // 일정 시간 동안 대기
+                    function sleep(ms) {
+                        const start = Date.now();
+                        while (Date.now() - start < ms) { }
                     }
 
                     // Stock Lack List 수량 조절 및 가격합 업데이트
@@ -489,13 +519,16 @@
 
                 });
             </script>
-            <div id="loadingSpinner" style="display:none; position:fixed; top:50%; left:50%; transform:translate(-50%, -50%); z-index:1000;">
+            <div id="loadingSpinner"
+                style="display:none; position:fixed; top:50%; left:50%; transform:translate(-50%, -50%); z-index:1000;">
                 <img src="/resources/assets/img/catReloading.gif" alt="Loading...">
             </div>
-            <div id="loadingSmailCat" style="display:none; position:fixed; top:50%; left:50%; transform:translate(-50%, -50%); z-index:1000;">
+            <div id="loadingSmailCat"
+                style="display:none; position:fixed; top:50%; left:50%; transform:translate(-50%, -50%); z-index:1000;">
                 <img src="/resources/assets/img/smailCat.jpg" alt="Loading...">
             </div>
-            <div id="loadingSadCat" style="display:none; position:fixed; top:50%; left:50%; transform:translate(-50%, -50%); z-index:1000;">
+            <div id="loadingSadCat"
+                style="display:none; position:fixed; top:50%; left:50%; transform:translate(-50%, -50%); z-index:1000;">
                 <img src="/resources/assets/img/sadCat.jpg" alt="Loading...">
             </div>
         </body>
