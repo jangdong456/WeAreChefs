@@ -14,15 +14,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.chef.app.food.FoodDTO;
-import com.chef.app.util.Pager;
 import com.chef.app.member.MemberDTO;
-
 
 @Controller
 @RequestMapping("/recipe/*")
@@ -46,10 +42,11 @@ public class RecipeController {
 	}
 
 	@GetMapping("list")
-	public void recipeList(RecipeDTO recipeDTO,Model model, RecipePager recipePager,HttpSession session) throws Exception {
+	public void recipeList(RecipeDTO recipeDTO, Model model, RecipePager recipePager, HttpSession session)
+			throws Exception {
 		// pager.setPage(1L);
-		MemberDTO memberDTO = (MemberDTO)session.getAttribute("member");
-		
+		MemberDTO memberDTO = (MemberDTO) session.getAttribute("member");
+
 		System.out.println("getMember_id" + recipeDTO.getMember_id());
 		List<RecipeDTO> ar = recipeService.recipeList(recipePager);
 
@@ -66,11 +63,13 @@ public class RecipeController {
 
 	@GetMapping("detail")
 	public String recipeDetail(RecipeDTO recipeDTO, Model model, RecipeReviewDTO recipeReviewDTO,
-			RecipeReplyDTO recipeReplyDTO,HttpSession session) {
-		MemberDTO memberDTO = (MemberDTO)session.getAttribute("member");
-		//recipeDTO.setMember_id(memberDTO.getMember_id());
-		System.out.println("getMember_id" + recipeDTO.getMember_id());
+			RecipeReplyDTO recipeReplyDTO, HttpSession session) {
+		MemberDTO memberDTO = (MemberDTO) session.getAttribute("member");
+		// recipeDTO.setMember_id(memberDTO.getMember_id());
+
 		recipeDTO = recipeService.recipeDetail(recipeDTO);
+		// System.out.println("getMember_id " + recipeDTO.getMember_id());
+		// System.out.println(recipeDTO.getRecipe_name());
 		List<RecipeReviewDTO> ar = recipeService.reviewList(recipeReviewDTO);
 		List<RecipeReviewDTO> ar2 = recipeService.replyList(recipeReplyDTO, recipeDTO);
 
@@ -80,7 +79,7 @@ public class RecipeController {
 		String url = "";
 		if (recipeDTO != null) {
 			model.addAttribute("dto", recipeDTO);
-	
+
 			url = "/recipe/detail";
 		} else {
 			model.addAttribute("result", "등록되지 않은 레시피입니다.");
@@ -118,67 +117,66 @@ public class RecipeController {
 	}
 
 	@GetMapping("update")
-	public String recipeUpdate(RecipeDTO recipeDTO,Model model,HttpSession session) throws Exception{
-	
-		
+	public String recipeUpdate(RecipeDTO recipeDTO, Model model, HttpSession session) throws Exception {
+
 		recipeDTO = recipeService.recipeDetail(recipeDTO);
 		String url = "";
 		if (recipeDTO != null) {
-			//model.addAttribute("result", "게시글 수정이 완료 됐습니다");
+			// model.addAttribute("result", "게시글 수정이 완료 됐습니다");
 			model.addAttribute("dto", recipeDTO);
 			url = "recipe/update";
-			//model.addAttribute("result", "레시피 수정이 완료 됐습니다");
+			// model.addAttribute("result", "레시피 수정이 완료 됐습니다");
 			System.out.println("update");
 			System.out.println(url);
 			System.out.println(recipeDTO.getRecipe_num());
 //			model.addAttribute("url", "/recipe/list");
 //			return "recipe/message";
-			
+
 		} else {
 			model.addAttribute("result", "없는 상품입니다.");
 			model.addAttribute("url", "./list");
 			url = "commons/message";
 		}
 		return url;
-		
+
 	}
-	
 
 	@PostMapping("update")
-	public String recipeUpdate(RecipeDTO recipeDTO,MultipartFile attach,HttpSession session,Model model) throws Exception {
-		int result = recipeService.recipeUpdate(recipeDTO,attach,session);	
+	public String recipeUpdate(RecipeDTO recipeDTO, MultipartFile attach, HttpSession session, Model model)
+			throws Exception {
+		int result = recipeService.recipeUpdate(recipeDTO, attach, session);
 
-		if (result>0) {
+		if (result > 0) {
 			model.addAttribute("result", "레시피 수정이 완료 됐습니다!");
 			model.addAttribute("url", "/recipe/detail?recipe_num=" + recipeDTO.getRecipe_num());
 			return "food/message";
-			
-		}
-			model.addAttribute("result", "레시피 수정에 실패 했습니다");
-			model.addAttribute("url", "/recipe/detail?recipe_num=" + recipeDTO.getRecipe_num());
-			return "food/message";
 
-		//return "redirect:./list";
+		}
+		model.addAttribute("result", "레시피 수정에 실패 했습니다");
+		model.addAttribute("url", "/recipe/detail?recipe_num=" + recipeDTO.getRecipe_num());
+		return "food/message";
+
+		// return "redirect:./list";
 
 	}
+
 	@GetMapping("delete")
-	public String detailDelete(RecipeDTO recipeDTO,Model model) throws Exception {
-		
+	public String recipeDelete(RecipeDTO recipeDTO, Model model) throws Exception {
+
 		int result = recipeService.recipeDelete(recipeDTO);
-		
-		if (result>0) {
+
+		if (result > 0) {
 			model.addAttribute("result", "게시글 삭제가 완료 됐습니다");
-			model.addAttribute("url", "/food/list");
+			model.addAttribute("url", "/recipe/list");
 			return "food/message";
-			
+
 		}
-			model.addAttribute("result", "게시글 삭제에 실패 했습니다");
-			model.addAttribute("url", "/food/list");
-			return "food/message";
-		
+		model.addAttribute("result", "게시글 삭제에 실패 했습니다");
+		model.addAttribute("url", "/recipe/list");
+		return "food/message";
+
 	}
-	
-		
+
 	@PostMapping("review")
 	public String recipeReview(RecipeReviewDTO recipeReviewDTO, Model model) {
 		recipeReviewDTO.setMember_id("ydb");
@@ -215,31 +213,33 @@ public class RecipeController {
 		}
 
 	}
-	
-	
+
 	@PostMapping("replyUpdate")
-	public String replyUpdate (RecipeReplyDTO recipeReplyDTO,Model model) throws Exception {
-		
+	public String replyUpdate(RecipeReplyDTO recipeReplyDTO, Model model) throws Exception {
+
 		model.addAttribute("dto", recipeReplyDTO);
-		
+
 		return "recipe/replyUpdate";
-		
+
 	}
-	@PostMapping("replyUpdateInsert")
-	public String replyUpdateInsert (RecipeReplyDTO recipeReplyDTO, Model model) throws Exception {
-		
-		int result = recipeService.replyUpdateInsert(recipeReplyDTO);
-		
-			model.addAttribute("msg", result);
-			return "commons/result";
-			
+
+	@PostMapping("reviewUpdate")
+	public String reviewUpdate(RecipeReviewDTO recipeReviewDTO, Model model) throws Exception {
+
+		System.out.println(recipeReviewDTO.getBoard_content());
+		System.out.println(recipeReviewDTO.getReview_num());
+		int result = recipeService.reviewUpdate(recipeReviewDTO);
+
+		model.addAttribute("msg", result);
+		return "commons/result";
+
 	}
-	
 
 	@PostMapping("comment")
 	@ResponseBody
-	public ResponseEntity<Map<String, Object>> recipeComment(@RequestBody RecipeReplyDTO recipeReplyDTO, Model model, RecipeDTO recipeDTO) {
-	 Map<String, Object> response = new HashMap<String, Object>();
+	public ResponseEntity<Map<String, Object>> recipeComment(@RequestBody RecipeReplyDTO recipeReplyDTO, Model model,
+			RecipeDTO recipeDTO) {
+		Map<String, Object> response = new HashMap<String, Object>();
 //		    
 //		System.out.println(recipeReplyDTO.getRecipe_num());
 //		System.out.println(recipeReplyDTO.getBoard_content());
@@ -273,33 +273,34 @@ public class RecipeController {
 //			model.addAttribute("url", "/recipe/detail?recipe_num=" + recipeReplyDTO.getRecipe_num());
 //			return "/recipe/message";
 //		}
-		   try {
-		        // Print debug information
-		        System.out.println("recipe_num: " + recipeReplyDTO.getRecipe_num());
-		        System.out.println("board_content: " + recipeReplyDTO.getBoard_content());
-		        System.out.println("recipe_reply_num: " + recipeReplyDTO.getRecipe_reply_num());
+		try {
+			// Print debug information
+			System.out.println("recipe_num: " + recipeReplyDTO.getRecipe_num());
+			System.out.println("board_content: " + recipeReplyDTO.getBoard_content());
+			System.out.println("recipe_reply_num: " + recipeReplyDTO.getRecipe_reply_num());
 
-		        int result = recipeService.recipeComment(recipeReplyDTO);
+			int result = recipeService.recipeComment(recipeReplyDTO);
 
-		        if (result > 0) {
-		            response.put("success", true);
-		            response.put("message", "답글 등록이 완료됐습니다.");
-		        } else {
-		            response.put("success", false);
-		            response.put("message", "답글 등록에 실패했습니다.");
-		        }
-		    } catch (Exception e) {
-		        e.printStackTrace();
-		        response.put("success", false);
-		        response.put("message", "서버 오류가 발생했습니다.");
-		    }
+			if (result > 0) {
+				response.put("success", true);
+				response.put("message", "답글 등록이 완료됐습니다.");
+			} else {
+				response.put("success", false);
+				response.put("message", "답글 등록에 실패했습니다.");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			response.put("success", false);
+			response.put("message", "서버 오류가 발생했습니다.");
+		}
 
-		    return ResponseEntity.ok(response);
+		return ResponseEntity.ok(response);
 	}
+
 	@GetMapping("getReplies")
 	public ResponseEntity<List<RecipeReplyDTO>> getReplies(@RequestParam Long recipe_reply_num) {
-	    List<RecipeReplyDTO> replies = recipeService.getReplies(recipe_reply_num);
-	    return ResponseEntity.ok(replies);
+		List<RecipeReplyDTO> replies = recipeService.getReplies(recipe_reply_num);
+		return ResponseEntity.ok(replies);
 	}
 
 }

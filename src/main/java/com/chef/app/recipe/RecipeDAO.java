@@ -7,8 +7,6 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.chef.app.food.StoreImgFileDTO;
-
 @Repository
 public class RecipeDAO {
 	@Autowired
@@ -70,6 +68,10 @@ public class RecipeDAO {
 		return sqlSession.selectList(NAMESPACE + "reviewList", recipeReviewDTO);
 	}
 
+	public int reviewUpdate(RecipeReviewDTO recipeReviewDTO) {
+		return sqlSession.update(NAMESPACE + "reviewUpdate", recipeReviewDTO);
+	}
+
 	public int hit(RecipeDTO recipeDTO) {
 		return sqlSession.update(NAMESPACE + "hit", recipeDTO);
 	}
@@ -97,34 +99,30 @@ public class RecipeDAO {
 		return sqlSession.selectOne(NAMESPACE + "getParentReply", recipe_reply_num);
 	}
 
-	public int replyUpdateInsert(RecipeReplyDTO recipeReplyDTO) {
-		return sqlSession.update(NAMESPACE+"replyUpdateInsert", recipeReplyDTO);
-	}
-
 	public List<RecipeReplyDTO> findParent(RecipeReplyDTO recipeReplyDTO) {
-		return sqlSession.selectList(NAMESPACE+"findParent", recipeReplyDTO);
+		return sqlSession.selectList(NAMESPACE + "findParent", recipeReplyDTO);
 	}
 
 	public int stepUpdate(RecipeReplyDTO recipeReplyDTO) {
-		return sqlSession.update(NAMESPACE+"stepUpdate", recipeReplyDTO);
-		
+		return sqlSession.update(NAMESPACE + "stepUpdate", recipeReplyDTO);
+
 	}
 
 	public int adminReplySubmit(RecipeReplyDTO recipeReplyDTO) {
-		return sqlSession.insert(NAMESPACE+"adminReplySubmit", recipeReplyDTO);
+		return sqlSession.insert(NAMESPACE + "adminReplySubmit", recipeReplyDTO);
 	}
 
 	public int recipeUpdate(RecipeDTO recipeDTO) {
 		return sqlSession.update(NAMESPACE + "recipeUpdate", recipeDTO);
 	}
-	public int updateRecipeImg (RecipeImgFileDTO recipeImgFileDTO) throws Exception {
-		return sqlSession.update(NAMESPACE+"updateRecipeImg", recipeImgFileDTO);
+
+	public int updateRecipeImg(RecipeImgFileDTO recipeImgFileDTO) throws Exception {
+		return sqlSession.update(NAMESPACE + "updateRecipeImg", recipeImgFileDTO);
 	}
 
 	public int recipeDelete(RecipeDTO recipeDTO) {
-		return sqlSession.update(NAMESPACE+"detailDelete", recipeDTO);
+		return sqlSession.update(NAMESPACE + "recipeDelete", recipeDTO);
 	}
-	
 
 //	public Long getNum() {
 //

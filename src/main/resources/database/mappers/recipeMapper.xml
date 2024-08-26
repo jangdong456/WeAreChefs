@@ -94,7 +94,7 @@
 						</otherwise>  
 						
 					 </choose>
-		
+				AND RECIPE_DEL = 'N'
 		            ORDER BY 		      
     			 	
 					<choose>
@@ -121,7 +121,7 @@
     	
     	 <resultMap type="RecipeDTO" id="recipeImgName">
 		   	<id column="RECIPE_NUM" property="recipe_num"/>
-		   	<result column="RECIPE_WRITER" property="recipe_writer"/>
+		   	<result column="MEMBER_ID" property="member_id"/>
 		   	<result column="RECIPE_NAME" property="recipe_name"/>
 		   	<result column="MENU_RECIPE" property="menu_recipe"/>
 		   	<result column="CREATE_DATE" property="create_date"/>
@@ -185,10 +185,10 @@
 	   	RECIPE_FILE_NAME = #{file_name} 
 	   	WHERE RECIPE_NUM = #{recipe_num}
    </update>
-    <update id="recipeDelete" parameterType="FoodDTO">
-   		DELETE 
-		RECIPE 
-		WHERE RECIPE_NUM = #{recipe_num}
+    <update id="recipeDelete" parameterType="RecipeDTO">
+   		UPDATE RECIPE 
+   		SET RECIPE_DEL = 'Y'
+		WHERE RECIPE_NUM= #{recipe_num}
    </update>
 	  
 	<insert id="mainImg" parameterType="RecipeImgFileDTO">
@@ -201,7 +201,7 @@
 								   REVIEW_NUM
 								 , RECIPE_NUM
 								 , MEMBER_ID
-								 , BOARD_TITLE	
+								
 								 , BOARD_CONTENT	
 								 , RECIPE_RATING	
 								 )
@@ -210,7 +210,7 @@
    									RECIPEREVIEW_SEQ.NEXTVAL
    									, #{recipe_num}
    									, #{member_id}
-   									, #{board_title}
+   									
    									, #{board_content}
    									, #{recipe_rating}
    									)
@@ -283,7 +283,7 @@
 				 
 		FROM RECIPEREPLY
 		WHERE RECIPE_NUM = #{recipe_num}
-		ORDER BY CREATE_DATE DESC
+		ORDER BY REF DESC, STEP ASC
 		
 	</select>
 	
@@ -328,9 +328,13 @@
 											  ) -->
 								   							
 	</insert>
-	<update id="replyUpdateInsert" parameterType="RecipeReplyDTO">
-   	UPDATE RECIPEREPLY SET UPDATE_DATE =SYSDATE ,BOARD_CONTENT =#{board_content} WHERE RECIPE_REPLY_NUM = #{recipe_reply_num}
+	<update id="reviewUpdate" parameterType="RecipeReviewDTO">
+   	UPDATE RECIPEREVIEW 
+   		SET UPDATE_DATE =SYSDATE 
+   		,BOARD_CONTENT =#{board_content} 
+   	WHERE RECIPE_REPLY_NUM = #{recipe_reply_num}
    </update>
+   
 	<update id="replyUpdate" parameterType="RecipeDTO">
 			 UPDATE RECIPE
 		    SET STEP = STEP +1

@@ -12,9 +12,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.chef.app.file.FileManager;
-import com.chef.app.food.StoreImgFileDTO;
-import com.chef.app.food.StoreMidOrderDTO;
-
 
 @Service
 public class RecipeService {
@@ -121,10 +118,10 @@ public class RecipeService {
 
 		return recipeDAO.recipeReply(recipeReplyDTO);
 	}
-	
-	public int replyUpdateInsert(RecipeReplyDTO recipeReplyDTO) throws Exception {
-		
-		return recipeDAO.replyUpdateInsert(recipeReplyDTO);
+
+	public int reviewUpdate(RecipeReviewDTO recipeReviewDTO) throws Exception {
+
+		return recipeDAO.reviewUpdate(recipeReviewDTO);
 	}
 
 	public List<RecipeReviewDTO> replyList(RecipeReplyDTO recipeReplyDTO, RecipeDTO recipeDTO) {
@@ -136,78 +133,75 @@ public class RecipeService {
 	public int recipeComment(RecipeReplyDTO recipeReplyDTO) {
 		// RecipeDTO recipeDTO;
 		Long ref = recipeReplyDTO.getRecipe_reply_num();
-		
+
 		recipeReplyDTO.setRef(ref);
-		
+
 		Long maxStep = 0L;
-		Long maxDepth = 0L;	
-		//List<RecipeReplyDTO> list = RecipeDTO.getRef();
-		
-		List<RecipeReplyDTO> parents = recipeDAO.findParent(recipeReplyDTO);	
-		for(RecipeReplyDTO p : parents) {
-			
-		    if (p.getStep() > maxStep) {
-		        maxStep = p.getStep();
-		    }
-		    if (p.getDepth() > maxDepth) {
-		        maxDepth = p.getDepth();
-		    }
-			
-		    recipeDAO.stepUpdate(p);
+		Long maxDepth = 0L;
+		// List<RecipeReplyDTO> list = RecipeDTO.getRef();
+
+		List<RecipeReplyDTO> parents = recipeDAO.findParent(recipeReplyDTO);
+		for (RecipeReplyDTO p : parents) {
+
+			if (p.getStep() > maxStep) {
+				maxStep = p.getStep();
+			}
+			if (p.getDepth() > maxDepth) {
+				maxDepth = p.getDepth();
+			}
+
+			recipeDAO.stepUpdate(p);
 		}
-		
-		
-		recipeReplyDTO.setStep(maxStep+1);
-		recipeReplyDTO.setDepth(maxDepth+1);		
-		
+
+		recipeReplyDTO.setStep(maxStep + 1);
+		recipeReplyDTO.setDepth(maxDepth + 1);
+
 		return recipeDAO.adminReplySubmit(recipeReplyDTO);
 	}
-	//부모글의 모든 자식글 찾기
+
+	// 부모글의 모든 자식글 찾기
 	public List<RecipeReplyDTO> getReplies(Long recipe_reply_num) {
-	    RecipeReplyDTO recipeReplyDTO = new RecipeReplyDTO();
-	    recipeReplyDTO.setRecipe_reply_num(recipe_reply_num);
-	    
-	    return recipeDAO.findParent(recipeReplyDTO);
+		RecipeReplyDTO recipeReplyDTO = new RecipeReplyDTO();
+		recipeReplyDTO.setRecipe_reply_num(recipe_reply_num);
+
+		return recipeDAO.findParent(recipeReplyDTO);
 	}
 
-	public int recipeUpdate(RecipeDTO recipeDTO,MultipartFile attach,HttpSession session) throws Exception {
-		
+	public int recipeUpdate(RecipeDTO recipeDTO, MultipartFile attach, HttpSession session) throws Exception {
 
-		int result =  recipeDAO.recipeUpdate(recipeDTO);
+		int result = recipeDAO.recipeUpdate(recipeDTO);
 		Long recipeNum = recipeDTO.getRecipe_num();
-		
-		if(!attach.isEmpty()) {
-			
+
+		if (!attach.isEmpty()) {
+
 			ServletContext servletContext = session.getServletContext();
 			String path = servletContext.getRealPath("resources/upload/recipes");
 			System.out.println(path);
-			
+
 			String fileName = fileManager.fileSave(path, attach);
 			RecipeImgFileDTO recipeImgFileDTO = new RecipeImgFileDTO();
 			recipeImgFileDTO.setFile_name(fileName);
 			recipeImgFileDTO.setRecipe_num(recipeNum);
-			
+
 			result = recipeDAO.updateRecipeImg(recipeImgFileDTO);
 
 			return result;
-		}	
+		}
 		String notChange = recipeDTO.getRecipeImgFileDTO().getFile_name();
-		
+
 		RecipeImgFileDTO recipeImgFileDTO = new RecipeImgFileDTO();
 		recipeImgFileDTO.setFile_name(notChange);
 		recipeImgFileDTO.setRecipe_num(recipeNum);
-		
+
 		result = recipeDAO.updateRecipeImg(recipeImgFileDTO);
-		
+
 		return result;
-		
-	
-		//return recipeDAO.recipeUpdate(recipeDTO);
+
+		// return recipeDAO.recipeUpdate(recipeDTO);
 	}
 
 	public int recipeDelete(RecipeDTO recipeDTO) {
 		return recipeDAO.recipeDelete(recipeDTO);
 	}
-
 
 }
