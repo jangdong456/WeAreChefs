@@ -189,7 +189,64 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="stockList" resultType="FoodDTO">
 		SELECT *
 		FROM FOOD
+		<![CDATA[
+			WHERE FOOD_STOCK >= 0
+		]]>
+		ORDER BY FOOD_STOCK DESC
+	</select>
+	
+	<select id="stockLackList" resultType="FoodDTO">
+		SELECT *
+		FROM FOOD
+		<![CDATA[
+			WHERE FOOD_STOCK < 0
+		]]>
+		ORDER BY FOOD_STOCK DESC
+		</select>
+	
+	<select id="stockCartList" resultType="StockCartDTO">
+		SELECT *
+		FROM STOCK_CART
 	</select>
 
+	<select id="getStockBuyingSeq" resultType="java.lang.Long">
+		SELECT STOCK_BUYING_SEQ.NEXTVAL FROM DUAL
+	</select>
+	
+	<insert id="addStockBuying" parameterType="StockBuyingDTO">
+		INSERT INTO STOCK_BUYING
+		VALUES(#{buying_num}, #{buying_total_price}, SYSDATE)
+	</insert>
+	
+	<insert id="addStockMidBuying" parameterType="StockMidBuyingDTO">
+		INSERT INTO STOCK_MID_BUYING
+		VALUES(
+			STOCK_MID_BUYING_SEQ.NEXTVAL,
+			#{buying_num},
+			#{food_num},
+			#{food_count},
+			#{food_price},
+			SYSDATE,
+			#{food_category},
+			#{food_one_price},
+			#{food_name}
+		)
+	</insert>
+	
+	<update id="updateFoodStock" parameterType="StockMidBuyingDTO">
+		UPDATE FOOD
+		SET 
+			FOOD_STOCK = FOOD_STOCK + #{food_count}
+		WHERE FOOD_NAME = #{food_name}
+	</update>
+	<!-- add Items -->
+	<insert id="addItems" parameterType="FoodDTO">
+		INSERT INTO FOOD(FOOD_NUM, FOOD_CATEGORY, FOOD_NAME, FOOD_BUYING, FOOD_PRICE)
+		VALUES(FOOD_SEQ.NEXTVAL, #{food_category}, #{food_name}, #{food_buying}, #{food_price})
+	</insert>
+	
+
+	
+	
 
 </mapper>

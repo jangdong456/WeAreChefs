@@ -292,7 +292,6 @@ divDetail.addEventListener("click", (e)=>{
 
   // 수정 완료
   if(id == 'completeBtn'){
-    console.log('비번' + memberPw.value);
     if(bMemberNickname == false && bMemberName == false && bMemberMail == false && bMemberPhone == false){
       let form = new FormData();
       form.append("member_id", memberId.value);

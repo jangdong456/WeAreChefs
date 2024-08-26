@@ -274,7 +274,6 @@ for(i=0;i<12;i++){
 	if(purSales[i] === undefined || purSales[i] === null){
 		purSales[i] = 0;
 	}
-	console.log(i + '하하' + purSales[i].value);
 }
 
 var statisticsChart = new Chart(ctx, {

@@ -10,6 +10,9 @@ import org.springframework.stereotype.Service;
 import com.chef.app.food.FoodDTO;
 import com.chef.app.food.StoreOrderDTO;
 import com.chef.app.manager.OriMemberDTO;
+import com.chef.app.manager.StockBuyingDTO;
+import com.chef.app.manager.StockCartDTO;
+import com.chef.app.manager.StockMidBuyingDTO;
 import com.chef.app.manager.TotalPurchaseDTO;
 import com.chef.app.member.MemberDAO;
 import com.chef.app.member.MemberDTO;
@@ -122,5 +125,71 @@ public class ManagerService {
 	// STOCK LIST ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 	public List<FoodDTO> stockList() throws Exception{
 		return managerDAO.stockList();
+	}
+	
+	public List<FoodDTO> stockLackList() throws Exception{
+		return managerDAO.stockLackList();
+	}
+	
+	public List<StockCartDTO> stockCartList() throws Exception{
+		return managerDAO.stockCartList();
+	}
+	
+	// 상품 구매
+	public int buyingStock(StockMidBuyingDTO [] ar) throws Exception{
+		// StockBuying 값 insert
+		Long seq = managerDAO.getStockBuyingSeq();
+		Long sum = 0L;
+		for(StockMidBuyingDTO a : ar) {
+			sum = sum + a.getFood_price();
+		}
+		StockBuyingDTO stockBuyingDTO = new StockBuyingDTO();
+		stockBuyingDTO.setBuying_num(seq);
+		stockBuyingDTO.setBuying_total_price(sum);
+		int resultOne = managerDAO.addStockBuying(stockBuyingDTO);
+		
+		// StockMidBuying 값 insert
+		
+		boolean flag1 = true;
+		boolean flag2 = true;
+		
+		for(StockMidBuyingDTO a : ar) {
+			a.setBuying_num(seq);
+			int resultTwo = managerDAO.addStockMidBuying(a);
+			int resultThree = managerDAO.updateFoodStock(a);
+			System.out.println("2 : " + resultTwo);
+			System.out.println("3 : " + resultThree);
+			if(resultTwo == 0) {
+				flag1 = false;
+			}
+			if(resultThree == 0) {
+				flag2 = false;
+			}
+		}
+		
+		if(resultOne == 1 && flag1 == true && flag2 == true) {
+			return 1;
+		}else {
+			return 0;
+		}
+	}
+	
+	// add items to food table. When click addBtn.
+	public void addItems(FoodDTO [] ar) throws Exception{
+		FoodDTO foodDTO = new FoodDTO();
+		int i = 0;
+		for(FoodDTO a : ar) {
+			System.out.println(" @@ service : " + i);
+			System.out.println("종류 : " + a.getFood_category());
+			System.out.println("이름 : "+a.getFood_name());
+			System.out.println("구매가 : " + a.getFood_buying());
+			System.out.println("판매가 : " + a.getFood_price());
+			//int result = managerDAO.addItems(a);
+			//System.out.println("r : " + result);
+			System.out.println(" $$ sr");
+			i++;
+		}		
+
+//		return managerDAO.addItems(ar);
 	}
 }

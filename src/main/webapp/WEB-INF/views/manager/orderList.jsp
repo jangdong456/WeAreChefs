@@ -151,8 +151,6 @@
 	<script src="/resources/assets/js/plugin/sweetalert/sweetalert.min.js"></script>
 	<!-- Datatables -->
 	<script src="/resources/assets/js/plugin/datatables/datatables.min.js"></script>
-  <!-- orderList Js -->
-  <script src="/resources/js/jerry/orderList.js"></script>
   <!-- 검색 및 정렬 -->
   <script>
     $(document).ready(function () {

@@ -19,6 +19,9 @@
 	<c:import url="/WEB-INF/views/managerCommons/sidebar.jsp"></c:import>
 	<c:import url="/WEB-INF/views/managerCommons/header.jsp"></c:import>
 	<!--@------------------------------------------------------------------ Start Main -------------------------------------------------------------------------------->
+
+
+
 	<div class="container">
 		<div class="page-inner">
 			
@@ -180,6 +183,7 @@
 			<div class="row">
 
 				<!--@--------------------------------------------------Start 신규 유저 목록-------------------------------------------------------->
+
 				<div class="col-md-4">
 					<div class="card card-round">
 						<div class="card-body">
@@ -330,5 +334,7 @@
 			fillColor: "rgba(255, 165, 52, .14)",
 		});
 	</script>
+
+<script src="/resources/js/jerry/fetch.js"></script>
 </body>
 </html>

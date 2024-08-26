@@ -9,6 +9,9 @@ import org.springframework.stereotype.Repository;
 import com.chef.app.food.FoodDTO;
 import com.chef.app.food.StoreOrderDTO;
 import com.chef.app.manager.OriMemberDTO;
+import com.chef.app.manager.StockBuyingDTO;
+import com.chef.app.manager.StockCartDTO;
+import com.chef.app.manager.StockMidBuyingDTO;
 import com.chef.app.manager.TotalPurchaseDTO;
 import com.chef.app.member.MemberDTO;
 
@@ -120,6 +123,35 @@ public class ManagerDAO {
 	// STOCK LIST ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 	public List<FoodDTO> stockList() throws Exception{
 		return sqlSession.selectList(NAMESPACE + "stockList");
+	}
+	
+	public List<FoodDTO> stockLackList() throws Exception{
+		return sqlSession.selectList(NAMESPACE + "stockLackList");
+	}
+	
+	public List<StockCartDTO> stockCartList() throws Exception{
+		return sqlSession.selectList(NAMESPACE + "stockCartList");
+	}
+	
+	public Long getStockBuyingSeq() throws Exception{
+		return sqlSession.selectOne(NAMESPACE + "getStockBuyingSeq");
+	}
+	
+	public int addStockBuying(StockBuyingDTO stockBuyingDTO) throws Exception{
+		return sqlSession.insert(NAMESPACE + "addStockBuying", stockBuyingDTO);
+	}
+	
+	
+	public int addStockMidBuying(StockMidBuyingDTO stockMidBuyingDTO) throws Exception{
+		return sqlSession.insert(NAMESPACE + "addStockMidBuying", stockMidBuyingDTO);
+	}
+	public int updateFoodStock(StockMidBuyingDTO stockMidBuyingDTO) throws Exception{
+		return sqlSession.update(NAMESPACE + "updateFoodStock", stockMidBuyingDTO);
+	}
+	
+	// add items
+	public int addItems(FoodDTO foodDTO) throws Exception{
+		return sqlSession.insert(NAMESPACE + "addItems", foodDTO);
 	}
 	
 }

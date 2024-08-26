@@ -7,10 +7,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.chef.app.food.FoodDTO;
 import com.chef.app.food.StoreOrderDTO;
 import com.chef.app.manager.OriMemberDTO;
+import com.chef.app.manager.StockBuyingDTO;
+import com.chef.app.manager.StockMidBuyingDTO;
 import com.chef.app.manager.TotalPurchaseDTO;
 import com.chef.app.member.MemberDTO;
 
@@ -227,7 +231,26 @@ public class ManagerController {
 	@GetMapping("stockList")
 	public String stockList(Model model) throws Exception{
 		model.addAttribute("stockList", managerService.stockList());
+		model.addAttribute("stockLackList", managerService.stockLackList());
+		model.addAttribute("stockCartList", managerService.stockCartList());
 		return "manager/stockList";
 	}
-//끝
+	
+	// 재고 구매
+	@PostMapping("buyingStock")
+	public String buyingStock(@RequestBody StockMidBuyingDTO [] ar, Model model) throws Exception{
+		int result = managerService.buyingStock(ar);
+		System.out.println("최종 결과 : " + result);
+		model.addAttribute("msg", result);
+		return "commons/result";
+	}
+	
+	// add items to food table. When click addBtn.
+	@PostMapping("addItems")
+	public void addItems(@RequestBody FoodDTO [] ar, Model model) throws Exception{
+		managerService.addItems(ar);
+	}
+	
+	
+	//#@@@@@@@@@@@@@@@@22 끝
 }
