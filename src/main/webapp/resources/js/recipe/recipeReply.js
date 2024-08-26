@@ -3,8 +3,8 @@ const replyBtn = document.getElementsByClassName("replyBtn");
 const reviewUpBtn = document.getElementsByClassName("reviewUpBtn");
 
 const recipe_num = document.getElementById("recipe_num");
-const updateDiv = document.getElementsByClassName("updateDiv")
-
+const updateDiv = document.getElementsByClassName("updateDiv");
+const updateDiv2 = document.getElementsByClassName("updateDiv2");
 
 // const replyList = document.getElementsByClassName("replyList");
 let count = 0;
@@ -199,8 +199,36 @@ navmission.addEventListener("click", (e) => {
 
 }
 
-  
+})
 
+const navmission2 = document.getElementById("nav-mission2")
+
+navmission2.addEventListener("click", (e) => {
+ 
+if (e.target.classList.contains('replyUpdateBtn')) {
+   alert("수정");
+
+  let num = e.target.getAttribute("data-reply-num");
+  let conentup = e.target.getAttribute("data-reply-content");
+
+
+  if (e.target.id == "updateReply" + num) {
+
+   fetch("/recipe/replyUpdate", {
+     method: "POST",
+     headers: {"Content-type": "application/x-www-form-urlencoded"},
+     body:"recipe_reply_num=" + num + "&board_content=" + conentup
+   })
+     .then(r => r.text())
+     .then(r => {
+       for (let div of updateDiv2) {
+         if (div.getAttribute("data-reply-num") == num) {
+           div.innerHTML = r;
+         }
+       }
+     })
+
+ }}
 })
 
 

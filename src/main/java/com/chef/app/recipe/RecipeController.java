@@ -217,7 +217,8 @@ public class RecipeController {
 
 	@PostMapping("replyUpdate")
 	public String replyUpdate(RecipeReplyDTO recipeReplyDTO, Model model) throws Exception {
-
+		System.out.println(recipeReplyDTO.getBoard_content());
+		System.out.println(recipeReplyDTO.getRecipe_reply_num());
 		model.addAttribute("dto", recipeReplyDTO);
 
 		return "recipe/replyUpdate";
