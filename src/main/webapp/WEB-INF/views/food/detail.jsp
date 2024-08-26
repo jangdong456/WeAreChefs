@@ -246,7 +246,7 @@
                                             <c:if test="${a.member_id=='12341234'}">
                                             	<h5>↪<운영자 답변>💕</h5>
                                             </c:if>
-                                                <p class="mb-2" style="font-size: 14px;">${a.create_date}</p>
+                                                <p class="mb-2" style="font-size: 14px;">${a.update_date}</p>
                                                 
                                                     <c:if test="${a.member_id!='12341234'}">  
                                                     <h5>${a.member_id}</h5>
