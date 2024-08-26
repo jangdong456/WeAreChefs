@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.chef.app.food.StoreReplyDTO;
 import com.chef.app.member.MemberDTO;
 
 @Controller
@@ -223,16 +224,37 @@ public class RecipeController {
 
 	}
 
-	@PostMapping("reviewUpdate")
-	public String reviewUpdate(RecipeReviewDTO recipeReviewDTO, Model model) throws Exception {
+	@PostMapping("replyUpdateInsert")
+	public String replyUpdateInsert(RecipeReviewDTO recipeReviewDTO, Model model) throws Exception {
+
 
 		System.out.println(recipeReviewDTO.getBoard_content());
 		System.out.println(recipeReviewDTO.getReview_num());
-		int result = recipeService.reviewUpdate(recipeReviewDTO);
+		int result = recipeService.replyUpdateInsert(recipeReviewDTO);
 
 		model.addAttribute("msg", result);
 		return "commons/result";
 
+	}
+	
+	@PostMapping("reviewUpdate")
+	public String reviewUpdate(RecipeReviewDTO recipeReviewDTO, Model model) throws Exception {
+
+	
+		//int result = recipeService.reviewUpdate(recipeReviewDTO);
+
+		model.addAttribute("dto", recipeReviewDTO);
+		return "recipe/reviewUpdate";
+
+	}
+	@PostMapping("reviewDelete")
+	public String reviewDelete(RecipeReviewDTO recipeReviewDTO,HttpSession session,Model model) throws Exception {
+			
+		int result = recipeService.reviewDelete(recipeReviewDTO);
+		
+		model.addAttribute("msg", result);
+		return "commons/result";
+		
 	}
 
 	@PostMapping("comment")

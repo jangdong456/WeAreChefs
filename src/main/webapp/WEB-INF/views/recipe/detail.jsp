@@ -133,6 +133,25 @@
     font-size: 14px;
     margin-left: auto; /* Ensures the button moves to the right */
 }
+
+.child{
+	padding-left: 70px;
+}
+.updateDiv {
+    display: flex;
+    justify-content: space-between; /* Distributes space between the text and button */
+    align-items: center; /* Aligns items vertically in the center */
+}
+
+.updateDiv p {
+    margin: 0; /* Removes default margin for proper alignment */
+}
+
+.reviewUpdateBtn {
+    margin-left: auto; /* Ensures the button moves to the right */
+    font-size: 14px;
+    margin-bottom: 11px;
+}
 </style>
 </head>
 
@@ -257,7 +276,7 @@
 								</div>
 								<!--기본적으로 숨겨져있는 클래스  -->
 								<!-- 리뷰 -->
-								<div class="tab-pane" id="nav-mission" role="tabpanel"
+								<div class="tab-pane" id="nav-mission" role="tabpanel" data-recipe-num="${dto.recipe_num}"
 									aria-labelledby="nav-mission-tab">
 									<c:forEach items="${ar}" var="ar">
 										<div class="d-flex">
@@ -333,21 +352,21 @@
 														</c:choose>
 														
 													</div>
-                                                    <div class="ml-auto updateDiv" data-review-num="${ar.review_num}">
-	                                                    <c:if test="${dto.member_id eq member.member_id}">
-														    <button class="btn text-primary rounded-pill reviewUpdateBtn" data-review-num="${ar.review_num}"
-                                                            data-review-content="${ar.board_content}" style="font-size: 14px;margin-bottom: 11px;" id="updateReviwe${ar.review_num}">수정</button>
-														</c:if>
-                                                        <!-- <div class="reviewUpdate">
-
-                                                        </div> -->
-                                                    </div>
-                                                   
-													
 												</div>
-	
-													
-												<p>${ar.board_content}</p>
+												
+												<div class="ml-auto updateDiv d-flex justify-content-between align-items-center" data-review-num="${ar.review_num}">
+													<p class="mb-0">${ar.board_content}</p>
+													<c:if test="${dto.member_id eq member.member_id}">
+														<button class="btn text-primary rounded-pill reviewUpdateBtn ms-auto" data-review-num="${ar.review_num}"
+														data-review-content="${ar.board_content}" style="font-size: 14px;margin-bottom: 11px;" id="updateReviwe${ar.review_num}">수정</button>
+
+														<button class="btn text-primary rounded-pill reviewDeleteBtn ms-auto" data-review-num="${ar.review_num}"
+														data-review-content="${ar.board_content}" style="font-size: 14px;margin-bottom: 11px;" id="deleteReviwe${ar.review_num}">삭제</button>
+													</c:if>
+													<!-- <div class="reviewUpdate">
+
+													</div> -->
+												</div>
 											</div>
 										</div>
 										<hr>
@@ -358,8 +377,15 @@
 								<div class="tab-pane" id="nav-mission2" role="tabpanel"
 									aria-labelledby="nav-mission2-tab">
 									<c:forEach items="${ar2}" var="ar" varStatus="i">
+										<c:choose>
+											<c:when test="${ar.step!=0}">
+												<div class="d-flex child">
+											</c:when>
+											<c:otherwise>
+												<div class="d-flex">
 
-										<div class="d-flex">
+											</c:otherwise>
+										</c:choose>
 											<%-- <c:choose> --%>
 												<!--부모글이면  -->
 												<%-- <c:when test="${ar.step==0}">
@@ -400,16 +426,16 @@
 
 												</div>
 
-												<!-- 다음 인덱스랑 비교해서 REF가 같지 않으면 HR -->
-												<c:if test="${ar.ref ne ar2[i.index+1].ref}">
-													<hr class="border opacity-100 mb-5">
-												</c:if>
+												
 
 												<!--  <div class="replyListParent"> -->
 
 											</div>
 										</div>
-
+										<!-- 다음 인덱스랑 비교해서 REF가 같지 않으면 HR -->
+										<c:if test="${ar.ref ne ar2[i.index+1].ref}">
+											<hr class="border opacity-100 mb-5">
+										</c:if>
 									</c:forEach>
 								</div>
 							</div>

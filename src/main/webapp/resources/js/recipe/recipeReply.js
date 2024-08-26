@@ -3,6 +3,7 @@ const replyBtn = document.getElementsByClassName("replyBtn");
 const reviewUpBtn = document.getElementsByClassName("reviewUpBtn");
 
 const recipe_num = document.getElementById("recipe_num");
+const updateDiv = document.getElementsByClassName("updateDiv")
 
 
 // const replyList = document.getElementsByClassName("replyList");
@@ -50,15 +51,9 @@ document.querySelectorAll('.replyBtn').forEach(function (element) {
     //댓글 서버로 보내기
 
     btn.addEventListener("click", function () {
-      //  console.log(textarea.value);
-      // let recipe_reply_num = parseInt(this.closest(".replyListParent").querySelector(".recipe_reply_num").value,10);
-      //  console.log(recipe_reply_num);
-
+ 
       let recipe_reply_num = this.closest(".replyListParent").querySelector(".recipe_reply_num").value;
-      //let parsedReplyNum = parseInt(recipe_reply_num, 10); // Ensure it's a number
-
-      //let recipe_reply_num_element = this.closest(".replyListParent").querySelector(".recipe_reply_num");
-      //let recipe_reply_num = recipe_reply_num_element ? parseInt(recipe_reply_num_element.value, 10) : null; // Convert to number or set to null
+     
       console.log('recipe_reply_num:', recipe_reply_num);
 
       let recipe_num_value = parseInt(recipe_num.value, 10);
@@ -113,49 +108,15 @@ document.querySelectorAll('.comment').forEach(comment => {
   loadReplies(commentId, replyList);
 });
 
-
-// document.querySelectorAll('.reviewUpBtn').forEach(function(element) {
-//   reviewUpBtn.addEventListener("click",function() {
-//     console.log(this.closest(".reviewParent").querySelector(".reviewUpdateTextarea"));
-//     // if(document.getElementsByClassName('replyTextarea') != null){
-
-//    // if(this.closest(".reviewParent").querySelector(".reviewUpdateTextarea") != null){
-//       // console.log("return");
-//     //   return;
-//     // }
-//   //const uniqueId = "reply_" + count;
-//     let div = document.createElement("div");
-//     div.className="input-group mb-3";
-
-//     let textarea = document.createElement("textarea");
-//     textarea.name="board_content";
-//     textarea.className="form-control reviewUpdateTextarea";
-//     textarea.style.width = "650px";
-//     textarea.style.height = "70px";
-
-//     let btn = document.createElement("button");
-//     btn.type="button";
-//     btn.className="btn btn-outline-secondary";
-
-//     let t = document.createTextNode("완료");
-
-//     btn.appendChild(t);    
-//     div.append(textarea);
-//     div.append(btn);
-
-//    // this.closest(".reviewParent").querySelector(".reviewUpdate").append(div);
-//   })
-// })
 const navmission = document.getElementById("nav-mission")
 
 navmission.addEventListener("click", (e) => {
   if (e.target.classList.contains('reviewUpdateBtn')) {
-    alert("수정");
+   
 
      let num = e.target.getAttribute("data-review-num");
      let conentup = e.target.getAttribute("data-review-content");
-     console.log(num);
-     console.log(conentup);
+    
 
      if (e.target.id == "updateReviwe" + num) {
 
@@ -177,4 +138,69 @@ navmission.addEventListener("click", (e) => {
 
   }
 
+  if(e.target.id=='newUpdate'){
+
+    let updateContent = document.getElementById("updateContent")
+   
+    let num = updateContent.getAttribute("data-review-num")
+    console.log(num);
+    console.log(updateContent);
+
+    fetch("/recipe/replyUpdateInsert", {
+        method:"POST",
+        headers:{"Content-type":"application/x-www-form-urlencoded"},
+        body:"review_num=" + num +"&board_content="+updateContent.value+"&recipe_num="+navmission.getAttribute("data-recipe-num")
+      })
+  
+      .then((r)=>{return r.text()})
+      .then((r)=>{
+        console.log(r)
+        if(r>0){
+            alert("리뷰 수정이 완료됐습니다.")
+            location.reload()
+        }else{
+            alert("리뷰 수정에 실패했습니다.")
+            location.reload()
+        }
+      })
+  
+  }
+
+  if(e.target.classList.contains("reviewDeleteBtn")){
+        
+ 
+    let reviewNum = e.target.getAttribute("data-review-num");
+
+    if(e.target.id=="deleteReviwe"+reviewNum){
+      //alert("삭제");
+        let check = confirm("리뷰를 삭제하시겠습니까?")
+        
+        if(check){
+            fetch("/recipe/reviewDelete",{
+                method:"POST",
+                headers:{"Content-type":"application/x-www-form-urlencoded"},
+                body:"review_num="+reviewNum
+            })
+
+            .then((r)=>{return r.text()})
+            .then((r)=>{
+              console.log(r)
+              if(r>0){
+                  alert("리뷰를 삭제했습니다.")
+                  location.reload()
+              }else{
+                  alert("리뷰 삭제에 실패했습니다.")
+                  location.reload()
+              }
+            })
+
+       }
+    }
+
+}
+
+  
+
 })
+
+
