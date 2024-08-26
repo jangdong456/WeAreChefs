@@ -18,8 +18,21 @@ let introductionId = introductionAdd.getAttribute("data-member-id");
 let introducesId = introductionAdd.getAttribute("data_member_id");
 let profileId = profileAdd.getAttribute("data-member-id");
 
+// list 최신순 오래된순 선택 관련
+const recipeList = document.getElementById("recipeList");
+const recipeListDiv  = document.getElementById("recipeListDiv");
 
-
+recipeList.addEventListener("change", (e) => {
+    
+    fetch("getList?order="+e.target.value, {
+        method : "GET"
+    })
+    .then(res => res.text())
+    .then(res => {
+        console.log(res);
+        recipeListDiv.innerHTML = res;
+    })
+})
 
 profileSnsDelete.addEventListener("click", () => {
 

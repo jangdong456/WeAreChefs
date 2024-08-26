@@ -40,12 +40,6 @@ public class MemberController {
 	@Autowired
 	private Email email;
 	
-	@GetMapping("recipeRecentList")
-	public void recipeRecentList(HttpSession session) throws Exception {
-		MemberDTO memberdto = (MemberDTO)session.getAttribute("member");
-		
-		memberService.recipeRecentList(memberdto);
-	}
 	
 	@GetMapping("prfileSnsDelete")
 	public String prfileSnsDelete(MemberDTO memberDTO, Model model) throws Exception {
@@ -140,34 +134,62 @@ public class MemberController {
 		return url;
 	}
 	
+	@GetMapping("getList")
+	public String getList(Pager pager, Model model, HttpSession session) throws Exception {
+		System.out.println("== @@@@@@@@@@@@@@@@@@@@@@@@@@@@ ==");
+		System.out.println(pager.getOrder());
+		System.out.println(pager.getPage());
+		
+		MemberDTO memberdto = (MemberDTO)session.getAttribute("member");
+		memberdto = memberService.mypage(memberdto);
+
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("memberdto", memberdto);
+		map.put("pager", pager);
+
+		//레시피 작성
+		List<RecipeDTO> recipedto = memberService.recipeList(map);
+		model.addAttribute("recipeList", recipedto);
+		
+		// 상대방 레시피에 작성한 리뷰
+		List<RecipeReviewDTO> recipeReview = memberService.recipeReviewList(map);
+		model.addAttribute("reviewList", recipeReview);
+
+		return "member/recipeList";
+	}
 	
 	@GetMapping("mypage")
 	public void mypage(HttpSession session, Model model, Pager pager) throws Exception {
 		System.out.println("== My Page ==");
-		System.out.println(pager);
+		
+		System.out.println(pager.getPage());
 		
 		MemberDTO memberdto = (MemberDTO)session.getAttribute("member");
 		memberdto = memberService.mypage(memberdto);
 		
-		System.out.println("로그인 한 id:" + memberdto.getMember_id());
-		
-//		test.setRecipe_writer(memberdto.getMember_id());
-		
-//		MemberDTO list = memberService.recipeList(memberdto);
-		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("memberdto", memberdto);
+		map.put("pager", pager);
+				
+		model.addAttribute("member", memberdto);
 		// 작성한 레시피 리스트
-		List<RecipeDTO> recipedto = memberService.recipeList(memberdto);
+		List<RecipeDTO> recipedto = memberService.recipeList(map);
 		model.addAttribute("recipeList", recipedto);
 
 		// 상대방 레시피에 작성한 리뷰
-		List<RecipeReviewDTO> recipeReview = memberService.recipeReviewList(memberdto);
+		List<RecipeReviewDTO> recipeReview = memberService.recipeReviewList(map);
+//		model.addAttribute("recipeList", recipeReview);
 		model.addAttribute("reviewList", recipeReview);
 		
 		// 상대방 레시피에 작성한 댓글
-		List<RecipeReplyDTO> recipeReply = memberService.recipeReplyList(memberdto); 
+		List<RecipeReplyDTO> recipeReply = memberService.recipeReplyList(map);
+//		model.addAttribute("recipeList", recipeReply);
 		model.addAttribute("recipeReply", recipeReply);
 		
-		model.addAttribute("member", memberdto);
+		// 최근 작성한 레시피 상위3개
+		List<RecipeDTO> recentyList = memberService.recipeRecentList();
+		model.addAttribute("recentyList", recentyList);
+		
 	}
 	
 	@PostMapping("mypage")

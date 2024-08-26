@@ -78,7 +78,7 @@ public class FoodController {
 	public void getList(Pager pager,Model model,HttpSession session) throws Exception{
 		
 		MemberDTO memberDTO = (MemberDTO)session.getAttribute("member");
-		
+				
 		List<FoodDTO> ar =foodService.getList(pager);
 		List<Map<String, Object>> categoryCount =foodService.categoryCount();
 		model.addAttribute("pager", pager);
@@ -90,7 +90,7 @@ public class FoodController {
 	
 	@PostMapping("list")
 	public String getListSearch(Pager pager,Model model) throws Exception{
-
+		
 		List<FoodDTO> ar =foodService.getList(pager);
 		List<Map<String, Object>> categoryCount =foodService.categoryCount();
 		model.addAttribute("pager", pager);

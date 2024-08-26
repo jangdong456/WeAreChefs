@@ -30,8 +30,9 @@ public class MemberService {
 	@Autowired
 	private FileManager fileManager;
 	
-	public void recipeRecentList(MemberDTO memberDTO) throws Exception {
-		memberDAO.recipeRecentList(memberDTO);
+	
+	public List<RecipeDTO> recipeRecentList() throws Exception {
+		return memberDAO.recipeRecentList();
 	}
 	
 	public int prfileSnsDelete(MemberDTO memberDTO) throws Exception {
@@ -69,16 +70,39 @@ public class MemberService {
 		return check;
 	}
 				
-	public List<RecipeReplyDTO> recipeReplyList(MemberDTO test) throws Exception {
-		return memberDAO.recipeReplyList(test);
+	public List<RecipeReplyDTO> recipeReplyList(Map<String, Object> map) throws Exception {
+		return memberDAO.recipeReplyList(map);
 	}
 	
-	public List<RecipeReviewDTO> recipeReviewList(MemberDTO test) throws Exception {
-		return memberDAO.recipeReviewList(test);
+	public List<RecipeReviewDTO> recipeReviewList(Map<String, Object> map) throws Exception {
+		Long totalRow = memberDAO.getTotalCount(map);
+		System.out.println("=== 총 토탈 갯수 반환 값 : ===" + totalRow);
+		
+		if(totalRow==0) {
+			totalRow=1L;
+		}
+		
+		Pager pager = (Pager)map.get("pager");
+		pager.makeRow(8L);
+		pager.makeNum(totalRow, 8L, 5L);
+			
+		return memberDAO.recipeReviewList(map);
 	}
 	
-	public List<RecipeDTO> recipeList(MemberDTO test) throws Exception {
-		return memberDAO.recipeList(test);
+	public List<RecipeDTO> recipeList(Map<String, Object> map) throws Exception {
+		Long totalRow = memberDAO.getTotalCount(map);
+		System.out.println("=== 총 토탈 갯수 반환 값 : ===" + totalRow);
+		
+		if(totalRow==0) {
+			totalRow=1L;
+		}
+		
+		Pager pager = (Pager)map.get("pager");
+		pager.makeRow(8L);
+		pager.makeNum(totalRow, 8L, 5L);
+				
+		return memberDAO.recipeList(map);
+		
 	}
 
 	public int introducesDelete(MemberDTO memberDTO) throws Exception {
