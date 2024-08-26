@@ -44,16 +44,17 @@
                     <div class="container-fluid py-5">
                         <div class="container py-5 text-center">
                             <div align="left">
+                                <p>- 기본적으로 최근 3개월간의 자료가 조회되며, 기간 검색시 더 많은 자료들을 확인할 수 있습니다.</p>
                                 <h5>📆기간별 주문내역 검색하기</h5>
                                 <form action="/member/buyList" method="get">
-                                    <input type="date" name="startDate">&nbsp;~&nbsp;<input type="date"
-                                        name="endDate">&nbsp;
+                                    <input type="date" name="startDate" value="${startDate}">&nbsp;~&nbsp;<input
+                                        type="date" name="endDate" value="${endDate}">&nbsp;
                                     <button class="btn border-secondary text-uppercase text-primary"
                                         type="submit">검색하기</button>
                                 </form>
                             </div>
                             <h1 class="mb-4 mt-5">결제내역이 없습니다</h1>
-                            <h1 class="mb-4">다시 검색하세요</h1>
+                            <h1 class="mb-4">시작날짜와 끝날짜를 다시 확인해주세요</h1>
                         </div>
                     </div>
                 </c:when>
@@ -63,10 +64,11 @@
                     <!-- Order Details Start -->
                     <div class="container-fluid py-5">
                         <div class="container py-5 justify-content-center">
+                            <p>- 기본적으로 최근 3개월간의 자료가 조회되며, 기간 검색시 더 많은 자료들을 확인할 수 있습니다.</p>
                             <h5>📆기간별 주문내역 검색하기</h5>
                             <form action="/member/buyList" method="get">
-                                <input type="date" name="startDate">&nbsp;~&nbsp;<input type="date"
-                                    name="endDate">&nbsp;
+                                <input type="date" name="startDate" value="${startDate}">&nbsp;~&nbsp;<input type="date"
+                                    name="endDate" value="${endDate}">&nbsp;
                                 <button class="btn border-secondary text-uppercase text-primary"
                                     type="submit">검색하기</button>
                             </form>
@@ -144,13 +146,14 @@
                                         </tr>
                                     </tbody>
                                 </table>
-								
-								<c:if test="${order.order_status=='결제완료'}">
-                                <div class="container form-group mt-5" align="right">
-                                    <a href="/member/cancleRequest?order_num=${order.order_num}"><button
-                                            class="btn border-secondary text-uppercase text-primary" type="submit">결제취소
-                                            신청</button></a>
-                                </div>
+
+                                <c:if test="${order.order_status=='결제완료'}">
+                                    <div class="container form-group mt-5" align="right">
+                                        <a href="/member/cancleRequest?order_num=${order.order_num}"><button
+                                                class="btn border-secondary text-uppercase text-primary"
+                                                type="submit">결제취소
+                                                신청</button></a>
+                                    </div>
                                 </c:if>
                             </c:forEach>
                         </div>
