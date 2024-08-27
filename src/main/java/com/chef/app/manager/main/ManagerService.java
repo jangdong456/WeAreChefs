@@ -11,7 +11,6 @@ import com.chef.app.food.FoodDTO;
 import com.chef.app.food.StoreOrderDTO;
 import com.chef.app.manager.OriMemberDTO;
 import com.chef.app.manager.StockBuyingDTO;
-import com.chef.app.manager.StockCartDTO;
 import com.chef.app.manager.StockMidBuyingDTO;
 import com.chef.app.manager.TotalPurchaseDTO;
 import com.chef.app.member.MemberDAO;
@@ -215,10 +214,6 @@ public class ManagerService {
 	
 	public List<FoodDTO> stockLackList() throws Exception{
 		return managerDAO.stockLackList();
-	}
-	
-	public List<StockCartDTO> stockCartList() throws Exception{
-		return managerDAO.stockCartList();
 	}
 	
 	// 상품 구매

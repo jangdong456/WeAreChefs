@@ -11,7 +11,7 @@ import com.chef.app.food.FoodDTO;
 import com.chef.app.food.StoreOrderDTO;
 import com.chef.app.manager.OriMemberDTO;
 import com.chef.app.manager.StockBuyingDTO;
-import com.chef.app.manager.StockCartDTO;
+
 import com.chef.app.manager.StockMidBuyingDTO;
 import com.chef.app.manager.TotalPurchaseDTO;
 import com.chef.app.member.MemberDTO;
@@ -142,10 +142,6 @@ public class ManagerDAO {
 	
 	public List<FoodDTO> stockLackList() throws Exception{
 		return sqlSession.selectList(NAMESPACE + "stockLackList");
-	}
-	
-	public List<StockCartDTO> stockCartList() throws Exception{
-		return sqlSession.selectList(NAMESPACE + "stockCartList");
 	}
 	
 	public Long getStockBuyingSeq() throws Exception{

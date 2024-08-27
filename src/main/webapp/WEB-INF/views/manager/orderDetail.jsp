@@ -145,7 +145,8 @@
 										<tfoot>
 											<tr>
 												<td colspan="6" >
-													<h3 class="orderDetailH3">총 결제 가격 : ${orderDetail.order_price} 원</h3>
+													<h3 class="orderDetailH3">총 결제 가격 : ${totalPrice} 원</h3>
+													<h3 class="orderDetailH3">*실제 결제 가격 : ${orderDetail.order_price} 원</h3>
 												</td>
 											</tr>
 										</tfoot>

@@ -279,11 +279,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		]]>
 		ORDER BY FOOD_STOCK DESC
 		</select>
-	
-	<select id="stockCartList" resultType="StockCartDTO">
-		SELECT *
-		FROM STOCK_CART
-	</select>
 
 	<select id="getStockBuyingSeq" resultType="java.lang.Long">
 		SELECT STOCK_BUYING_SEQ.NEXTVAL FROM DUAL

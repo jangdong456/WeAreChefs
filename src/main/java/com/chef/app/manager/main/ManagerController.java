@@ -209,6 +209,13 @@ public class ManagerController {
 		if(managerService.orderFoodDetail(storeOrderDTO).size() == 0){
 			model.addAttribute("foodSize", 0);
 		}else {
+			List<FoodDTO> result = managerService.orderFoodDetail(storeOrderDTO);
+			Long totalPrice = 0L;
+			for(FoodDTO a : result) {
+				totalPrice = totalPrice + a.getTotal_price();
+			}
+			System.out.println("토탈 프라이스 : " + totalPrice);
+			model.addAttribute("totalPrice", totalPrice);
 			model.addAttribute("orderFoodDetail", managerService.orderFoodDetail(storeOrderDTO));			
 		}
 		return "manager/orderDetail";
@@ -260,7 +267,6 @@ public class ManagerController {
 	public String stockList(Model model) throws Exception{
 		model.addAttribute("stockList", managerService.stockList());
 		model.addAttribute("stockLackList", managerService.stockLackList());
-		model.addAttribute("stockCartList", managerService.stockCartList());
 		return "manager/stockList";
 	}
 	
