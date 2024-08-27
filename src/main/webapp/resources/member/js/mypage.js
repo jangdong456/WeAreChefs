@@ -30,6 +30,15 @@ const recipeListDiv  = document.getElementById("recipeListDiv");
 // 요리레시피, 요리후기 ,댓글 tab 관련 태그
 const kindList = document.getElementById("kindList");
 
+// 찜목록
+const wishList = document.getElementById("wishList");
+
+wishList.addEventListener("click", () => {
+    fetch("wishList", {
+        method : "GET"
+    })
+})
+
 kindList.addEventListener("click", (e) => {
     console.log(e.target.innerHTML)
     let value = e.target.innerHTML

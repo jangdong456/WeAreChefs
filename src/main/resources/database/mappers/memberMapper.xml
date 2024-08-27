@@ -5,6 +5,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="com.chef.app.member.MemberDAO">
 
+
+	<select id="wishList" parameterType="MemberDTO" resultType="RecipeDTO">
+		SELECT * FROM RECIPE
+		WHERE RECIPE_NUM = 
+				(
+					SELECT RECIPE_NUM 
+					FROM BOOKMARK 
+					WHERE MEMBER_ID = #{member_id}
+				)
+	</select>
+
 	<select id="recipeRecentList" resultType="RecipeDTO">
 		SELECT * FROM
 		(SELECT ROWNUM R,B.* FROM (SELECT * FROM RECIPE ORDER BY CREATE_DATE DESC)B)
@@ -61,14 +72,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 						</otherwise>
 					</choose>
 				)B)
-				<choose>
-					<when test="pager.kind == '요리 후기 리스트'">
-						WHERE R BETWEEN #{pager.startRow} AND #{pager.lastRow}
-					</when>
-					<otherwise>
-						WHERE R BETWEEN #{pager.startRow} AND #{pager.lastRow}
-					</otherwise>
-				</choose>
+				WHERE R BETWEEN #{pager.startRow} AND #{pager.lastRow}
 	</select>
 	
 	<select id="recipeList" parameterType="Map" resultType="RecipeDTO">
@@ -92,17 +96,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SELECT COUNT(RECIPE_NUM) FROM RECIPE
 		WHERE MEMBER_ID = #{memberdto.member_id}	
 	</select>
-	
-	<select id="getTotalCountRecipeReview" parameterType="Map" resultType="Long">
+
+	<select id="getTotalCount2" parameterType="Map" resultType="Long">
 		SELECT COUNT(REVIEW_NUM) FROM RECIPEREVIEW
-		WHERE MEMBER_ID = #{memberdto.member_id}	
+		WHERE MEMBER_ID = #{memberdto.member_id}
 	</select>
-	
-	<select id="getTotalCountRecipeReply" parameterType="Map" resultType="Long">
+
+
+	<select id="getTotalCount3" parameterType="Map" resultType="Long">
 		SELECT COUNT(RECIPE_REPLY_NUM) FROM RECIPEREPLY
-		WHERE MEMBER_ID = #{memberdto.member_id}	
+		WHERE MEMBER_ID = #{memberdto.member_id}
 	</select>
-		
 	
 	<select id="duplication" parameterType="MemberDTO" resultType="int">
 		SELECT 
@@ -227,7 +231,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
    </resultMap>
    
    <update id="cancleRequest" parameterType="StoreOrderDTO">
-   	UPDATE STOREORDER SET ORDER_STATUS = '결제취소요청' WHERE ORDER_NUM=#{order_num}
+   		UPDATE STOREORDER SET ORDER_STATUS = '결제취소요청' WHERE ORDER_NUM=#{order_num}
    </update>
-	
+   
+
 </mapper>
