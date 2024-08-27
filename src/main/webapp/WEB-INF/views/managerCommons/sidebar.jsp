@@ -12,7 +12,7 @@
           alt="navbar brand"
           class="navbar-brand"
           height="50"
-          width="180"
+          width="190"
         />
       </a>
       <!-- 사이드 바 왼쪽 오른쪽으로 움직이게 하는 것-->

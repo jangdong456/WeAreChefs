@@ -226,6 +226,9 @@
 													<div class="username">${memberListDesc.member_id}</div>
 													<div class="status">${memberListDesc.member_nickname}</div>
 												</div>
+												<div>
+													<div>${memberListDesc.join_date}</div>
+												</div>
 											</div>
 										</c:forEach>
 										<!--@ End 프로필 1세트 -->
