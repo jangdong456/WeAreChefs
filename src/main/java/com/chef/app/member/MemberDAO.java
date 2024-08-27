@@ -115,4 +115,12 @@ public class MemberDAO {
 	public int cancleRequest (StoreOrderDTO storeOrderDTO) throws Exception{
 		return sqlSession.update(NAMESPACE+"cancleRequest", storeOrderDTO);
 	}
+	
+	public Long getTotalCount2 (Map<String, Object> map) throws Exception {
+		return sqlSession.selectOne(NAMESPACE+"getTotalCount2", map);
+	}
+	
+	public Long getTotalCount3 (Map<String, Object> map) throws Exception {
+		return sqlSession.selectOne(NAMESPACE+"getTotalCount3", map);
+	}
 }

@@ -96,14 +96,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE MEMBER_ID = #{memberdto.member_id}	
 	</select>
 	
-	<select id="getTotalCountRecipeReview" parameterType="Map" resultType="Long">
+	<select id="getTotalCount2" parameterType="Map" resultType="Long">
 		SELECT COUNT(REVIEW_NUM) FROM RECIPEREVIEW
-		WHERE MEMBER_ID = #{memberdto.member_id}	
+		WHERE MEMBER_ID = #{memberdto.member_id}
 	</select>
 	
-	<select id="getTotalCountRecipeReply" parameterType="Map" resultType="Long">
+	<select id="getTotalCount3" parameterType="Map" resultType="Long">
 		SELECT COUNT(RECIPE_REPLY_NUM) FROM RECIPEREPLY
-		WHERE MEMBER_ID = #{memberdto.member_id}	
+		WHERE MEMBER_ID = #{memberdto.member_id}
 	</select>
 		
 	
