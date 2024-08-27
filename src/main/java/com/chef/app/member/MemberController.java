@@ -42,6 +42,14 @@ public class MemberController {
 	@Autowired
 	private Email email;
 	
+	@GetMapping("wishList")
+	public void wishList(HttpSession session, Model model) throws Exception {
+		MemberDTO memberdto = (MemberDTO)session.getAttribute("member");
+		List<RecipeDTO> ar = memberService.wishList(memberdto);
+		
+		model.addAttribute("wishList", ar);
+		
+	}
 	
 	@GetMapping("prfileSnsDelete")
 	public String prfileSnsDelete(MemberDTO memberDTO, Model model) throws Exception {
@@ -184,18 +192,17 @@ public class MemberController {
 		// 작성한 레시피 리스트
 		List<RecipeDTO> recipedto = memberService.recipeList(map);
 		model.addAttribute("recipeList", recipedto);
-
 		
-		// 상대방 레시피에 작성한 리뷰
-		List<RecipeReviewDTO> recipeReview = memberService.recipeReviewList(map);
-//		model.addAttribute("recipeList", recipeReview);
-		model.addAttribute("reviewList", recipeReview);
+//		// 상대방 레시피에 작성한 리뷰
+//		List<RecipeReviewDTO> recipeReview = memberService.recipeReviewList(map);
+////		model.addAttribute("recipeList", recipeReview);
+//		model.addAttribute("reviewList", recipeReview);
 		
 		
-		// 상대방 레시피에 작성한 댓글
-		List<RecipeReplyDTO> recipeReply = memberService.recipeReplyList(map);
-//		model.addAttribute("recipeList", recipeReply);
-		model.addAttribute("recipeReply", recipeReply);
+//		// 상대방 레시피에 작성한 댓글
+//		List<RecipeReplyDTO> recipeReply = memberService.recipeReplyList(map);
+////		model.addAttribute("recipeList", recipeReply);
+//		model.addAttribute("recipeReply", recipeReply);
 		
 		// 최근 작성한 레시피 상위3개
 		List<RecipeDTO> recentyList = memberService.recipeRecentList();

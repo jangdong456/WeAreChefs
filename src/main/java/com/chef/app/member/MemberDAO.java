@@ -21,6 +21,9 @@ public class MemberDAO {
 	
 	private final String NAMESPACE = "com.chef.app.member.MemberDAO.";
 	
+	public List<RecipeDTO> wishList(MemberDTO memberDTO) throws Exception {
+		return sqlSession.selectList(NAMESPACE + "wishList",memberDTO);
+	}
 	
 	public Long getTotalCountRecipeReply(Map<String, Object> map) throws Exception {
 		return sqlSession.selectOne(NAMESPACE + "getTotalCountRecipeReply", map);

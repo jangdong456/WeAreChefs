@@ -31,6 +31,10 @@ public class MemberService {
 	private FileManager fileManager;
 	
 	
+	public List<RecipeDTO> wishList(MemberDTO memberDTO) throws Exception {
+		return memberDAO.wishList(memberDTO);
+	}
+	
 	public List<RecipeDTO> recipeRecentList() throws Exception {
 		return memberDAO.recipeRecentList();
 	}

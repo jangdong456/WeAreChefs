@@ -293,6 +293,20 @@
                                     </div>
                                 </div>
 
+
+                                <div class="mb-3">
+                                    <h4>Categories</h4>
+                                    <ul class="list-unstyled fruite-categorie">
+                                        <li>
+                                            <div class="d-flex justify-content-between fruite-name">
+                                                <a href="/member/wishList" id="wishList" ><i class="fas fa-apple-alt me-2"></i>찜목록록록</a>
+                                                <span>찜 목록</span>
+                                            </div>
+                                        </li>   
+                                    </ul>
+                                </div>
+
+
                                 <div class="col-lg-12">
                                 <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
                                     <div class="carousel-indicators">
@@ -343,6 +357,8 @@
                            
                             </div>                                         
                         </div>
+
+
 
                         
                             <div class="col-lg-9">
@@ -402,6 +418,8 @@
                                                 </div>
                                             </div>
                                         </div> 
+
+                                        
                                         <div class="col-12">
                                             <div class="pagination d-flex justify-content-center mt-5">
                                                 <a href="/member/mypage?page=${pager.startNum-1}&order=${pager.order}" class="rounded ${pager.pre?'':'disabled'}" >&laquo;</a>
@@ -410,7 +428,8 @@
                                                 </c:forEach>
                                                 <a href="/member/mypage?page=${pager.startNum-1}&order=${pager.order}" class="rounded ${pager.next?'':'disabled'}">&raquo;</a>
                                             </div>
-                                        </div>                                     
+                                        </div>
+                                                                            
                                     </div>
 
                                 </div>  
