@@ -44,7 +44,7 @@
 	<c:import url="/WEB-INF/views/templete/nav.jsp"></c:import>
 	<!-- Hero Start -->
 	<div class="container-fluid page-header py-5">
-		<h1 class="text-center text-white display-6">레시피 작성</h1>
+		<h1 class="text-center text-white display-6">레시피 수정</h1>
 		<ol class="breadcrumb justify-content-center mb-0">
 			<li class="breadcrumb-item"><a href="#">Home</a></li>
 			<li class="breadcrumb-item"><a href="#">Pages</a></li>
@@ -53,11 +53,11 @@
 	</div>
 	<div class="container-fluid py-5">
 		<div class="container py-5">
-			<h3 class="mb-4" style="text-align: center;">🍽️레시피를 작성해주세요.</h3>
-			<h5 class="mb-4" style="text-align: center;">💡요리의 맛이 좌우될 수 있는 중요한 부분은 빠짐없이 적어주세요.</h5>
+			<h3 class="mb-4" style="text-align: center;">🍽️레시피를 수정해주세요.</h3>
+			<h5 class="mb-4" style="text-align: center;">💡완성사진은 변경하지않으면 기존 사진으로 표시됩니다.</h5>
 			<div class="form-container">
 				<div class="form-wrapper">
-					<form action="/recipe/add" method ="post" enctype="multipart/form-data">
+					<form action="/recipe/update" method ="post" enctype="multipart/form-data">
 						<div class="row g-5">
 							<div class="col-12 ">
 							
@@ -71,34 +71,40 @@
 									</div>
 							
 								 <div class="col-12 ">
+								 <input type="hidden" class="form-control" name = "recipe_num"  value="${dto.recipe_num}">
 										<div class="form-item w-100">
 										<!-- <div class="form-item w-100">  -->
 											<label class="form-label my-3" >작성자<sup>*</sup></label>
-											<input type="text" class="form-control" name = "member_id" value="${member.member_id}" >
+											<input type="text" class="form-control" name = "recipe_writer"  value="${dto.member_id}">
 										</div>
 										
 									</div>
 									<div class="col-12 ">
 										<div class="form-item w-100">
 											<label class="form-label my-3">요리명<sup>*</sup></label>
-											<input type="text" class="form-control" name = "recipe_name" placeholder="ex) 소고기 미역국 끓이기">
+											<input type="text" class="form-control" name = "recipe_name" placeholder="ex) 소고기 미역국 끓이기" value="${dto.recipe_name}">
 										</div>
 									</div>
 									<div class="col-12">
 		    							<div class="form-item w-100">
 											<label class="form-label my-3">완성사진 추가<sup>*</sup></label>
-											<input type="file" class="form-control" name="attach" id="attach" required>
+											<input type="file" class="form-control" name="attach" id="attach" required >
+											
 											<!-- <button type="button" class="btn border-secondary py-3 px-4 text-uppercase w-100 text-primary" name = "attach" id="add" style="margin-bottom: 10px;">추가</button> -->
 											<!-- <div id="result">
 
  											 </div> -->
 										
 		  		 					</div>
+	  		 					   <div class="col-12">
+						                <input type="hidden"  name="recipeImgFileDTO.file_name" value="${dto.recipeImgFileDTO.file_name}">
+						                <img id="viewImg" src="/resources/upload/recipes/${dto.recipeImgFileDTO.file_name}"/>
+						            </div>
 									<div class="col-md-12 ">
 										<div class="form-item w-100">
 											<label class="form-label my-3">요리소개<sup>*</sup></label>
 											<textarea class="form-control" spellcheck="false" placeholder="ex) 남편 생일을 맞아 소고기 미역국을 끓여봤어요~"
-											cols="30" rows="11" id="editor" name = "menu_recipe" ></textarea>
+											cols="30" rows="11" id="editor" name = "menu_recipe"> ${dto.menu_recipe}</textarea>
 										</div>
 									</div>	
 									<div class="col-md-12">

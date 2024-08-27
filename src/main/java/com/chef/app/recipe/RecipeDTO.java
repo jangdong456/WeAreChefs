@@ -5,7 +5,7 @@ import java.util.List;
 
 public class RecipeDTO {
 	private Long recipe_num;
-	private String recipe_writer;
+	private String member_id;
 	private String recipe_name;
 	private String menu_recipe;
 	private Date create_date;
@@ -17,11 +17,19 @@ public class RecipeDTO {
 	private Long recipe_like;
 	private Long recipe_hit;
 	private List<RecipeReplyDTO> ar;
-	
-    private Long ref;   // 댓글의 ref
-    private Long step;  // 댓글의 step
-    private Long depth; // 댓글의 depth
+	private String recipe_ck;
 
+	private Long ref; // 댓글의 ref
+	private Long step; // 댓글의 step
+	private Long depth; // 댓글의 depth
+
+	public String getRecipe_ck() {
+		return recipe_ck;
+	}
+
+	public void setRecipe_ck(String recipe_ck) {
+		this.recipe_ck = recipe_ck;
+	}
 
 	public Long getRef() {
 		return ref;
@@ -73,12 +81,12 @@ public class RecipeDTO {
 		this.recipe_num = recipe_num;
 	}
 
-	public String getRecipe_writer() {
-		return recipe_writer;
+	public String getMember_id() {
+		return member_id;
 	}
 
-	public void setRecipe_writer(String recipe_writer) {
-		this.recipe_writer = recipe_writer;
+	public void setMember_id(String member_id) {
+		this.member_id = member_id;
 	}
 
 	public String getRecipe_name() {

@@ -112,6 +112,7 @@
                                             </div>
                                         </div>
                                     </div>
+                                     <a href="/recipe/add" class="btn border border-secondary rounded-pill px-3 text-primary" ><i class="fa me-2 text-primary"></i>🧑‍🍳레시피 작성 </a>
                                 </div>
                             </div>
                             <div class="col-lg-9">

@@ -1,12 +1,13 @@
 package com.chef.app.recipe;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
+import com.chef.app.member.MemberDTO;
 
 @Repository
 public class RecipeDAO {
@@ -69,6 +70,10 @@ public class RecipeDAO {
 		return sqlSession.selectList(NAMESPACE + "reviewList", recipeReviewDTO);
 	}
 
+	public int reviewUpdateInsert(RecipeReviewDTO recipeReviewDTO) {
+		return sqlSession.update(NAMESPACE + "reviewUpdateInsert", recipeReviewDTO);
+	}
+
 	public int hit(RecipeDTO recipeDTO) {
 		return sqlSession.update(NAMESPACE + "hit", recipeDTO);
 	}
@@ -89,12 +94,72 @@ public class RecipeDAO {
 	}
 
 	public int replyUpdate(RecipeDTO recipeDTO) {
-		return sqlSession.update(NAMESPACE + "replyUpdate",recipeDTO);
-	}
-	
-	public RecipeReplyDTO getParentReply(Long recipe_reply_num) {
-	    return sqlSession.selectOne(NAMESPACE + "getParentReply", recipe_reply_num);
+		return sqlSession.update(NAMESPACE + "replyUpdate", recipeDTO);
 	}
 
+	public RecipeReplyDTO getParentReply(Long recipe_reply_num) {
+		return sqlSession.selectOne(NAMESPACE + "getParentReply", recipe_reply_num);
+	}
+
+	public List<RecipeReplyDTO> findParent(RecipeReplyDTO recipeReplyDTO) {
+		return sqlSession.selectList(NAMESPACE + "findParent", recipeReplyDTO);
+	}
+
+	public int stepUpdate(RecipeReplyDTO recipeReplyDTO) {
+		return sqlSession.update(NAMESPACE + "stepUpdate", recipeReplyDTO);
+
+	}
+
+	public int adminReplySubmit(RecipeReplyDTO recipeReplyDTO) {
+		return sqlSession.insert(NAMESPACE + "adminReplySubmit", recipeReplyDTO);
+	}
+
+	public int recipeUpdate(RecipeDTO recipeDTO) {
+		return sqlSession.update(NAMESPACE + "recipeUpdate", recipeDTO);
+	}
+
+	public int updateRecipeImg(RecipeImgFileDTO recipeImgFileDTO) throws Exception {
+		return sqlSession.update(NAMESPACE + "updateRecipeImg", recipeImgFileDTO);
+	}
+
+	public int recipeDelete(RecipeDTO recipeDTO) {
+		return sqlSession.update(NAMESPACE + "recipeDelete", recipeDTO);
+	}
+
+	public int reviewDelete(RecipeReviewDTO recipeReviewDTO) {
+
+		return sqlSession.update(NAMESPACE + "reviewDelete", recipeReviewDTO);
+	}
+
+	public int replyUpdateInsert(RecipeReplyDTO recipeReplyDTO) {
+
+		return sqlSession.update(NAMESPACE + "replyUpdateInsert", recipeReplyDTO);
+	}
+
+	public int replyDelete(RecipeReplyDTO recipeReplyDTO) {
+
+		return sqlSession.update(NAMESPACE + "replyDelete", recipeReplyDTO);
+	}
+
+	public List<RecipeDTO> wishList(MemberDTO memberDTO) {
+		return sqlSession.selectList(NAMESPACE + "wishList", memberDTO);
+	}
+
+	public int addWish(RecipeDTO recipeDTO) {
+		return sqlSession.insert(NAMESPACE + "addWish", recipeDTO);
+	}
+
+	public int wishUpdate(RecipeDTO recipeDTO) {
+		return sqlSession.delete(NAMESPACE + "wishUpdate", recipeDTO);
+	}
+
+	public Long bookMark(RecipeDTO recipeDTO) {
+		return sqlSession.selectOne(NAMESPACE + "bookMark", recipeDTO);
+	}
+
+	public Double ratingTotal(RecipeReviewDTO recipeReviewDTO) {
+
+		return sqlSession.selectOne(NAMESPACE + "ratingTotal", recipeReviewDTO);
+	}
 
 }
