@@ -268,13 +268,18 @@ var world_map = new jsVectorMap({
 //Chart
 
 var ctx = document.getElementById('statisticsChart').getContext('2d');
+// 월별 정보
+let purSales = document.getElementsByClassName('purSales');
+let purExpends = document.getElementsByClassName('purExpends');
+let purEarns = document.getElementsByClassName("purEarns")
+
 
 var statisticsChart = new Chart(ctx, {
 	type: 'line',
 	data: {
 		labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
 		datasets: [ {
-			label: "Subscribers",
+			label: "지출",
 			borderColor: '#f3545d',
 			pointBackgroundColor: 'rgba(243, 84, 93, 0.6)',
 			pointRadius: 0,
@@ -282,9 +287,9 @@ var statisticsChart = new Chart(ctx, {
 			legendColor: '#f3545d',
 			fill: true,
 			borderWidth: 2,
-			data: [154, 184, 175, 203, 210, 231, 240, 278, 252, 312, 320, 374]
+			data: [purExpends[0].value, purExpends[1].value, purExpends[2].value, purExpends[3].value, purExpends[4].value, purExpends[5].value, purExpends[6].value, purExpends[7].value, purExpends[8].value, purExpends[9].value, purExpends[10].value, purExpends[11].value]
 		}, {
-			label: "New Visitors",
+			label: "순이익",
 			borderColor: '#fdaf4b',
 			pointBackgroundColor: 'rgba(253, 175, 75, 0.6)',
 			pointRadius: 0,
@@ -292,9 +297,9 @@ var statisticsChart = new Chart(ctx, {
 			legendColor: '#fdaf4b',
 			fill: true,
 			borderWidth: 2,
-			data: [256, 230, 245, 287, 240, 250, 230, 295, 331, 431, 456, 521]
+			data: [purEarns[0].value, purEarns[1].value, purEarns[2].value, purEarns[3].value, purEarns[4].value, purEarns[5].value, purEarns[6].value, purEarns[7].value, purEarns[8].value,  purEarns[9].value,  purEarns[10].value,  purEarns[11].value]
 		}, {
-			label: "Active Users",
+			label: "매출",
 			borderColor: '#177dff',
 			pointBackgroundColor: 'rgba(23, 125, 255, 0.6)',
 			pointRadius: 0,
@@ -302,7 +307,7 @@ var statisticsChart = new Chart(ctx, {
 			legendColor: '#177dff',
 			fill: true,
 			borderWidth: 2,
-			data: [542, 480, 430, 550, 530, 453, 380, 434, 568, 610, 700, 900]
+			data: [purSales[0].value, purSales[1].value, purSales[2].value, purSales[3].value, purSales[4].value, purSales[5].value, purSales[6].value, purSales[7].value, purSales[8].value, purSales[9].value, purSales[10].value, purSales[11].value]
 		}]
 	},
 	options : {
@@ -375,20 +380,21 @@ for (var i = 0; i < legendItems.length; i += 1) {
 
 var dailySalesChart = document.getElementById('dailySalesChart').getContext('2d');
 
+let dailyMember = document.getElementsByClassName("dailyMember")
+
 var myDailySalesChart = new Chart(dailySalesChart, {
 	type: 'line',
 	data: {
 		labels:["January",
-		"February",
-		"March",
-		"April",
-		"May",
-		"June",
-		"July",
-		"August",
-		"September"],
+		"Today-5",
+		"Today-4",
+		"Today-3",
+		"Today-2",
+		"Today-1",
+		"Today"
+		],
 		datasets:[ {
-			label: "Sales Analytics", fill: !0, backgroundColor: "rgba(255,255,255,0.2)", borderColor: "#fff", borderCapStyle: "butt", borderDash: [], borderDashOffset: 0, pointBorderColor: "#fff", pointBackgroundColor: "#fff", pointBorderWidth: 1, pointHoverRadius: 5, pointHoverBackgroundColor: "#fff", pointHoverBorderColor: "#fff", pointHoverBorderWidth: 1, pointRadius: 1, pointHitRadius: 5, data: [65, 59, 80, 81, 56, 55, 40, 35, 30]
+			label: "Sales Analytics", fill: !0, backgroundColor: "rgba(255,255,255,0.2)", borderColor: "#fff", borderCapStyle: "butt", borderDash: [], borderDashOffset: 0, pointBorderColor: "#fff", pointBackgroundColor: "#fff", pointBorderWidth: 1, pointHoverRadius: 5, pointHoverBackgroundColor: "#fff", pointHoverBorderColor: "#fff", pointHoverBorderWidth: 1, pointRadius: 1, pointHitRadius: 5, data: [dailyMember[6].value, dailyMember[5].value, dailyMember[4].value, dailyMember[3].value, dailyMember[2].value, dailyMember[1].value, dailyMember[0].value]
 		}]
 	},
 	options : {

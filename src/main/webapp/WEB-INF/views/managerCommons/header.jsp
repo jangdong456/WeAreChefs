@@ -41,7 +41,7 @@
           class="navbar navbar-header-left navbar-expand-lg  p-0 d-none d-lg-flex"
         >
           <!-- ìë¨ë° ìì¹ ìì´ì½ ë° ì¸í íê·¸-->
-          <h1>Manager</h1>
+          <a href="/manager/index"><h1>Manager</h1></a>
         </nav>
         <ul class="navbar-nav topbar-nav align-items-center">
           <li class="nav-item topbar-icon dropdown hidden-caret">

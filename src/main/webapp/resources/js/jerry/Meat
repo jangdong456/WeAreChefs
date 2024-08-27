@@ -1,0 +1,84 @@
+const testBTN = document.getElementById("testBTN");
+
+testBTN.addEventListener("click", async () => {
+  try {
+    console.log('버튼이 눌렸습니다.');
+    
+    let categoryNum = 500;
+    let categoryName = '';
+    let url = 'http://www.kamis.or.kr/service/price/xml.do?action=dailyPriceByCategoryList';
+    let productCls = '&p_product_cls_code=02';
+    let itemCategory = '&p_item_category_code=';
+    let countryCode = '&p_country_code=';
+    let regday = '&p_regday=2024-08-23';
+    let kg = '&p_convert_kg_yn=Y';
+    let keyId = '&p_cert_key=2e9c9e0a-557a-42ba-9828-1ad76672f5be&p_cert_id=4643&p_returntype=json';
+    url = url + productCls + itemCategory + categoryNum + countryCode + regday + kg + keyId;
+    
+    const response = await fetch(url, {
+      method: "GET",
+      headers: { "Content-type": 'application/x-www-form-urlencoded;charset=utf-8' }
+    });
+    
+    const data = await response.json();
+    
+    if (!data.data || !Array.isArray(data.data.item)) {
+      throw new Error("Items is not an array or data is missing.");
+    }
+    
+    const items = data.data.item;
+    let ar = [];
+    for (const item of items) {
+      let form = {};
+
+      let meatName = `${item.item_name} ${item.kind_name} ${item.rank}`;
+
+      if (categoryNum === 100) {
+        console.log('식량작물');
+        categoryName = '식량작물';
+      } else if (categoryNum === 200) {
+        console.log('채소류');
+        categoryName = '채소류';
+      } else if (categoryNum === 400) {
+        console.log('과일류');
+        categoryName = '과일류';
+      } else if (categoryNum === 500) {
+        console.log('축산물');
+        categoryName = '축산물';
+      } else if (categoryNum === 600) {
+        console.log('수산물');
+        categoryName = '수산물';
+      }
+
+      const price = isNaN(Number(item.dpr6.replace(/,/g, ''))) ? 0 : Number(item.dpr6.replace(/,/g, ''));
+      const adjustedPrice = price * 1.7;
+      console.log(meatName);
+      console.log(price);
+      console.log(adjustedPrice);
+      
+      form.food_category = categoryName;
+      form.food_name = meatName;
+      form.food_buying = price;
+      form.food_price = adjustedPrice;
+      ar.push(form);
+    }
+
+    const jsonAr = JSON.stringify(ar); // 여기에서 "JSON"을 올바르게 사용해야 합니다.
+    
+    // 비동기 POST 요청을 순차적으로 처리
+    const result = await fetch("/manager/addItems", {
+      method: "POST",
+      headers: { 'Content-Type': 'application/json' }, // JSON 데이터를 전송할 때 헤더를 설정합니다.
+      body: jsonAr
+    });
+
+    if (!result.ok) {
+      throw new Error("Failed to send data.");
+    }
+
+    console.log('성공적으로 데이터가 전송되었습니다.');
+    
+  } catch (error) {
+    console.error('데이터 처리 오류:', error.message);
+  }
+});

@@ -18,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.chef.app.comment.CommentDTO;
 import com.chef.app.manager.InquiryDTO;
+import com.chef.app.member.MemberDTO;
 import com.chef.app.util.Pager;
 
 import oracle.jdbc.proxy.annotation.GetCreator;
@@ -49,18 +50,48 @@ public class QnaController {
 	}
 	
 	@GetMapping("list")
-	public String qnaList(Pager pager, Model model) throws Exception{
-		List<InquiryDTO> inquiryList = qnaService.qnaList(pager);
+	public String qnaList(Pager pager, Model model, HttpSession session) throws Exception{
+		Long lev = 0L;
+		if(((MemberDTO) session.getAttribute("member")) != null) {
+			lev = ((MemberDTO) session.getAttribute("member")).getMember_lev();
+		}
+		MemberDTO memberDTO = new MemberDTO();
+		memberDTO.setMember_lev(lev);
+		model.addAttribute("member", memberDTO);
+
 		
+		List<InquiryDTO> inquiryList = qnaService.qnaList(pager);
 		model.addAttribute("pager", pager);
 		model.addAttribute("inquiryList", inquiryList);
 		
 		return "board/inquiry/list";
 	}	
 	
+	@GetMapping("hitUpdate")
+	public String hitUpdate(Pager pager,InquiryDTO inquiryDTO, Model model) throws Exception{
+		int result = qnaService.hitUpdate(inquiryDTO);
+		
+		List<InquiryDTO> InquiryList = qnaService.qnaList(pager);
+		model.addAttribute("pager", pager);
+		model.addAttribute("inquiryList", InquiryList);
+		return "board/inquiry/inquiryUpdate";
+	}
+	
 	
 	@GetMapping("detail")
-	public String qnaDetail(CommentDTO commentDTO, Model model) throws Exception{
+	public String qnaDetail(CommentDTO commentDTO, Model model, HttpSession session) throws Exception{
+		Long lev = 0L;
+		String memberId = "";
+		if(((MemberDTO) session.getAttribute("member")) != null) {
+			lev = ((MemberDTO) session.getAttribute("member")).getMember_lev();
+			memberId = ((MemberDTO) session.getAttribute("member")).getMember_id();
+		}
+		MemberDTO memberDTO = new MemberDTO();
+		memberDTO.setMember_lev(lev);
+		memberDTO.setMember_id(memberId);
+		model.addAttribute("member", memberDTO);
+
+		
 		// 디테일 호출
 		InquiryDTO inquiryDTO = qnaService.qnaDetail(commentDTO);
 		model.addAttribute("inquiryDetail", inquiryDTO);
@@ -69,6 +100,8 @@ public class QnaController {
 		model.addAttribute("inquiryDTOList", result);
 		// &Todo Session에서 member_id를 받아오고 그 값을 model("member", memberDTO)를 통해 detail.jsp로 보낸다.
 		// &Todo detail.jsp에서 member 아이디가 글 작성자와 같으면 수정 삭제가 보이도록 한다.
+		
+		
 		return "board/inquiry/detail";
 	}
 	
@@ -118,9 +151,10 @@ public class QnaController {
 	}
 	
 	@PostMapping("add")
-	public String qnaAdd(InquiryDTO inquiryDTO, Model model) throws Exception{
+	public String qnaAdd(InquiryDTO inquiryDTO, Model model, HttpSession session) throws Exception{
 		// & Todo : Session에서 memberID 받는 것으로 바꿔줘야함
-		inquiryDTO.setMember_id("admin1");
+		inquiryDTO.setMember_id(((MemberDTO) session.getAttribute("member")).getMember_id());
+		inquiryDTO.setMember_nickname(((MemberDTO) session.getAttribute("member")).getMember_nickname());
 		int result = qnaService.qnaAdd(inquiryDTO);
 		
 		String msg = "작성을 성공 하였습니다.";
@@ -137,9 +171,16 @@ public class QnaController {
 	
 	//댓글 달기 및 댓글 비동기 호출
 	@PostMapping("reply")
-	public String qnaReply(InquiryDTO inquiryDTO, Model model) throws Exception{
-		// &Todo member session에서 값 받아오기.
-		inquiryDTO.setMember_id("aaa");
+	public String qnaReply(InquiryDTO inquiryDTO, Model model, HttpSession session) throws Exception{
+		String memberId = "";
+		String memberNickname = "";
+		if(((MemberDTO) session.getAttribute("member")) != null) {
+			memberId = ((MemberDTO) session.getAttribute("member")).getMember_id();
+			memberNickname = ((MemberDTO) session.getAttribute("member")).getMember_nickname();
+		}
+		inquiryDTO.setMember_id(memberId);
+		inquiryDTO.setMember_nickname(memberNickname);
+		model.addAttribute("member", inquiryDTO);
 		// 댓글 추가
 		int addResult = qnaService.addQnaReply(inquiryDTO);
 		
@@ -158,10 +199,15 @@ public class QnaController {
 	}
 	
 	@GetMapping("replyUpdate")
-	public String getReplyUpdate(InquiryDTO inquiryDTO, Model model) throws Exception{
+	public String getReplyUpdate(InquiryDTO inquiryDTO, Model model, HttpSession session) throws Exception{
+		String memberId = "";
+		// &Todo member session에서 값 받아오기.		
+		if(((MemberDTO) session.getAttribute("member")) != null) {
+			memberId = ((MemberDTO) session.getAttribute("member")).getMember_id();
+		}
 		
 		InquiryDTO getReplyUpdate = qnaService.getReplyUpdate(inquiryDTO);
-		getReplyUpdate.setMember_id("aaa");
+		getReplyUpdate.setMember_id(memberId);
 		System.out.println("get replyUpdate : " + getReplyUpdate.getBoard_content());
 		model.addAttribute("getReplyUpdate", getReplyUpdate);
 		return "board/inquiry/commentUpdate";

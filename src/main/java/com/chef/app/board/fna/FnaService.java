@@ -26,6 +26,10 @@ public class FnaService {
 		return fnaDAO.fnaList(pager);
 	}
 	
+	public int hitUpdate(InquiryDTO inquiryDTO) throws Exception{
+		return fnaDAO.hitUpdate(inquiryDTO);
+	}
+	
 	public InquiryDTO fnaDetail(CommentDTO commentDTO) throws Exception{
 		return fnaDAO.fnaDetail(commentDTO);
 	}

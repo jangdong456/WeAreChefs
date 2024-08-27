@@ -1,5 +1,6 @@
 package com.chef.app.member;
 
+import java.sql.Date;
 import java.util.List;
 
 import com.chef.app.file.FileDTO;
@@ -13,6 +14,7 @@ public class MemberDTO extends FileDTO {
 	private String member_phone;
 	private String member_nickname;
 	private Long member_lev;
+	private Date join_date;
 	
 	private String profile_about_me;
 	private String profile_sns_url;
@@ -25,6 +27,12 @@ public class MemberDTO extends FileDTO {
 	
 	private List<RecipeDTO> recipedtos;
 	
+	public Date getJoin_date() {
+		return join_date;
+	}
+	public void setJoin_date(Date join_date) {
+		this.join_date = join_date;
+	}
 	public List<RecipeDTO> getRecipedtos() {
 		return recipedtos;
 	}
