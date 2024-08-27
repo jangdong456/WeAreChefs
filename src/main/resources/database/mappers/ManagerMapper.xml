@@ -4,10 +4,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.chef.app.manager.main.ManagerDAO">
-	<!-- index 첫줄 정보 -->
+	<!-- index 첫줄 정보 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ -->
 	<select id="getMemberTotalCount" resultType="java.lang.Long">
 		SELECT COUNT(MEMBER_ID)
 		FROM "MEMBER"
+	</select>
+	
+	<select id="getOneMember" parameterType="OriMemberDTO" resultType="MemberDTO">
+		SELECT *
+		FROM "MEMBER"
+		WHERE MEMBER_ID = #{member_id}
 	</select>
 	
 	<select id="getOrderCompleteCount" resultType="java.lang.Long">
@@ -18,12 +24,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE ST.TODAY = TO_CHAR(SYSDATE, 'YYYY-MM-DD') AND ST.ORDER_STATUS = '결제완료'
 	</select>
 	
-	<select id="getDeliveryCount" resultType="java.lang.Long">
+	<select id="getCancelOrderCount" resultType="java.lang.Long">
 		SELECT COUNT(*)
-		FROM(SELECT ORDER_NUM , DELIVERY_STATUS, TO_CHAR(ORDER_DATE , 'YYYY-MM-DD') AS TODAY
-			FROM STOREORDER
-			) ST
-		WHERE ST.TODAY = TO_CHAR(SYSDATE, 'YYYY-MM-DD') AND ST.DELIVERY_STATUS = '배송중'
+		FROM STOREORDER
+		WHERE ORDER_STATUS = '결제취소요청'
 	</select>	
 	
 	<select id="getRequiredFoodStockOrderCount" resultType="java.lang.Long">
@@ -34,17 +38,94 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		]]>
 	</select>
 	
-	<!-- index 차트 정보 -->
-	<select id="getMonthTotalPurchase" resultType="MonthTotalPurchaseDTO">
-		SELECT TO_CHAR(ORDER_DATE , 'MM') PUR_MONTH, COUNT(ORDER_NUM)  PUR_COUNT
+	<!-- index 차트 정보 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ -->
+	<!-- 매출 -->
+	<select id="getMonthSales" resultType="TotalPurchaseDTO">
+		SELECT TO_CHAR(ORDER_DATE , 'MM') PUR_PERIOD, SUM(ORDER_PRICE)  PUR_PRICE
 		FROM
 		    STOREORDER
 		WHERE TO_CHAR(ORDER_DATE, 'YYYY') = TO_CHAR(SYSDATE, 'YYYY')
 		GROUP BY
 		    TO_CHAR(ORDER_DATE , 'MM')
+		ORDER BY PUR_PERIOD
+	</select>
+	<!-- 지출 -->
+	<select id="getMonthExpands" resultType="TotalPurchaseDTO">
+		SELECT TO_CHAR(BUYING_DATE, 'MM') PUR_PERIOD, SUM(BUYING_TOTAL_PRICE) PUR_PRICE
+		FROM STOCK_BUYING
+		WHERE TO_CHAR(BUYING_DATE, 'YYYY')  = TO_CHAR(SYSDATE, 'YYYY')
+		GROUP BY
+			TO_CHAR(BUYING_DATE, 'MM') 
+		ORDER BY PUR_PERIOD
+	</select>
+	<!-- 일별 회원 증가 수 -->
+	<select id="getDailyMember" resultType="TotalPurchaseDTO">
+		SELECT 
+			(SELECT COUNT(*)
+				FROM "MEMBER"
+				WHERE TO_CHAR(JOIN_DATE, 'YYYY-MM-DD') = TO_CHAR(SYSDATE, 'YYYY-MM-DD')
+			) DAY_0,
+			(SELECT COUNT(*)
+				FROM "MEMBER"
+				WHERE TO_CHAR(JOIN_DATE, 'YYYY-MM-DD') = TO_CHAR(SYSDATE-1, 'YYYY-MM-DD')
+			) DAY_1,
+			(SELECT COUNT(*)
+				FROM "MEMBER"
+				WHERE TO_CHAR(JOIN_DATE, 'YYYY-MM-DD') = TO_CHAR(SYSDATE-2, 'YYYY-MM-DD')
+			) DAY_2,
+			(SELECT COUNT(*)
+				FROM "MEMBER"
+				WHERE TO_CHAR(JOIN_DATE, 'YYYY-MM-DD') = TO_CHAR(SYSDATE-3, 'YYYY-MM-DD')
+			) DAY_3,
+			(SELECT COUNT(*)
+				FROM "MEMBER"
+				WHERE TO_CHAR(JOIN_DATE, 'YYYY-MM-DD') = TO_CHAR(SYSDATE-4, 'YYYY-MM-DD')
+			) DAY_4,
+			(SELECT COUNT(*)
+				FROM "MEMBER"
+				WHERE TO_CHAR(JOIN_DATE, 'YYYY-MM-DD') = TO_CHAR(SYSDATE-5, 'YYYY-MM-DD')
+			) DAY_5,
+			(SELECT COUNT(*)
+				FROM "MEMBER"
+				WHERE TO_CHAR(JOIN_DATE, 'YYYY-MM-DD') = TO_CHAR(SYSDATE-6, 'YYYY-MM-DD')
+			) DAY_6
+		FROM DUAL
+	</select>
+	<!-- INDEX 차트 일별 매출 -->
+	<select id="getDailySales" resultType="TotalPurchaseDTO">
+		SELECT 
+			(SELECT SUM(ORDER_PRICE)
+				FROM STOREORDER
+				WHERE TO_CHAR(ORDER_DATE, 'YYYY-MM-DD') = TO_CHAR(SYSDATE, 'YYYY-MM-DD')
+			) DAY_0,
+			(SELECT SUM(ORDER_PRICE)
+				FROM STOREORDER
+				WHERE TO_CHAR(ORDER_DATE, 'YYYY-MM-DD') = TO_CHAR(SYSDATE-1, 'YYYY-MM-DD')
+			) DAY_1,	
+			(SELECT SUM(ORDER_PRICE)
+				FROM STOREORDER
+				WHERE TO_CHAR(ORDER_DATE, 'YYYY-MM-DD') = TO_CHAR(SYSDATE-2, 'YYYY-MM-DD')
+			) DAY_2,	
+			(SELECT SUM(ORDER_PRICE)
+				FROM STOREORDER
+				WHERE TO_CHAR(ORDER_DATE, 'YYYY-MM-DD') = TO_CHAR(SYSDATE-3, 'YYYY-MM-DD')
+			) DAY_3,	
+			(SELECT SUM(ORDER_PRICE)
+				FROM STOREORDER
+				WHERE TO_CHAR(ORDER_DATE, 'YYYY-MM-DD') = TO_CHAR(SYSDATE-4, 'YYYY-MM-DD')
+			) DAY_4,	
+			(SELECT SUM(ORDER_PRICE)
+				FROM STOREORDER
+				WHERE TO_CHAR(ORDER_DATE, 'YYYY-MM-DD') = TO_CHAR(SYSDATE-5, 'YYYY-MM-DD')
+			) DAY_5,	
+			(SELECT SUM(ORDER_PRICE)
+				FROM STOREORDER
+				WHERE TO_CHAR(ORDER_DATE, 'YYYY-MM-DD') = TO_CHAR(SYSDATE-6, 'YYYY-MM-DD')
+			) DAY_6
+		FROM DUAL
 	</select>
 	
-		
+	<!-- index 멤버 정보 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ -->
 	<select id="getMemberListAsc" resultType="MemberDTO">
 		SELECT MM.*
 		FROM 
@@ -61,5 +142,205 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			ORDER BY ROWNUM DESC) MM
 	</select>
 	
+	<!-- index 주문 정보 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ -->
+	<select id="getOrderListDesc" resultType="StoreOrderDTO">
+		SELECT *
+		FROM STOREORDER 
+		ORDER BY ORDER_DATE DESC
+	</select>
 	
+	<!-- managerDetail member 정보ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ -->
+	<select id="getMemberDetail" parameterType="MemberDTO" resultType="MemberDTO">
+		SELECT *
+		FROM "MEMBER"
+		WHERE MEMBER_ID = #{member_id}
+	</select>
+	
+	<!-- 수정 확인 시 실행되는 Update 쿼리 -->
+	<update id="postMemberDetailUpdate" parameterType="OriMemberDTO">
+		UPDATE "MEMBER"
+		SET
+			MEMBER_ID = #{member_id},
+			MEMBER_PWD = #{member_pwd},
+			MEMBER_NICKNAME = #{member_nickname},
+			MEMBER_NAME = #{member_name},
+			MEMBER_MAIL = #{member_mail},
+			MEMBER_PHONE = #{member_phone},
+			MEMBER_LEV = #{member_lev}
+		WHERE MEMBER_ID = #{oriMember_id}
+	</update>
+	
+	<!-- Member Detail 수정 시 중복을 확인하는 쿼리 목록 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ -->
+	<!-- MemberId -->
+	<select id="confirmMemberId" parameterType="MemberDTO" resultType="java.lang.Long">
+		SELECT COUNT(*)
+		FROM "MEMBER"
+		WHERE MEMBER_ID = #{member_id} 
+	</select>
+	<!-- MemberNickname -->
+	<select id="confirmMemberNickname" parameterType="MemberDTO" resultType="java.lang.Long">
+		SELECT COUNT(*)
+		FROM "MEMBER"
+		WHERE MEMBER_NICKNAME = #{member_nickname} 
+	</select>
+	<!-- Mail -->
+	<select id="confirmMemberMail" parameterType="MemberDTO" resultType="java.lang.Long">
+		SELECT COUNT(*)
+		FROM "MEMBER"
+		WHERE MEMBER_Mail = #{member_mail} 
+	</select>
+	<!-- Phone -->
+	<select id="confirmMemberPhone" parameterType="MemberDTO" resultType="java.lang.Long">
+		SELECT COUNT(*)
+		FROM "MEMBER"
+		WHERE MEMBER_PHONE = #{member_phone} 
+	</select>
+	
+	<!-- Orderㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ -->
+	<!-- order List 결제 목록 -->
+	<select id="getOrderList" resultType="StoreOrderDTO">
+		SELECT *
+		FROM STOREORDER
+		ORDER BY ORDER_DATE DESC
+	</select>
+	<!-- cancel order List 결제 취소 목록 -->
+	<select id="getCancelOrderList" resultType="StoreOrderDTO">
+		SELECT *
+		FROM STOREORDER
+		WHERE ORDER_STATUS = '결제취소요청'
+	</select>
+	<!-- 결제취소 요청 승인 -->
+	<update id="cancelOk" parameterType="StoreOrderDTO">
+		UPDATE STOREORDER
+		SET
+			ORDER_STATUS = '결제취소'
+		WHERE ORDER_NUM = #{order_num}
+	</update>
+	<!-- 결제취소 요청 거절 -->
+	<update id="cancelNo" parameterType="StoreOrderDTO">
+		UPDATE STOREORDER
+		SET
+			ORDER_STATUS = '결제취소거절'
+		WHERE ORDER_NUM = #{order_num}
+	</update>	
+	<!-- 주문 상세 정보 -->
+	<select id="orderDetail" parameterType="StoreOrderDTO" resultType="StoreOrderDTO">
+		SELECT *
+		FROM STOREORDER
+		WHERE ORDER_NUM = #{order_num}
+	</select>
+	<!-- 주문 상세 정보의 세부 주문 목록 -->
+	<select id="orderFoodDetail" parameterType="StoreOrderDTO" resultMap="FoodResultMap">
+		SELECT FD.FOOD_NUM, FD.FOOD_CATEGORY, FD.FOOD_NAME , MD.FOOD_COUNT, FD.FOOD_PRICE, (MD.FOOD_COUNT * FD.FOOD_PRICE)TOTAL_PRICE
+		FROM FOOD FD
+			INNER JOIN MIDORDER MD
+			ON FD.FOOD_NUM = MD.FOOD_NUM 
+		WHERE MD.ORDER_NUM = #{order_num}
+		ORDER BY FD.FOOD_CATEGORY
+	</select>
+	
+	<resultMap id="FoodResultMap" type="FoodDTO">
+        <id column="FOOD_NUM" property="food_num"/>
+        <result column="FOOD_CATEGORY" property="food_category"/>
+        <result column="FOOD_NAME" property="food_name"/>
+        <result column="FOOD_PRICE" property="food_price"/>
+        <result column="FOOD_COUNT" property="food_count"/>
+        <result column="TOTAL_PRICE" property="total_price"/>
+    </resultMap>
+	<!-- 주문&배송 정보 수정 -->
+	<update id="completeOrderDetailUpdate" parameterType="StoreOrderDTO">
+		UPDATE STOREORDER
+		SET
+			ORDER_STATUS = #{order_status},
+			DELIVERY_STATUS = #{delivery_status},
+			ORDER_NAME = #{order_name},
+			ORDER_PHONE = #{order_phone},
+			ORDER_POST = #{order_post},
+			DELIVERY_ADDRESS = #{delivery_address}
+		WHERE ORDER_NUM = #{order_num}
+	</update>
+	
+	<!-- StockList ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ -->
+	<!-- 재고 목록 -->
+	<select id="stockList" resultType="FoodDTO">
+		SELECT *
+		FROM FOOD
+		<![CDATA[
+			WHERE FOOD_STOCK >= 0
+		]]>
+		ORDER BY FOOD_STOCK DESC
+	</select>
+	
+	<select id="stockLackList" resultType="FoodDTO">
+		SELECT *
+		FROM FOOD
+		<![CDATA[
+			WHERE FOOD_STOCK < 0
+		]]>
+		ORDER BY FOOD_STOCK DESC
+		</select>
+
+	<select id="getStockBuyingSeq" resultType="java.lang.Long">
+		SELECT STOCK_BUYING_SEQ.NEXTVAL FROM DUAL
+	</select>
+	
+	<insert id="addStockBuying" parameterType="StockBuyingDTO">
+		INSERT INTO STOCK_BUYING
+		VALUES(#{buying_num}, #{buying_total_price}, SYSDATE)
+	</insert>
+	
+	<insert id="addStockMidBuying" parameterType="StockMidBuyingDTO">
+		INSERT INTO STOCK_MID_BUYING
+		VALUES(
+			STOCK_MID_BUYING_SEQ.NEXTVAL,
+			#{buying_num},
+			#{food_num},
+			#{food_count},
+			#{food_price},
+			SYSDATE,
+			#{food_category},
+			#{food_one_price},
+			#{food_name}
+		)
+	</insert>
+	
+	<update id="updateFoodStock" parameterType="StockMidBuyingDTO">
+		UPDATE FOOD
+		SET 
+			FOOD_STOCK = FOOD_STOCK + #{food_count}
+		WHERE FOOD_NAME = #{food_name}
+	</update>
+	<!-- add Items -->
+	<insert id="addItems" parameterType="FoodDTO">
+		INSERT INTO FOOD(FOOD_NUM, FOOD_CATEGORY, FOOD_NAME, FOOD_BUYING, FOOD_PRICE)
+		VALUES(FOOD_SEQ.NEXTVAL, #{food_category}, #{food_name}, #{food_buying}, #{food_price})
+	</insert>
+	
+	
+	<!-- STOCK RECORDㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ -->
+	<!-- 재고 구매 기록 -->
+	<select id="getStockRecordList" resultType="StockBuyingDTO">
+		SELECT *
+		FROM STOCK_BUYING
+		ORDER BY BUYING_DATE DESC
+	</select>
+	
+	<!-- 재고 구매 세부 기록 -->
+	<select id="getStockRecordDetailBig" parameterType="StockBuyingDTO" resultType="StockBuyingDTO">
+		SELECT *
+		FROM STOCK_BUYING
+		WHERE BUYING_NUM = #{buying_num}
+	</select>
+	
+	<select id="getStockRecordDetailSmall" parameterType="StockBuyingDTO" resultType="StockMidBuyingDTO">
+		SELECT *
+		FROM STOCK_MID_BUYING
+		WHERE BUYING_NUM = #{buying_num}
+		ORDER BY FOOD_CATEGORY ASC
+	</select>
+	
+
+	
+	
+
 </mapper>

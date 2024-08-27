@@ -31,11 +31,14 @@
  		<typeAlias type="com.chef.app.food.StoreCartDTO" alias="StoreCartDTO"/>
  		
  		<!-- 정민 -->
- 		<typeAlias type="com.chef.app.manager.BuyingHistoryDTO" alias="BuyingHistoryDTO"/>
+ 		<typeAlias type="com.chef.app.manager.StockBuyingDTO" alias="StockBuyingDTO"/>
+ 		<typeAlias type="com.chef.app.manager.StockMidBuyingDTO" alias="StockMidBuyingDTO"/>
  		<typeAlias type="com.chef.app.manager.NoticeDTO" alias="NoticeDTO"/>
  		<typeAlias type="com.chef.app.manager.NoticeFileDTO" alias="NoticeFileDTO"/>
  		<typeAlias type="com.chef.app.manager.InquiryDTO" alias="InquiryDTO"/>
- 		<typeAlias type="com.chef.app.manager.MonthTotalPurchaseDTO" alias="MonthTotalPurchaseDTO"/>
+ 		<typeAlias type="com.chef.app.manager.TotalPurchaseDTO" alias="TotalPurchaseDTO"/>
+ 		<typeAlias type="com.chef.app.manager.OriMemberDTO" alias="OriMemberDTO"/>
+ 		
  		
 
  	</typeAliases>

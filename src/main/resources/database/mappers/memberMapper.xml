@@ -4,6 +4,23 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.chef.app.member.MemberDAO">
+
+
+	<select id="wishList" parameterType="MemberDTO" resultType="RecipeDTO">
+		SELECT * FROM RECIPE
+		WHERE RECIPE_NUM = 
+				(
+					SELECT RECIPE_NUM 
+					FROM BOOKMARK 
+					WHERE MEMBER_ID = #{member_id}
+				)
+	</select>
+
+	<select id="recipeRecentList" resultType="RecipeDTO">
+		SELECT * FROM
+		(SELECT ROWNUM R,B.* FROM (SELECT * FROM RECIPE ORDER BY CREATE_DATE DESC)B)
+		WHERE R BETWEEN 1 AND 3
+	</select>
 	
 	<update id="prfileSnsDelete" parameterType="MemberDTO">
 		UPDATE MEMBER SET PROFILE_SNS_URL = NULL
@@ -25,23 +42,72 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE MEMBER_ID = #{member_id}
 	</update>
 	
-	<select id="recipeReplyList" parameterType="MemberDTO" resultType="RecipeReplyDTO">
-		SELECT * FROM RECIPEREPLY
-		WHERE RECIPE_REPLY_NUM > 0 AND MEMBER_ID = #{member_id}
+	<select id="recipeReplyList" parameterType="Map" resultType="RecipeReplyDTO">
+		SELECT * FROM 	
+			(SELECT ROWNUM R, B.* FROM
+				(SELECT * FROM RECIPEREPLY WHERE MEMBER_ID = #{memberdto.member_id} ORDER BY 
+					<choose>
+						<when test="pager.order == 'old'">
+							CREATE_DATE ASC
+						</when>
+						<otherwise>
+							CREATE_DATE DESC
+						</otherwise>
+					</choose>
+				)B)
+				WHERE R BETWEEN #{pager.startRow} AND #{pager.lastRow}
 	</select>
 	
-	<select id="recipeReviewList" parameterType="MemberDTO" resultType="RecipeReviewDTO">
-		SELECT * FROM RECIPEREVIEW
-		WHERE REVIEW_NUM > 0 AND MEMBER_ID = #{member_id}
+	
+	<select id="recipeReviewList" parameterType="Map" resultType="RecipeReviewDTO">
+		SELECT * FROM 	
+			(SELECT ROWNUM R, B.* FROM
+				(SELECT * FROM RECIPEREVIEW WHERE MEMBER_ID = #{memberdto.member_id} ORDER BY 
+					<choose>
+						<when test="pager.order == 'old'">
+							CREATE_DATE ASC
+						</when>
+						<otherwise>
+							CREATE_DATE DESC
+						</otherwise>
+					</choose>
+				)B)
+				WHERE R BETWEEN #{pager.startRow} AND #{pager.lastRow}
+	</select>
+	
+	<select id="recipeList" parameterType="Map" resultType="RecipeDTO">
+	SELECT * FROM 	
+		(SELECT ROWNUM R, B.* FROM
+			(SELECT * FROM RECIPE WHERE MEMBER_ID = #{memberdto.member_id} ORDER BY 
+				<choose>
+					<when test="pager.order == 'old'">
+						CREATE_DATE ASC
+					</when>
+					<otherwise>
+						CREATE_DATE DESC
+					</otherwise>
+				</choose>
+			)B)
+			WHERE R BETWEEN #{pager.startRow} AND #{pager.lastRow}
 	</select>
 	
 	
-	<select id="recipeList" parameterType="MemberDTO" resultType="RecipeDTO">
-		SELECT * FROM RECIPE
-		WHERE RECIPE_NUM > 80 AND RECIPE_WRITER = #{member_id}
+	<select id="getTotalCount" parameterType="Map" resultType="Long">
+		SELECT COUNT(RECIPE_NUM) FROM RECIPE
+		WHERE MEMBER_ID = #{memberdto.member_id}	
 	</select>
-	
 
+	<select id="getTotalCount2" parameterType="Map" resultType="Long">
+		SELECT COUNT(REVIEW_NUM) FROM RECIPEREVIEW
+		WHERE MEMBER_ID = #{memberdto.member_id}
+	</select>
+
+
+	<select id="getTotalCount3" parameterType="Map" resultType="Long">
+		SELECT COUNT(RECIPE_REPLY_NUM) FROM RECIPEREPLY
+		WHERE MEMBER_ID = #{memberdto.member_id}
+	</select>
+	
 	<select id="duplication" parameterType="MemberDTO" resultType="int">
 		SELECT 
 			<choose>
@@ -165,7 +231,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
    </resultMap>
    
    <update id="cancleRequest" parameterType="StoreOrderDTO">
-   	UPDATE STOREORDER SET ORDER_STATUS = '결제취소요청' WHERE ORDER_NUM=#{order_num}
+   		UPDATE STOREORDER SET ORDER_STATUS = '결제취소요청' WHERE ORDER_NUM=#{order_num}
    </update>
-	
+   
+
 </mapper>

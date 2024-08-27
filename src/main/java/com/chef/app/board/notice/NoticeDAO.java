@@ -22,6 +22,10 @@ public class NoticeDAO {
 		return sqlSession.selectList(NAMESPACE + "noticeList", pager);
 	}
 	
+	public int hitUpdate(NoticeDTO noticeDTO) throws Exception{
+		return sqlSession.update(NAMESPACE + "hitUpdate", noticeDTO);
+	}
+	
 	public NoticeDTO noticeDetail(CommentDTO commentDTO) throws Exception{
 		return sqlSession.selectOne(NAMESPACE + "noticeDetail", commentDTO);
 	}

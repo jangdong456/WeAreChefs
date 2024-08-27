@@ -26,6 +26,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE R BETWEEN #{startRow} AND #{lastRow}
 	</select>
 	
+	<update id="hitUpdate" parameterType="InquiryDTO">
+		UPDATE INQUIRY
+			SET HIT = HIT + 1
+		WHERE BOARD_NUM = #{board_num}
+	</update>
+	
 	<select id="getRowNum" parameterType="Pager" resultType="java.lang.Long">
 		SELECT COUNT(BOARD_NUM)
 		FROM INQUIRY
@@ -60,8 +66,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</delete>
 	
 	<insert id="fnaAdd" parameterType="InquiryDTO">
-		INSERT INTO INQUIRY(BOARD_NUM, MEMBER_ID, BOARD_TYPE, BOARD_TITLE, BOARD_CONTENT, CREATE_DATE)
-		VALUES(INQUIRY_SEQ.NEXTVAL, #{member_id}, 1, #{board_title}, #{board_content}, SYSDATE)
+		INSERT INTO INQUIRY(BOARD_NUM, MEMBER_ID, MEMBER_NICKNAME, BOARD_TYPE, BOARD_TITLE, BOARD_CONTENT, CREATE_DATE)
+		VALUES(INQUIRY_SEQ.NEXTVAL, #{member_id}, #{member_nickname}, 1, #{board_title}, #{board_content}, SYSDATE)
 		
 	</insert>
 </mapper>

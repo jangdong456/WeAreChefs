@@ -1,17 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
- <!-- Sidebar -->
- <div class="sidebar" data-background-color="dark">
+<!-- Sidebar -->
+<div class="sidebar" data-background-color="dark">
   <div class="sidebar-logo">
     <!-- Logo Header -->
     <div class="logo-header" data-background-color="dark">
       <a href="index.html" class="logo">
         <img
-          src="/resources/assets/img/kaiadmin/logo_light.svg"
+          src="/resources/assets/img/admin.jpg"
           alt="navbar brand"
           class="navbar-brand"
-          height="20"
+          height="50"
+          width="190"
         />
       </a>
       <!-- 사이드 바 왼쪽 오른쪽으로 움직이게 하는 것-->
@@ -26,7 +27,7 @@
       
       <button class="topbar-toggler more">
         <i class="gg-more-vertical-alt"></i>
-      </button>
+      </button>	
     </div>
     <!-- End Logo Header -->
   </div>
@@ -49,9 +50,21 @@
                   <span class="sub-item">회원 정보</span>
                 </a>
               </li>
+            </ul>
+          </div>
+        </li>
+
+        <li class="nav-item">
+          <a data-bs-toggle="collapse" href="#tables">
+            <i class="fas fa-exchange-alt"></i>
+            <p>주문&배송</p>
+            <span class="caret"></span>
+          </a>
+          <div class="collapse" id="tables">
+            <ul class="nav nav-collapse">
               <li>
-                <a href="#">
-                  <span class="sub-item">회원 등급</span>
+                <a href="/manager/orderList">
+                  <span class="sub-item">주문&배송 관리</span>
                 </a>
               </li>
             </ul>
@@ -67,57 +80,13 @@
           <div class="collapse" id="forms">
             <ul class="nav nav-collapse">
               <li>
-                <a href="#">
-                  <span class="sub-item">재고 현황</span>
+                <a href="/manager/stockList">
+                  <span class="sub-item">재고 목록</span>
                 </a>
               </li>
               <li>
-                <a href="#">
-                  <span class="sub-item">재고 장바구니</span>
-                </a>
-              </li>
-            </ul>
-          </div>
-        </li>
-
-        <li class="nav-item">
-          <a data-bs-toggle="collapse" href="#tables">
-            <i class="fas fa-exchange-alt"></i>
-            <p>주문&배송</p>
-            <span class="caret"></span>
-          </a>
-          <div class="collapse" id="tables">
-            <ul class="nav nav-collapse">
-              <li>
-                <a href="#">
-                  <span class="sub-item">주문 관리</span>
-                </a>
-              </li>
-              <li>
-                <a href="#">
-                  <span class="sub-item">배송 관리</span>
-                </a>
-              </li>
-            </ul>
-          </div>
-        </li>
-
-        <li class="nav-item">
-          <a data-bs-toggle="collapse" href="#maps">
-            <i class="fas fa-won-sign"></i>
-            <p>가계</p>
-            <span class="caret"></span>
-          </a>
-          <div class="collapse" id="maps">
-            <ul class="nav nav-collapse">
-              <li>
-                <a href="#">
-                  <span class="sub-item">가계 현황 표</span>
-                </a>
-              </li>
-              <li>
-                <a href="#">
-                  <span class="sub-item">가계 현황 차트</span>
+                <a href="/manager/stockRecordList">
+                  <span class="sub-item">재고 구매 기록</span>
                 </a>
               </li>
             </ul>

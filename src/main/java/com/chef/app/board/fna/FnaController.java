@@ -2,6 +2,8 @@ package com.chef.app.board.fna;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.chef.app.comment.CommentDTO;
 import com.chef.app.manager.InquiryDTO;
+import com.chef.app.manager.NoticeDTO;
+import com.chef.app.member.MemberDTO;
 import com.chef.app.util.Pager;
 
 import oracle.jdbc.proxy.annotation.Post;
@@ -29,16 +33,43 @@ public class FnaController {
 	}
 	
 	@GetMapping("list")
-	public String fnaList(Pager pager, Model model) throws Exception {
-		List<InquiryDTO> InquiryList = fnaService.fnaList(pager);
+	public String fnaList(Pager pager, Model model, HttpSession session) throws Exception {
+		Long lev = 0L;
+		if(((MemberDTO) session.getAttribute("member")) != null) {
+			lev = ((MemberDTO) session.getAttribute("member")).getMember_lev();
+		}
+		MemberDTO memberDTO = new MemberDTO();
+		memberDTO.setMember_lev(lev);
+		model.addAttribute("member", memberDTO);
+
 		
+		List<InquiryDTO> InquiryList = fnaService.fnaList(pager);
 		model.addAttribute("pager", pager);
 		model.addAttribute("inquiryList", InquiryList);
 		return "board/inquiry/list";
 	}
 	
+	@GetMapping("hitUpdate")
+	public String hitUpdate(Pager pager,InquiryDTO inquiryDTO, Model model) throws Exception{
+		int result = fnaService.hitUpdate(inquiryDTO);
+		
+		List<InquiryDTO> InquiryList = fnaService.fnaList(pager);
+		model.addAttribute("pager", pager);
+		model.addAttribute("inquiryList", InquiryList);
+		return "board/inquiry/inquiryUpdate";
+	}
+	
 	@GetMapping("detail")
-	public String fnaDetail(CommentDTO commentDTO, Model model) throws Exception{
+	public String fnaDetail(CommentDTO commentDTO, Model model, HttpSession session) throws Exception{
+		Long lev = 0L;
+		if(((MemberDTO) session.getAttribute("member")) != null) {
+			lev = ((MemberDTO) session.getAttribute("member")).getMember_lev();
+		}
+		MemberDTO memberDTO = new MemberDTO();
+		memberDTO.setMember_lev(lev);
+		model.addAttribute("member", memberDTO);
+
+		
 		InquiryDTO inquiryDTO = fnaService.fnaDetail(commentDTO);
 		model.addAttribute("inquiryDetail", inquiryDTO);
 		
@@ -91,9 +122,11 @@ public class FnaController {
 	}
 	
 	@PostMapping("add")
-	public String fnaAdd(InquiryDTO inquiryDTO, Model model) throws Exception{
+	public String fnaAdd(InquiryDTO inquiryDTO, Model model, HttpSession session) throws Exception{
 		// & Todo : Session에서 memberID 받는 것으로 바꿔줘야함
-		inquiryDTO.setMember_id("admin1");
+		inquiryDTO.setMember_id(((MemberDTO) session.getAttribute("member")).getMember_id());
+		inquiryDTO.setMember_nickname(((MemberDTO) session.getAttribute("member")).getMember_nickname());
+	
 		int result = fnaService.fnaAdd(inquiryDTO);
 		
 		String msg = "작성을 성공 하였습니다.";

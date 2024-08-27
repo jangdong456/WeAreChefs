@@ -15,7 +15,23 @@ public class FoodDTO {
 	private Long rating;
 	private StoreImgFileDTO storeImgFileDTO;
 	
+	//8.21 추가 이정민
+	private Long food_count;
+	private Long total_price;
+	
 
+	public Long getFood_count() {
+		return food_count;
+	}
+	public void setFood_count(Long food_count) {
+		this.food_count = food_count;
+	}
+	public Long getTotal_price() {
+		return total_price;
+	}
+	public void setTotal_price(Long total_price) {
+		this.total_price = total_price;
+	}
 	public StoreImgFileDTO getStoreImgFileDTO() {
 		return storeImgFileDTO;
 	}
