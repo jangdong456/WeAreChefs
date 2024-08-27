@@ -90,6 +90,8 @@ public class MemberController {
 		MemberDTO memberdto = (MemberDTO)session.getAttribute("member");
 		memberDTO.setMember_id(memberdto.getMember_id());
 		
+		System.out.println("==== 프로필 사진 변경 =====");
+		
 		int result = 0;
 		String url = "";
 		
@@ -141,6 +143,7 @@ public class MemberController {
 		System.out.println("== @@@@@@@@@@@@@@@@@@@@@@@@@@@@ ==");
 		System.out.println(pager.getOrder());
 		System.out.println(pager.getPage());
+		System.out.println(pager.getKind());
 		
 		MemberDTO memberdto = (MemberDTO)session.getAttribute("member");
 		memberdto = memberService.mypage(memberdto);
@@ -156,6 +159,10 @@ public class MemberController {
 		// 상대방 레시피에 작성한 리뷰
 		List<RecipeReviewDTO> recipeReview = memberService.recipeReviewList(map);
 		model.addAttribute("reviewList", recipeReview);
+		
+		// 상대방 레시피에 작성한 댓글
+		List<RecipeReplyDTO> recipeReply = memberService.recipeReplyList(map);
+		model.addAttribute("recipeReply", recipeReply);
 
 		return "member/recipeList";
 	}
@@ -178,10 +185,12 @@ public class MemberController {
 		List<RecipeDTO> recipedto = memberService.recipeList(map);
 		model.addAttribute("recipeList", recipedto);
 
+		
 		// 상대방 레시피에 작성한 리뷰
 		List<RecipeReviewDTO> recipeReview = memberService.recipeReviewList(map);
 //		model.addAttribute("recipeList", recipeReview);
 		model.addAttribute("reviewList", recipeReview);
+		
 		
 		// 상대방 레시피에 작성한 댓글
 		List<RecipeReplyDTO> recipeReply = memberService.recipeReplyList(map);

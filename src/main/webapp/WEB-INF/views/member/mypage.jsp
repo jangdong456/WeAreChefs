@@ -130,7 +130,7 @@
                                                                         <div class="modal-footer">
                                                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                                                             <button type="submit" class="btn btn-primary" id="profile_picture_add" data-member-id="${member.member_id}">등록</button>
-                                                                            <button type="button" class="btn btn-danger" id="profile_picture_delete" data-member-id="${member.member_id}">삭제</button>
+                                                                            <button type="button" class="btn btn-danger" id="profile_picture_delete" data-member-delete-id="${member.member_id}">삭제</button>
                                                                         </div>
                                                                     </form>
                                                                 </div>
@@ -348,7 +348,7 @@
                             <div class="col-lg-9">
                                 <div class="row g-4 justify-content-center"> 
                                     <div class="tab-class text-center">
-                                        <div class="col-lg-8 text-end">
+                                        <div id="kindList" class="col-lg-8 text-end">
                                             <ul class="nav nav-pills d-inline-flex text-center mb-5">
                                                 <li class="nav-item">
                                                     <a class="d-flex m-2 py-2 bg-light rounded-pill active" data-bs-toggle="pill" href="#tab-1">
@@ -369,10 +369,10 @@
                                             </ul>
                                         </div>
                                     </div>
-                        
+                                    <!-- value="recipeList" value="cookingReviewList" value="commentList" -->
 
                                 
-                                <!-- id 값이 tab-1 tab-2 tab-3 으로  탭을 눌렀을 때 어떠한 리스트들이 올지 정해진다 -->
+                            <!-- id 값이 tab-1 tab-2 tab-3 으로  탭을 눌렀을 때 어떠한 리스트들이 올지 정해진다 -->
                             <div id="recipeListDiv">
                                 <div class="tab-content">
                                     <div id="tab-1" class="tab-pane fade show p-0 active">                                        
@@ -382,7 +382,7 @@
 
                                                     <c:forEach items="${recipeList}" var="list"> 
 
-
+                                                    
                                                         <div class="col-md-6 col-lg-4 col-xl-3">
                                                             <div class="rounded position-relative fruite-item">
                                                                 <div class="fruite-img">
@@ -435,7 +435,7 @@
                                                                     <h4>${review.board_title}</h4>
                                                                     <p id="test">${review.board_content}</p>
                                                                     <div class="d-flex justify-content-between flex-lg-wrap">
-                                                                        <a href="#" style="margin-left:18%" class="btn border border-secondary rounded-pill px-3 text-primary">작성한 댓글보기</a>
+                                                                        <a href="#" style="margin-left:18%" class="btn border border-secondary rounded-pill px-3 text-primary">작성한 요리후기</a>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -445,17 +445,17 @@
                                             </div>
                                         </div>
 
+
                                         <div class="col-12">
-                                            <c:if test="tab2번 여기 출력">
                                             <div class="pagination d-flex justify-content-center mt-5">
                                                 <a href="/member/mypage?page=${pager.startNum-1}&order=${pager.order}" class="rounded ${pager.pre?'':'disabled'}" >&laquo;</a>
                                                 <c:forEach begin="${pager.startNum}" end="${pager.lastNum}" step="1" var="i">
-                                                    <a href="/member/mypage?page=${i}&order=${pager.order}" class="rounded">${i}</a>
+                                                    <a href="/member/mypage?page=${i}&order=${pager.order}&kind={pager.kind}" class="rounded">${i}</a>
                                                 </c:forEach>
                                                 <a href="/member/mypage?page=${pager.startNum-1}&order=${pager.order}" class="rounded ${pager.next?'':'disabled'}">&raquo;</a>
-                                            </div>
-                                            </c:if>
+                                            </div> 
                                         </div>
+
                                     </div>
                                 </div>
                                 
@@ -477,7 +477,7 @@
                                                                     <h4>${reply.board_title}</h4>
                                                                     <p id="test">${reply.board_content}</p>
                                                                     <div class="d-flex justify-content-between flex-lg-wrap">
-                                                                        <a href="#" style="margin-left:18%" class="btn border border-secondary rounded-pill px-3 text-primary">작성한 요리후기</a>
+                                                                        <a href="#" style="margin-left:18%" class="btn border border-secondary rounded-pill px-3 text-primary">작성한 댓글</a>
                                                                     </div>
                                                                 </div>
                                                             </div>

@@ -53,7 +53,7 @@
                                     <h4>${review.board_title}</h4>
                                     <p id="test">${review.board_content}</p>
                                     <div class="d-flex justify-content-between flex-lg-wrap">
-                                        <a href="#" style="margin-left:18%" class="btn border border-secondary rounded-pill px-3 text-primary">작성한 댓글보기</a>
+                                        <a href="#" style="margin-left:18%" class="btn border border-secondary rounded-pill px-3 text-primary">작성한 요리후기</a>
                                     </div>
                                 </div>
                             </div>
@@ -83,7 +83,7 @@
                                     <h4>${reply.board_title}</h4>
                                     <p id="test">${reply.board_content}</p>
                                     <div class="d-flex justify-content-between flex-lg-wrap">
-                                        <a href="#" style="margin-left:18%" class="btn border border-secondary rounded-pill px-3 text-primary">작성한 요리후기</a>
+                                        <a href="#" style="margin-left:18%" class="btn border border-secondary rounded-pill px-3 text-primary">작성한 댓글보기</a>
                                     </div>
                                 </div>
                             </div>

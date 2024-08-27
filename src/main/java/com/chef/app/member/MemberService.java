@@ -71,12 +71,23 @@ public class MemberService {
 	}
 				
 	public List<RecipeReplyDTO> recipeReplyList(Map<String, Object> map) throws Exception {
+		Long totalRow = memberDAO.getTotalCountRecipeReply(map);
+		System.out.println("=== 레시피 댓글 총 토탈 갯수 반환 값 : ===" + totalRow);
+		
+		if(totalRow==0) {
+			totalRow=1L;
+		}
+		
+		Pager pager = (Pager)map.get("pager");
+		pager.makeRow(8L);
+		pager.makeNum(totalRow, 8L, 5L);
+			
 		return memberDAO.recipeReplyList(map);
 	}
 	
 	public List<RecipeReviewDTO> recipeReviewList(Map<String, Object> map) throws Exception {
-		Long totalRow = memberDAO.getTotalCount(map);
-		System.out.println("=== 총 토탈 갯수 반환 값 : ===" + totalRow);
+		Long totalRow = memberDAO.getTotalCountRecipeReview(map);
+		System.out.println("=== 레시피 리뷰 총 토탈 갯수 반환 값 : ===" + totalRow);
 		
 		if(totalRow==0) {
 			totalRow=1L;
@@ -91,7 +102,7 @@ public class MemberService {
 	
 	public List<RecipeDTO> recipeList(Map<String, Object> map) throws Exception {
 		Long totalRow = memberDAO.getTotalCount(map);
-		System.out.println("=== 총 토탈 갯수 반환 값 : ===" + totalRow);
+		System.out.println("=== 레시피 리스트 총 토탈 갯수 반환 값 : ===" + totalRow);
 		
 		if(totalRow==0) {
 			totalRow=1L;

@@ -18,9 +18,26 @@ let introductionId = introductionAdd.getAttribute("data-member-id");
 let introducesId = introductionAdd.getAttribute("data_member_id");
 let profileId = profileAdd.getAttribute("data-member-id");
 
+let profileDrop = profilePictureDelete.getAttribute("data-member-delete-id")
+
+
+
 // list 최신순 오래된순 선택 관련
 const recipeList = document.getElementById("recipeList");
 const recipeListDiv  = document.getElementById("recipeListDiv");
+
+
+// 요리레시피, 요리후기 ,댓글 tab 관련 태그
+const kindList = document.getElementById("kindList");
+
+kindList.addEventListener("click", (e) => {
+    console.log(e.target.innerHTML)
+    let value = e.target.innerHTML
+    fetch("getList?kind="+ value, {
+        method : "GET"
+    })
+})
+
 
 recipeList.addEventListener("change", (e) => {
     
@@ -34,8 +51,8 @@ recipeList.addEventListener("change", (e) => {
     })
 })
 
+// sns url
 profileSnsDelete.addEventListener("click", () => {
-
     fetch("prfileSnsDelete?member_id="+profileSnsId, {
         method : "GET"
     })
@@ -72,8 +89,11 @@ profileSnsAdd.addEventListener("click", () => {
     
 })
 
+
+// 프로필 사진
 profilePictureDelete.addEventListener("click", () => {
-    fetch("profileDelete?member_id="+introductionId, {
+
+    fetch("profileDelete?member_id="+profileDrop, {
         method : "GET"
     })
     .then(res => res.text())
@@ -88,6 +108,7 @@ profilePictureDelete.addEventListener("click", () => {
 })
 
 
+// 자기소개
 introductionAdd.addEventListener("click", () =>{
     
     console.log(commentContents.value);

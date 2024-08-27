@@ -22,6 +22,14 @@ public class MemberDAO {
 	private final String NAMESPACE = "com.chef.app.member.MemberDAO.";
 	
 	
+	public Long getTotalCountRecipeReply(Map<String, Object> map) throws Exception {
+		return sqlSession.selectOne(NAMESPACE + "getTotalCountRecipeReply", map);
+	}
+	
+	public Long getTotalCountRecipeReview(Map<String, Object> map) throws Exception {
+		return sqlSession.selectOne(NAMESPACE + "getTotalCountRecipeReview", map);
+	}
+	
 	public Long getTotalCount(Map<String, Object> map) throws Exception {
 		return sqlSession.selectOne(NAMESPACE + "getTotalCount", map);
 	}
