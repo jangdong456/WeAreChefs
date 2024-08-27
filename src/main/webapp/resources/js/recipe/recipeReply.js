@@ -2,10 +2,15 @@
 const replyBtn = document.getElementsByClassName("replyBtn");
 const reviewUpBtn = document.getElementsByClassName("reviewUpBtn");
 
+const re_frm = document.getElementById("re_frm");
 const recipe_num = document.getElementById("recipe_num");
 const updateDiv = document.getElementsByClassName("updateDiv");
 const updateDiv2 = document.getElementsByClassName("updateDiv2");
 
+const post_review =  document.getElementById("review");
+const post_reply =  document.getElementById("reply");
+const starRating = document.getElementById("starRating");
+const board_content = document.getElementById("board_content");
 // const replyList = document.getElementsByClassName("replyList");
 let count = 0;
 let max = 1;
@@ -13,6 +18,8 @@ let max = 1;
 function setMax(m) {
   max = m;
 }
+
+
 
 //replyButtons.forEach(function(replyBtn) {
 document.querySelectorAll('.replyBtn').forEach(function (element) {
@@ -208,7 +215,6 @@ const navmission2 = document.getElementById("nav-mission2")
 navmission2.addEventListener("click", (e) => {
  
 if (e.target.classList.contains('replyUpdateBtn')) {
-   alert("수정");
 
   let num = e.target.getAttribute("data-reply-num");
   let conentup = e.target.getAttribute("data-reply-content");

@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.chef.app.file.FileManager;
+import com.chef.app.member.MemberDTO;
 
 @Service
 public class RecipeService {
@@ -216,6 +217,28 @@ public class RecipeService {
 
 	public int replyUpdateInsert(RecipeReplyDTO recipeReplyDTO) {
 		return recipeDAO.replyUpdateInsert(recipeReplyDTO);
+	}
+
+	public List<RecipeDTO> wishList(MemberDTO memberDTO) {
+		return recipeDAO.wishList(memberDTO);
+	}
+
+	public int addWish(RecipeDTO recipeDTO) {
+		return recipeDAO.addWish(recipeDTO);
+
+	}
+
+	public int wishUpdate(RecipeDTO recipeDTO) {
+
+		return recipeDAO.wishUpdate(recipeDTO);
+	}
+
+	public Long bookMark(RecipeDTO recipeDTO) {
+		return recipeDAO.bookMark(recipeDTO);
+	}
+
+	public Double ratingTotal(RecipeReviewDTO recipeReviewDTO) {
+		return recipeDAO.ratingTotal(recipeReviewDTO);
 	}
 
 }

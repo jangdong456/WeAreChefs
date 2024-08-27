@@ -7,6 +7,8 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.chef.app.member.MemberDTO;
+
 @Repository
 public class RecipeDAO {
 	@Autowired
@@ -139,9 +141,25 @@ public class RecipeDAO {
 		return sqlSession.update(NAMESPACE + "replyDelete", recipeReplyDTO);
 	}
 
-//	public Long getNum() {
-//
-//		return sqlSession.selectOne(NAMESPACE + "getNum");
-//	}
+	public List<RecipeDTO> wishList(MemberDTO memberDTO) {
+		return sqlSession.selectList(NAMESPACE + "wishList", memberDTO);
+	}
+
+	public int addWish(RecipeDTO recipeDTO) {
+		return sqlSession.insert(NAMESPACE + "addWish", recipeDTO);
+	}
+
+	public int wishUpdate(RecipeDTO recipeDTO) {
+		return sqlSession.delete(NAMESPACE + "wishUpdate", recipeDTO);
+	}
+
+	public Long bookMark(RecipeDTO recipeDTO) {
+		return sqlSession.selectOne(NAMESPACE + "bookMark", recipeDTO);
+	}
+
+	public Double ratingTotal(RecipeReviewDTO recipeReviewDTO) {
+
+		return sqlSession.selectOne(NAMESPACE + "ratingTotal", recipeReviewDTO);
+	}
 
 }

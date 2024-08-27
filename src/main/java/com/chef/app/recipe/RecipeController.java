@@ -65,16 +65,38 @@ public class RecipeController {
 	public String recipeDetail(RecipeDTO recipeDTO, Model model, RecipeReviewDTO recipeReviewDTO,
 			RecipeReplyDTO recipeReplyDTO, HttpSession session) {
 		MemberDTO memberDTO = (MemberDTO) session.getAttribute("member");
+
 		// recipeDTO.setMember_id(memberDTO.getMember_id());
 
 		recipeDTO = recipeService.recipeDetail(recipeDTO);
+
+		if (memberDTO != null) {
+			RecipeDTO bookRecipe = new RecipeDTO();
+			bookRecipe.setMember_id(memberDTO.getMember_id());
+			bookRecipe.setRecipe_num(recipeDTO.getRecipe_num());
+			Long result = recipeService.bookMark(bookRecipe);
+			String msg = "";
+			if (result >= 1) {
+				msg = "ok";
+			}
+			model.addAttribute("bookMark", msg);
+			model.addAttribute("loginMember", memberDTO);
+			System.out.println("detial reuslt @@@ " + result);
+			System.out.println("detial member id @@@ " + bookRecipe.getMember_id());
+
+		}
+
 		// System.out.println("getMember_id " + recipeDTO.getMember_id());
 		// System.out.println(recipeDTO.getRecipe_name());
 		List<RecipeReviewDTO> ar = recipeService.reviewList(recipeReviewDTO);
+		System.out.println("recipeNum " + recipeReviewDTO.getRecipe_num());
 		List<RecipeReviewDTO> ar2 = recipeService.replyList(recipeReplyDTO, recipeDTO);
+		Double result = recipeService.ratingTotal(recipeReviewDTO);
+		System.out.println("tot" + result);
 
 		model.addAttribute("ar", ar);
 		model.addAttribute("ar2", ar2);
+		model.addAttribute("tot", result);
 
 		String url = "";
 		if (recipeDTO != null) {
@@ -282,41 +304,9 @@ public class RecipeController {
 	public ResponseEntity<Map<String, Object>> recipeComment(@RequestBody RecipeReplyDTO recipeReplyDTO, Model model,
 			RecipeDTO recipeDTO) {
 		Map<String, Object> response = new HashMap<String, Object>();
-//		    
-//		System.out.println(recipeReplyDTO.getRecipe_num());
-//		System.out.println(recipeReplyDTO.getBoard_content());
-//		System.out.println(recipeReplyDTO.getRecipe_reply_num());
-//		recipeReplyDTO.setMember_id("ydb");
-//
-//		// System.out.println("원본글 " + recipeReplyDTO.getRef());
-//
-//		int result = recipeService.recipeComment(recipeReplyDTO);
-//		
-//	    if (result > 0) {
-//	        // If the insertion was successful, return success JSON
-//	        response.put("success", true);
-//	        response.put("message", "답글 등록이 완료됐습니다.");
-//	    } else {
-//	        // If the insertion failed, return failure JSON
-//	        response.put("success", false);
-//	        response.put("message", "답글 등록에 실패했습니다.");
-//	    }
-//	    return ResponseEntity.ok(response);
-//		model.addAttribute("msg", result);
-//		return "commons/result";
 
-//		if (result > 0) {
-//			model.addAttribute("result", "답변이 등록됐습니다!");
-//			model.addAttribute("url", "/recipe/detail?recipe_num=" + recipeReplyDTO.getRecipe_num());
-//			return "/recipe/message";
-//			// model.addAttribute("review",recipeReviewDTO);
-//		} else {
-//			model.addAttribute("result", "답변등록에 실패했습니다.");
-//			model.addAttribute("url", "/recipe/detail?recipe_num=" + recipeReplyDTO.getRecipe_num());
-//			return "/recipe/message";
-//		}
 		try {
-			// Print debug information
+
 			System.out.println("recipe_num: " + recipeReplyDTO.getRecipe_num());
 			System.out.println("board_content: " + recipeReplyDTO.getBoard_content());
 			System.out.println("recipe_reply_num: " + recipeReplyDTO.getRecipe_reply_num());
@@ -343,6 +333,33 @@ public class RecipeController {
 	public ResponseEntity<List<RecipeReplyDTO>> getReplies(@RequestParam Long recipe_reply_num) {
 		List<RecipeReplyDTO> replies = recipeService.getReplies(recipe_reply_num);
 		return ResponseEntity.ok(replies);
+	}
+
+	@GetMapping("addWish")
+	public String addWish(RecipeDTO recipeDTO, HttpSession session, Model model) throws Exception {
+
+		MemberDTO memberDTO = (MemberDTO) session.getAttribute("member");
+		recipeDTO.setMember_id(memberDTO.getMember_id());
+		int result = recipeService.addWish(recipeDTO);
+		// model.addAttribute(memberDTO)ck
+		model.addAttribute("msg", result);
+
+		return "commons/result";
+
+	}
+
+	@GetMapping("cancel")
+	public String cancelWish(RecipeDTO recipeDTO, Model model) throws Exception {
+		int result = recipeService.wishUpdate(recipeDTO);
+		System.out.println("@@ cancel : " + result);
+
+		String url = "/recipe/detail?recipe_num=" + recipeDTO.getRecipe_num();
+
+		model.addAttribute("msg", "레시피 취소");
+		model.addAttribute("url", url);
+
+		return "commons/message";
+
 	}
 
 }

@@ -80,16 +80,16 @@
 }
 
 #starRating label:hover {
-	text-shadow: 0 0 0 rgb(247, 247, 44);
+	text-shadow: 0 0 0 #FCD53F;
 }
 
 #starRating label:hover ~label {
-	text-shadow: 0 0 0 rgb(247, 247, 44);
+	text-shadow: 0 0 0 #FCD53F;
 	/* 마우스 호버 뒤에오는 이모지들 */
 }
 
 #starRating input[type=radio]:checked ~label {
-	text-shadow: 0 0 0 rgb(247, 247, 44);
+	text-shadow: 0 0 0 #FCD53F;
 	/* 마우스 클릭 체크 */
 }
 
@@ -129,28 +129,31 @@
 	margin-left: 2px;
 	margin-bottom: 16px;
 }
+
 .replyBtn {
-    font-size: 14px;
-    margin-left: auto; /* Ensures the button moves to the right */
+	font-size: 14px;
+	margin-left: auto; /* Ensures the button moves to the right */
 }
 
-.child{
+.child {
 	padding-left: 70px;
 }
+
 .updateDiv {
-    display: flex;
-    justify-content: space-between; /* Distributes space between the text and button */
-    align-items: center; /* Aligns items vertically in the center */
+	display: flex;
+	justify-content: space-between;
+	/* Distributes space between the text and button */
+	align-items: center; /* Aligns items vertically in the center */
 }
 
 .updateDiv p {
-    margin: 0; /* Removes default margin for proper alignment */
+	margin: 0; /* Removes default margin for proper alignment */
 }
 
 .reviewUpdateBtn {
-    margin-left: auto; /* Ensures the button moves to the right */
-    font-size: 14px;
-    margin-bottom: 11px;
+	margin-left: auto; /* Ensures the button moves to the right */
+	font-size: 14px;
+	margin-bottom: 11px;
 }
 </style>
 </head>
@@ -186,19 +189,17 @@
 									${dto.recipe_hit}
 								</div>
 							</div>
-							<br>
-							<br>
+							<br> <br>
 							<div>
 								<c:if test="${dto.member_id eq member.member_id}">
 									<a href="/recipe/update?recipe_num=${dto.recipe_num}"><button
-											class="btn border-secondary text-uppercase text-primary"
-											type="button">레시피 수정</button></a>
+											class="btn text-uppercase text-primary" type="button">레시피
+											수정</button></a>
 									<a href="/recipe/delete?recipe_num=${dto.recipe_num}"><button
-											class="btn border-secondary text-uppercase text-primary"
-											type="button">레시피 삭제</button></a>
+											class="btn text-uppercase text-primary" type="button">레시피
+											삭제</button></a>
 								</c:if>
-								<p>dto.member_id: ${dto.member_id}</p>
-								<p>member.member_id: ${member.member_id}</p>
+
 							</div>
 						</div>
 						<div class="col-lg-6">
@@ -206,12 +207,59 @@
 							<h6 class="fw-bold mb-3">분류 : ${dto.recipe_category}</h6>
 							<h6 class="fw-bold mb-3">난이도 : ${dto.recipe_level}</h6>
 							<h6 class="fw-bold mb-3">소요시간 : ${dto.recipe_time}</h6>
-							<div class="d-flex mb-4">
-								<i class="fa fa-star text-secondary"></i> <i
-									class="fa fa-star text-secondary"></i> <i
-									class="fa fa-star text-secondary"></i> <i
-									class="fa fa-star text-secondary"></i> <i class="fa fa-star"></i>
-							</div>
+
+							<c:choose>
+								<c:when test="${tot<2}">
+									<i class="fa fa-star text-secondary"></i>
+									<i class="fa fa-star"></i>
+									<i class="fa fa-star"></i>
+									<i class="fa fa-star"></i>
+									<i class="fa fa-star"></i>
+	                                                        (${tot})
+	                             </c:when>
+								<c:when test="${tot<3}">
+									<i class="fa fa-star text-secondary"></i>
+									<i class="fa fa-star text-secondary"></i>
+									<i class="fa fa-star"></i>
+									<i class="fa fa-star"></i>
+									<i class="fa fa-star"></i>
+	                                                        (${tot})
+	                             </c:when>
+								<c:when test="${tot<4}">
+									<i class="fa fa-star text-secondary"></i>
+									<i class="fa fa-star text-secondary"></i>
+									<i class="fa fa-star text-secondary"></i>
+									<i class="fa fa-star"></i>
+									<i class="fa fa-star"></i>
+	                                                        (${tot})
+	                            </c:when>
+								<c:when test="${tot<5}">
+									<i class="fa fa-star text-secondary"></i>
+									<i class="fa fa-star text-secondary"></i>
+									<i class="fa fa-star text-secondary"></i>
+									<i class="fa fa-star text-secondary"></i>
+									<i class="fa fa-star"></i>
+	                                                        (${tot})
+	                            </c:when>
+								<c:when test="${tot==5}">
+									<i class="fa fa-star text-secondary"></i>
+									<i class="fa fa-star text-secondary"></i>
+									<i class="fa fa-star text-secondary"></i>
+									<i class="fa fa-star text-secondary"></i>
+									<i class="fa fa-star text-secondary"></i>
+	                                                        (${tot})
+	                           </c:when>
+
+								<c:when test="${empty tot}">
+									<i class="fa fa-star"></i>
+									<i class="fa fa-star"></i>
+									<i class="fa fa-star"></i>
+									<i class="fa fa-star"></i>
+									<i class="fa fa-star"></i>
+                                      (아직 후기가 없어요😎)
+	                           </c:when>
+							</c:choose>
+
 							<p class="mb-4">The generated Lorem Ipsum is therefore always
 								free from repetition injected humour, or non-characteristic
 								words etc.</p>
@@ -235,9 +283,31 @@
 									</button>
 								</div>
 							</div>
-							<a href="#"
+							<a href="/food/list"
 								class="btn border border-secondary rounded-pill px-4 py-2 mb-4 text-primary"><i
-								class="fa fa-shopping-bag me-2 text-primary"></i> 재료사러가기</a>
+								class="fa fa-shopping-bag me-2 text-primary"></i> 재료사러가기</a> <br>
+
+
+
+							<c:if test="${dto.member_id ne member.member_id}">
+								<c:choose>
+									<c:when test="${bookMark eq 'ok'}">
+										<a type="button"
+											href="/recipe/cancel?recipe_num=${dto.recipe_num}&member_id=${loginMember.member_id}"
+											class="btn border border-secondary rounded-pill px-4 py-2 mb-4 text-primary">레시피
+											저장 취소</a>
+									</c:when>
+									<c:otherwise>
+										<button type="button"
+											class="btn border border-secondary rounded-pill px-4 py-2 mb-4 text-primary"
+											id="addWish" data-recipe-num="${dto.recipe_num}">레시피
+											저장</button>
+									</c:otherwise>
+								</c:choose>
+							</c:if>
+
+
+
 						</div>
 						<div class="col-lg-12">
 							<nav>
@@ -274,36 +344,38 @@
 								</div>
 								<!--기본적으로 숨겨져있는 클래스  -->
 								<!-- 리뷰 -->
-								<div class="tab-pane" id="nav-mission" role="tabpanel" data-recipe-num="${dto.recipe_num}"
+								<div class="tab-pane" id="nav-mission" role="tabpanel"
+									data-recipe-num="${dto.recipe_num}"
 									aria-labelledby="nav-mission-tab">
 									<c:forEach items="${ar}" var="ar">
 										<div class="d-flex">
 											<img src="/resources/img/avatar.jpg"
 												class="img-fluid rounded-circle p-3"
 												style="width: 100px; height: 100px;" alt="">
-                                                <div class="reviewParent">
+											<div class="reviewParent">
 												<p class="mb-2" style="font-size: 14px;">${ar.create_date}</p>
-												<div class="d-flex align-items-center justify-content-between">
+												<div
+													class="d-flex align-items-center justify-content-between">
 													<h5 class="mr-3">${ar.member_id}</h5>
-												
-											
+
+
 													<div id="reviewRating" class="d-flex">
 														<c:choose>
 															<c:when test="${ar.recipe_rating == 1}">
 																<div class="col-lg-12 my-2 reviewRating">
-																	<input type="radio" name="recipe_rating"> 
-																	<label for="rate1" class="ck_rating">⭐</label> 
-																	<span class="tating2"> <input type="radio"
+																	<input type="radio" name="recipe_rating"> <label
+																		for="rate1" class="ck_rating">⭐</label> <span
+																		class="tating2"> <input type="radio"
 																		name="recipe_rating"> <label for="rate"
 																		class="n_ck_rating">⭐⭐⭐⭐</label>
-																	</span>	
+																	</span>
 																</div>
 															</c:when>
 															<c:when test="${ar.recipe_rating == 2}">
 																<div class="col-lg-12 my-2 reviewRating">
-																	<input type="radio" name="recipe_rating"> 
-																	<label for="rate2" class="ck_rating">⭐⭐</label> 
-																	<span class="tating2"> <input type="radio"
+																	<input type="radio" name="recipe_rating"> <label
+																		for="rate2" class="ck_rating">⭐⭐</label> <span
+																		class="tating2"> <input type="radio"
 																		name="recipe_rating"> <label for="rate"
 																		class="n_ck_rating">⭐⭐⭐</label>
 																	</span>
@@ -311,9 +383,9 @@
 															</c:when>
 															<c:when test="${ar.recipe_rating == 3}">
 																<div class="col-lg-12 my-2 reviewRating">
-																	<input type="radio" name="recipe_rating"> 
-																	<label for="rate3" class="ck_rating">⭐⭐⭐</label> 
-																		<span class="tating2"> <input type="radio"
+																	<input type="radio" name="recipe_rating"> <label
+																		for="rate3" class="ck_rating">⭐⭐⭐</label> <span
+																		class="tating2"> <input type="radio"
 																		name="recipe_rating"> <label for="rate"
 																		class="n_ck_rating">⭐⭐</label>
 																	</span>
@@ -346,16 +418,29 @@
 														</c:choose>
 													</div>
 												</div>
-												<div class="ml-auto updateDiv d-flex justify-content-between align-items-center" data-review-num="${ar.review_num}">
+												<div
+													class="ml-auto updateDiv d-flex justify-content-between align-items-center"
+													data-review-num="${ar.review_num}">
 													<p class="mb-0">${ar.board_content}</p>
-													<c:if test="${dto.member_id eq member.member_id}">
-														<button class="btn text-primary rounded-pill reviewUpdateBtn ms-auto" data-review-num="${ar.review_num}"
-														data-review-content="${ar.board_content}" style="font-size: 14px;margin-bottom: 11px;" id="updateReviwe${ar.review_num}">수정</button>
+													<div>
+														<c:if test="${dto.member_id eq member.member_id}">
+															<button
+																class="btn text-primary rounded-pill reviewUpdateBtn ms-auto"
+																data-review-num="${ar.review_num}"
+																data-review-content="${ar.board_content}"
+																style="font-size: 14px; margin-bottom: 11px; position: relative; left: 560%;"
+																id="updateReviwe${ar.review_num}">수정</button>
 
-														<button class="btn text-primary rounded-pill reviewDeleteBtn ms-auto" data-review-num="${ar.review_num}"
-														data-review-content="${ar.board_content}" style="font-size: 14px;margin-bottom: 11px;" id="deleteReviwe${ar.review_num}">삭제</button>
-													</c:if>
+															<button
+																class="btn text-primary rounded-pill reviewDeleteBtn ms-auto"
+																data-review-num="${ar.review_num}"
+																data-review-content="${ar.board_content}"
+																style="font-size: 14px; margin-bottom: 11px; position: relative; left: 560%;"
+																id="deleteReviwe${ar.review_num}">삭제</button>
+														</c:if>
+													</div>
 												</div>
+
 											</div>
 										</div>
 										<hr>
@@ -364,7 +449,8 @@
 								</div>
 								<!-- qna  -->
 								<div class="tab-pane" id="nav-mission2" role="tabpanel"
-									aria-labelledby="nav-mission2-tab" data-recipe-num="${dto.recipe_num}">
+									aria-labelledby="nav-mission2-tab"
+									data-recipe-num="${dto.recipe_num}">
 									<c:forEach items="${ar2}" var="ar" varStatus="i">
 										<c:choose>
 											<c:when test="${ar.step!=0}">
@@ -372,140 +458,145 @@
 											</c:when>
 											<c:otherwise>
 												<div class="d-flex">
-
 											</c:otherwise>
 										</c:choose>
-											<%-- <c:choose> --%>
-												<!--부모글이면  -->
-												<%-- <c:when test="${ar.step==0}">
+										<%-- <c:choose> --%>
+										<!--부모글이면  -->
+										<%-- <c:when test="${ar.step==0}">
 												</c:when>
 											</c:choose> --%>
-											<img src="/resources/img/avatar.jpg"
-												class="img-fluid rounded-circle p-3"
-												style="width: 100px; height: 100px;" alt="">
-											<div class="replyListParent w-100">
+										<img src="/resources/img/avatar.jpg"
+											class="img-fluid rounded-circle p-3"
+											style="width: 100px; height: 100px;" alt="">
+										<div class="replyListParent w-100">
 
-												<input type="hidden"
-													class="form-control border-0 me-4 recipe_reply_num"
-													value="${ar.recipe_reply_num}" name="recipe_reply_num">
+											<input type="hidden"
+												class="form-control border-0 me-4 recipe_reply_num"
+												value="${ar.recipe_reply_num}" name="recipe_reply_num">
 
-												<p class="mb-2" style="font-size: 14px;">
-													${ar.create_date}</p>
-													<h5 class="mb-0">${ar.member_id}</h5>
-												<div class="d-flex align-items-center">
-														<c:if test="${ar.step==0 && ar.del=='N'}">
-															<button class="btn text-primary rounded-pill replyBtn"
-															style="font-size: 14px;">|답글|</button>
-														</c:if>
-													<c:if test="${dto.member_id eq member.member_id}">
-
-														<button class="btn text-primary rounded-pill replyUpdateBtn" data-reply-num="${ar.recipe_reply_num}"
-														data-reply-content="${ar.board_content}" 
-														style="font-size: 11px;margin-bottom: 11px; margin-left: 50px;margin-left: 620px;" 
-														id="updateReply${ar.recipe_reply_num}">수정</button>
-
-														<button class="btn text-primary rounded-pill replyDeleteBtn ms-auto" data-reply-num="${ar.recipe_reply_num}"
-														data-reply-content="${ar.board_content}" style="font-size: 14px;margin-bottom: 11px; padding-left: inherit;
-														font-size: 11px;margin-bottom: 11px; margin-right: 17px;" id="deleteReply${ar.recipe_reply_num}">삭제</button>
-													</c:if>
-													<!-- </div> -->
-												</div>
-												<!--자식글이면  -->
-													<c:if test="${ar.step!=0}">&nbsp👉 </c:if>
+											<p class="mb-2" style="font-size: 14px;">
+												${ar.create_date}</p>
+											<div class="d-flex align-items-center">
+												<h5 class="mb-0">${ar.member_id}</h5>
+												<c:if test="${ar.step==0 && ar.del=='N'}">
+													<button class="btn text-primary rounded-pill replyBtn"
+														style="font-size: 14px;">|답글|</button>
+												</c:if>
+												<c:if test="${dto.member_id eq member.member_id}">
 													<c:choose>
 														<c:when test="${ar.del=='N'}">
-															<p>${ar.board_content}</p>
-														</c:when>
-														<c:otherwise>
-                                               				<p>삭제된 리뷰입니다.</p>
-                                               			</c:otherwise>
-													</c:choose>
-												<div class="comment" id="comment_1">
-													<input type="hidden" class="recipe_reply_num"
-														value="${ar.recipe_reply_num}">
-													<div class="updateDiv2 replyList" data-reply-num="${ar.recipe_reply_num}">
+															<button
+																class="btn text-primary rounded-pill replyUpdateBtn"
+																data-reply-num="${ar.recipe_reply_num}"
+																data-reply-content="${ar.board_content}"
+																style="font-size: 13px; margin-bottom: 11px; margin-left: 50px; margin-left: 620px;"
+																id="updateReply${ar.recipe_reply_num}">수정</button>
 
-													</div>
-												</div>
+															<button
+																class="btn text-primary rounded-pill replyDeleteBtn ms-auto"
+																data-reply-num="${ar.recipe_reply_num}"
+																data-reply-content="${ar.board_content}"
+																style="font-size: 14px; margin-bottom: 11px; padding-left: inherit; font-size: 13px; margin-bottom: 11px; margin-right: 17px;"
+																id="deleteReply${ar.recipe_reply_num}">삭제</button>
+														</c:when>
+													</c:choose>
+												</c:if>
+												<!-- </div> -->
+											</div>
+											<!--자식글이면  -->
+											<c:if test="${ar.step!=0}"></c:if>
+											<c:choose>
+												<c:when test="${ar.del=='N'}">
+													<p>${ar.board_content}</p>
+												</c:when>
+												<c:otherwise>
+													<p>삭제된 리뷰입니다.</p>
+												</c:otherwise>
+											</c:choose>
+											<div class="comment" id="comment_1">
+												<input type="hidden" class="recipe_reply_num"
+													value="${ar.recipe_reply_num}">
+												<div class="updateDiv2 replyList"
+													data-reply-num="${ar.recipe_reply_num}"></div>
 											</div>
 										</div>
-										<!-- 다음 인덱스랑 비교해서 REF가 같지 않으면 HR -->
-										<c:if test="${ar.ref ne ar2[i.index+1].ref}">
-											<hr class="border opacity-100 mb-5">
-										</c:if>
-									</c:forEach>
 								</div>
+								<!-- 다음 인덱스랑 비교해서 REF가 같지 않으면 HR -->
+								<c:if test="${ar.ref ne ar2[i.index+1].ref}">
+									<hr class="border opacity-100 mb-5">
+								</c:if>
+								</c:forEach>
 							</div>
 						</div>
 					</div>
-					<form action="/recipe/review" method="post" id="re_frm">
-						<h4 class="mb-5 fw-bold">review&QnA📌</h4>
+				</div>
+				<form action="/recipe/review" method="post" id="re_frm">
+					<h4 class="mb-5 fw-bold">review&QnA📌</h4>
 
-						<div class="row g-4">
+					<div class="row g-4">
 
-							<div class="border-bottom rounded">
-								<input type="hidden" class="form-control border-0 me-4"
-									value="${dto.recipe_num}" name="recipe_num" id="recipe_num">
-							</div>
-							<!-- Review or QnA -->
+						<div class="border-bottom rounded">
+							<input type="hidden" class="form-control border-0 me-4"
+								value="${dto.recipe_num}" name="recipe_num" id="recipe_num">
+						</div>
+						<!-- Review or QnA -->
+						<div class="col-lg-12">
 							<div class="col-lg-12">
-								<div class="col-lg-12">
-									<label><input type="radio" id="review" name="post_type"
-										value="review" checked> Review</label>&nbsp&nbsp&nbsp <label><input
-										type="radio" id="reply" name="post_type" value="qna">
-										QnA</label> <br>
-									<br>
-								</div>
+								<label><input type="radio" id="review" name="post_type"
+									value="review" checked> Review</label>&nbsp&nbsp&nbsp <label><input
+									type="radio" id="reply" name="post_type" value="qna">
+									QnA</label> <br> <br>
 							</div>
+						</div>
 
-							<label style="margin-bottom: 2px;">별점</label><br>
-							<div class="col-lg-12 my-2" id="starRating">
-								<fieldset id="rating">
-									<input type="radio" name="recipe_rating" value="5" id="rate1"><label
-										for="rate1">⭐</label> <input type="radio" name="recipe_rating"
-										value="4" id="rate2"><label for="rate2">⭐</label> <input
-										type="radio" name="recipe_rating" value="3" id="rate3"><label
-										for="rate3">⭐</label> <input type="radio" name="recipe_rating"
-										value="2" id="rate4"><label for="rate4">⭐</label> <input
-										type="radio" name="recipe_rating" value="1" id="rate5"><label
-										for="rate5">⭐</label>
-								</fieldset>
-							</div>
+						<label style="margin-bottom: 2px;">별점</label><br>
+						<div class="col-lg-12 my-2" id="starRating">
+							<fieldset id="rating">
+								<input type="radio" name="recipe_rating" value="5" id="rate1"><label
+									for="rate1">⭐</label> <input type="radio" name="recipe_rating"
+									value="4" id="rate2"><label for="rate2">⭐</label> <input
+									type="radio" name="recipe_rating" value="3" id="rate3"><label
+									for="rate3">⭐</label> <input type="radio" name="recipe_rating"
+									value="2" id="rate4"><label for="rate4">⭐</label> <input
+									type="radio" name="recipe_rating" value="1" id="rate5"><label
+									for="rate5">⭐</label>
+							</fieldset>
+						</div>
 
-							<div class="col-lg-6">
-								<div class="border-bottom rounded">
-									<input type="text" class="form-control border-0 me-4"
-										placeholder="작성자" name="member_id" value="${dto.member_id}">
-								</div>
+						<div class="col-lg-6">
+							<div class="border-bottom rounded">
+								<input type="text" class="form-control border-0 me-4"
+									placeholder="작성자" name="member_id" value="${dto.member_id}">
 							</div>
-							<!-- <div class="col-lg-6">
+						</div>
+						<!-- <div class="col-lg-6">
 								<div class="border-bottom rounded">
 									<input type="text" class="form-control border-0"
 										placeholder="제목" name="board_title">
 								</div>
 							</div> -->
-							<div class="col-lg-12">
-								<div class="border-bottom rounded my-4">
-									<textarea name="board_content" class="form-control border-0"
-										cols="30" rows="8" placeholder="내용" spellcheck="false"
-										name="board_content"></textarea>
-								</div>
-							</div>
-							<div class="col-lg-12">
-								<div class="d-flex justify-content-between py-3 mb-5">
-									<div class="d-flex align-items-center"></div>
-									<button type="button"
-										class="btn border border-secondary text-primary rounded-pill px-4 py-3"
-										id="reBtn">Post Comment</button>
-								</div>
+						<div class="col-lg-12">
+							<div class="border-bottom rounded my-4">
+								<textarea name="board_content" class="form-control border-0"
+									cols="30" rows="8" placeholder="내용" spellcheck="false"
+									name="board_content"></textarea>
 							</div>
 						</div>
-					</form>
-				</div>
+						<div class="col-lg-12">
+							<div class="d-flex justify-content-between py-3 mb-5">
+								<div class="d-flex align-items-center"></div>
+								<button type="button"
+									class="btn border border-secondary text-primary rounded-pill px-4 py-3"
+									id="reBtn">Post Comment</button>
+							</div>
+						</div>
+					</div>
+				</form>
 			</div>
-
-
 		</div>
+
+
+	</div>
 	</div>
 	<script>
 		document.addEventListener('DOMContentLoaded', function() {

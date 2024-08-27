@@ -407,10 +407,41 @@
 	   	 REF = #{ref, jdbcType=NUMERIC} 
 	   	 ORDER BY STEP ASC 
 	</select>
-<resultMap id="RecipeReplyResultMap" type="RecipeReplyDTO">
-    <id property="recipe_reply_num" column="recipe_reply_num" jdbcType="BIGINT"/>
-    <result property="ref" column="ref" jdbcType="BIGINT"/>
-    <result property="step" column="step" jdbcType="INTEGER"/>
-    <result property="board_content" column="board_content" jdbcType="VARCHAR"/>
-</resultMap>
-    </mapper>
+	<resultMap id="RecipeReplyResultMap" type="RecipeReplyDTO">
+	    <id property="recipe_reply_num" column="recipe_reply_num" jdbcType="BIGINT"/>
+	    <result property="ref" column="ref" jdbcType="BIGINT"/>
+	    <result property="step" column="step" jdbcType="INTEGER"/>
+	    <result property="board_content" column="board_content" jdbcType="VARCHAR"/>
+	</resultMap>
+
+
+	<insert id="addWish" parameterType="RecipeDTO">
+	 INSERT INTO BOOKMARK VALUES (#{recipe_num},#{member_id})
+	</insert>
+	
+	<delete id="wishUpdate" parameterType="RecipeDTO">
+		DELETE FROM BOOKMARK
+		WHERE RECIPE_NUM = #{recipe_num} AND MEMBER_ID = #{member_id}
+	 </delete>
+	 
+	 <select id="bookMark" parameterType="RecipeDTO" resultType="java.lang.Long">
+	 	SELECT COUNT(*)
+		FROM BOOKMARK
+		WHERE RECIPE_NUM = #{recipe_num} AND MEMBER_ID = #{member_id}
+	 </select>
+	 
+	 <select id="ratingTotal" parameterType="RecipeReviewDTO" resultType="java.lang.Double">
+	 	SELECT TRUNC(AVG(RECIPE_RATING),1) 
+		FROM RECIPEREVIEW
+		WHERE RECIPE_NUM = #{recipe_num}
+	 
+	 </select>
+	 
+	 <resultMap id="RecipeReviewResultMap" type="RecipeReviewDTO">
+	    <id property="review_num" column="review_num" jdbcType="BIGINT"/>
+	    <result property="recipe_num" column="recipe_num" jdbcType="BIGINT"/>
+	    <result property="member_id" column="member_id" jdbcType="VARCHAR"/>
+	    <result property="recipe_rating" column="recipe_rating" jdbcType="BIGINT"/>
+	</resultMap>
+	 
+  </mapper>

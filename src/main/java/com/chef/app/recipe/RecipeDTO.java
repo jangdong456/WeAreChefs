@@ -17,11 +17,19 @@ public class RecipeDTO {
 	private Long recipe_like;
 	private Long recipe_hit;
 	private List<RecipeReplyDTO> ar;
-	
-    private Long ref;   // 댓글의 ref
-    private Long step;  // 댓글의 step
-    private Long depth; // 댓글의 depth
+	private String recipe_ck;
 
+	private Long ref; // 댓글의 ref
+	private Long step; // 댓글의 step
+	private Long depth; // 댓글의 depth
+
+	public String getRecipe_ck() {
+		return recipe_ck;
+	}
+
+	public void setRecipe_ck(String recipe_ck) {
+		this.recipe_ck = recipe_ck;
+	}
 
 	public Long getRef() {
 		return ref;
