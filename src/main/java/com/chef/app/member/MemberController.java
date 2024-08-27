@@ -1,6 +1,8 @@
 package com.chef.app.member;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -39,6 +41,7 @@ public class MemberController {
 	
 	@Autowired
 	private Email email;
+	
 	
 	@GetMapping("prfileSnsDelete")
 	public String prfileSnsDelete(MemberDTO memberDTO, Model model) throws Exception {
@@ -87,6 +90,8 @@ public class MemberController {
 		MemberDTO memberdto = (MemberDTO)session.getAttribute("member");
 		memberDTO.setMember_id(memberdto.getMember_id());
 		
+		System.out.println("==== 프로필 사진 변경 =====");
+		
 		int result = 0;
 		String url = "";
 		
@@ -133,33 +138,69 @@ public class MemberController {
 		return url;
 	}
 	
-	
-	@GetMapping("mypage")
-	public void mypage(HttpSession session, Model model) throws Exception {
-		System.out.println("== My Page ==");
-
+	@GetMapping("getList")
+	public String getList(Pager pager, Model model, HttpSession session) throws Exception {
+		System.out.println("== @@@@@@@@@@@@@@@@@@@@@@@@@@@@ ==");
+		System.out.println(pager.getOrder());
+		System.out.println(pager.getPage());
+		System.out.println(pager.getKind());
+		
 		MemberDTO memberdto = (MemberDTO)session.getAttribute("member");
 		memberdto = memberService.mypage(memberdto);
-		
-		System.out.println("로그인 한 id:" + memberdto.getMember_id());
-		
-//		test.setRecipe_writer(memberdto.getMember_id());
-		
-//		MemberDTO list = memberService.recipeList(memberdto);
-		
-		// 작성한 레시피 리스트
-		List<RecipeDTO> recipedto = memberService.recipeList(memberdto);
-		model.addAttribute("recipeList", recipedto);
 
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("memberdto", memberdto);
+		map.put("pager", pager);
+
+		//레시피 작성
+		List<RecipeDTO> recipedto = memberService.recipeList(map);
+		model.addAttribute("recipeList", recipedto);
+		
 		// 상대방 레시피에 작성한 리뷰
-		List<RecipeReviewDTO> recipeReview = memberService.recipeReviewList(memberdto);
+		List<RecipeReviewDTO> recipeReview = memberService.recipeReviewList(map);
 		model.addAttribute("reviewList", recipeReview);
 		
 		// 상대방 레시피에 작성한 댓글
-		List<RecipeReplyDTO> recipeReply = memberService.recipeReplyList(memberdto); 
+		List<RecipeReplyDTO> recipeReply = memberService.recipeReplyList(map);
+		model.addAttribute("recipeReply", recipeReply);
+
+		return "member/recipeList";
+	}
+	
+	@GetMapping("mypage")
+	public void mypage(HttpSession session, Model model, Pager pager) throws Exception {
+		System.out.println("== My Page ==");
+		
+		System.out.println(pager.getPage());
+		
+		MemberDTO memberdto = (MemberDTO)session.getAttribute("member");
+		memberdto = memberService.mypage(memberdto);
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("memberdto", memberdto);
+		map.put("pager", pager);
+				
+		model.addAttribute("member", memberdto);
+		// 작성한 레시피 리스트
+		List<RecipeDTO> recipedto = memberService.recipeList(map);
+		model.addAttribute("recipeList", recipedto);
+
+		
+		// 상대방 레시피에 작성한 리뷰
+		List<RecipeReviewDTO> recipeReview = memberService.recipeReviewList(map);
+//		model.addAttribute("recipeList", recipeReview);
+		model.addAttribute("reviewList", recipeReview);
+		
+		
+		// 상대방 레시피에 작성한 댓글
+		List<RecipeReplyDTO> recipeReply = memberService.recipeReplyList(map);
+//		model.addAttribute("recipeList", recipeReply);
 		model.addAttribute("recipeReply", recipeReply);
 		
-		model.addAttribute("member", memberdto);
+		// 최근 작성한 레시피 상위3개
+		List<RecipeDTO> recentyList = memberService.recipeRecentList();
+		model.addAttribute("recentyList", recentyList);
+		
 	}
 	
 	@PostMapping("mypage")
@@ -187,14 +228,17 @@ public class MemberController {
 	
 	
 	@GetMapping("sendEmail")
-	public void email(MemberDTO memberDTO, Model model, String member_mail) throws Exception {
+	public String email(MemberDTO memberDTO, Model model, String member_mail) throws Exception {
 		System.out.println("== Email ==");
 		System.out.println(member_mail);
-//		int result = 1;
-//		model.addAttribute("msg", result);
-		email.mailTemplete(member_mail);
 		
-//		return "member/email";
+		if(member_mail != null || member_mail != "") {
+			String mailresult = email.mailTemplete(member_mail);
+			System.out.println("반환값:" +mailresult);
+			model.addAttribute("msg", mailresult);		
+		}
+		
+		return "commons/result";
 	}
 	
 	@GetMapping("email")
@@ -293,12 +337,22 @@ public class MemberController {
 	
 	@GetMapping("buyList")
 	public void buyList(HttpSession session,Model model,Pager pager,String startDate,String endDate) throws Exception {
-			
-		if(startDate==null) {
-			startDate="1900-01-01";
+		
+		Calendar ca = Calendar.getInstance();
+		Date today = ca.getTime();
+		
+        ca.add(Calendar.MONTH, -3);
+        Date threeMonthsAgo = ca.getTime();
+		
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		String nowStr = format.format(today);
+		String threeAgo  = format.format(threeMonthsAgo);
+		
+		if(startDate==null||startDate.equals("")) {
+			startDate=threeAgo;
 		}
-		if(endDate==null) {
-			endDate="2100-12-31";
+		if(endDate==null||endDate.equals("")) {
+			endDate=nowStr;
 		}
 		
 		Map<String, Object> goService = new HashMap<String, Object>();
@@ -313,6 +367,8 @@ public class MemberController {
 				
 		model.addAttribute("list", map.get("list"));
 		model.addAttribute("pager", map.get("pager"));
+		model.addAttribute("startDate", startDate);
+		model.addAttribute("endDate", endDate);
 		
 	}
 	

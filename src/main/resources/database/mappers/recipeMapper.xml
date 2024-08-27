@@ -180,6 +180,7 @@
 								 , MEMBER_ID
 								 , BOARD_TITLE	
 								 , BOARD_CONTENT	
+								 , RECIPE_RATING	
 								 )
 							VALUES
    									(
@@ -188,12 +189,20 @@
    									, #{member_id}
    									, #{board_title}
    									, #{board_content}
+   									, #{recipe_rating}
    									)
 
 	</insert>
 	
 	<select id="reviewList" parameterType="recipeReviewDTO" resultType="recipeReviewDTO">
-		SELECT *
+		SELECT 	REVIEW_NUM
+				 , RECIPE_NUM
+				 , MEMBER_ID
+				 , CREATE_DATE
+				 , UPDATE_DATE
+				 , BOARD_TITLE
+				 , BOARD_CONTENT
+				 , RECIPE_RATING
 		FROM RECIPEREVIEW
 		WHERE RECIPE_NUM = #{recipe_num}
 		ORDER BY CREATE_DATE DESC
@@ -215,8 +224,6 @@
 								 , BOARD_TITLE	
 								 , BOARD_CONTENT	
 								 , REF
-						   		 , STEP
-						   		 , DEPTH
 								 )
 							VALUES
    									(
@@ -226,16 +233,84 @@
    									, #{board_title}
    									, #{board_content}
    									, RECIPEREPLY_SEQ.CURRVAL
-									, 0
-									, 0
+									
    									)
    									
   </insert>
   	<select id="replyList" parameterType="recipeReplyDTO" resultType="recipeReplyDTO" >
-		SELECT *
+		SELECT 	RECIPE_REPLY_NUM
+				 , RECIPE_NUM
+				 , MEMBER_ID
+				 , CREATE_DATE
+				 , UPDATE_DATE
+				 , BOARD_TITLE
+				 , BOARD_CONTENT
+				 , REF
+				 , STEP
+				 , DEPTH        
+				 , DEL
+				 
 		FROM RECIPEREPLY
 		WHERE RECIPE_NUM = #{recipe_num}
 		ORDER BY CREATE_DATE DESC
 
 	</select>
+	
+	<insert id="recipeComment" parameterType="RecipeReplyDTO">
+ 	INSERT INTO RECIPEREPLY(
+								   RECIPE_REPLY_NUM
+								 , RECIPE_NUM
+								 , MEMBER_ID
+								 , BOARD_CONTENT	
+								 , REF
+						   		 , STEP	
+						   		 
+						   					   		
+								 )
+							VALUES
+   									(
+   									  RECIPEREPLY_SEQ.NEXTVAL
+   									, #{recipe_num}
+   									, #{member_id}
+   									, #{board_content}
+   									, #{recipe_reply_num}
+									, RECIPEREPLY_SEQ.NEXTVAL
+										
+   									) 
+   						<!-- 			  INSERT INTO RECIPEREPLY(
+								        RECIPE_REPLY_NUM,
+								        RECIPE_NUM,
+								        MEMBER_ID,
+								        BOARD_CONTENT,
+								        REF,
+								        STEP,
+								        DEPTH
+								    )
+								    VALUES (
+								        RECIPEREPLY_SEQ.NEXTVAL,
+								        #{recipe_num},
+								        #{member_id},
+								        #{board_content},
+								        #{ref},
+								        #{step},
+								        #{depth}
+											  ) -->
+								   							
+	</insert>
+	<update id="replyUpdate" parameterType="RecipeDTO">
+			 UPDATE RECIPE
+		    SET STEP = STEP +1
+		    WHERE RECIPE_NUM = #{recipe_num}
+		    		AND 
+		    		REF = #{ref} 
+		   		    AND
+					STEP > #{step}
+   	</update>
+   	
+   	<select id="getParentReply" parameterType="long" resultType="RecipeReplyDTO">
+	    SELECT  REF, STEP, DEPTH
+	    FROM RECIPEREPLY
+        WHERE RECIPE_REPLY_NUM = #{recipe_reply_num}
+	</select>
+
     </mapper>

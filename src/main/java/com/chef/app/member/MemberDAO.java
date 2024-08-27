@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import com.chef.app.recipe.RecipeDTO;
 import com.chef.app.recipe.RecipeReplyDTO;
 import com.chef.app.recipe.RecipeReviewDTO;
+import com.chef.app.util.Pager;
 import com.chef.app.food.StoreOrderDTO;
 
 @Repository
@@ -19,6 +20,23 @@ public class MemberDAO {
 	private SqlSession sqlSession;
 	
 	private final String NAMESPACE = "com.chef.app.member.MemberDAO.";
+	
+	
+	public Long getTotalCountRecipeReply(Map<String, Object> map) throws Exception {
+		return sqlSession.selectOne(NAMESPACE + "getTotalCountRecipeReply", map);
+	}
+	
+	public Long getTotalCountRecipeReview(Map<String, Object> map) throws Exception {
+		return sqlSession.selectOne(NAMESPACE + "getTotalCountRecipeReview", map);
+	}
+	
+	public Long getTotalCount(Map<String, Object> map) throws Exception {
+		return sqlSession.selectOne(NAMESPACE + "getTotalCount", map);
+	}
+	
+	public List<RecipeDTO> recipeRecentList() throws Exception {
+		return sqlSession.selectList(NAMESPACE + "recipeRecentList");
+	}
 	
 	public int prfileSnsDelete(MemberDTO memberDTO) throws Exception {
 		return sqlSession.update(NAMESPACE + "prfileSnsDelete", memberDTO);
@@ -33,21 +51,19 @@ public class MemberDAO {
 	}
 	
 	public int profileChange(MemberDTO memberDTO) throws Exception {
-		System.out.println("dao 넘어옴?@@@@@@@@");
-		
 		return sqlSession.update(NAMESPACE + "profileChange", memberDTO);
 	}
 	
-	public List<RecipeReplyDTO> recipeReplyList(MemberDTO test) throws Exception {
-		return sqlSession.selectList(NAMESPACE + "recipeReplyList" ,test);
+	public List<RecipeReplyDTO> recipeReplyList(Map<String, Object> map) throws Exception {
+		return sqlSession.selectList(NAMESPACE + "recipeReplyList" ,map);
 	}
 	
-	public List<RecipeReviewDTO> recipeReviewList(MemberDTO test) throws Exception {
-		return sqlSession.selectList(NAMESPACE + "recipeReviewList" ,test);
+	public List<RecipeReviewDTO> recipeReviewList(Map<String, Object> map) throws Exception {
+		return sqlSession.selectList(NAMESPACE + "recipeReviewList" , map);
 	}
 	
-	public List<RecipeDTO> recipeList(MemberDTO test) throws Exception {
-		return sqlSession.selectList(NAMESPACE + "recipeList", test);
+	public List<RecipeDTO> recipeList(Map<String, Object> map) throws Exception {
+		return sqlSession.selectList(NAMESPACE + "recipeList", map);
 	}
 	
 	public int duplication(MemberDTO memberDTO) throws Exception {

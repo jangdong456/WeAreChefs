@@ -78,7 +78,7 @@ public class FoodController {
 	public void getList(Pager pager,Model model,HttpSession session) throws Exception{
 		
 		MemberDTO memberDTO = (MemberDTO)session.getAttribute("member");
-		
+				
 		List<FoodDTO> ar =foodService.getList(pager);
 		List<Map<String, Object>> categoryCount =foodService.categoryCount();
 		model.addAttribute("pager", pager);
@@ -90,7 +90,7 @@ public class FoodController {
 	
 	@PostMapping("list")
 	public String getListSearch(Pager pager,Model model) throws Exception{
-
+		
 		List<FoodDTO> ar =foodService.getList(pager);
 		List<Map<String, Object>> categoryCount =foodService.categoryCount();
 		model.addAttribute("pager", pager);
@@ -106,13 +106,13 @@ public class FoodController {
 		
 		MemberDTO memberDTO = (MemberDTO)session.getAttribute("member");
 		
+		Double avg = foodService.startAvg(foodDTO);
+		
 		Map<String, Object> map = foodService.getDetail(foodDTO,pager);
 
 		map.put("admin", memberDTO);
+		map.put("avg", avg);
 		
-		List<StoreReplyDTO> ar = (List<StoreReplyDTO>) map.get("reply");
-	
-			
 		model.addAttribute("map", map);
 
 	}
@@ -283,7 +283,16 @@ public class FoodController {
 	}
 	
 	@PostMapping("replyAdd")
-	public String replyAdd (StoreReplyDTO storeReplyDTO,Model model) throws Exception {
+	public String replyAdd (StoreReplyDTO storeReplyDTO,Model model,HttpSession session) throws Exception {
+		
+		MemberDTO memberDTO = (MemberDTO)session.getAttribute("member");
+		
+		if(memberDTO==null) {
+			model.addAttribute("msg","로그인을 해주세요");
+			model.addAttribute("url", "/member/login");
+			
+			return "commons/message";
+		}
 		
 		int result  = foodService.replyAdd(storeReplyDTO);
 		

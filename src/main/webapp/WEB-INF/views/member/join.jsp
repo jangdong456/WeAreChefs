@@ -34,12 +34,12 @@
 	</style>
 </head>
 <body>
-
+	<c:import url="/WEB-INF/views/templete/nav.jsp"></c:import>
 	<div class="container-fluid page-header py-5">
 		<h1 class="text-center text-white display-6">회원가입</h1>
 	</div>
 	
-	<div class="container-fluid py-5">
+	<div class="container-fluid py-5" id="joinTopTag">
 		<div class="container py-5">
 			<div class="form-container">
 				<div class="form-wrapper">
@@ -78,7 +78,9 @@
 									<label class="form-label my-3">이메일<sup>*</sup></label>
 									<input type="text" class="form-control member_join" id="membere_mail" name="membere_mail">
 								</div>
-								<button id="emailNumCheck" type="button" class="btn border-secondary py-2 px-4 text-uppercase w-80 text-primary">이메일 인증하기</button>
+
+
+								<button id="emailbtn" type="button" class="btn border-secondary py-2 px-4 text-uppercase w-80 text-primary">이메일 인증하기</button>
 
 								<div class="form-item">
 									<label class="form-label my-3">전화번호<sup>*</sup></label>

@@ -1,6 +1,7 @@
 package com.chef.app.recipe;
 
 import java.sql.Date;
+import java.util.List;
 
 public class RecipeDTO {
 	private Long recipe_num;
@@ -15,6 +16,44 @@ public class RecipeDTO {
 	private Long rating;
 	private Long recipe_like;
 	private Long recipe_hit;
+	private List<RecipeReplyDTO> ar;
+	
+    private Long ref;   // 댓글의 ref
+    private Long step;  // 댓글의 step
+    private Long depth; // 댓글의 depth
+
+
+	public Long getRef() {
+		return ref;
+	}
+
+	public void setRef(Long ref) {
+		this.ref = ref;
+	}
+
+	public Long getStep() {
+		return step;
+	}
+
+	public void setStep(Long step) {
+		this.step = step;
+	}
+
+	public Long getDepth() {
+		return depth;
+	}
+
+	public void setDepth(Long depth) {
+		this.depth = depth;
+	}
+
+	public List<RecipeReplyDTO> getAr() {
+		return ar;
+	}
+
+	public void setAr(List<RecipeReplyDTO> ar) {
+		this.ar = ar;
+	}
 
 	private RecipeImgFileDTO recipeImgFileDTO;
 

@@ -87,12 +87,57 @@
     	<h2 class="fw-bold mb-3">  <br/></h2>
         <p class="mb-3">*카테고리 : ${map.dto.food_category}</p>
         <h2 class="fw-bold mb-3">${map.dto.food_name}</h2>
-        <h5><i class="fa fa-star text-secondary"></i>
-        	<i class="fa fa-star text-secondary"></i>
-        	<i class="fa fa-star text-secondary"></i>
-        	<i class="fa fa-star text-secondary"></i>
-        	<i class="fa fa-star text-secondary"></i>
-        	(5.0)
+        <h5>
+                                                    <c:choose>
+                                                    	<c:when test="${map.avg<2}">
+	                                                        <i class="fa fa-star text-secondary"></i>
+	                                                        <i class="fa fa-star"></i>
+	                                                        <i class="fa fa-star"></i>
+	                                                        <i class="fa fa-star"></i>
+	                                                        <i class="fa fa-star"></i>
+	                                                        (${map.avg})
+	                                                    </c:when>
+                                                    	<c:when test="${map.avg<3}">
+	                                                        <i class="fa fa-star text-secondary"></i>
+	                                                        <i class="fa fa-star text-secondary"></i>
+	                                                        <i class="fa fa-star"></i>
+	                                                        <i class="fa fa-star"></i>
+	                                                        <i class="fa fa-star"></i>
+	                                                        (${map.avg})
+	                                                    </c:when>
+	                                                    <c:when test="${map.avg<4}">
+	                                                        <i class="fa fa-star text-secondary"></i>
+	                                                        <i class="fa fa-star text-secondary"></i>
+	                                                        <i class="fa fa-star text-secondary"></i>
+	                                                        <i class="fa fa-star"></i>
+	                                                        <i class="fa fa-star"></i>
+	                                                        (${map.avg})
+	                                                    </c:when>
+                                                    	<c:when test="${map.avg<5}">
+	                                                        <i class="fa fa-star text-secondary"></i>
+	                                                        <i class="fa fa-star text-secondary"></i>
+	                                                        <i class="fa fa-star text-secondary"></i>
+	                                                        <i class="fa fa-star text-secondary"></i>
+	                                                        <i class="fa fa-star"></i>
+	                                                        (${map.avg})
+	                                                    </c:when>
+	                                                    <c:when test="${map.avg==5}">
+	                                                        <i class="fa fa-star text-secondary"></i>
+	                                                        <i class="fa fa-star text-secondary"></i>
+	                                                        <i class="fa fa-star text-secondary"></i>
+	                                                        <i class="fa fa-star text-secondary"></i>
+	                                                        <i class="fa fa-star text-secondary"></i>
+	                                                        (${map.avg})
+	                                                    </c:when>
+               											<c:when test="${empty map.avg}">
+               												<i class="fa fa-star"></i>                                                    
+	                                                        <i class="fa fa-star"></i>
+	                                                        <i class="fa fa-star"></i>
+	                                                        <i class="fa fa-star"></i>
+	                                                        <i class="fa fa-star"></i>
+	                                                        (아직 후기가 없어요😎)
+	                                                    </c:when>
+	                                                </c:choose>
         </h5>
         <h3 class="fw-bold mb-3" id="buyPrice" data-buy-price="${map.dto.food_price}">${map.dto.food_price}원</h3>
     	<h5 class="fw-bold mb-3">  <br/></h5>
@@ -173,6 +218,7 @@
                                                     <i class="fa fa-star text-secondary" id="fifthStar"></i>
                                                 </div>
                                             </div>
+                            <div id="target-element"></div>
                                             <button class="btn border border-secondary text-primary rounded-pill px-4 py-3">후기 쓰기</button>
                                         </div>
                                     </div>
@@ -181,14 +227,12 @@
                                 <input type="hidden" name="member_id" value="${map.admin.member_id}">
                                 <input type="hidden" name="food_num" value="${map.dto.food_num}">
                             </form>	
-                            
 							<c:choose>
 							<c:when test="${empty map.reply}">
                               <div class="tab-pane" id="nav-mission" role="tabpanel" aria-labelledby="nav-mission-tab">
                                     <h4 class="fw-bold mb-3">👀상품 후기가 없습니다. 후기 남겨주실래요?</h4>
                               </div>
 							</c:when>
-                            
                             <c:otherwise>
                                     <div class="tab-pane" id="nav-mission" role="tabpanel" aria-labelledby="nav-mission-tab">
                                     <h4 class="fw-bold mb-3">📖상품 후기들</h4>
@@ -202,8 +246,8 @@
                                             <c:if test="${a.member_id=='12341234'}">
                                             	<h5>↪<운영자 답변>💕</h5>
                                             </c:if>
-                                                <p class="mb-2" style="font-size: 14px;">${a.create_date}</p>
-                                                <!-- <div class="d-flex justify-content-between"> -->
+                                                <p class="mb-2" style="font-size: 14px;">${a.update_date}</p>
+                                                
                                                     <c:if test="${a.member_id!='12341234'}">  
                                                     <h5>${a.member_id}</h5>
                                                     <c:choose>
@@ -307,18 +351,17 @@
                                     </div>
                                     </c:otherwise>
                                  </c:choose>
-
-
+<c:if test="${not empty map.reply}">
             <div class="col-12">
                 <div class="pagination d-flex justify-content-center mt-5">
-                    <a href="/food/detail?food_page=${pager.startNum-1}" class="rounded ${pager.pre?'':'disabled'}" >&laquo;</a>
-                    <c:forEach begin="${pager.startNum}" end="${pager.lastNum}" step="1" var="i">
-                        <a href="/food/detail?page=${i}" class="rounded">${i}</a>
+                    <a href="/food/detail?food_num=${map.dto.food_num}&page=${map.pager.startNum-1}#target-element" class="btn rounded ${map.pager.pre?'':'disabled'}">&laquo;</a>
+                    <c:forEach begin="${map.pager.startNum}" end="${map.pager.lastNum}" step="1" var="i">
+                        <a href="/food/detail?food_num=${map.dto.food_num}&page=${i}#target-element" class="rounded">${i}</a>
                     </c:forEach>
-                    <a href="#" class="rounded ${pager.next?'':'disabled'}">&raquo;</a>
+                    <a href="/food/detail?food_num=${map.dto.food_num}&page=${map.pager.lastNum+1}#target-element" class="btn rounded ${map.pager.next?'':'disabled'}">&raquo;</a>
                 </div>
             </div>
-
+</c:if>
                   
                                  
  </div>
