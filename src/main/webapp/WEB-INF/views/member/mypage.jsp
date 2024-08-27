@@ -159,7 +159,7 @@
                                                                                 <button type="button"
                                                                                     class="btn btn-danger"
                                                                                     id="profile_picture_delete"
-                                                                                    data-member-id="${member.member_id}">삭제</button>
+                                                                                    data-member-delete-id="${member.member_id}">삭제</button>
                                                                             </div>
                                                                         </form>
                                                                     </div>
@@ -414,6 +414,19 @@
 
 
                                             </div>
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <h4>Categories</h4>
+                                            <ul class="list-unstyled fruite-categorie">
+                                                <li>
+                                                    <div class="d-flex justify-content-between fruite-name">
+                                                        <a href="/member/wishList" id="wishList"><i
+                                                                class="fas fa-apple-alt me-2"></i>찜목록록록</a>
+                                                        <span>찜 목록</span>
+                                                    </div>
+                                                </li>
+                                            </ul>
                                         </div>
 
                                         <div class="col-lg-12">
