@@ -70,38 +70,70 @@ public class MemberService {
 		return check;
 	}
 				
-	public List<RecipeReplyDTO> recipeReplyList(Map<String, Object> map) throws Exception {
-		return memberDAO.recipeReplyList(map);
-	}
-	
-	public List<RecipeReviewDTO> recipeReviewList(Map<String, Object> map) throws Exception {
-		Long totalRow = memberDAO.getTotalCount(map);
-		System.out.println("=== 총 토탈 갯수 반환 값 : ===" + totalRow);
+	public Map<String, Object> recipeReplyList(Map<String, Object> map) throws Exception {
+		
+		Long totalRow = memberDAO.getTotalCount3(map);
+
 		
 		if(totalRow==0) {
 			totalRow=1L;
 		}
 		
-		Pager pager = (Pager)map.get("pager");
-		pager.makeRow(8L);
-		pager.makeNum(totalRow, 8L, 5L);
+		Pager recipeReviewReplypager = (Pager)map.get("pager");
+		recipeReviewReplypager.makeRow(8L);
+		recipeReviewReplypager.makeNum(totalRow, 8L, 5L);
 			
-		return memberDAO.recipeReviewList(map);
+		List<RecipeReplyDTO> ar = memberDAO.recipeReplyList(map);
+		
+		map.put("recipeReplyPager", recipeReviewReplypager);
+		map.put("recipeReplyAr",ar);
+		
+		return map;
+
 	}
 	
-	public List<RecipeDTO> recipeList(Map<String, Object> map) throws Exception {
-		Long totalRow = memberDAO.getTotalCount(map);
-		System.out.println("=== 총 토탈 갯수 반환 값 : ===" + totalRow);
+	public Map<String, Object> recipeReviewList(Map<String, Object> map) throws Exception {
+		
+		Long totalRow = memberDAO.getTotalCount2(map);
+
 		
 		if(totalRow==0) {
 			totalRow=1L;
 		}
 		
-		Pager pager = (Pager)map.get("pager");
-		pager.makeRow(8L);
-		pager.makeNum(totalRow, 8L, 5L);
-				
-		return memberDAO.recipeList(map);
+		Pager recipeReviewpager = (Pager)map.get("pager");
+		recipeReviewpager.makeRow(8L);
+		recipeReviewpager.makeNum(totalRow, 8L, 5L);
+			
+		List<RecipeReviewDTO> ar = memberDAO.recipeReviewList(map);
+		
+		System.out.println("요리후기리스트 길이"+ar.size());
+		
+		map.put("recipeReviewpager", recipeReviewpager);
+		map.put("recipereViewAr",ar);
+		
+		return map;
+		
+	}
+	
+	public Map<String, Object> recipeList(Map<String, Object> map) throws Exception {
+		
+		Long totalRow = memberDAO.getTotalCount(map);
+		
+		if(totalRow==0) {
+			totalRow=1L;
+		}
+		
+		Pager recipePager = (Pager)map.get("pager");
+		recipePager.makeRow(8L);
+		recipePager.makeNum(totalRow, 8L, 5L);
+		
+		List<RecipeDTO> ar = memberDAO.recipeList(map);
+		
+		map.put("recipePager", recipePager);
+		map.put("recipeAr",ar);
+		
+		return map;
 		
 	}
 

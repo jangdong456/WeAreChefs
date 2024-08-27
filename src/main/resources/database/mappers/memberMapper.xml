@@ -85,6 +85,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SELECT COUNT(RECIPE_NUM) FROM RECIPE
 		WHERE MEMBER_ID = #{memberdto.member_id}	
 	</select>
+	
+	<select id="getTotalCount2" parameterType="Map" resultType="Long">
+		SELECT COUNT(REVIEW_NUM) FROM RECIPEREVIEW
+		WHERE MEMBER_ID = #{memberdto.member_id}
+	</select>
+	
+	<select id="getTotalCount3" parameterType="Map" resultType="Long">
+		SELECT COUNT(RECIPE_REPLY_NUM) FROM RECIPEREPLY
+		WHERE MEMBER_ID = #{memberdto.member_id}
+	</select>
 		
 	
 	<select id="duplication" parameterType="MemberDTO" resultType="int">
