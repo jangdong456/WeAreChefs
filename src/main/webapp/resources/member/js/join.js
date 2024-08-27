@@ -24,6 +24,28 @@ const regexpPassword = /^(?=.*\d)(?=.*[a-z])(?=.*[a-zA-Z]).{8,12}$/;
 const regexpEmail    = /^(\w{1,20})+@(\w{1,20})+\.([a-zA-Z]{2,4}$)+$/;
 const regexpPhone    = /^[010|011|016|017|018|019]{3}-\d{3,4}-\d{4}$/;
 
+//이메일 관련                                  
+const joinTopTag = document.getElementById("joinTopTag");
+
+joinTopTag.addEventListener("click", (e) => {
+    if(e.target.id == "emailNumCheckBtn"){
+        //  생성된 element는 처음에 로드될때 없기에 test.addEventListener를 하면 email.js에서 만들어놓 element를 파악 가능 하기에 
+        // 밑에 emailNumCheck.value를 가져올 수 있다. 
+        const emailNumCheck = document.getElementById("emailNumCheck");
+        const mailnum = localStorage.getItem("mailnum");
+        const emailNumCheckBtn = document.getElementById("emailNumCheckBtn");
+        const emailbtn = document.getElementById("emailbtn");
+
+        if(emailNumCheck.value == mailnum) {
+            emailNumCheck.remove();
+            emailNumCheckBtn.remove();
+            emailbtn.setAttribute('disabled', false)
+            emailbtn.setAttribute('data-check', true)
+        } else {
+            alert("인증번호가 다릅니다.")
+        }
+    }
+})
 
 memberId.addEventListener("input", () =>{
     idCheck.disabled = false
@@ -36,6 +58,10 @@ memberNickname.addEventListener("input", () =>{
 memberPhone.addEventListener("input", () =>{
     phoneCheck.disabled = false
 })
+
+// memberEmail.addEventListener("input", () =>{
+//     emailbtn.disabled = false
+// })
 
 // 휴대폰 중복체크
 phoneCheck.addEventListener("click", ()=>{
@@ -239,6 +265,7 @@ memberPhone.addEventListener("input", (e)=> {
 
 
 joinBtn.addEventListener("click", ()=> {
+    
     // 이름
     if(!regexpName.test(memberName.value)) {
         let span = document.createElement('span');
@@ -371,6 +398,13 @@ joinBtn.addEventListener("click", ()=> {
         })
         return;
     }
+
+    //이메일 중복확인 체크
+    if(emailbtn.getAttribute("data-check") != 'true') {
+        alert("이메일 중복확인 해주세요")
+        return;
+    }
+   
 
     // 전화번호
     if(!regexpPhone.test(memberPhone.value)){

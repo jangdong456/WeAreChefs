@@ -4,10 +4,19 @@ import com.chef.app.comment.CommentDTO;
 
 public class RecipeReplyDTO extends CommentDTO {
 	private Long recipe_num;
+	private Long recipe_reply_num;
 	private Long ref;
 	private Long step;
 	private Long depth;
 	private String del;
+
+	public Long getRecipe_reply_num() {
+		return recipe_reply_num;
+	}
+
+	public void setRecipe_reply_num(Long recipe_reply_num) {
+		this.recipe_reply_num = recipe_reply_num;
+	}
 
 	public Long getRef() {
 		return ref;

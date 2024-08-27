@@ -162,6 +162,10 @@ for(let b of buyCount){
         let currentPrice = parseInt(b.getAttribute("data-buy-price"))
         for(t of totalPrice){
             if(b.getAttribute("data-food-num")==t.getAttribute("data-food-num")){
+                if(b.value<0||isNaN(b.value)){
+                    alert("숫자만 입력할 수 있습니다")
+                    b.value=1;
+                }
                 t.innerHTML=parseInt(b.value)*currentPrice+"원"
                 t.setAttribute("data-total-notice", parseInt(b.value) * currentPrice)
 
@@ -200,6 +204,11 @@ for(let d of delBtn) {
 
 // 결제 진행하기 눌렀을 때 현 장바구니와 기존의 장바구니 똑같게 하기 위한 update sql문 실행하는 기능
 payBtn.addEventListener("click",()=>{
+
+    if(parseInt(totalNotice.innerHTML)==0){
+        alert("결제 금액이 0원입니다. 장바구니를 다시 확인해주세요.")
+        return;
+    }
 
     let dataToSend = [];
 
