@@ -5,15 +5,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="com.chef.app.member.MemberDAO">
 
-
 	<select id="wishList" parameterType="MemberDTO" resultType="RecipeDTO">
-		SELECT * FROM RECIPE
-		WHERE RECIPE_NUM = 
-				(
-					SELECT RECIPE_NUM 
-					FROM BOOKMARK 
-					WHERE MEMBER_ID = #{member_id}
-				)
+		SELECT * FROM 	
+			(SELECT ROWNUM R, B.* FROM
+				(SELECT * FROM BOOKMARK WHERE MEMBER_ID = #{member_id})
+				B)
+		WHERE R BETWEEN 1 AND 8;
 	</select>
 
 	<select id="recipeRecentList" resultType="RecipeDTO">

@@ -12,6 +12,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.ui.Model;
+
+import com.chef.app.member.MemberDTO;
+
 public class LoginFilter implements Filter {
 
 	@Override
@@ -27,6 +31,17 @@ public class LoginFilter implements Filter {
 			HttpSession session = req.getSession();
 			
 			Object obj = session.getAttribute("member");
+			
+			
+			MemberDTO memberdto = (MemberDTO)session.getAttribute("member");
+			
+//			if(memberdto.getMember_lev() >= 1) {
+//				chain.doFilter(request, response);
+//			} else {
+//				HttpServletResponse res = (HttpServletResponse)response;
+//				res.sendRedirect("/member/login");
+//			}
+			
 			
 			if(obj != null) {
 				chain.doFilter(request, response);

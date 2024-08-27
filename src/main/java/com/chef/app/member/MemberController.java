@@ -184,12 +184,18 @@ public class MemberController {
 			
 		}
 		
-
 		if(tab.equals("3")) {
 		// 상대방 레시피에 작성한 댓글
 		Map<String, Object> recipeReplyMap = memberService.recipeReplyList(map);
 		model.addAttribute("recipeReplyMap", recipeReplyMap);
 		model.addAttribute("tab", tab);
+		}
+		
+		if(tab.equals("4")) {
+			List<RecipeDTO> ar = memberService.wishList(memberdto);
+			
+			model.addAttribute("wishList", ar);
+			model.addAttribute("tab", tab);
 		}
 		
 		// 최근 작성한 레시피 상위3개
