@@ -1,6 +1,8 @@
 package com.chef.app.member;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -326,12 +328,22 @@ public class MemberController {
 	
 	@GetMapping("buyList")
 	public void buyList(HttpSession session,Model model,Pager pager,String startDate,String endDate) throws Exception {
-			
-		if(startDate==null) {
-			startDate="1900-01-01";
+		
+		Calendar ca = Calendar.getInstance();
+		Date today = ca.getTime();
+		
+        ca.add(Calendar.MONTH, -3);
+        Date threeMonthsAgo = ca.getTime();
+		
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		String nowStr = format.format(today);
+		String threeAgo  = format.format(threeMonthsAgo);
+		
+		if(startDate==null||startDate.equals("")) {
+			startDate=threeAgo;
 		}
-		if(endDate==null) {
-			endDate="2100-12-31";
+		if(endDate==null||endDate.equals("")) {
+			endDate=nowStr;
 		}
 		
 		Map<String, Object> goService = new HashMap<String, Object>();
@@ -346,6 +358,8 @@ public class MemberController {
 				
 		model.addAttribute("list", map.get("list"));
 		model.addAttribute("pager", map.get("pager"));
+		model.addAttribute("startDate", startDate);
+		model.addAttribute("endDate", endDate);
 		
 	}
 	

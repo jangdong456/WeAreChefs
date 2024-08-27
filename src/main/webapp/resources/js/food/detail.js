@@ -58,6 +58,12 @@ buyCount.addEventListener("change",()=>{
     let currentValue = parseInt(buyCount.value)
     let currentPrice = parseInt(buyPrice.getAttribute("data-buy-price"))
 
+    if(currentValue<0||isNaN(currentValue)){
+        alert("숫자만 입력할 수 있습니다")
+        buyCount.value=1;
+        currentValue=1;
+    }
+
     buyPrice.innerHTML=parseInt(buyCount.value)*currentPrice+"원"
 
 })
@@ -341,8 +347,6 @@ navmission.addEventListener("click",(e)=>{
         }
 
     }
-
-
 
 
 })

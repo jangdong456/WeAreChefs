@@ -1,25 +1,26 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+	<!DOCTYPE html>
+	<html>
 
-<script type="text/javascript">
-	let check = confirm('${result}');
+	<head>
+		<meta charset="UTF-8">
+		<title>Insert title here</title>
+	</head>
 
-	if(check){
-		location.href='${urlTrue}';
-	}
-	else {
-		location.href='${urlFalse}';
-	}
-	
-</script>
+	<body>
 
-</body>
-</html>
+		<script type="text/javascript">
+			let check = confirm('${result}');
 
+			if (check) {
+				location.href = '${urlTrue}';
+			}
+			else {
+				location.href = '${urlFalse}';
+			}
+
+		</script>
+
+	</body>
+
+	</html>
