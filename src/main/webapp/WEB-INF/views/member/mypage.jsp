@@ -505,7 +505,6 @@
                                                 </ul>
                                             </div>
                                         </div>
-                                        <h1>탭이에요${tab}</h1>
                                         <div id="recipeListDiv">
                                             <div class="tab-content">
                                                 <c:choose>

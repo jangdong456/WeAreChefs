@@ -163,8 +163,6 @@ public class MemberController {
 	@GetMapping("mypage")
 	public void mypage(HttpSession session, Model model, Pager pager,String tab) throws Exception {
 		
-		System.out.println("tab:"+tab);
-		
 		if(tab==null) {
 			tab="1";
 		}
@@ -180,8 +178,6 @@ public class MemberController {
 				
 		// 작성한 레시피 리스트
 		
-		System.out.println(tab);
-		
 		if(tab.equals("1")) {
 		Map<String, Object> recipeMap = memberService.recipeList(map);
 		model.addAttribute("recipeMap", recipeMap);
@@ -189,7 +185,6 @@ public class MemberController {
 		}
 		
 		if(tab.equals("2")) {
-		System.out.println("2번 왇어요");
 		// 상대방 레시피에 작성한 리뷰
 		Map<String, Object> recipeReviewMap = memberService.recipeReviewList(map);
 		model.addAttribute("recipeReviewMap", recipeReviewMap);
@@ -202,8 +197,6 @@ public class MemberController {
 			System.out.println(r.getBoard_content());
 		}
 		
-		
-		System.out.println("2번맵사이즈:"+recipeReviewMap.size());
 		
 		}
 		

@@ -107,8 +107,6 @@ public class MemberService {
 			
 		List<RecipeReviewDTO> ar = memberDAO.recipeReviewList(map);
 		
-		System.out.println("요리후기리스트 길이"+ar.size());
-		
 		map.put("recipeReviewpager", recipeReviewpager);
 		map.put("recipereViewAr",ar);
 		
