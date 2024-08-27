@@ -25,14 +25,6 @@ public class MemberDAO {
 		return sqlSession.selectList(NAMESPACE + "wishList",memberDTO);
 	}
 	
-	public Long getTotalCountRecipeReply(Map<String, Object> map) throws Exception {
-		return sqlSession.selectOne(NAMESPACE + "getTotalCountRecipeReply", map);
-	}
-	
-	public Long getTotalCountRecipeReview(Map<String, Object> map) throws Exception {
-		return sqlSession.selectOne(NAMESPACE + "getTotalCountRecipeReview", map);
-	}
-	
 	public Long getTotalCount(Map<String, Object> map) throws Exception {
 		return sqlSession.selectOne(NAMESPACE + "getTotalCount", map);
 	}

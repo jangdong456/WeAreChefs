@@ -73,7 +73,7 @@ public class MemberService {
 
 		return check;
 	}
-				
+
 	public Map<String, Object> recipeReplyList(Map<String, Object> map) throws Exception {
 
 		Long totalRow = memberDAO.getTotalCount3(map);
@@ -85,14 +85,13 @@ public class MemberService {
 		Pager recipeReviewReplypager = (Pager)map.get("pager");
 		recipeReviewReplypager.makeRow(8L);
 		recipeReviewReplypager.makeNum(totalRow, 8L, 5L);
-
+			
 		List<RecipeReplyDTO> ar = memberDAO.recipeReplyList(map);
-
+		
 		map.put("recipeReplyPager", recipeReviewReplypager);
 		map.put("recipeReplyAr",ar);
-
+		
 		return map;
-			
 
 	}
 	
@@ -107,18 +106,21 @@ public class MemberService {
 		Pager recipeReviewpager = (Pager)map.get("pager");
 		recipeReviewpager.makeRow(8L);
 		recipeReviewpager.makeNum(totalRow, 8L, 5L);
-
+			
 		List<RecipeReviewDTO> ar = memberDAO.recipeReviewList(map);
-
+		
 		map.put("recipeReviewpager", recipeReviewpager);
 		map.put("recipereViewAr",ar);
-
+		
 		return map;
+		
 	}
 	
+
+	
 	public Map<String, Object> recipeList(Map<String, Object> map) throws Exception {
+
 		Long totalRow = memberDAO.getTotalCount(map);
-		System.out.println("=== 레시피 리스트 총 토탈 갯수 반환 값 : ===" + totalRow);
 		
 		if(totalRow==0) {
 			totalRow=1L;
@@ -128,11 +130,12 @@ public class MemberService {
 		recipePager.makeRow(8L);
 		recipePager.makeNum(totalRow, 8L, 5L);
 
+		
 		List<RecipeDTO> ar = memberDAO.recipeList(map);
-
+		
 		map.put("recipePager", recipePager);
 		map.put("recipeAr",ar);
-
+		
 		return map;
 		
 	}

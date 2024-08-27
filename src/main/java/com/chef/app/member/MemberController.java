@@ -144,7 +144,9 @@ public class MemberController {
 		}
 		return url;
 	}
+
 	
+
 
 	@GetMapping("mypage")
 	public void mypage(HttpSession session, Model model, Pager pager,String tab) throws Exception {
@@ -158,9 +160,11 @@ public class MemberController {
 		memberdto = memberService.mypage(memberdto);
 		model.addAttribute("member", memberdto);
 
+		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("memberdto", memberdto);
 		map.put("pager", pager);
+				
 
 		// 작성한 레시피 리스트
 
@@ -169,16 +173,17 @@ public class MemberController {
 		model.addAttribute("recipeMap", recipeMap);
 		model.addAttribute("tab", tab);
 		}
-
+		
 		if(tab.equals("2")) {
 		// 상대방 레시피에 작성한 리뷰
 		Map<String, Object> recipeReviewMap = memberService.recipeReviewList(map);
 		model.addAttribute("recipeReviewMap", recipeReviewMap);
 		model.addAttribute("tab", tab);
-
+		
 		List<RecipeReviewDTO> re = (List<RecipeReviewDTO>)recipeReviewMap.get("recipereViewAr");
-
+			
 		}
+		
 
 		if(tab.equals("3")) {
 		// 상대방 레시피에 작성한 댓글
@@ -186,6 +191,12 @@ public class MemberController {
 		model.addAttribute("recipeReplyMap", recipeReplyMap);
 		model.addAttribute("tab", tab);
 		}
+		
+		// 최근 작성한 레시피 상위3개
+		List<RecipeDTO> recentyList = memberService.recipeRecentList();
+		model.addAttribute("recentyList", recentyList);
+		
+	}
 	
 	@PostMapping("mypage")
 	public String mypageUpdate(MemberDTO memberDTO, HttpSession session, Model model) throws Exception {
