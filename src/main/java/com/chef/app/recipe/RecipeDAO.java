@@ -68,8 +68,8 @@ public class RecipeDAO {
 		return sqlSession.selectList(NAMESPACE + "reviewList", recipeReviewDTO);
 	}
 
-	public int replyUpdateInsert(RecipeReviewDTO recipeReviewDTO) {
-		return sqlSession.update(NAMESPACE + "replyUpdateInsert", recipeReviewDTO);
+	public int reviewUpdateInsert(RecipeReviewDTO recipeReviewDTO) {
+		return sqlSession.update(NAMESPACE + "reviewUpdateInsert", recipeReviewDTO);
 	}
 
 	public int hit(RecipeDTO recipeDTO) {
@@ -125,8 +125,18 @@ public class RecipeDAO {
 	}
 
 	public int reviewDelete(RecipeReviewDTO recipeReviewDTO) {
-		
+
 		return sqlSession.update(NAMESPACE + "reviewDelete", recipeReviewDTO);
+	}
+
+	public int replyUpdateInsert(RecipeReplyDTO recipeReplyDTO) {
+
+		return sqlSession.update(NAMESPACE + "replyUpdateInsert", recipeReplyDTO);
+	}
+
+	public int replyDelete(RecipeReplyDTO recipeReplyDTO) {
+
+		return sqlSession.update(NAMESPACE + "replyDelete", recipeReplyDTO);
 	}
 
 //	public Long getNum() {

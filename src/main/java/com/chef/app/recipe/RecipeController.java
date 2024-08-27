@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.chef.app.food.StoreReplyDTO;
 import com.chef.app.member.MemberDTO;
 
 @Controller
@@ -226,36 +225,56 @@ public class RecipeController {
 	}
 
 	@PostMapping("replyUpdateInsert")
-	public String replyUpdateInsert(RecipeReviewDTO recipeReviewDTO, Model model) throws Exception {
+	public String replyUpdateInsert(RecipeReplyDTO recipeReplyDTO, Model model) throws Exception {
 
-
-		System.out.println(recipeReviewDTO.getBoard_content());
-		System.out.println(recipeReviewDTO.getReview_num());
-		int result = recipeService.replyUpdateInsert(recipeReviewDTO);
+		System.out.println(recipeReplyDTO.getBoard_content());
+		System.out.println(recipeReplyDTO.getRecipe_reply_num());
+		int result = recipeService.replyUpdateInsert(recipeReplyDTO);
 
 		model.addAttribute("msg", result);
 		return "commons/result";
 
 	}
-	
+
+	@PostMapping("replyDelete")
+	public String replyDelete(RecipeReplyDTO recipeReplyDTO, Model model) throws Exception {
+
+		int result = recipeService.replyDelete(recipeReplyDTO);
+		// model.addAttribute("dto", recipeReplyDTO);
+		model.addAttribute("msg", result);
+
+		return "commons/result";
+
+	}
+
+	@PostMapping("reviewUpdateInsert")
+	public String reviewUpdateInsert(RecipeReviewDTO recipeReviewDTO, Model model) throws Exception {
+
+		System.out.println(recipeReviewDTO.getBoard_content());
+		System.out.println(recipeReviewDTO.getReview_num());
+		int result = recipeService.reviewUpdateInsert(recipeReviewDTO);
+
+		model.addAttribute("msg", result);
+		return "commons/result";
+
+	}
+
 	@PostMapping("reviewUpdate")
 	public String reviewUpdate(RecipeReviewDTO recipeReviewDTO, Model model) throws Exception {
-
-	
-		//int result = recipeService.reviewUpdate(recipeReviewDTO);
 
 		model.addAttribute("dto", recipeReviewDTO);
 		return "recipe/reviewUpdate";
 
 	}
+
 	@PostMapping("reviewDelete")
-	public String reviewDelete(RecipeReviewDTO recipeReviewDTO,HttpSession session,Model model) throws Exception {
-			
+	public String reviewDelete(RecipeReviewDTO recipeReviewDTO, HttpSession session, Model model) throws Exception {
+
 		int result = recipeService.reviewDelete(recipeReviewDTO);
-		
+
 		model.addAttribute("msg", result);
 		return "commons/result";
-		
+
 	}
 
 	@PostMapping("comment")

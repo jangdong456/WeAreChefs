@@ -119,11 +119,11 @@ public class RecipeService {
 		return recipeDAO.recipeReply(recipeReplyDTO);
 	}
 
-	public int replyUpdateInsert(RecipeReviewDTO recipeReviewDTO) throws Exception {
+	public int reviewUpdateInsert(RecipeReviewDTO recipeReviewDTO) throws Exception {
 		System.out.println("service " + recipeReviewDTO.getBoard_content());
-		System.out.println("service " +recipeReviewDTO.getReview_num());
+		System.out.println("service " + recipeReviewDTO.getReview_num());
 
-		return recipeDAO.replyUpdateInsert(recipeReviewDTO);
+		return recipeDAO.reviewUpdateInsert(recipeReviewDTO);
 	}
 
 	public List<RecipeReviewDTO> replyList(RecipeReplyDTO recipeReplyDTO, RecipeDTO recipeDTO) {
@@ -208,6 +208,14 @@ public class RecipeService {
 
 	public int reviewDelete(RecipeReviewDTO recipeReviewDTO) {
 		return recipeDAO.reviewDelete(recipeReviewDTO);
+	}
+
+	public int replyDelete(RecipeReplyDTO recipeReplyDTO) {
+		return recipeDAO.replyDelete(recipeReplyDTO);
+	}
+
+	public int replyUpdateInsert(RecipeReplyDTO recipeReplyDTO) {
+		return recipeDAO.replyUpdateInsert(recipeReplyDTO);
 	}
 
 }

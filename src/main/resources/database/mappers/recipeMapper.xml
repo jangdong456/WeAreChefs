@@ -228,7 +228,7 @@
 				 , RECIPE_RATING
 		FROM RECIPEREVIEW
 		WHERE RECIPE_NUM = #{recipe_num}
-		AND REVIEW_DEL = 'N'
+		
 		ORDER BY CREATE_DATE DESC
 
 	</select>
@@ -284,6 +284,7 @@
 				 
 		FROM RECIPEREPLY
 		WHERE RECIPE_NUM = #{recipe_num}
+		
 		ORDER BY REF DESC, STEP ASC
 		
 	</select>
@@ -329,7 +330,7 @@
 											  ) -->
 								   							
 	</insert>
-	<update id="replyUpdateInsert" parameterType="RecipeReviewDTO">
+	<update id="reviewUpdateInsert" parameterType="RecipeReviewDTO">
    	UPDATE RECIPEREVIEW 
    		SET UPDATE_DATE =SYSDATE 
    		,BOARD_CONTENT =#{board_content} 
@@ -346,6 +347,12 @@
 					STEP > #{step}
    	</update>
    	
+   	<update id="replyDelete" parameterType="RecipeReplyDTO">
+   
+   		UPDATE RECIPEREPLY 
+   		SET DEL = 'Y'
+		WHERE RECIPE_REPLY_NUM = #{recipe_reply_num}
+   </update>
    	<update id="reviewDelete" parameterType="RecipeReviewDTO">
    
    		UPDATE RECIPEREVIEW 
@@ -353,6 +360,12 @@
 		WHERE REVIEW_NUM= #{review_num}
    </update>
  
+ <update id="replyUpdateInsert" parameterType="RecipeReplyDTO">
+   	UPDATE RECIPEREPLY 
+   		SET UPDATE_DATE =SYSDATE 
+   		,BOARD_CONTENT =#{board_content} 
+   	WHERE RECIPE_REPLY_NUM = #{recipe_reply_num}
+   </update>
    	<select id="getParentReply" parameterType="long" resultType="RecipeReplyDTO">
 	    SELECT  REF, STEP, DEPTH
 	    FROM RECIPEREPLY

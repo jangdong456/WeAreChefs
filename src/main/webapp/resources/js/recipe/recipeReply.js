@@ -74,8 +74,10 @@ document.querySelectorAll('.replyBtn').forEach(function (element) {
           if (response.success === true) {
             alert("답글 등록이 완료됐습니다.");
             loadReplies(recipe_reply_num, this.closest(".replyListParent").querySelector(".replyList"));
+            location.reload()
           } else {
             alert("답글 등록에 실패했습니다.");
+            location.reload()
           }
         })
         .catch(error => {
@@ -146,7 +148,7 @@ navmission.addEventListener("click", (e) => {
     console.log(num);
     console.log(updateContent);
 
-    fetch("/recipe/replyUpdateInsert", {
+    fetch("/recipe/reviewUpdateInsert", {
         method:"POST",
         headers:{"Content-type":"application/x-www-form-urlencoded"},
         body:"review_num=" + num +"&board_content="+updateContent.value+"&recipe_num="+navmission.getAttribute("data-recipe-num")
@@ -211,9 +213,8 @@ if (e.target.classList.contains('replyUpdateBtn')) {
   let num = e.target.getAttribute("data-reply-num");
   let conentup = e.target.getAttribute("data-reply-content");
 
-
   if (e.target.id == "updateReply" + num) {
-
+   
    fetch("/recipe/replyUpdate", {
      method: "POST",
      headers: {"Content-type": "application/x-www-form-urlencoded"},
@@ -229,6 +230,70 @@ if (e.target.classList.contains('replyUpdateBtn')) {
      })
 
  }}
+
+ if(e.target.id=='newUpdate2'){
+
+  let updateContent2 = document.getElementById("updateContent2")
+ 
+  let num = updateContent2.getAttribute("data-reply-num")
+  console.log(num);
+  console.log(updateContent2);
+
+  fetch("/recipe/replyUpdateInsert", {
+      method:"POST",
+      headers:{"Content-type":"application/x-www-form-urlencoded"},
+      body:"recipe_reply_num=" + num +"&board_content="+updateContent2.value+"&recipe_num="+navmission2.getAttribute("data-recipe-num")
+    })
+
+    .then((r)=>{return r.text()})
+    .then((r)=>{
+      console.log(r)
+      if(r>0){
+          alert("댓글 수정이 완료됐습니다.")
+          location.reload()
+      }else{
+          alert("댓글 수정에 실패했습니다.")
+          location.reload()
+      }
+    })
+
+}
+
+if(e.target.classList.contains("replyDeleteBtn")){
+        
+ 
+  let replyNum = e.target.getAttribute("data-reply-num");
+
+  if(e.target.id=="deleteReply"+replyNum){
+    //alert("삭제");
+      let check = confirm("댓글을 삭제하시겠습니까?")
+      
+      if(check){
+          fetch("/recipe/replyDelete",{
+              method:"POST",
+              headers:{"Content-type":"application/x-www-form-urlencoded"},
+              body:"recipe_reply_num="+replyNum
+          })
+
+          .then((r)=>{return r.text()})
+          .then((r)=>{
+            console.log(r)
+            if(r>0){
+                alert("댓글을 삭제했습니다.")
+                location.reload()
+            }else{
+                alert("댓글 삭제에 실패했습니다.")
+                location.reload()
+            }
+          })
+
+     }
+  }
+
+}
 })
+
+
+
 
 
