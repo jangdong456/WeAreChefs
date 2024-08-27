@@ -15,6 +15,10 @@
 					background: #F5F5F5;
 					border-radius: 10px;
 				}
+
+				.textCenter {
+					text-align: center;
+				}
 			</style>
 		</head>
 
@@ -125,6 +129,25 @@
 					<c:forEach items="${monthEarns}" var="list" begin="0" end="11">
 						<input type="hidden" class="purEarns" value="${list.pur_price}">
 					</c:forEach>
+
+					<!--일별 회원가입-->
+					<input type="hidden" class="dailyMember" value="${dailyMember.day_0}">
+					<input type="hidden" class="dailyMember" value="${dailyMember.day_1}">
+					<input type="hidden" class="dailyMember" value="${dailyMember.day_2}">
+					<input type="hidden" class="dailyMember" value="${dailyMember.day_3}">
+					<input type="hidden" class="dailyMember" value="${dailyMember.day_4}">
+					<input type="hidden" class="dailyMember" value="${dailyMember.day_5}">
+					<input type="hidden" class="dailyMember" value="${dailyMember.day_6}">
+
+					<!--일별 매출-->
+					<input type="hidden" class="dailySales" value="${dailySales.day_0}">
+					<input type="hidden" class="dailySales" value="${dailySales.day_1}">
+					<input type="hidden" class="dailySales" value="${dailySales.day_2}">
+					<input type="hidden" class="dailySales" value="${dailySales.day_3}">
+					<input type="hidden" class="dailySales" value="${dailySales.day_4}">
+					<input type="hidden" class="dailySales" value="${dailySales.day_5}">
+					<input type="hidden" class="dailySales" value="${dailySales.day_6}">
+
 					<!--주간 매출 차트 정보-->
 					<div class="row">
 						<!-- 메인 차트 -->
@@ -148,12 +171,12 @@
 							<div class="card card-primary card-round">
 								<div class="card-header">
 									<div class="card-head-row">
-										<div class="card-title">주간 매출</div>
-										<div class="card-tools">&*4주간총매출
+										<div class="card-title">일별 회원 가입</div>
+										<div class="card-tools">
 										</div>
 									</div>
 									<!--&* 주간 날짜 넣어줘야함-->
-									<div class="card-category">&*최근 한달날짜</div>
+									<div class="card-category"></div>
 								</div>
 								<div class="card-body pb-0">
 									<div class="mb-4 mt-4">
@@ -167,8 +190,8 @@
 							</div>
 							<div class="card card-round">
 								<div class="card-body pb-0">
-									<div class="h1 fw-bold float-end text-primary">&*일간총매출</div>
-									<h2 class="mb-1">일간 매출</h2>
+									<div class="h1 fw-bold float-end text-primary"></div>
+									<h2 class="mb-1">일별 매출</h2>
 									<div class="pull-in sparkline-fix">
 										<div id="lineChart"></div>
 									</div>
@@ -203,12 +226,6 @@
 													<div class="username">${memberListDesc.member_id}</div>
 													<div class="status">${memberListDesc.member_nickname}</div>
 												</div>
-												<button class="btn btn-icon btn-link op-8 me-1">
-													<i class="far fa-envelope"></i>
-												</button>
-												<button class="btn btn-icon btn-link btn-danger op-8">
-													<i class="fas fa-ban"></i>
-												</button>
 											</div>
 										</c:forEach>
 										<!--@ End 프로필 1세트 -->
@@ -231,12 +248,14 @@
 										<!-- Projects table -->
 										<table class="table table-hover align-items-center mb-0 ">
 											<thead class="thead-light">
-												<tr>
+												<tr class="textCenter">
 													<th scope="col">주문 번호</th>
 													<th scope="col" class="text-end">주문자 아이디</th>
 													<th scope="col" class="text-end">주문 날짜</th>
 													<th scope="col" class="text-end">주문 금액</th>
+													<th scope="col" class="text-end">주문 상태</th>
 												</tr>
+
 											</thead>
 											<tbody>
 												<c:forEach items="${orderListDesc}" var="order" begin="0" end="9" step="1">
@@ -244,14 +263,34 @@
 														onclick="location.href='/manager/orderDetail?order_num=${order.order_num}'"
 														style="cursor:pointer;">
 														<th scope="row">
-															<button class="btn btn-icon btn-round btn-success btn-sm me-2">
-																<i class="fa fa-check"></i>
-															</button>
+															<c:choose>
+																<c:when test="${order.order_status eq '결제완료'}">
+																		<button class="btn btn-icon btn-round btn-success btn-sm me-2">
+																			<i class="fa fa-check"></i> 
+																		</button>
+																	</c:when>
+																	<c:when test="${order.order_status eq '결제취소요청'}">
+																		<button class="btn btn-icon btn-round btn-danger btn-sm me-2">
+																			<i class="fa fa-dollar-sign"></i> 
+																		</button>
+																	</c:when>
+																	<c:when test="${order.order_status eq '결제취소'}">
+																		<button class="btn btn-icon btn-round btn-warning btn-sm me-2">
+																			<i class="fas fa-hand-holding-usd"></i> 
+																		</button>
+																	</c:when>
+																	<c:otherwise>
+																	<button class="btn btn-icon btn-round btn-black btn-sm me-2">
+																		<i class="fas fa-hand-holding"></i> 
+																	</button>
+																	</c:otherwise>
+																</c:choose>
 															${order.order_num}
 														</th>
-														<td class="text-end">${order.member_id}</td>
-														<td class="text-end">${order.order_date}</td>
-														<td class="text-end">${order.order_price}</td>
+														<td class="text-end textCenter">${order.member_id}</td>
+														<td class="text-end textCenter">${order.order_date}</td>
+														<td class="text-end textCenter">${order.order_price}</td>
+														<td class="text-end textCenter">${order.order_status}</td>
 													</tr>
 												</c:forEach>
 											</tbody>
@@ -303,7 +342,9 @@
 			<script src="/resources/assets/js/demo.js"></script>
 			<!-- Index 중간에 보이는 우측의 작은 차트-->
 			<script>
-				$("#lineChart").sparkline([102, 109, 120, 99, 110, 105, 115], {
+				let dailySales = document.getElementsByClassName("dailySales");
+
+				$("#lineChart").sparkline([dailySales[6].value, dailySales[5].value, dailySales[4].value, dailySales[3].value, dailySales[2].value, dailySales[1].value, dailySales[0].value], {
 					type: "line",
 					height: "70",
 					width: "100%",
@@ -312,7 +353,7 @@
 					fillColor: "rgba(23, 125, 255, 0.14)",
 				});
 
-				$("#lineChart2").sparkline([99, 125, 122, 105, 110, 124, 115], {
+				$("#lineChart2").sparkline([500, 125, 122, 105, 110, 124, 115], {
 					type: "line",
 					height: "70",
 					width: "100%",
@@ -321,7 +362,7 @@
 					fillColor: "rgba(243, 84, 93, .14)",
 				});
 
-				$("#lineChart3").sparkline([105, 103, 123, 100, 95, 105, 115], {
+				$("#lineChart3").sparkline([105, 103, 123, 100, 600, 105, 115], {
 					type: "line",
 					height: "70",
 					width: "100%",
@@ -331,7 +372,7 @@
 				});
 			</script>
 
-<!--	api로 값을 추가할 때 사용함.	<script src="/resources/js/jerry/fetch.js"></script>-->	
+			<!--	api로 값을 추가할 때 사용함.	<script src="/resources/js/jerry/fetch.js"></script>-->
 		</body>
 
 		</html>

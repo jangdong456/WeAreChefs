@@ -8,10 +8,11 @@
     <div class="logo-header" data-background-color="dark">
       <a href="index.html" class="logo">
         <img
-          src="/resources/assets/img/kaiadmin/logo_light.png"
+          src="/resources/assets/img/admin.jpg"
           alt="navbar brand"
           class="navbar-brand"
-          height="20"
+          height="50"
+          width="180"
         />
       </a>
       <!-- 사이드 바 왼쪽 오른쪽으로 움직이게 하는 것-->
@@ -84,30 +85,8 @@
                 </a>
               </li>
               <li>
-                <a href="/manager/stockCart">
-                  <span class="sub-item">재고 장바구니</span>
-                </a>
-              </li>
-            </ul>
-          </div>
-        </li>
-
-        <li class="nav-item">
-          <a data-bs-toggle="collapse" href="#maps">
-            <i class="fas fa-won-sign"></i>
-            <p>가계</p>
-            <span class="caret"></span>
-          </a>
-          <div class="collapse" id="maps">
-            <ul class="nav nav-collapse">
-              <li>
-                <a href="#">
-                  <span class="sub-item">가계 현황 표</span>
-                </a>
-              </li>
-              <li>
-                <a href="#">
-                  <span class="sub-item">가계 현황 차트</span>
+                <a href="/manager/stockRecordList">
+                  <span class="sub-item">재고 구매 기록</span>
                 </a>
               </li>
             </ul>

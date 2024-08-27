@@ -53,6 +53,14 @@ public class ManagerController {
 		}
 		model.addAttribute("monthEarns", monthEarns);
 		
+		// 일별 회원가입
+		TotalPurchaseDTO dailyMember = managerService.getDailyMember();
+		model.addAttribute("dailyMember", dailyMember);
+		
+		// 일별 매출
+		TotalPurchaseDTO dailySales = managerService.getDailySales();
+		model.addAttribute("dailySales", dailySales);
+		
 		// 회원 정보 리스트
 		List<MemberDTO> memberListDesc = managerService.getMemberListDesc();
 		model.addAttribute("memberListDesc", memberListDesc);
@@ -275,6 +283,20 @@ public class ManagerController {
 	@PostMapping("addItems")
 	public void addItems(@RequestBody FoodDTO [] ar, Model model) throws Exception{
 		managerService.addItems(ar);
+	}
+	
+	// 재고 구매 기록
+	@GetMapping("stockRecordList")
+	public String stockRecordList(Model model) throws Exception{
+		model.addAttribute("stockRecordList", managerService.getStockRecordList());
+		return "manager/stockRecordList";
+	}
+	
+	@GetMapping("stockRecordDetail")
+	public String stockReecordDetail(StockBuyingDTO sbDTO, Model model) throws Exception{
+		model.addAttribute("stockBuyingDetailBig", managerService.getStockBuyingDetailBig(sbDTO));
+		model.addAttribute("stockBuyingDetailSmall", managerService.getStockBuyingDetailSmall(sbDTO));
+		return "manager/stockRecordDetail";
 	}
 	
 	

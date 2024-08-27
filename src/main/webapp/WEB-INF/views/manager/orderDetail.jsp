@@ -49,25 +49,25 @@
 	<c:import url="/WEB-INF/views/managerCommons/header.jsp"></c:import>
 	<div class="container">
 		<div class="page-inner">
-      <div class="page-header">
-        <h3 class="fw-bold mb-3">주문&배송 목록</h3>
+			<div class="page-header">
+				<h3 class="fw-bold mb-3">재고 구매 세부사항 기록</h3>
 				<ul class="breadcrumbs mb-3">
-          <li class="nav-home">
-            <a href="/manager/index">
-              <i class="icon-home"></i>
+					<li class="nav-home">
+						<a href="/manager/index">
+							<i class="icon-home"></i>
 						</a>
 					</li>
 					<li class="separator">
-            <i class="icon-arrow-right"></i>
+						<i class="icon-arrow-right"></i>
 					</li>
 					<li class="nav-item">
-            <a href="/manager/orderList">주문</a>
+						<a href="#">재고</a>
 					</li>
 					<li class="separator">
-            <i class="icon-arrow-right"></i>
+						<i class="icon-arrow-right"></i>
 					</li>
 					<li class="nav-item">
-            <a href="#">주문&배송 세부사항</a>
+						<a href="#">재고 구매 세부사항 기록</a>
 					</li>
 				</ul>
 			</div>

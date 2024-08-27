@@ -55,7 +55,7 @@ testBTN.addEventListener("click", () => {
         let price = isNaN(Number(item.dpr1.replace(/,/g, ''))) ? 0 : Number(item.dpr1.replace(/,/g, ''))
         // price
         console.log(isNaN(Number(item.dpr1.replace(/,/g, '')))? 0:Number(item.dpr1.replace(/,/g, '')) * 1.5)
-        let adjustedPrice = price * 1.7;
+        let adjustedPrice =  Math.ceil(price * 1.7/10)*10;
 
         printedItems.add(item.item_name); // 출력된 item_name을 Set에 추가
 

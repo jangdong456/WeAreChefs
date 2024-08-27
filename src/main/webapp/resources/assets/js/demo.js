@@ -273,6 +273,7 @@ let purSales = document.getElementsByClassName('purSales');
 let purExpends = document.getElementsByClassName('purExpends');
 let purEarns = document.getElementsByClassName("purEarns")
 
+
 var statisticsChart = new Chart(ctx, {
 	type: 'line',
 	data: {
@@ -379,20 +380,21 @@ for (var i = 0; i < legendItems.length; i += 1) {
 
 var dailySalesChart = document.getElementById('dailySalesChart').getContext('2d');
 
+let dailyMember = document.getElementsByClassName("dailyMember")
+
 var myDailySalesChart = new Chart(dailySalesChart, {
 	type: 'line',
 	data: {
 		labels:["January",
-		"February",
-		"March",
-		"April",
-		"May",
-		"June",
-		"July",
-		"August",
-		"September"],
+		"Today-5",
+		"Today-4",
+		"Today-3",
+		"Today-2",
+		"Today-1",
+		"Today"
+		],
 		datasets:[ {
-			label: "Sales Analytics", fill: !0, backgroundColor: "rgba(255,255,255,0.2)", borderColor: "#fff", borderCapStyle: "butt", borderDash: [], borderDashOffset: 0, pointBorderColor: "#fff", pointBackgroundColor: "#fff", pointBorderWidth: 1, pointHoverRadius: 5, pointHoverBackgroundColor: "#fff", pointHoverBorderColor: "#fff", pointHoverBorderWidth: 1, pointRadius: 1, pointHitRadius: 5, data: [65, 59, 80, 81, 56, 55, 40, 35, 30]
+			label: "Sales Analytics", fill: !0, backgroundColor: "rgba(255,255,255,0.2)", borderColor: "#fff", borderCapStyle: "butt", borderDash: [], borderDashOffset: 0, pointBorderColor: "#fff", pointBackgroundColor: "#fff", pointBorderWidth: 1, pointHoverRadius: 5, pointHoverBackgroundColor: "#fff", pointHoverBorderColor: "#fff", pointHoverBorderWidth: 1, pointRadius: 1, pointHitRadius: 5, data: [dailyMember[6].value, dailyMember[5].value, dailyMember[4].value, dailyMember[3].value, dailyMember[2].value, dailyMember[1].value, dailyMember[0].value]
 		}]
 	},
 	options : {

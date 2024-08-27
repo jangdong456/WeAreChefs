@@ -50,6 +50,16 @@ public class ManagerDAO {
 		return sqlSession.selectList(NAMESPACE + "getMonthExpands");
 	}
 	
+	// 일별 회원가입
+	public TotalPurchaseDTO getDailyMember() throws Exception{
+		return sqlSession.selectOne(NAMESPACE + "getDailyMember");
+	}
+	
+	// 일별 매출
+	public TotalPurchaseDTO getDailySales() throws Exception{
+		return sqlSession.selectOne(NAMESPACE + "getDailySales");
+	}
+	
 	// index 멤버 정보 -----------------------------------------------------------------------------
 	public List<MemberDTO> getMemberListAsc() throws Exception{
 		return sqlSession.selectList(NAMESPACE + "getMemberListAsc");
@@ -159,4 +169,20 @@ public class ManagerDAO {
 		return sqlSession.insert(NAMESPACE + "addItems", foodDTO);
 	}
 	
+	// STOCK RECORDㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+	// stock List
+	public List<StockBuyingDTO> getStockRecordList() throws Exception{
+		return sqlSession.selectList(NAMESPACE + "getStockRecordList");
+	}
+	
+	// stock Detail Big
+	public StockBuyingDTO getStockBuyingDetailBig(StockBuyingDTO sbDTO) throws Exception{
+		return sqlSession.selectOne(NAMESPACE + "getStockRecordDetailBig", sbDTO);
+	}
+	
+	// stock Detail Small
+	
+	public List<StockMidBuyingDTO> getStockBuyingDetailSmall(StockBuyingDTO sbDTO) throws Exception{
+		return sqlSession.selectList(NAMESPACE + "getStockRecordDetailSmall", sbDTO);
+	}
 }

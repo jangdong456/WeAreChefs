@@ -113,6 +113,16 @@ public class ManagerService {
 		return resultDTO;
 	}
 	
+	// index 차트 일별 회원가입
+	public TotalPurchaseDTO getDailyMember() throws Exception{
+		return managerDAO.getDailyMember();
+	}
+	
+	// index 차트 일별 매출
+	public TotalPurchaseDTO getDailySales() throws Exception{
+		return managerDAO.getDailySales();
+	}
+	
 	
 	// index 멤버 정보-----------------------------------------------------------------------------
 	public List<MemberDTO> getMemberListAsc() throws Exception{
@@ -267,5 +277,20 @@ public class ManagerService {
 		}		
 
 //		return managerDAO.addItems(ar);
+	}
+	
+	// STOCK RECORDㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+	// stock List
+	public List<StockBuyingDTO> getStockRecordList() throws Exception{
+		return managerDAO.getStockRecordList();
+	}
+	
+	// stock Detail Big
+	public StockBuyingDTO getStockBuyingDetailBig(StockBuyingDTO sbDTO) throws Exception{
+		return managerDAO.getStockBuyingDetailBig(sbDTO);
+	}
+	
+	public List<StockMidBuyingDTO> getStockBuyingDetailSmall(StockBuyingDTO sbDTO) throws Exception{
+		return managerDAO.getStockBuyingDetailSmall(sbDTO);
 	}
 }
