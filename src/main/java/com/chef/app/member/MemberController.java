@@ -220,11 +220,13 @@ public class MemberController {
 	public String email(MemberDTO memberDTO, Model model, String member_mail) throws Exception {
 		System.out.println("== Email ==");
 		System.out.println(member_mail);
-//		int result = 1;
-//		model.addAttribute("msg", result);
-		String mailresult = email.mailTemplete(member_mail);
-		System.out.println("반환값:" +mailresult);
-		model.addAttribute("msg", mailresult);
+		
+		if(member_mail != null || member_mail != "") {
+			String mailresult = email.mailTemplete(member_mail);
+			System.out.println("반환값:" +mailresult);
+			model.addAttribute("msg", mailresult);		
+		}
+		
 		return "commons/result";
 	}
 	
