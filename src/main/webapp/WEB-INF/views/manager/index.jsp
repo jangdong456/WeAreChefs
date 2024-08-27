@@ -171,7 +171,7 @@
 							<div class="card card-primary card-round">
 								<div class="card-header">
 									<div class="card-head-row">
-										<div class="card-title">일별 회원 가입</div>
+										<div class="card-title">주간 회원 가입</div>
 										<div class="card-tools">
 										</div>
 									</div>
@@ -191,7 +191,7 @@
 							<div class="card card-round">
 								<div class="card-body pb-0">
 									<div class="h1 fw-bold float-end text-primary"></div>
-									<h2 class="mb-1">일별 매출</h2>
+									<h2 class="mb-1">주간 매출</h2>
 									<div class="pull-in sparkline-fix">
 										<div id="lineChart"></div>
 									</div>
