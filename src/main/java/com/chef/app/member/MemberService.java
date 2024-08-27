@@ -73,10 +73,9 @@ public class MemberService {
 
 		return check;
 	}
-				
 
 	public Map<String, Object> recipeReplyList(Map<String, Object> map) throws Exception {
-		
+
 		Long totalRow = memberDAO.getTotalCount3(map);
 		
 		if(totalRow==0) {
@@ -97,7 +96,7 @@ public class MemberService {
 	}
 	
 	public Map<String, Object> recipeReviewList(Map<String, Object> map) throws Exception {
-		
+
 		Long totalRow = memberDAO.getTotalCount2(map);
 		
 		if(totalRow==0) {
@@ -117,8 +116,10 @@ public class MemberService {
 		
 	}
 	
+
+	
 	public Map<String, Object> recipeList(Map<String, Object> map) throws Exception {
-		
+
 		Long totalRow = memberDAO.getTotalCount(map);
 		
 		if(totalRow==0) {
@@ -128,6 +129,7 @@ public class MemberService {
 		Pager recipePager = (Pager)map.get("pager");
 		recipePager.makeRow(8L);
 		recipePager.makeNum(totalRow, 8L, 5L);
+
 		
 		List<RecipeDTO> ar = memberDAO.recipeList(map);
 		
