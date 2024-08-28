@@ -28,10 +28,10 @@ public class RecipeController {
 
 	@PostMapping("uploadContentImage")
 	@ResponseBody
-	public Map<String, String> uploadContentImage(MultipartFile attach, Model model, HttpSession session)
+	public Map<String, String> uploadContentImage(MultipartFile upload, Model model, HttpSession session)
 			throws Exception {
 
-		String imgName = recipeService.uploadContentImage(attach, session);
+		String imgName = recipeService.uploadContentImage(upload, session);
 		String path = "/resources/upload/recipecontents/" + imgName;
 
 		Map<String, String> map = new HashMap<String, String>();
@@ -151,7 +151,6 @@ public class RecipeController {
 		MemberDTO memberDTO = (MemberDTO) session.getAttribute("member");
 		recipeDTO = recipeService.recipeDetail(recipeDTO);
 
-
 		if (memberDTO == null) {
 			model.addAttribute("msg", "로그인이 필요합니다.");
 			model.addAttribute("url", "/member/login");
@@ -215,7 +214,7 @@ public class RecipeController {
 			model.addAttribute("msg", "로그인이 필요합니다.");
 			model.addAttribute("url", "/member/login");
 			return "commons/message";
-		} else if (memberDTO.getMember_id() != recipeDTO.getMember_id()) {
+		} else if (!memberDTO.getMember_id().equals(recipeDTO.getMember_id())) {
 			model.addAttribute("msg", "본인 글만 삭제가 가능합니다.");
 			model.addAttribute("url", "/recipe/list");
 			return "commons/message";
