@@ -428,9 +428,9 @@
 													data-review-num="${ar.review_num}">
 													<p class="mb-0">${ar.board_content}</p>
 													<div>
-													<h2>dto ${dto.member_id}</h2>
+													<h2>dto ${ar.member_id}</h2>
 													<h2>member ${member.member_id}</h2>
-														<c:if test="${dto.member_id eq member.member_id}">
+														<c:if test="${ar.member_id eq member.member_id}">
 															<button
 																class="btn text-primary rounded-pill reviewUpdateBtn ms-auto"
 																data-review-num="${ar.review_num}"
@@ -489,7 +489,7 @@
 													<button class="btn text-primary rounded-pill replyBtn"
 														style="font-size: 14px;">|답글|</button>
 												</c:if>
-												<c:if test="${dto.member_id eq member.member_id}">
+												<c:if test="${ar.member_id eq member.member_id}">
 													<c:choose>
 														<c:when test="${ar.del=='N'}">
 															<button
@@ -562,14 +562,16 @@
 						<label style="margin-bottom: 2px;">별점</label><br>
 						<div class="col-lg-12 my-2" id="starRating">
 							<fieldset id="rating">
-								<input type="radio" name="recipe_rating" value="5" id="rate1"><label
-									for="rate1">⭐</label> <input type="radio" name="recipe_rating"
-									value="4" id="rate2"><label for="rate2">⭐</label> <input
-									type="radio" name="recipe_rating" value="3" id="rate3"><label
-									for="rate3">⭐</label> <input type="radio" name="recipe_rating"
-									value="2" id="rate4"><label for="rate4">⭐</label> <input
-									type="radio" name="recipe_rating" value="1" id="rate5"><label
-									for="rate5">⭐</label>
+								<input type="radio" name="recipe_rating" value="5" id="rate1">
+								<label for="rate1">⭐</label> 
+								<input type="radio" name="recipe_rating" value="4" id="rate2">
+								<label for="rate2">⭐</label> 
+								<input type="radio" name="recipe_rating" value="3" id="rate3">
+								<label for="rate3">⭐</label> 
+								<input type="radio" name="recipe_rating" value="2" id="rate4">
+								<label for="rate4">⭐</label> 
+								<input type="radio" name="recipe_rating" value="1" id="rate5">
+								<label for="rate5">⭐</label>
 							</fieldset>
 						</div>
 

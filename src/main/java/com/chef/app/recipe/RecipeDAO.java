@@ -83,7 +83,7 @@ public class RecipeDAO {
 		return sqlSession.insert(NAMESPACE + "recipeReply", recipeReplyDTO);
 	}
 
-	public List<RecipeReviewDTO> replyList(RecipeReplyDTO recipeReplyDTO) {
+	public List<RecipeReplyDTO> replyList(RecipeReplyDTO recipeReplyDTO) {
 
 		return sqlSession.selectList(NAMESPACE + "replyList", recipeReplyDTO);
 	}

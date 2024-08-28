@@ -90,7 +90,7 @@ public class RecipeController {
 		// System.out.println(recipeDTO.getRecipe_name());
 		List<RecipeReviewDTO> ar = recipeService.reviewList(recipeReviewDTO);
 		System.out.println("recipeNum " + recipeReviewDTO.getRecipe_num());
-		List<RecipeReviewDTO> ar2 = recipeService.replyList(recipeReplyDTO, recipeDTO);
+		List<RecipeReplyDTO> ar2 = recipeService.replyList(recipeReplyDTO, recipeDTO);
 		Double result = recipeService.ratingTotal(recipeReviewDTO);
 		System.out.println("tot" + result);
 

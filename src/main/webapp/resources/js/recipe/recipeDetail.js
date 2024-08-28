@@ -11,9 +11,18 @@ const starRating = document.getElementById("starRating");
 const board_content = document.getElementById("board_content");
 
 
+
+
 reBtn.addEventListener("click", () => {
   
+  
     if (review.checked) {
+        const ratingCk=  document.querySelector('#rating input[type="radio"]:checked');
+        if(ratingCk == null){
+            alert("모든 항목을 입력해주세요.");
+            return;
+        }
+
         re_frm.action = '/recipe/review'; 
     } else if (reply.checked) {
         re_frm.action = '/recipe/reply';
