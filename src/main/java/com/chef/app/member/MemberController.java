@@ -268,11 +268,8 @@ public class MemberController {
 	
 	@GetMapping("logout")
 	public String logout(HttpSession session, Model model) throws Exception {
-		
 		System.out.println(" ==== 로그아웃 ==== ");
 		MemberDTO memberDTO = (MemberDTO)session.getAttribute("member");
-		System.out.println(memberDTO.getMember_id());
-		System.out.println(memberDTO.getMember_type());
 		
 		String url = "";
 		if(memberDTO.getMember_type().equals("카카오톡")) {
