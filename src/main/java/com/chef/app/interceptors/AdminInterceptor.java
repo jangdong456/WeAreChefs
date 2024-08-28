@@ -14,9 +14,10 @@ public class AdminInterceptor extends HandlerInterceptorAdapter {
 	    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 	            throws Exception {
 	        MemberDTO memberDTO = (MemberDTO) request.getSession().getAttribute("member");
-
+	        System.out.println("실행전");
 	        // member_lev가 1 이상이어야 접근 가능
 	        if (memberDTO == null || memberDTO.getMember_lev() < 1) {
+	        	System.out.println("실행됨");
 	            request.setAttribute("msg", "권한이 없습니다.");
 	            request.setAttribute("url", "/");
 	            RequestDispatcher view = request.getRequestDispatcher("/WEB-INF/views/commons/message.jsp");

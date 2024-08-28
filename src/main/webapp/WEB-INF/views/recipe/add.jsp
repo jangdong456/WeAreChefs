@@ -74,7 +74,7 @@
 										<div class="form-item w-100">
 										<!-- <div class="form-item w-100">  -->
 											<label class="form-label my-3" >작성자<sup>*</sup></label>
-											<input type="text" class="form-control" name = "member_id" value="${member.member_id}" >
+											<input type="text" class="form-control" name = "member_id" value="${member.member_id}" readonly>
 										</div>
 										
 									</div>
