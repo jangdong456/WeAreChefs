@@ -428,8 +428,6 @@
 													data-review-num="${ar.review_num}">
 													<p class="mb-0">${ar.board_content}</p>
 													<div>
-													<h2>dto ${ar.member_id}</h2>
-													<h2>member ${member.member_id}</h2>
 														<c:if test="${ar.member_id eq member.member_id}">
 															<button
 																class="btn text-primary rounded-pill reviewUpdateBtn ms-auto"
