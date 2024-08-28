@@ -10,6 +10,7 @@ import java.util.Map;
 import java.util.List;
 
 import javax.crypto.Cipher;
+import javax.net.ssl.HttpsURLConnection;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -186,8 +187,6 @@ public class MemberController {
 		
 		if(tab.equals("4")) {
 			Map<String, Object> ar = memberService.wishList(map);
-			System.out.println("=== 출력되나요 ? :" + ar);
-
 			
 			model.addAttribute("wishList", ar);
 			model.addAttribute("tab", tab);
@@ -290,8 +289,15 @@ public class MemberController {
 	}
 	
 	@GetMapping("login")
-	public void login() throws Exception {
-
+	public String login(HttpSession session, Model model) throws Exception {
+		MemberDTO memberDTO = (MemberDTO) session.getAttribute("member");
+		if(memberDTO == null) {
+			return "member/login";
+		}else {
+			model.addAttribute("msg", "잘못된 접근입니다.");
+			model.addAttribute("url", "/");
+			return "commons/message";
+		}
 	}
 	
 	@PostMapping("login")
@@ -304,7 +310,6 @@ public class MemberController {
 		
 		if(result != null ) {
 			session.setAttribute("member", result);
-			System.out.println(session);
 			model.addAttribute("msg", num);
 			return "commons/result";
 		} else {
@@ -315,9 +320,15 @@ public class MemberController {
 	}
 	
 	@GetMapping("join")
-	public void join() throws Exception {
-		System.out.println("== Get Join Controller ==");
-
+	public String join(HttpSession session, Model model) throws Exception {
+		MemberDTO memberDTO = (MemberDTO) session.getAttribute("member");
+		if(memberDTO == null) {
+			return "member/join";
+		}else {
+			model.addAttribute("msg", "잘못된 접근입니다.");
+			model.addAttribute("url", "/");
+			return "commons/message";
+		}
 	}
 	
 	@PostMapping("join")

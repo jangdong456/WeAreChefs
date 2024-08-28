@@ -451,8 +451,8 @@
                                                                                 <h4>${review.board_title}</h4>
                                                                                 <p>${review.board_content}</p>
                                                                             <div class="d-flex justify-content-between flex-lg-wrap">
-                                                                                <a href="/recipe/detail?recipe_num=${list.recipe_num}" style="margin-left:18%" class="btn border border-secondary rounded-pill px-3 text-primary">작성한 댓글보기</a>
-                                                                                </div>
+                                                                                <a href="/recipe/detail?recipe_num=${review.recipe_num}" style="margin-left:18%" class="btn border border-secondary rounded-pill px-3 text-primary">작성한 댓글보기</a>
+                                                                                </div> 
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -525,7 +525,7 @@
                                                                                 <h4>${reply.board_title}</h4>
                                                                                 <p>${reply.board_content}</p>
                                                                                 <div class="d-flex justify-content-between flex-lg-wrap">
-                                                                                    <a href="#" style="margin-left:18%" class="btn border border-secondary rounded-pill px-3 text-primary">작성한 요리후기</a>
+                                                                                    <a href="/recipe/detail?recipe_num=${reply.recipe_num}" style="margin-left:18%" class="btn border border-secondary rounded-pill px-3 text-primary">작성한 요리후기</a>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
