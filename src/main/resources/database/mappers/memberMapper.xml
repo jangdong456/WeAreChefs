@@ -6,16 +6,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="com.chef.app.member.MemberDAO">
 
 
-	<select id="wishList" parameterType="MemberDTO" resultType="RecipeDTO">
-		SELECT * FROM RECIPE
-		WHERE RECIPE_NUM = 
-				(
-					SELECT RECIPE_NUM 
-					FROM BOOKMARK 
-					WHERE MEMBER_ID = #{member_id}
-				)
-	</select>
-
 	<select id="recipeRecentList" resultType="RecipeDTO">
 		SELECT * FROM
 		(SELECT ROWNUM R,B.* FROM (SELECT * FROM RECIPE ORDER BY CREATE_DATE DESC)B)
@@ -41,6 +31,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		UPDATE MEMBER SET PROFILE_NAME = #{file_name} 
 		WHERE MEMBER_ID = #{member_id}
 	</update>
+	
+	<select id="wishList" parameterType="Map" resultType="RecipeDTO">
+		SELECT * FROM 
+			(SELECT ROWNUM R, B.* 
+			FROM RECIPE B 
+			WHERE RECIPE_NUM 
+			IN (SELECT RECIPE_NUM FROM BOOKMARK WHERE MEMBER_ID = #{memberdto.member_id})
+			)
+		WHERE R BETWEEN #{pager.startRow} AND #{pager.lastRow}
+	</select>
 	
 	<select id="recipeReplyList" parameterType="Map" resultType="RecipeReplyDTO">
 		SELECT * FROM 	
@@ -105,6 +105,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<select id="getTotalCount3" parameterType="Map" resultType="Long">
 		SELECT COUNT(RECIPE_REPLY_NUM) FROM RECIPEREPLY
+		WHERE MEMBER_ID = #{memberdto.member_id}
+	</select>
+	
+	<select id="getTotalCount4" parameterType="Map" resultType="Long">
+		SELECT COUNT(RECIPE_NUM) FROM BOOKMARK
 		WHERE MEMBER_ID = #{memberdto.member_id}
 	</select>
 	

@@ -30,10 +30,7 @@ public class MemberService {
 	@Autowired
 	private FileManager fileManager;
 	
-	
-	public List<RecipeDTO> wishList(MemberDTO memberDTO) throws Exception {
-		return memberDAO.wishList(memberDTO);
-	}
+
 	
 	public List<RecipeDTO> recipeRecentList() throws Exception {
 		return memberDAO.recipeRecentList();
@@ -72,6 +69,26 @@ public class MemberService {
 		System.out.println("반환 값 :" + check);
 
 		return check;
+	}
+	
+	public Map<String, Object> wishList(Map<String, Object> map) throws Exception {
+		Long totalRow = memberDAO.getTotalCount4(map);
+		
+		if(totalRow==0) {
+			totalRow=1L;
+		}
+		
+		Pager wishListPager = (Pager)map.get("pager");
+		wishListPager.makeRow(8L);
+		wishListPager.makeNum(totalRow, 8L, 5L);
+	
+		List<RecipeDTO> ar = memberDAO.wishList(map);
+		
+		map.put("wishListPager", wishListPager);
+		map.put("wishListAr",ar);
+		
+		return map;
+		
 	}
 
 	public Map<String, Object> recipeReplyList(Map<String, Object> map) throws Exception {

@@ -72,14 +72,12 @@
 								</div>
 								<div class="form-item">
 									<label class="form-label my-3">비밀번호확인<sup>*</sup></label>
-									<input type="text" class="form-control member_join" id="pwdCheck" maxlength="12">
+									<input type="password" class="form-control member_join" id="pwdCheck" maxlength="12">
 								</div>
 								<div class="form-item">
 									<label class="form-label my-3">이메일<sup>*</sup></label>
 									<input type="text" class="form-control member_join" id="membere_mail" name="membere_mail">
 								</div>
-
-
 								<button id="emailbtn" type="button" class="btn border-secondary py-2 px-4 text-uppercase w-80 text-primary">이메일 인증하기</button>
 
 								<div class="form-item">

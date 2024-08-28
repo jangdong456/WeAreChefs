@@ -93,20 +93,20 @@
 	/* 마우스 클릭 체크 */
 }
 
-#tating2 label {
+.tating2 label {
 	color: transparent;
 	/* 기존 이모지 컬러 제거 */
 	text-shadow: 0 0 0 #f0f0f0;
 }
 
 .ck_rating {
-	color: gold;
+	/* color: gold; */
 	font-size: 18px;
 	margin-right: 2px;
 }
 
 .ck_rating, .n_ck_rating {
-	color: gold;
+	/* color: red; */
 	font-size: 16px;
 	line-height: 1;
 	vertical-align: middle;
@@ -199,7 +199,7 @@
 											class="btn text-uppercase text-primary" type="button">레시피
 											삭제</button></a>
 								</c:if>
-
+								
 							</div>
 						</div>
 						<div class="col-lg-6">
@@ -316,7 +316,7 @@
 									<button class="nav-link active border-white border-bottom-0"
 										type="button" role="tab" id="nav-about-tab"
 										data-bs-toggle="tab" data-bs-target="#nav-about"
-										aria-controls="nav-about" aria-selected="true">Description</button>
+										aria-controls="nav-about" aria-selected="true">detail</button>
 									<!-- id가 nav-mission 인거 -->
 									<button class="nav-link border-white border-bottom-0"
 										type="button" role="tab" id="nav-mission-tab"
@@ -358,7 +358,6 @@
 													class="d-flex align-items-center justify-content-between">
 													<h5 class="mr-3">${ar.member_id}</h5>
 
-
 													<div id="reviewRating" class="d-flex">
 														<c:choose>
 															<c:when test="${ar.recipe_rating == 1}">
@@ -367,7 +366,7 @@
 																		for="rate1" class="ck_rating">⭐</label> <span
 																		class="tating2"> <input type="radio"
 																		name="recipe_rating"> <label for="rate"
-																		class="n_ck_rating">⭐⭐⭐⭐</label>
+																		class="n_ck_rating" >⭐⭐⭐⭐</label>
 																	</span>
 																</div>
 															</c:when>
@@ -383,10 +382,16 @@
 															</c:when>
 															<c:when test="${ar.recipe_rating == 3}">
 																<div class="col-lg-12 my-2 reviewRating">
+
 																	<input type="radio" name="recipe_rating"> <label
-																		for="rate3" class="ck_rating">⭐⭐⭐</label> <span
-																		class="tating2"> <input type="radio"
-																		name="recipe_rating"> <label for="rate"
+																		for="rate3" class="ck_rating">⭐⭐⭐</label> 
+																		
+																		<span
+																		class="tating2">
+																		 <input type="radio"
+																		name="recipe_rating"> 
+																		<label for="rate"
+
 																		class="n_ck_rating">⭐⭐</label>
 																	</span>
 																</div>
@@ -408,12 +413,12 @@
 																</div>
 															</c:when>
 															<c:otherwise>
-																<div class="col-lg-12 my-2 reviewRating">
+																<!-- <div class="col-lg-12 my-2 reviewRating">
 																	<span id="tating2"> <input type="radio"
 																		name="recipe_rating"> <label
 																		class="n_ck_rating" for="rate">⭐⭐⭐⭐⭐</label>
 																	</span>
-																</div>
+																</div> -->
 															</c:otherwise>
 														</c:choose>
 													</div>
@@ -516,8 +521,11 @@
 											<div class="comment" id="comment_1">
 												<input type="hidden" class="recipe_reply_num"
 													value="${ar.recipe_reply_num}">
-												<div class="updateDiv2 replyList"
+												<div class="updateDiv2"
 													data-reply-num="${ar.recipe_reply_num}"></div>
+											</div>
+											<div class="replyList">
+											
 											</div>
 										</div>
 								</div>
@@ -566,7 +574,7 @@
 						<div class="col-lg-6">
 							<div class="border-bottom rounded">
 								<input type="text" class="form-control border-0 me-4"
-									placeholder="작성자" name="member_id" value="${dto.member_id}">
+									placeholder="작성자" name="member_id" value="${member.member_id}" readonly>
 							</div>
 						</div>
 						<!-- <div class="col-lg-6">

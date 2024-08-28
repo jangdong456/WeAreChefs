@@ -1,10 +1,10 @@
-
 const membere_mail = document.getElementById("membere_mail");
 const emailbtn = document.getElementById("emailbtn");
 
 
-
+// 이메일 인증버튼 클릭시 이메일 유효검사
 emailbtn.addEventListener("click", ()=>{
+    console.log("이메일 버튼 클릭?")
     let email = membere_mail.value
 
     if(!regexpEmail.test(memberEmail.value)){
@@ -19,7 +19,12 @@ emailbtn.addEventListener("click", ()=>{
         joinBtn.addEventListener("click", ()=> {
             span.remove();
         })
+        emailbtn.addEventListener("click", () => {
+            span.remove();
+        }) 
         return;
+    } else {
+        emailbtn.disabled = true
     }
 
     fetch("/member/sendEmail?member_mail="+email, {

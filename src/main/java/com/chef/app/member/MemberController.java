@@ -10,6 +10,7 @@ import java.util.Map;
 import java.util.List;
 
 import javax.crypto.Cipher;
+import javax.net.ssl.HttpsURLConnection;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,14 +43,7 @@ public class MemberController {
 	@Autowired
 	private Email email;
 	
-	@GetMapping("wishList")
-	public void wishList(HttpSession session, Model model) throws Exception {
-		MemberDTO memberdto = (MemberDTO)session.getAttribute("member");
-		List<RecipeDTO> ar = memberService.wishList(memberdto);
-		
-		model.addAttribute("wishList", ar);
-	}
-	
+
 	@GetMapping("prfileSnsDelete")
 	public String prfileSnsDelete(MemberDTO memberDTO, Model model) throws Exception {
 		System.out.println("===== prfileSnsDelete =====");
@@ -169,27 +163,33 @@ public class MemberController {
 		// 작성한 레시피 리스트
 
 		if(tab.equals("1")) {
-		Map<String, Object> recipeMap = memberService.recipeList(map);
-		model.addAttribute("recipeMap", recipeMap);
-		model.addAttribute("tab", tab);
+			Map<String, Object> recipeMap = memberService.recipeList(map);
+			model.addAttribute("recipeMap", recipeMap);
+			model.addAttribute("tab", tab);
 		}
 		
 		if(tab.equals("2")) {
-		// 상대방 레시피에 작성한 리뷰
-		Map<String, Object> recipeReviewMap = memberService.recipeReviewList(map);
-		model.addAttribute("recipeReviewMap", recipeReviewMap);
-		model.addAttribute("tab", tab);
-		
-		List<RecipeReviewDTO> re = (List<RecipeReviewDTO>)recipeReviewMap.get("recipereViewAr");
+			// 상대방 레시피에 작성한 리뷰
+			Map<String, Object> recipeReviewMap = memberService.recipeReviewList(map);
+			model.addAttribute("recipeReviewMap", recipeReviewMap);
+			model.addAttribute("tab", tab);
+			
+			List<RecipeReviewDTO> re = (List<RecipeReviewDTO>)recipeReviewMap.get("recipereViewAr");
 			
 		}
 		
-
 		if(tab.equals("3")) {
-		// 상대방 레시피에 작성한 댓글
-		Map<String, Object> recipeReplyMap = memberService.recipeReplyList(map);
-		model.addAttribute("recipeReplyMap", recipeReplyMap);
-		model.addAttribute("tab", tab);
+			// 상대방 레시피에 작성한 댓글
+			Map<String, Object> recipeReplyMap = memberService.recipeReplyList(map);
+			model.addAttribute("recipeReplyMap", recipeReplyMap);
+			model.addAttribute("tab", tab);
+		}
+		
+		if(tab.equals("4")) {
+			Map<String, Object> ar = memberService.wishList(map);
+			
+			model.addAttribute("wishList", ar);
+			model.addAttribute("tab", tab);
 		}
 		
 		// 최근 작성한 레시피 상위3개
@@ -201,10 +201,6 @@ public class MemberController {
 	@PostMapping("mypage")
 	public String mypageUpdate(MemberDTO memberDTO, HttpSession session, Model model) throws Exception {
 		
-//		MemberDTO memberdto = (MemberDTO)session.getAttribute("member");
-//		memberdto.setProfile_about_me(profile_about_me);
-//		memberdto.setMember_id(member_id);
-		System.out.println("myapge 자기소개");
 		MemberDTO memberdto = (MemberDTO)session.getAttribute("member");
 		memberdto.setMember_id(memberDTO.getMember_id());
 		memberdto.setProfile_about_me(memberDTO.getProfile_about_me());;
@@ -219,9 +215,7 @@ public class MemberController {
 		return url;
 	}
 	
-	
-	
-	
+
 	@GetMapping("sendEmail")
 	public String email(MemberDTO memberDTO, Model model, String member_mail) throws Exception {
 		System.out.println("== Email ==");
@@ -241,11 +235,6 @@ public class MemberController {
 		
 	}
 	
-	@GetMapping("getcode")
-	public void getcode() throws Exception {
-		System.out.println("== get code ==");
-	}
-	
 	@PostMapping("kakaologin")
 	public String kakaologin(String token, MemberDTO memberDTO, Model model, HttpSession session) throws Exception {
 		System.out.println("== Kakao Controller ==");
@@ -253,11 +242,6 @@ public class MemberController {
 		String result = "";
 		
 		if(token != null) {
-			System.out.println("1번 값:" + token);
-			System.out.println("2번 값:" + memberDTO.getMember_id());
-			System.out.println("3번 값:" + memberDTO.getMember_nickname());
-			System.out.println("4번 값:" + memberDTO.getKakao_profile_img());
-			System.out.println("5번 값:" + memberDTO.getMember_type());
 			num = memberService.kakaologin(memberDTO);
 		}
 		
@@ -278,8 +262,26 @@ public class MemberController {
 //		memberService.kakao();
 	}
 	
+	
+	
 	@GetMapping("logout")
-	public String logout(HttpSession session) throws Exception {
+	public String logout(HttpSession session, Model model) throws Exception {
+		
+		System.out.println(" ==== 로그아웃 ==== ");
+		MemberDTO memberDTO = (MemberDTO)session.getAttribute("member");
+		System.out.println(memberDTO.getMember_id());
+		System.out.println(memberDTO.getMember_type());
+		
+		String url = "";
+		if(memberDTO.getMember_type().equals("카카오톡")) {
+			System.out.println("카카오 회원");
+			int num = 1;
+			url = "member/logout";
+			model.addAttribute("msg", num);
+			session.invalidate();
+			return url;
+		}
+		
 		session.invalidate();
 		
 		return "redirect:/";
@@ -287,8 +289,15 @@ public class MemberController {
 	}
 	
 	@GetMapping("login")
-	public void login() throws Exception {
-
+	public String login(HttpSession session, Model model) throws Exception {
+		MemberDTO memberDTO = (MemberDTO) session.getAttribute("member");
+		if(memberDTO == null) {
+			return "member/login";
+		}else {
+			model.addAttribute("msg", "잘못된 접근입니다.");
+			model.addAttribute("url", "/");
+			return "commons/message";
+		}
 	}
 	
 	@PostMapping("login")
@@ -301,7 +310,6 @@ public class MemberController {
 		
 		if(result != null ) {
 			session.setAttribute("member", result);
-			System.out.println(session);
 			model.addAttribute("msg", num);
 			return "commons/result";
 		} else {
@@ -312,9 +320,15 @@ public class MemberController {
 	}
 	
 	@GetMapping("join")
-	public void join() throws Exception {
-		System.out.println("== Get Join Controller ==");
-
+	public String join(HttpSession session, Model model) throws Exception {
+		MemberDTO memberDTO = (MemberDTO) session.getAttribute("member");
+		if(memberDTO == null) {
+			return "member/join";
+		}else {
+			model.addAttribute("msg", "잘못된 접근입니다.");
+			model.addAttribute("url", "/");
+			return "commons/message";
+		}
 	}
 	
 	@PostMapping("join")
