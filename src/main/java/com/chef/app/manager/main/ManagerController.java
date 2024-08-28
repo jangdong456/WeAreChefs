@@ -3,6 +3,7 @@ package com.chef.app.manager.main;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.ibatis.javassist.expr.NewArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,6 +20,7 @@ import com.chef.app.manager.StockMidBuyingDTO;
 import com.chef.app.manager.TotalPurchaseDTO;
 import com.chef.app.member.MemberDTO;
 
+import oracle.jdbc.driver.parser.util.Array;
 import oracle.jdbc.proxy.annotation.Post;
 
 @Controller
@@ -172,7 +174,7 @@ public class ManagerController {
 	// 주문
 	// orderList
 	@GetMapping("orderList")
-	public String orderList(Model model) throws Exception{
+	public String orderList(Model model) throws Exception{		
 		model.addAttribute("orderList", managerService.getOrderList());
 		model.addAttribute("cancelOrderList", managerService.getCancelOrderList());
 		return "manager/orderList";
