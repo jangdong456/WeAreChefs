@@ -36,15 +36,15 @@
 			<mapping path="/notice/*"/>
 			<mapping path="/board/fna/*"/>
 			<mapping path="/board/qna/*"/>
-			<mapping path="/food/*"/>
+<!-- 			<mapping path="/food/*"/> -->
 			<exclude-mapping path="/notice/list"/>
 			<exclude-mapping path="/notice/detail"/>
 			<exclude-mapping path="/board/fna/list"/>
 			<exclude-mapping path="/board/fna/detail"/>
 			<exclude-mapping path="/board/qna/list"/>
 			<exclude-mapping path="/board/qna/detail"/>
-			<exclude-mapping path="/food/list"/>
-			<exclude-mapping path="/food/detail"/>
+<!-- 			<exclude-mapping path="/food/list"/>
+			<exclude-mapping path="/food/detail"/> -->
 			<beans:ref bean="adminInterceptor"/>
 		</interceptor>
 	</interceptors>
