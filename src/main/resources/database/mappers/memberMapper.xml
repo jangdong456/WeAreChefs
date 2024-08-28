@@ -234,5 +234,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
    		UPDATE STOREORDER SET ORDER_STATUS = '결제취소요청' WHERE ORDER_NUM=#{order_num}
    </update>
    
-
+   <select id="cartCount" parameterType="MemberDTO" resultType="java.lang.Long">
+   	SELECT COUNT(FOOD_NUM) FROM STORECART WHERE MEMBER_ID=#{member_id}
+   </select>
+   
 </mapper>

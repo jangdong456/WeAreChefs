@@ -115,4 +115,9 @@ public class MemberDAO {
 	public Long getTotalCount3 (Map<String, Object> map) throws Exception {
 		return sqlSession.selectOne(NAMESPACE+"getTotalCount3", map);
 	}
+	
+	public Long cartCount (MemberDTO memberDTO) throws Exception {
+		return sqlSession.selectOne(NAMESPACE+"cartCount",memberDTO);
+	}
+	
 }
