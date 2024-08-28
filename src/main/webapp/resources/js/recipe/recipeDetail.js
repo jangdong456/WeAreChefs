@@ -11,16 +11,8 @@ const starRating = document.getElementById("starRating");
 const board_content = document.getElementById("board_content");
 
 
-//reBtn.addEventListener("click",()=>{
-    //alert("test");
-  //  re_frm.submit();
-
-//})
-
-
 reBtn.addEventListener("click", () => {
   
-
     if (review.checked) {
         re_frm.action = '/recipe/review'; 
     } else if (reply.checked) {
@@ -38,11 +30,10 @@ rating.addEventListener('change', function() {
     //alert(selectedRating);
 });
 
-
-addWish.addEventListener("click",(e)=>{
+addWish.addEventListener("click",()=>{
     let num = addWish.getAttribute("data-recipe-num")
     console.log(num)
-    fetch("/recipe/addWish?recipe_num="+num + "&recipe_ck=haha",{
+    fetch("/recipe/addWish?recipe_num="+num,{
                 method:"GET"
             })
    
@@ -57,5 +48,5 @@ addWish.addEventListener("click",(e)=>{
     // 예외(exception) 발생시 여기서도 처리 가능
     .catch(()=>{
         alert("오류 발생")
-    })
+    });
 })
