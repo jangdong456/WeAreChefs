@@ -27,6 +27,8 @@ const regexpPhone    = /^[010|011|016|017|018|019]{3}-\d{3,4}-\d{4}$/;
 //이메일 관련                                  
 const joinTopTag = document.getElementById("joinTopTag");
 
+
+// 이메일 인증번호 input 태그 관련
 joinTopTag.addEventListener("click", (e) => {
     if(e.target.id == "emailNumCheckBtn"){
         //  생성된 element는 처음에 로드될때 없기에 test.addEventListener를 하면 email.js에서 만들어놓 element를 파악 가능 하기에 
@@ -59,9 +61,9 @@ memberPhone.addEventListener("input", () =>{
     phoneCheck.disabled = false
 })
 
-// memberEmail.addEventListener("input", () =>{
-//     emailbtn.disabled = false
-// })
+memberEmail.addEventListener("input", () =>{
+    emailbtn.disabled = false
+})
 
 // 휴대폰 중복체크
 phoneCheck.addEventListener("click", ()=>{
@@ -194,12 +196,13 @@ nickNameCheck.addEventListener("click", ()=>{
     }
 })
 
+
 // 아이디 중복체크
 idCheck.addEventListener("click", ()=>{
     if(!regexpId.test(memberId.value)){
         let span = document.createElement('span');
         span.id = 'join_span';
-        span.innerHTML = "한글 또는 영문 , 2~12자리로 입력해주세요";
+        span.innerHTML = "영문 또는 숫자, 2~12자리로 입력해주세요"; 
         memberId.parentNode.append(span);
         memberId.focus();
 
@@ -264,6 +267,7 @@ memberPhone.addEventListener("input", (e)=> {
 });
 
 
+//회원가입 버튼 클릭시 조건검사
 joinBtn.addEventListener("click", ()=> {
     
     // 이름
@@ -319,7 +323,7 @@ joinBtn.addEventListener("click", ()=> {
     if(!regexpId.test(memberId.value)){
         let span = document.createElement('span');
         span.id = 'join_span';
-        span.innerHTML = "영문으로만 2~12자리 입력해주세요";
+        span.innerHTML = "영문 또는 숫자, 2~12자리로 입력해주세요";
         memberId.parentNode.append(span);
         memberId.focus();
         memberId.addEventListener("click", () =>{
@@ -394,6 +398,9 @@ joinBtn.addEventListener("click", ()=> {
             span.remove();
         });
         joinBtn.addEventListener("click", ()=> {
+            span.remove();
+        })
+        emailbtn.addEventListener("click", () => {
             span.remove();
         })
         return;

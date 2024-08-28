@@ -59,31 +59,12 @@
             <div class="row g-4">
                 <div class="col-lg-12">
                     <div class="row g-4">
-                        <div class="col-xl-3">
-
-                        </div>
-                        <div class="col-6 mt-3"></div>
-                        <div class="col-xl-3">
-                            <div class="bg-light ps-3 py-3 rounded d-flex justify-content-between mb-4 mt-3">
-                                <label for="fruits">분류:</label>
-                                <select id="recipeList" name="fruitlist"
-                                    class="border-0 form-select-sm bg-light me-3" form="fruitform">
-                                    <option value="recent">최신순</option>
-                                    <option value="old">오래된순</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row g-4">
                         <div class="col-lg-3">
                             <div class="row g-4">
                                 <div class="col-lg-12">
                                     <div class="mb-3">
-
-                                        <div class="rounded position-relative fruite-item">
-                                            <!-- <div class="fruite-img">
-                                            <img src="/resources/img/fruite-item-5.jpg" class="img-fluid w-100 rounded-top" alt="">
-                                        </div> -->
+                                        <div class="rounded position-relative fruite-item mt-5">
+                                            <!-- background img 넣을수 있는지 ? 없는지? -->
                                             <div class="box-1">
                                                 <c:if test="${member.member_type eq '일반회원'}">
                                                     <c:choose>
@@ -296,18 +277,14 @@
                                                 <c:choose>
                                                     <c:when test="${empty member.profile_hit}">
                                                         <a
-                                                            class="btn border border-secondary rounded-pill px-3 text-primary">❤️0</a>
+                                                            class="btn border border-secondary rounded-pill px-3 text-primary ms-5" >❤️0</a>
                                                     </c:when>
                                                     <c:otherwise>
                                                         <a
-                                                            class="btn border border-secondary rounded-pill px-3 text-primary">❤️${member.profile_hit}</a>
+                                                            class="btn border border-secondary rounded-pill px-3 text-primary ms-5">❤️${member.profile_hit}</a>
                                                     </c:otherwise>
                                                 </c:choose>
 
-                                                <a href="#"
-                                                    class="btn border border-secondary rounded-pill px-3 text-primary"><i
-                                                        class="fa fa-shopping-bag me-2 text-primary"></i> Add to
-                                                    cart</a>
                                             </div>
                                         </div>
 
@@ -315,18 +292,6 @@
                                     </div>
                                 </div>
 
-                                <div class="mb-3">
-                                    <h4>Categories</h4>
-                                    <ul class="list-unstyled fruite-categorie">
-                                        <li>
-                                            <div class="d-flex justify-content-between fruite-name">
-                                                <a href="/member/wishList" id="wishList"><i
-                                                        class="fas fa-apple-alt me-2"></i>찜목록록록</a>
-                                                <span>찜 목록</span>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
 
                                 <div class="col-lg-12">
                                     <div id="carouselExampleCaptions" class="carousel slide"
@@ -394,7 +359,7 @@
                             <div class="row g-4 justify-content-center">
                                 <div class="tab-class text-center">
                                     <div class="col-lg-8 text-end">
-                                        <ul class="nav nav-pills d-inline-flex text-center mb-5">
+                                        <ul class="nav nav-pills d-inline-flex text-center mb-5 mt-5">
                                             <li class="nav-item">
                                                 <a class="d-flex m-2 py-2 bg-light rounded-pill ${tab eq '1' ? 'active' : ''}"
                                                     href="/member/mypage?tab=1">
@@ -423,7 +388,7 @@
                                         </ul>
                                     </div>
                                 </div>
-                                <div id="recipeListDiv">
+                                
                                     <div class="tab-content">
                                         <c:choose>
                                             <c:when test="${tab=='1'}">
@@ -510,11 +475,11 @@
 
                                             <c:when test="${tab=='4'}">
                                                 
-                                                <div id="tab-2" class="tab-pane fade show active p-0">
+                                                <div id="tab-4" class="tab-pane fade show active p-0">
                                                     <div class="row g-4">
                                                         <div class="col-lg-12">
                                                             <div class="row g-4">
-                                                                <c:forEach items="${wishList}" var="list">
+                                                                <c:forEach items="${wishList.wishListAr}" var="list">
                                                                     <div class="col-md-6 col-lg-4 col-xl-3">
                                                                         <div class="rounded position-relative fruite-item">
                                                                             <div class="fruite-img">
@@ -537,11 +502,11 @@
 
                                                     <div class="col-12">
                                                         <div class="pagination d-flex justify-content-center mt-5">
-                                                            <a href="/member/mypage?page=${recipeReviewMap.recipeReviewpager.startNum-1}&order=${recipeReviewMap.recipeReviewpager.order}&tab=2" class="btn rounded ${recipeReviewMap.recipeReviewpager.pre ? '' : 'disabled'}">&laquo;</a>
-                                                            <c:forEach begin="${recipeReviewMap.recipeReviewpager.startNum}" end="${recipeReviewMap.recipeReviewpager.lastNum}" step="1" var="i">
-                                                                <a href="/member/mypage?page=${i}&order=${recipeReviewMap.recipeReviewpager.order}&tab=2" class="rounded">${i}</a>
+                                                            <a href="/member/mypage?page=${wishList.wishListPager.startNum-1}&order=${wishList.wishListPager.order}&tab=4" class="btn rounded ${wishList.wishListPager.pre ? '' : 'disabled'}">&laquo;</a>
+                                                            <c:forEach begin="${wishList.wishListPager.startNum}" end="${wishList.wishListPager.lastNum}" step="1" var="i">
+                                                                <a href="/member/mypage?page=${i}&order=${wishList.wishListPager.order}&tab=4" class="rounded">${i}</a>
                                                             </c:forEach>
-                                                            <a href="/member/mypage?page=${recipeReviewMap.recipeReviewpager.lastNum+1}&order=${recipeReviewMap.recipeReviewpager.order}&tab=2" class="btn rounded ${recipeReviewMap.recipeReviewpager.next ? '' : 'disabled'}">&raquo;</a>
+                                                            <a href="/member/mypage?page=${wishList.wishListPager.lastNum+1}&order=${wishList.wishListPager.order}&tab=4" class="btn rounded ${wishList.wishListPager.next ? '' : 'disabled'}">&raquo;</a>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -592,7 +557,6 @@
                                             
                                         </c:choose>
                                     </div>
-                                </div>
                             </div>
                         </div>
                     </div>

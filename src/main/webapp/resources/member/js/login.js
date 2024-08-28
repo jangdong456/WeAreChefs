@@ -23,7 +23,7 @@ loginBtn.addEventListener("click", () => {
             }
         })
         .catch(()=> {
-            alert("오류발생");
+            alert("아이디 및 비밀번호를 입력해 주세요");
         })
    
 })

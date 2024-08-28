@@ -20,46 +20,6 @@ let profileId = profileAdd.getAttribute("data-member-id");
 
 let profileDrop = profilePictureDelete.getAttribute("data-member-delete-id")
 
-
-
-// list 최신순 오래된순 선택 관련
-const recipeList = document.getElementById("recipeList");
-const recipeListDiv  = document.getElementById("recipeListDiv");
-
-
-// 요리레시피, 요리후기 ,댓글 tab 관련 태그
-const kindList = document.getElementById("kindList");
-
-// 찜목록
-const wishList = document.getElementById("wishList");
-
-wishList.addEventListener("click", () => {
-    fetch("wishList", {
-        method : "GET"
-    })
-})
-
-kindList.addEventListener("click", (e) => {
-    console.log(e.target.innerHTML)
-    let value = e.target.innerHTML
-    fetch("getList?kind="+ value, {
-        method : "GET"
-    })
-})
-
-
-recipeList.addEventListener("change", (e) => {
-    
-    fetch("getList?order="+e.target.value, {
-        method : "GET"
-    })
-    .then(res => res.text())
-    .then(res => {
-        console.log(res);
-        recipeListDiv.innerHTML = res;
-    })
-})
-
 // sns url
 profileSnsDelete.addEventListener("click", () => {
     fetch("prfileSnsDelete?member_id="+profileSnsId, {
@@ -98,7 +58,6 @@ profileSnsAdd.addEventListener("click", () => {
     
 })
 
-
 // 프로필 사진
 profilePictureDelete.addEventListener("click", () => {
 
@@ -115,7 +74,6 @@ profilePictureDelete.addEventListener("click", () => {
         console.log("오류발생 :" + error);
     })
 })
-
 
 // 자기소개
 introductionAdd.addEventListener("click", () =>{

@@ -21,9 +21,6 @@ public class MemberDAO {
 	
 	private final String NAMESPACE = "com.chef.app.member.MemberDAO.";
 	
-	public List<RecipeDTO> wishList(MemberDTO memberDTO) throws Exception {
-		return sqlSession.selectList(NAMESPACE + "wishList",memberDTO);
-	}
 	
 	public Long getTotalCount(Map<String, Object> map) throws Exception {
 		return sqlSession.selectOne(NAMESPACE + "getTotalCount", map);
@@ -47,6 +44,10 @@ public class MemberDAO {
 	
 	public int profileChange(MemberDTO memberDTO) throws Exception {
 		return sqlSession.update(NAMESPACE + "profileChange", memberDTO);
+	}
+	
+	public List<RecipeDTO> wishList(Map<String, Object> map) throws Exception {
+		return sqlSession.selectList(NAMESPACE + "wishList", map);
 	}
 	
 	public List<RecipeReplyDTO> recipeReplyList(Map<String, Object> map) throws Exception {
@@ -115,4 +116,10 @@ public class MemberDAO {
 	public Long getTotalCount3 (Map<String, Object> map) throws Exception {
 		return sqlSession.selectOne(NAMESPACE+"getTotalCount3", map);
 	}
+	
+	public Long getTotalCount4 (Map<String, Object> map) throws Exception {
+		return sqlSession.selectOne(NAMESPACE+"getTotalCount4", map);
+	}
+	
+	
 }
