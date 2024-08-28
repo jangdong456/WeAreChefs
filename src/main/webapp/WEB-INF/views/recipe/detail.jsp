@@ -516,8 +516,11 @@
 											<div class="comment" id="comment_1">
 												<input type="hidden" class="recipe_reply_num"
 													value="${ar.recipe_reply_num}">
-												<div class="updateDiv2 replyList"
+												<div class="updateDiv2"
 													data-reply-num="${ar.recipe_reply_num}"></div>
+											</div>
+											<div class="replyList">
+											
 											</div>
 										</div>
 								</div>

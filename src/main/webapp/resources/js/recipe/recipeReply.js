@@ -2,15 +2,11 @@
 const replyBtn = document.getElementsByClassName("replyBtn");
 const reviewUpBtn = document.getElementsByClassName("reviewUpBtn");
 
-const re_frm = document.getElementById("re_frm");
+
 const recipe_num = document.getElementById("recipe_num");
 const updateDiv = document.getElementsByClassName("updateDiv");
 const updateDiv2 = document.getElementsByClassName("updateDiv2");
 
-const post_review =  document.getElementById("review");
-const post_reply =  document.getElementById("reply");
-const starRating = document.getElementById("starRating");
-const board_content = document.getElementById("board_content");
 // const replyList = document.getElementsByClassName("replyList");
 let count = 0;
 let max = 1;
@@ -28,7 +24,7 @@ document.querySelectorAll('.replyBtn').forEach(function (element) {
     // if(document.getElementsByClassName('replyTextarea') != null){
 
     if (this.closest(".replyListParent").querySelector(".replyTextarea") != null) {
-      // console.log("return");
+       console.log("return");
       return;
     }
     //const uniqueId = "reply_" + count;
