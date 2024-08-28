@@ -434,7 +434,6 @@
 
 
                                             <c:when test="${tab=='2'}">
-                                                <h1>${recipeReviewMap.recipereViewAr[0].board_title}</h1>
                                                 <div id="tab-2" class="tab-pane fade show active p-0">
                                                     <div class="row g-4">
                                                         <div class="col-lg-12">
