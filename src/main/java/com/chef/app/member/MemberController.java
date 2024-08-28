@@ -268,11 +268,8 @@ public class MemberController {
 	
 	@GetMapping("logout")
 	public String logout(HttpSession session, Model model) throws Exception {
-		
 		System.out.println(" ==== 로그아웃 ==== ");
 		MemberDTO memberDTO = (MemberDTO)session.getAttribute("member");
-		System.out.println(memberDTO.getMember_id());
-		System.out.println(memberDTO.getMember_type());
 		
 		String url = "";
 		if(memberDTO.getMember_type().equals("카카오톡")) {
@@ -398,7 +395,6 @@ public class MemberController {
 			model.addAttribute("msg", "결제취소 요청에 실패했습니다");
 			model.addAttribute("url", "/member/buyList");	
 		}
-		
 		return "commons/message";
 	}
 	

@@ -387,7 +387,7 @@
    	VALUES (
    	RECIPEREPLY_SEQ.NEXTVAL
    	,#{recipe_num}
-   	,'ydb'
+   	,#{member_id}
    	,#{board_content}
    	,#{ref}
    	,#{step}
