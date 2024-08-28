@@ -247,8 +247,10 @@ public class MemberController {
 		
 		if(num > 0) {
 			MemberDTO memberdto = memberService.kakaologin2(memberDTO);
+			Long count = memberService.cartCount(memberdto);
 			System.out.println(memberdto);
 			session.setAttribute("member", memberdto);
+			session.setAttribute("cartCount", count);
 			model.addAttribute("msg", num);
 			result = "commons/result";
 		}
@@ -307,9 +309,12 @@ public class MemberController {
 		
 		MemberDTO result = memberService.login(memberDTO);
 		int num = 1;
+		Long count = memberService.cartCount(memberDTO);
 		
 		if(result != null ) {
 			session.setAttribute("member", result);
+			session.setAttribute("cartCount", count);
+			System.out.println(session);
 			model.addAttribute("msg", num);
 			return "commons/result";
 		} else {
