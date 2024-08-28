@@ -151,11 +151,15 @@ public class RecipeController {
 		MemberDTO memberDTO = (MemberDTO) session.getAttribute("member");
 		recipeDTO = recipeService.recipeDetail(recipeDTO);
 
+
 		if (memberDTO == null) {
 			model.addAttribute("msg", "로그인이 필요합니다.");
 			model.addAttribute("url", "/member/login");
 			return "commons/message";
-		} else if (memberDTO.getMember_id() != recipeDTO.getMember_id()) {
+		} else if (!memberDTO.getMember_id().equals(recipeDTO.getMember_id())) {
+			System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@q");
+			System.out.println("memberDTO : " + memberDTO.getMember_id());
+			System.out.println("recipeDTO : " + recipeDTO.getMember_id());
 			model.addAttribute("msg", "본인 글만 수정이 가능합니다.");
 			model.addAttribute("url", "/recipe/list");
 			return "commons/message";
@@ -337,14 +341,16 @@ public class RecipeController {
 	@PostMapping("comment")
 	@ResponseBody
 	public ResponseEntity<Map<String, Object>> recipeComment(@RequestBody RecipeReplyDTO recipeReplyDTO, Model model,
-			RecipeDTO recipeDTO) {
+			RecipeDTO recipeDTO, HttpSession session) {
 		Map<String, Object> response = new HashMap<String, Object>();
 
 		try {
-
+			MemberDTO memberDTO = (MemberDTO) session.getAttribute("member");
+			recipeReplyDTO.setMember_id(memberDTO.getMember_id());
 			System.out.println("recipe_num: " + recipeReplyDTO.getRecipe_num());
 			System.out.println("board_content: " + recipeReplyDTO.getBoard_content());
 			System.out.println("recipe_reply_num: " + recipeReplyDTO.getRecipe_reply_num());
+			System.out.println("meember_id : 2" + recipeReplyDTO.getMember_id());
 
 			int result = recipeService.recipeComment(recipeReplyDTO);
 
