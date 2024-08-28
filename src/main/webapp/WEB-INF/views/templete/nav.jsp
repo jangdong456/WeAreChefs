@@ -22,7 +22,7 @@
                     <c:choose>
                         <c:when test="${not empty member}">
                             <div class="top-link pe-2">
-                                <a href="#" class="text-white"><small class="text-white mx-2">Terms of Use</small>/</a>
+                                <small class="text-white mx-2">${member.member_nickname} 님</small>/
                                 <a href="/member/logout" class="text-white"><small
                                         class="text-white ms-2">로그아웃</small></a>
                             </div>
