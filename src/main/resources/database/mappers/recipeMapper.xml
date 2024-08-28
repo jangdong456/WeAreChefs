@@ -94,7 +94,7 @@
 						</otherwise>  
 						
 					 </choose>
-		
+				AND RECIPE_DEL = 'N'
 		            ORDER BY 		      
     			 	
 					<choose>
@@ -121,7 +121,7 @@
     	
     	 <resultMap type="RecipeDTO" id="recipeImgName">
 		   	<id column="RECIPE_NUM" property="recipe_num"/>
-		   	<result column="RECIPE_WRITER" property="recipe_writer"/>
+		   	<result column="MEMBER_ID" property="member_id"/>
 		   	<result column="RECIPE_NAME" property="recipe_name"/>
 		   	<result column="MENU_RECIPE" property="menu_recipe"/>
 		   	<result column="CREATE_DATE" property="create_date"/>
@@ -150,7 +150,7 @@
   		</selectKey>
     	INSERT INTO RECIPE(
     						RECIPE_NUM 
-    						,RECIPE_WRITER 
+    						,MEMBER_ID 
     						,RECIPE_NAME 
     						,MENU_RECIPE
     						,RECIPE_CATEGORY
@@ -168,6 +168,29 @@
 					)
 			
 	  </insert>
+	  <update id="recipeUpdate" parameterType="RecipeDTO">
+		UPDATE RECIPE 
+		SET
+	   	 RECIPE_NAME = #{recipe_name}
+	     ,MENU_RECIPE =#{menu_recipe}
+	   	 ,RECIPE_CATEGORY = #{recipe_category}
+	   	 ,RECIPE_LEVEL= #{recipe_level}
+    	 ,RECIPE_TIME = #{recipe_time}
+	    WHERE RECIPE_NUM =	#{recipe_num}
+	 </update>
+	  
+	<update id="updateRecipeImg" parameterType="RecipeImgFileDTO">
+	   	UPDATE RECIPEIMG 
+	   		SET 
+	   	RECIPE_FILE_NAME = #{file_name} 
+	   	WHERE RECIPE_NUM = #{recipe_num}
+   </update>
+    <update id="recipeDelete" parameterType="RecipeDTO">
+   		UPDATE RECIPE 
+   		SET RECIPE_DEL = 'Y'
+		WHERE RECIPE_NUM= #{recipe_num}
+   </update>
+	  
 	<insert id="mainImg" parameterType="RecipeImgFileDTO">
 		INSERT INTO RECIPEIMG(RECIPE_IMG_NUM, RECIPE_NUM, RECIPE_FILE_NAME) 
 		VALUES (RECIPEIMG_SEQ.NEXTVAL,#{recipe_num},#{file_name})
@@ -178,7 +201,7 @@
 								   REVIEW_NUM
 								 , RECIPE_NUM
 								 , MEMBER_ID
-								 , BOARD_TITLE	
+								
 								 , BOARD_CONTENT	
 								 , RECIPE_RATING	
 								 )
@@ -187,7 +210,7 @@
    									RECIPEREVIEW_SEQ.NEXTVAL
    									, #{recipe_num}
    									, #{member_id}
-   									, #{board_title}
+   									
    									, #{board_content}
    									, #{recipe_rating}
    									)
@@ -205,6 +228,7 @@
 				 , RECIPE_RATING
 		FROM RECIPEREVIEW
 		WHERE RECIPE_NUM = #{recipe_num}
+		
 		ORDER BY CREATE_DATE DESC
 
 	</select>
@@ -216,27 +240,35 @@
    	WHERE RECIPE_NUM = #{recipe_num}
    </update>
    
+   <select id="getNum" resultType="java.lang.Long">
+   		SELECT STOREREPLY_SEQ.NEXTVAL FROM DUAL
+   </select>
+   
    <insert id="recipeReply"  parameterType="RecipeReplyDTO" >
+   		<selectKey order="BEFORE" resultType="java.lang.Long" keyProperty="recipe_reply_num">
+  			SELECT NOTICE_SEQ.NEXTVAL FROM DUAL
+  		</selectKey>
 	    INSERT INTO RECIPEREPLY(
 								   RECIPE_REPLY_NUM
 								 , RECIPE_NUM
 								 , MEMBER_ID
-								 , BOARD_TITLE	
 								 , BOARD_CONTENT	
 								 , REF
+								 , STEP
+								 , DEPTH
 								 )
 							VALUES
    									(
-   									  RECIPEREPLY_SEQ.NEXTVAL
+   									 #{recipe_reply_num}
    									, #{recipe_num}
    									, #{member_id}
-   									, #{board_title}
    									, #{board_content}
-   									, RECIPEREPLY_SEQ.CURRVAL
-									
+									, #{recipe_reply_num}
+									, 0
+									, 0
    									)
    									
-  </insert>
+  	</insert>
   	<select id="replyList" parameterType="recipeReplyDTO" resultType="recipeReplyDTO" >
 		SELECT 	RECIPE_REPLY_NUM
 				 , RECIPE_NUM
@@ -252,8 +284,9 @@
 				 
 		FROM RECIPEREPLY
 		WHERE RECIPE_NUM = #{recipe_num}
-		ORDER BY CREATE_DATE DESC
-
+		
+		ORDER BY REF DESC, STEP ASC
+		
 	</select>
 	
 	<insert id="recipeComment" parameterType="RecipeReplyDTO">
@@ -297,6 +330,13 @@
 											  ) -->
 								   							
 	</insert>
+	<update id="reviewUpdateInsert" parameterType="RecipeReviewDTO">
+   	UPDATE RECIPEREVIEW 
+   		SET UPDATE_DATE =SYSDATE 
+   		,BOARD_CONTENT =#{board_content} 
+   	WHERE REVIEW_NUM = #{review_num}
+   </update>
+   
 	<update id="replyUpdate" parameterType="RecipeDTO">
 			 UPDATE RECIPE
 		    SET STEP = STEP +1
@@ -307,10 +347,101 @@
 					STEP > #{step}
    	</update>
    	
+   	<update id="replyDelete" parameterType="RecipeReplyDTO">
+   
+   		UPDATE RECIPEREPLY 
+   		SET DEL = 'Y'
+		WHERE RECIPE_REPLY_NUM = #{recipe_reply_num}
+   </update>
+   	<update id="reviewDelete" parameterType="RecipeReviewDTO">
+   
+   		UPDATE RECIPEREVIEW 
+   		SET REVIEW_DEL = 'Y'
+		WHERE REVIEW_NUM= #{review_num}
+   </update>
+ 
+ <update id="replyUpdateInsert" parameterType="RecipeReplyDTO">
+   	UPDATE RECIPEREPLY 
+   		SET UPDATE_DATE =SYSDATE 
+   		,BOARD_CONTENT =#{board_content} 
+   	WHERE RECIPE_REPLY_NUM = #{recipe_reply_num}
+   </update>
    	<select id="getParentReply" parameterType="long" resultType="RecipeReplyDTO">
 	    SELECT  REF, STEP, DEPTH
 	    FROM RECIPEREPLY
         WHERE RECIPE_REPLY_NUM = #{recipe_reply_num}
 	</select>
+	  <insert id="adminReplySubmit" parameterType="RecipeReplyDTO">
 
-    </mapper>
+   	INSERT INTO RECIPEREPLY (
+		   	   RECIPE_REPLY_NUM
+			 , RECIPE_NUM
+			 , MEMBER_ID
+			 , BOARD_CONTENT
+			 , REF
+			 , STEP
+			 , DEPTH
+			
+   	)
+   	VALUES (
+   	RECIPEREPLY_SEQ.NEXTVAL
+   	,#{recipe_num}
+   	,'ydb'
+   	,#{board_content}
+   	,#{ref}
+   	,#{step}
+   	,#{depth}
+
+   	)
+   </insert>
+      <update id="stepUpdate" parameterType="RecipeReplyDTO">
+   	UPDATE RECIPEREPLY SET STEP=STEP+1
+   	WHERE REF=#{ref} AND STEP>#{step}
+   </update>
+   
+   <select id="findParent" parameterType="RecipeReplyDTO" resultMap="RecipeReplyResultMap">
+   		SELECT * 
+   		FROM RECIPEREPLY 
+   		  <!-- WHERE RECIPE_REPLY_NUM = #{recipe_reply_num} -->
+	   	 WHERE 
+	   	 REF = #{ref, jdbcType=NUMERIC} 
+	   	 ORDER BY STEP ASC 
+	</select>
+	<resultMap id="RecipeReplyResultMap" type="RecipeReplyDTO">
+	    <id property="recipe_reply_num" column="recipe_reply_num" jdbcType="BIGINT"/>
+	    <result property="ref" column="ref" jdbcType="BIGINT"/>
+	    <result property="step" column="step" jdbcType="INTEGER"/>
+	    <result property="board_content" column="board_content" jdbcType="VARCHAR"/>
+	</resultMap>
+
+
+	<insert id="addWish" parameterType="RecipeDTO">
+	 INSERT INTO BOOKMARK VALUES (#{recipe_num},#{member_id})
+	</insert>
+	
+	<delete id="wishUpdate" parameterType="RecipeDTO">
+		DELETE FROM BOOKMARK
+		WHERE RECIPE_NUM = #{recipe_num} AND MEMBER_ID = #{member_id}
+	 </delete>
+	 
+	 <select id="bookMark" parameterType="RecipeDTO" resultType="java.lang.Long">
+	 	SELECT COUNT(*)
+		FROM BOOKMARK
+		WHERE RECIPE_NUM = #{recipe_num} AND MEMBER_ID = #{member_id}
+	 </select>
+	 
+	 <select id="ratingTotal" parameterType="RecipeReviewDTO" resultType="java.lang.Double">
+	 	SELECT TRUNC(AVG(RECIPE_RATING),1) 
+		FROM RECIPEREVIEW
+		WHERE RECIPE_NUM = #{recipe_num}
+	 
+	 </select>
+	 
+	 <resultMap id="RecipeReviewResultMap" type="RecipeReviewDTO">
+	    <id property="review_num" column="review_num" jdbcType="BIGINT"/>
+	    <result property="recipe_num" column="recipe_num" jdbcType="BIGINT"/>
+	    <result property="member_id" column="member_id" jdbcType="VARCHAR"/>
+	    <result property="recipe_rating" column="recipe_rating" jdbcType="BIGINT"/>
+	</resultMap>
+	 
+  </mapper>

@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.chef.app.file.FileManager;
+import com.chef.app.member.MemberDTO;
 
 @Service
 public class RecipeService {
@@ -110,9 +111,20 @@ public class RecipeService {
 		return recipeDAO.hit(recipeDTO);
 	}
 
+	// 댓글달기
 	public int recipeReply(RecipeReplyDTO recipeReplyDTO) {
+		if (recipeReplyDTO.getBoard_content().isEmpty()) {
+			recipeReplyDTO.setBoard_content(" ");
+		}
 
 		return recipeDAO.recipeReply(recipeReplyDTO);
+	}
+
+	public int reviewUpdateInsert(RecipeReviewDTO recipeReviewDTO) throws Exception {
+		System.out.println("service " + recipeReviewDTO.getBoard_content());
+		System.out.println("service " + recipeReviewDTO.getReview_num());
+
+		return recipeDAO.reviewUpdateInsert(recipeReviewDTO);
 	}
 
 	public List<RecipeReviewDTO> replyList(RecipeReplyDTO recipeReplyDTO, RecipeDTO recipeDTO) {
@@ -123,77 +135,110 @@ public class RecipeService {
 	@Transactional
 	public int recipeComment(RecipeReplyDTO recipeReplyDTO) {
 		// RecipeDTO recipeDTO;
+		Long ref = recipeReplyDTO.getRecipe_reply_num();
 
-		if (recipeReplyDTO.getRecipe_reply_num() != null) {
-			RecipeReplyDTO parent = recipeDAO.getParentReply(recipeReplyDTO.getRecipe_reply_num());
+		recipeReplyDTO.setRef(ref);
 
-			if (parent != null) {
-				recipeReplyDTO.setRef(parent.getRef());
-				recipeReplyDTO.setStep(parent.getStep() + 1);
-				recipeReplyDTO.setDepth(parent.getDepth() + 1);
+		Long maxStep = 0L;
+		Long maxDepth = 0L;
+		// List<RecipeReplyDTO> list = RecipeDTO.getRef();
+
+		List<RecipeReplyDTO> parents = recipeDAO.findParent(recipeReplyDTO);
+		for (RecipeReplyDTO p : parents) {
+
+			if (p.getStep() > maxStep) {
+				maxStep = p.getStep();
 			}
-		} else {
-			// If this is a top-level reply, set initial values
-			recipeReplyDTO.setRef(null); // This will trigger the sequence value to be used
-			recipeReplyDTO.setStep(0L);
-			recipeReplyDTO.setDepth(0L);
+			if (p.getDepth() > maxDepth) {
+				maxDepth = p.getDepth();
+			}
+
+			recipeDAO.stepUpdate(p);
 		}
 
-		return recipeDAO.recipeComment(recipeReplyDTO);
+		recipeReplyDTO.setStep(maxStep + 1);
+		recipeReplyDTO.setDepth(maxDepth + 1);
+
+		return recipeDAO.adminReplySubmit(recipeReplyDTO);
 	}
-	// 1. 부모 댓글 조회
-//		RecipeDTO parentRecipeDTO = new RecipeDTO();
-//		parentRecipeDTO.setRecipe_num(recipeReplyDTO.getRecipe_num());
-//
-//		// 부모 댓글 정보 조회
-//		RecipeDTO parent = recipeDAO.recipeDetail(parentRecipeDTO);
-//
-//		if (parent != null) {
-//			// 2. 부모 댓글의 ref, step, depth 가져오기
-//			Long parentRef = parent.getRef();
-//			Long parentStep = parent.getStep();
-//			Long parentDepth = parent.getDepth();
-//			
-//	        System.out.println("Parent Ref: " + parentRef);
-//	        System.out.println("Parent Step: " + parentStep);
-//	        System.out.println("Parent Depth: " + parentDepth);
-//
-//			// null 체크 추가
-//			if (parentRef != null && parentStep != null && parentDepth != null) {
-//				// 3. 대댓글의 ref, step, depth 설정
-//				recipeReplyDTO.setRef(parentRef);
-//				recipeReplyDTO.setStep(parentStep + 1); // parentStep에서 1을 더하기
-//				recipeReplyDTO.setDepth(parentDepth + 1); // parentDepth에서 1을 더하기
-//
-//				// 4. 대댓글 등록
-//				int result = recipeDAO.recipeComment(recipeReplyDTO);
-//
-//				if (result > 0) {
-//					recipeDAO.replyUpdate(parent);
-//				}
-//
-//				System.out.println(parent.getAr().get(result).getRef());
-//				// parent.setChild_ref(((RecipeReplyDTO)parent.getAr()).getRef());
-//				// System.out.println("getChild_ref " + parent.getChild_ref());
-//				// int result = recipeDAO.replyUpdate(parent);
-//
-//				/*
-//				 * recipeReplyDTO.setRef(parentReply.getRef());
-//				 * recipeReplyDTO.setStep(parentReply.getStep() + 1);
-//				 * recipeReplyDTO.setDepth(parentReply.getDepth() + 1);
-//				 */
-//				// System.out.println("원본글 " + parent.getAr().get(0).getRef());
-//
-//				return result;
-//			} else {
-//				System.out.println("Parent reply information is incomplete.");
-//				return 0;
-//			}
-//		} else {
-//			// 부모 댓글이 없을 경우 처리
-//			 System.out.println("Parent is null.");
-//			return 0;
-//		}
-//	}
+
+	// 부모글의 모든 자식글 찾기
+	public List<RecipeReplyDTO> getReplies(Long recipe_reply_num) {
+		RecipeReplyDTO recipeReplyDTO = new RecipeReplyDTO();
+		recipeReplyDTO.setRecipe_reply_num(recipe_reply_num);
+
+		return recipeDAO.findParent(recipeReplyDTO);
+	}
+
+	public int recipeUpdate(RecipeDTO recipeDTO, MultipartFile attach, HttpSession session) throws Exception {
+
+		int result = recipeDAO.recipeUpdate(recipeDTO);
+		Long recipeNum = recipeDTO.getRecipe_num();
+
+		if (!attach.isEmpty()) {
+
+			ServletContext servletContext = session.getServletContext();
+			String path = servletContext.getRealPath("resources/upload/recipes");
+			System.out.println(path);
+
+			String fileName = fileManager.fileSave(path, attach);
+			RecipeImgFileDTO recipeImgFileDTO = new RecipeImgFileDTO();
+			recipeImgFileDTO.setFile_name(fileName);
+			recipeImgFileDTO.setRecipe_num(recipeNum);
+
+			result = recipeDAO.updateRecipeImg(recipeImgFileDTO);
+
+			return result;
+		}
+		String notChange = recipeDTO.getRecipeImgFileDTO().getFile_name();
+
+		RecipeImgFileDTO recipeImgFileDTO = new RecipeImgFileDTO();
+		recipeImgFileDTO.setFile_name(notChange);
+		recipeImgFileDTO.setRecipe_num(recipeNum);
+
+		result = recipeDAO.updateRecipeImg(recipeImgFileDTO);
+
+		return result;
+
+		// return recipeDAO.recipeUpdate(recipeDTO);
+	}
+
+	public int recipeDelete(RecipeDTO recipeDTO) {
+		return recipeDAO.recipeDelete(recipeDTO);
+	}
+
+	public int reviewDelete(RecipeReviewDTO recipeReviewDTO) {
+		return recipeDAO.reviewDelete(recipeReviewDTO);
+	}
+
+	public int replyDelete(RecipeReplyDTO recipeReplyDTO) {
+		return recipeDAO.replyDelete(recipeReplyDTO);
+	}
+
+	public int replyUpdateInsert(RecipeReplyDTO recipeReplyDTO) {
+		return recipeDAO.replyUpdateInsert(recipeReplyDTO);
+	}
+
+	public List<RecipeDTO> wishList(MemberDTO memberDTO) {
+		return recipeDAO.wishList(memberDTO);
+	}
+
+	public int addWish(RecipeDTO recipeDTO) {
+		return recipeDAO.addWish(recipeDTO);
+
+	}
+
+	public int wishUpdate(RecipeDTO recipeDTO) {
+
+		return recipeDAO.wishUpdate(recipeDTO);
+	}
+
+	public Long bookMark(RecipeDTO recipeDTO) {
+		return recipeDAO.bookMark(recipeDTO);
+	}
+
+	public Double ratingTotal(RecipeReviewDTO recipeReviewDTO) {
+		return recipeDAO.ratingTotal(recipeReviewDTO);
+	}
 
 }
