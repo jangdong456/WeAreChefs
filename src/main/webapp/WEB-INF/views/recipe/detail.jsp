@@ -383,10 +383,10 @@
 															</c:when>
 															<c:when test="${ar.recipe_rating == 3}">
 																<div class="col-lg-12 my-2 reviewRating">
-																	<input type="radio" name="recipe_rating"> <label
-																		for="rate3" class="ck_rating">⭐⭐⭐</label> <span
+																	<input type="radio" name="recipe_rating"> <label 
+																		for="rate3" class="ck_rating">⭐⭐⭐</label> <span 
 																		class="tating2"> <input type="radio"
-																		name="recipe_rating"> <label for="rate"
+																		name="recipe_rating"> <label for="rate" 
 																		class="n_ck_rating">⭐⭐</label>
 																	</span>
 																</div>
