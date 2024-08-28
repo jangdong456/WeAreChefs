@@ -395,7 +395,6 @@ public class MemberController {
 			model.addAttribute("msg", "결제취소 요청에 실패했습니다");
 			model.addAttribute("url", "/member/buyList");	
 		}
-		
 		return "commons/message";
 	}
 	
