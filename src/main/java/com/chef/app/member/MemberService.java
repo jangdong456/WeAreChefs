@@ -249,4 +249,8 @@ public class MemberService {
 		return memberDAO.cancleRequest(storeOrderDTO);
 	}
 	
+	public Long cartCount(MemberDTO memberDTO) throws Exception {
+		return memberDAO.cartCount(memberDTO);
+	}
+	
 }
