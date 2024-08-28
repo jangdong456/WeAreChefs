@@ -22,11 +22,17 @@ const url = "https://kauth.kakao.com/oauth/authorize?response_type=code&client_i
 // 인가 번호 받아오는 메서드
 
 
+window.onpageshow = function(event) {
+  if (event.persisted == true) {
+      location.reload(); // js - 새로고침
+  }
+}
+
 //간편로그인 카카오톡 함수 호출
 // Kakao.Auth.authorize()
 
 img.addEventListener("click", ()=> {
-  
+
   if(window.location.href == "http://localhost/member/login#"){
     location.href = "/member/login"
   }

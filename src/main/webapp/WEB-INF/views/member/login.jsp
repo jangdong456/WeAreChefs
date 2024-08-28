@@ -61,6 +61,7 @@
 			top: 98%;
 			left: 47%;
 		}
+
 	</style>
 </head>
 <body>
@@ -93,7 +94,7 @@
 
 									<div class="row g-4 text-center align-items-center justify-content-center pt-2 mt-1" >
 										<a href=" javascript:void(0)">
-											<img src="/resources/member/img/kakao_login_medium_narrow.png" id="img">
+												<img src="/resources/member/img/kakao_login_medium_narrow.png" id="img">
 										</a>
 									</div>
 									<container class="container1 mt-1 mb-1">
