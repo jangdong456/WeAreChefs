@@ -159,7 +159,7 @@
     						)
 					VALUES(
 					#{recipe_num}
-					,'ydb'
+					,#{member_id}
 					,#{recipe_name}
 					,#{menu_recipe}
 					,#{recipe_category}

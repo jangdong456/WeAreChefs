@@ -114,7 +114,15 @@ public class RecipeController {
 	}
 
 	@GetMapping("add")
-	public void recipeAdd() throws Exception {
+	public String recipeAdd(HttpSession session, Model model) throws Exception {
+		MemberDTO memberDTO = (MemberDTO) session.getAttribute("member");
+		if(memberDTO == null) {
+			model.addAttribute("msg", "로그인이 필요합니다.");
+			model.addAttribute("url", "/member/login");
+			return "commons/message";
+		}else {
+			return "recipe/add";
+		}
 
 	}
 
@@ -140,8 +148,20 @@ public class RecipeController {
 
 	@GetMapping("update")
 	public String recipeUpdate(RecipeDTO recipeDTO, Model model, HttpSession session) throws Exception {
-
+		MemberDTO memberDTO = (MemberDTO) session.getAttribute("member");
 		recipeDTO = recipeService.recipeDetail(recipeDTO);
+		
+		if(memberDTO == null) {
+			model.addAttribute("msg", "로그인이 필요합니다.");
+			model.addAttribute("url", "/member/login");
+			return "commons/message";
+		}else if(memberDTO.getMember_id() != recipeDTO.getMember_id()) {
+			model.addAttribute("msg", "본인 글만 수정이 가능합니다.");
+			model.addAttribute("url", "/recipe/list");
+			return "commons/message";
+		}else {
+			
+
 		String url = "";
 		if (recipeDTO != null) {
 			// model.addAttribute("result", "게시글 수정이 완료 됐습니다");
@@ -161,6 +181,7 @@ public class RecipeController {
 		}
 		return url;
 
+		}
 	}
 
 	@PostMapping("update")
@@ -183,20 +204,32 @@ public class RecipeController {
 	}
 
 	@GetMapping("delete")
-	public String recipeDelete(RecipeDTO recipeDTO, Model model) throws Exception {
+	public String recipeDelete(HttpSession session, RecipeDTO recipeDTO, Model model) throws Exception {
+		MemberDTO memberDTO = (MemberDTO) session.getAttribute("member");
+		recipeDTO = recipeService.recipeDetail(recipeDTO);
+		
+		if(memberDTO == null) {
+			model.addAttribute("msg", "로그인이 필요합니다.");
+			model.addAttribute("url", "/member/login");
+			return "commons/message";
+		}else if(memberDTO.getMember_id() != recipeDTO.getMember_id()) {
+			model.addAttribute("msg", "본인 글만 삭제가 가능합니다.");
+			model.addAttribute("url", "/recipe/list");
+			return "commons/message";
+		}else {
 
-		int result = recipeService.recipeDelete(recipeDTO);
-
-		if (result > 0) {
-			model.addAttribute("result", "게시글 삭제가 완료 됐습니다");
+			int result = recipeService.recipeDelete(recipeDTO);
+	
+			if (result > 0) {
+				model.addAttribute("result", "게시글 삭제가 완료 됐습니다");
+				model.addAttribute("url", "/recipe/list");
+				return "food/message";
+	
+			}
+			model.addAttribute("result", "게시글 삭제에 실패 했습니다");
 			model.addAttribute("url", "/recipe/list");
 			return "food/message";
-
 		}
-		model.addAttribute("result", "게시글 삭제에 실패 했습니다");
-		model.addAttribute("url", "/recipe/list");
-		return "food/message";
-
 	}
 
 	@PostMapping("review")
