@@ -135,7 +135,8 @@
                                                                     <br>
                                                                     <c:choose>
                                                                         <c:when test="${not empty member.profile_sns_url}">
-                                                                            <a href="${member.profile_sns_url}" target="_blank" class="btn border border-secondary rounded-pill px-3 text-primary mt-2">
+                                                                            
+                                                                            <a href="${member.profile_sns_url}" target="_blank"  class="btn border border-secondary rounded-pill px-3 text-primary mt-2">
                                                                                 <img src="/resources/member/img/youtube.png" style="width: 40px; height: 40px;">
                                                                             </a>
                                                                             <a id="modalpage" class="btn border border-secondary rounded-pill px-3 text-primary mt-2" data-bs-toggle="modal" data-bs-target="#SnsModal">
@@ -185,7 +186,7 @@
                                                                     <br>
                                                                     <c:choose>
                                                                         <c:when test="${not empty member.profile_sns_url}">
-                                                                            <a href="${member.profile_sns_url}" target="_blank" class="btn border border-secondary rounded-pill px-3 text-primary mt-2">
+                                                                            <a href="${member.profile_sns_url}" target="_blank"  class="btn border border-secondary rounded-pill px-3 text-primary mt-2">
                                                                                 <img src="/resources/member/img/youtube.png" style="width: 40px; height: 40px;">
                                                                             </a>
                                                                             <a id="modalpage" class="btn border border-secondary rounded-pill px-3 text-primary mt-2" data-bs-toggle="modal" data-bs-target="#SnsModal">
@@ -274,17 +275,7 @@
 
 
                                             <div class="d-flex justify-content-between flex-lg-wrap">
-                                                <c:choose>
-                                                    <c:when test="${empty member.profile_hit}">
-                                                        <a
-                                                            class="btn border border-secondary rounded-pill px-3 text-primary ms-5" >❤️0</a>
-                                                    </c:when>
-                                                    <c:otherwise>
-                                                        <a
-                                                            class="btn border border-secondary rounded-pill px-3 text-primary ms-5">❤️${member.profile_hit}</a>
-                                                    </c:otherwise>
-                                                </c:choose>
-
+                                                    <a class="btn border border-secondary rounded-pill px-3 text-primary ms-5">레시피 조회수 &#128195;${hit}</a>
                                             </div>
                                         </div>
 
@@ -444,13 +435,11 @@
                                                                             <div class="fruite-img">
                                                                                 <img src="img/fruite-item-5.jpg" class="img-fluid w-100 rounded-top" alt="">
                                                                             </div>
-                                                                            <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">
-                                                                            </div>
                                                                             <div class="p-4 border border-secondary border-top-0 rounded-bottom">
                                                                                 <h4>${review.board_title}</h4>
                                                                                 <p>${review.board_content}</p>
                                                                             <div class="d-flex justify-content-between flex-lg-wrap">
-                                                                                <a href="/recipe/detail?recipe_num=${review.recipe_num}" style="margin-left:18%" class="btn border border-secondary rounded-pill px-3 text-primary">작성한 댓글보기</a>
+                                                                                <a href="/recipe/detail?recipe_num=${review.recipe_num}" style="margin-left:18%" class="btn border border-secondary rounded-pill px-3 text-primary">작성한 요리 후기 보러가기</a>
                                                                                 </div> 
                                                                             </div>
                                                                         </div>
@@ -521,10 +510,10 @@
                                                                     <div class="col-md-6 col-lg-4 col-xl-3">
                                                                         <div class="rounded position-relative fruite-item">
                                                                             <div class="p-4 border border-secondary border-top-0 rounded-bottom">
-                                                                                <h4>${reply.board_title}</h4>
+                                                                                <!-- <h4>${reply.board_title}</h4> -->
                                                                                 <p>${reply.board_content}</p>
                                                                                 <div class="d-flex justify-content-between flex-lg-wrap">
-                                                                                    <a href="/recipe/detail?recipe_num=${reply.recipe_num}" style="margin-left:18%" class="btn border border-secondary rounded-pill px-3 text-primary">작성한 요리후기</a>
+                                                                                    <a href="/recipe/detail?recipe_num=${reply.recipe_num}" style="margin-left:18%" class="btn border border-secondary rounded-pill px-3 text-primary">작성한 댓글 보러가기</a>
                                                                                 </div>
                                                                             </div>
                                                                         </div>

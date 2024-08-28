@@ -31,6 +31,9 @@ public class MemberService {
 	private FileManager fileManager;
 	
 
+	public Long recipeHit(MemberDTO memberDTO) throws Exception {
+		return memberDAO.recipeHit(memberDTO);
+	}
 	
 	public List<RecipeDTO> recipeRecentList() throws Exception {
 		return memberDAO.recipeRecentList();

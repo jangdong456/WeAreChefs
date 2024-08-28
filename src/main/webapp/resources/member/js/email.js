@@ -25,6 +25,7 @@ emailbtn.addEventListener("click", ()=>{
         return;
     } else {
         emailbtn.disabled = true
+        alert("이메일 인증코드를 입력 해주세요")
     }
 
     fetch("/member/sendEmail?member_mail="+email, {
@@ -39,10 +40,10 @@ emailbtn.addEventListener("click", ()=>{
             let input = document.createElement('input');
             let btn = document.createElement("button");
 
-            input.setAttribute('class', "form-control member_join");
+            input.setAttribute('class', "form-control member_join mt-3 labelName");
             input.setAttribute('id', "emailNumCheck");
 
-            btn.setAttribute('class', "btn border-secondary py-2 px-4 text-uppercase w-80 text-primary");
+            btn.setAttribute('class', "btn border-secondary py-2 px-4 text-uppercase w-80 text-primary mt-3");
             btn.setAttribute('id', "emailNumCheckBtn");
             btn.setAttribute('type', "button");
 

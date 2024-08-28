@@ -153,7 +153,12 @@ public class MemberController {
 //		현재 로그인한 멤버의 모든 정보 가져오기
 		memberdto = memberService.mypage(memberdto);
 		model.addAttribute("member", memberdto);
+		
+		// 레시피 조회수
+		System.out.println(memberdto.getMember_id());
+		Long hit = memberService.recipeHit(memberdto);
 
+		model.addAttribute("hit", hit);
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("memberdto", memberdto);
