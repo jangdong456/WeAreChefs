@@ -130,7 +130,6 @@
 		   	<result column="RECIPE_LEVEL" property="recipe_level"/>
 		   	<result column="RECIPE_TIME" property="recipe_time"/>
 		   	<result column="RATING" property="rating"/>
-		   	<result column="RECIPE_LIKE" property="recipe_like"/>
 		   	<result column="RECIPE_HIT" property="recipe_hit"/>
 		    <association property="recipeImgFileDTO" javaType="RecipeImgFileDTO">
     	<id column="RECIPE_IMG_NUM" property="file_num"/>
