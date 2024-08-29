@@ -44,7 +44,7 @@
 			<!-- Single Page Header End -->
 			<div class="container-fluid mt-5 py-5">
 				<div class="container py-5">
-					<div class="table-responsive">
+					<div>
 						<form method="get" action="./list">
 							<div style="display: flex; justify-content: space-between; align-items: center;">
 									<div style="text-align: center; flex-grow: 1;">
@@ -57,7 +57,7 @@
 													검색
 											</button>
 									</div>
-									<c:if test="${member.member_lev > 0 }">
+									<c:if test="${memberJ.member_lev > 0 }">
 											<div>
 													<a href="/board/notice/add" class="btn border-secondary rounded-pill px-4 py-3 text-primary ml-1" type="button">add</a>
 											</div>
@@ -121,7 +121,7 @@
 					console.log("id : " + id);
 					console.log("data : " + dataNoticeHit);
 					console.log("aId : " + aId);
-					if(id = aId){
+					if(id == aId){
 						fetch("/board/notice/hitUpdate?board_num="+dataNoticeHit, {
 						method:"GET"
 					})

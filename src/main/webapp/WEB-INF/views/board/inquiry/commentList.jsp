@@ -9,7 +9,7 @@
     </div>
 
     <div class="mb-4">
-        <span id="alBtn" data-alBtn="${member.member_id}" class="d-flex align-items-center">
+        <span id="alBtn" data-alBtn="${memberJ.member_id}" class="d-flex align-items-center">
             <input type="text" id="replyInput"
                 class="form-control border-2 border-secondary rounded-pill py-2 px-3 "  style="width: 1100px;" placeholder="댓글을 입력하세요">
             <button id="qnaReplyBtn"
@@ -30,7 +30,7 @@
                             style="border-left: 1px solid #ccc; padding-left: 10px;">수정일: ${list.update_date}</strong>
                     </c:if>
                 </div>
-                <c:if test="${list.member_id eq member.member_id}">
+                <c:if test="${list.member_id eq memberJ.member_id}">
                     <div>
                         <c:if test="${empty list.del}">
                             <button id="replyUpdate${list.board_num}"

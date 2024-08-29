@@ -261,7 +261,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</update>
 	
 	<!-- StockList ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ -->
-	<!-- 재고 목록 -->
+		<!-- 재고 목록 -->
+	<!-- 재고 리스트 -->
 	<select id="stockList" resultType="FoodDTO">
 		SELECT *
 		FROM FOOD
@@ -271,6 +272,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		ORDER BY FOOD_STOCK DESC
 	</select>
 	
+	<!-- 재고 부족 리스트 -->
 	<select id="stockLackList" resultType="FoodDTO">
 		SELECT *
 		FROM FOOD
@@ -278,7 +280,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			WHERE FOOD_STOCK < 0
 		]]>
 		ORDER BY FOOD_STOCK DESC
-		</select>
+	</select>
+	
 
 	<select id="getStockBuyingSeq" resultType="java.lang.Long">
 		SELECT STOCK_BUYING_SEQ.NEXTVAL FROM DUAL
