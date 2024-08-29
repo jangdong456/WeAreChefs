@@ -18,7 +18,7 @@
 		}
 		.boxTwo{
 			width: 700px;
-			height: 650px;
+			height: 750px;
 			background-color: #FFFFB4;
 			border-radius: 10px;
 			position: absolute;

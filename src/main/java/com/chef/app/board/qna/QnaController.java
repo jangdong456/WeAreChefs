@@ -1,5 +1,6 @@
 package com.chef.app.board.qna;
 
+import java.lang.reflect.Member;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -57,7 +58,7 @@ public class QnaController {
 		}
 		MemberDTO memberDTO = new MemberDTO();
 		memberDTO.setMember_lev(lev);
-		model.addAttribute("member", memberDTO);
+		model.addAttribute("memberJ", memberDTO);
 
 		
 		List<InquiryDTO> inquiryList = qnaService.qnaList(pager);
@@ -89,7 +90,7 @@ public class QnaController {
 		MemberDTO memberDTO = new MemberDTO();
 		memberDTO.setMember_lev(lev);
 		memberDTO.setMember_id(memberId);
-		model.addAttribute("member", memberDTO);
+		model.addAttribute("memberJ", memberDTO);
 
 		
 		// 디테일 호출
@@ -114,35 +115,55 @@ public class QnaController {
 	}
 	
 	@PostMapping("update")
-	public String qnaUpdate(InquiryDTO inquiryDTO, Model model) throws Exception{
-		int result = qnaService.qnaUpdate(inquiryDTO);
-		
-		String msg = "수정을 성공 하였습니다.";
-		String url = "./detail?board_num=" + inquiryDTO.getBoard_num();
-		if(result < 1) {
-			msg = "수정을 실패 하였습니다.";
-		};
-		model.addAttribute("msg", msg);
-		model.addAttribute("url", url);
-		
-		return "commons/message";
+	public String qnaUpdate(HttpSession session, InquiryDTO inquiryDTO, Model model) throws Exception{
+		if(inquiryDTO.getBoard_title().equals("") || inquiryDTO.getBoard_content().equals("")) {
+			model.addAttribute("msg", "값을 입력해주세요.");
+			model.addAttribute("url", "./add");
+			return "commons/message";
+		}else {
+			MemberDTO memberDTO = (MemberDTO) session.getAttribute("member");
+			if(inquiryDTO.getMember_id().equals(memberDTO.getMember_id())) {
+					
+				int result = qnaService.qnaUpdate(inquiryDTO);
+				
+				String msg = "수정을 성공 하였습니다.";
+				String url = "./detail?board_num=" + inquiryDTO.getBoard_num();
+				if(result < 1) {
+					msg = "수정을 실패 하였습니다.";
+				};
+				model.addAttribute("msg", msg);
+				model.addAttribute("url", url);
+				
+				return "commons/message";
+			}else {
+				model.addAttribute("msg", "본인글만 수정이 가능합니다.");
+				model.addAttribute("url", "./add");
+				return "commons/message";
+			}
+		}
 	}
 	
 	@GetMapping("delete")
-	public String qnaDelete(CommentDTO commentDTO, Model model) throws Exception{
-		
-		int result = qnaService.qnaDelete(commentDTO);
-		
-		String msg = "삭제를 성공 하였습니다.";
-		String url = "./list";
-		if(result < 1) {
-			msg = "삭제를 실패 하였습니다.";
-			url = "./detail";
-		};
-		model.addAttribute("msg", msg);
-		model.addAttribute("url", url);
-		
-		return "commons/message";
+	public String qnaDelete(HttpSession session, CommentDTO commentDTO, Model model) throws Exception{
+		MemberDTO memberDTO = (MemberDTO) session.getAttribute("member");
+		if(commentDTO.getMember_id().equals(memberDTO.getMember_id())) {
+			int result = qnaService.qnaDelete(commentDTO);
+			
+			String msg = "삭제를 성공 하였습니다.";
+			String url = "./list";
+			if(result < 1) {
+				msg = "삭제를 실패 하였습니다.";
+				url = "./detail";
+			};
+			model.addAttribute("msg", msg);
+			model.addAttribute("url", url);
+			
+			return "commons/message";
+		}else {
+			model.addAttribute("msg", "본인글만 삭제 가능합니다.");
+			model.addAttribute("url", "./add");
+			return "commons/message";
+		}
 	}
 	
 	@GetMapping("add")
@@ -152,21 +173,28 @@ public class QnaController {
 	
 	@PostMapping("add")
 	public String qnaAdd(InquiryDTO inquiryDTO, Model model, HttpSession session) throws Exception{
-		// & Todo : Session에서 memberID 받는 것으로 바꿔줘야함
-		inquiryDTO.setMember_id(((MemberDTO) session.getAttribute("member")).getMember_id());
-		inquiryDTO.setMember_nickname(((MemberDTO) session.getAttribute("member")).getMember_nickname());
-		int result = qnaService.qnaAdd(inquiryDTO);
+		if(inquiryDTO.getBoard_title().equals("") || inquiryDTO.getBoard_content().equals("")) {
+			model.addAttribute("msg", "값을 입력해주세요.");
+			model.addAttribute("url", "./add");
+			return "commons/message";
+		}else {
 		
-		String msg = "작성을 성공 하였습니다.";
-		String url = "./list";
-		if(result < 1) {
-			msg = "작성을 실패 하였습니다.";
-			url = "./detail";
-		};
-		model.addAttribute("msg", msg);
-		model.addAttribute("url", url);
-		
-		return "commons/message";
+			// & Todo : Session에서 memberID 받는 것으로 바꿔줘야함
+			inquiryDTO.setMember_id(((MemberDTO) session.getAttribute("member")).getMember_id());
+			inquiryDTO.setMember_nickname(((MemberDTO) session.getAttribute("member")).getMember_nickname());
+			int result = qnaService.qnaAdd(inquiryDTO);
+			
+			String msg = "작성을 성공 하였습니다.";
+			String url = "./list";
+			if(result < 1) {
+				msg = "작성을 실패 하였습니다.";
+				url = "./detail";
+			};
+			model.addAttribute("msg", msg);
+			model.addAttribute("url", url);
+			
+			return "commons/message";
+		}
 	}
 	
 	//댓글 달기 및 댓글 비동기 호출
@@ -180,7 +208,7 @@ public class QnaController {
 		}
 		inquiryDTO.setMember_id(memberId);
 		inquiryDTO.setMember_nickname(memberNickname);
-		model.addAttribute("member", inquiryDTO);
+		model.addAttribute("memberJ", inquiryDTO);
 		// 댓글 추가
 		int addResult = qnaService.addQnaReply(inquiryDTO);
 		
@@ -231,7 +259,7 @@ public class QnaController {
 		return "board/inquiry/commentList";
 	}
 	
-	@GetMapping("replyDelete")
+	@PostMapping("replyDelete")
 	public String replyDelete(CommentDTO commentDTO, ReplyUpdateDTO replyUpdateDTO, Model model) throws Exception{
 		System.out.println("REPLYDELETE 1 : " + commentDTO.getBoard_num());
 		System.out.println("REPLYDELETE 2 : " + replyUpdateDTO.getDetail_board_num());

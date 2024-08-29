@@ -30,10 +30,59 @@
 	</beans:bean>
 	
 	<beans:bean class="com.chef.app.interceptors.AdminInterceptor" id="adminInterceptor"></beans:bean>
+	<beans:bean class="com.chef.app.interceptors.loginedMemberInterceptor" id="loginedMemberInterceptor"></beans:bean>
+	<beans:bean class="com.chef.app.interceptors.noLoginedMemberInterceptor" id="noLoginedMemberInterceptor"></beans:bean>
+	<beans:bean class="com.chef.app.interceptors.noAdminLoginedMemberInterceptor" id="noAdminLoginedMemberInterceptor"></beans:bean>
+	
 	<interceptors>
 		<interceptor>
+			<mapping path="/food/add"/>
+			<mapping path="/food/delete"/>
+			<mapping path="/food/update"/>
 			<mapping path="/manager/*"/>
+			<mapping path="/board/notice/add"/>
+			<mapping path="/board/notice/update"/>
+			<mapping path="/board/notice/delete"/>
+			<mapping path="/board/fna/add"/>
+			<mapping path="/board/fna/update"/>
+			<mapping path="/board/fna/delete"/>
 			<beans:ref bean="adminInterceptor"/>
+		</interceptor>
+	</interceptors>
+	
+	<interceptors>
+		<interceptor>
+			<mapping path="/board/qna/add"/>
+			<mapping path="/board/qna/update"/>
+			<mapping path="/board/qna/delete"/>
+			<mapping path="/board/qna/reply"/>
+			<mapping path="/board/qna/replyUpdate"/>
+			<mapping path="/board/qna/replyCancel"/>
+			<mapping path="/board/qna/replyDelete"/>
+			<mapping path="/member/introdusesDelete"/>
+			<mapping path="/member/logout"/>
+			<mapping path="/member/profileDelete"/>
+			<mapping path="/member/prfileSnsDelete"/>
+			<beans:ref bean="loginedMemberInterceptor"/>
+		</interceptor>
+		
+	</interceptors>
+	
+	<interceptors>
+		<interceptor>
+			<mapping path="/food/cart"/>
+			<mapping path="/food/pay"/>
+			<mapping path="/food/payComplete"/>
+			<mapping path="/member/buyList"/>
+			<mapping path="/member/mypage"/>
+			<beans:ref bean="noAdminLoginedMemberInterceptor"/>
+		</interceptor>
+	</interceptors>
+	
+	<interceptors>
+		<interceptor>
+			<mapping path="/member/duplication"/>
+			<beans:ref bean="noLoginedMemberInterceptor"/>
 		</interceptor>
 	</interceptors>
 	

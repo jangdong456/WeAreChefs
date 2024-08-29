@@ -1,6 +1,8 @@
 package com.chef.app.board.fna;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -11,6 +13,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.chef.app.comment.CommentDTO;
 import com.chef.app.manager.InquiryDTO;
@@ -32,6 +36,19 @@ public class FnaController {
 		return "fna";
 	}
 	
+	@PostMapping("uploadContentImage")
+	//JSON으로 받기 때문에 필요
+	@ResponseBody
+	public Map<String, String> ckEditor(MultipartFile upload, HttpSession session) throws Exception{
+		String fileName = fnaService.ckEditor(upload, session);
+		
+		String path = "/resources/upload/boardContents/" + fileName;
+		// 경로 완성
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("url", path);
+		return map;
+	}
+	
 	@GetMapping("list")
 	public String fnaList(Pager pager, Model model, HttpSession session) throws Exception {
 		Long lev = 0L;
@@ -40,7 +57,7 @@ public class FnaController {
 		}
 		MemberDTO memberDTO = new MemberDTO();
 		memberDTO.setMember_lev(lev);
-		model.addAttribute("member", memberDTO);
+		model.addAttribute("memberJ", memberDTO);
 
 		
 		List<InquiryDTO> InquiryList = fnaService.fnaList(pager);
@@ -67,7 +84,7 @@ public class FnaController {
 		}
 		MemberDTO memberDTO = new MemberDTO();
 		memberDTO.setMember_lev(lev);
-		model.addAttribute("member", memberDTO);
+		model.addAttribute("memberJ", memberDTO);
 
 		
 		InquiryDTO inquiryDTO = fnaService.fnaDetail(commentDTO);
@@ -86,17 +103,23 @@ public class FnaController {
 	
 	@PostMapping("update")
 	public String fnaUpdate(InquiryDTO inquiryDTO, Model model) throws Exception{
-		int result = fnaService.fnaUpdate(inquiryDTO);
-		
-		String msg = "수정을 성공 하였습니다.";
-		String url = "./detail?board_num=" + inquiryDTO.getBoard_num();
-		if(result < 1) {
-			msg = "수정을 실패 하였습니다.";
-		};
-		model.addAttribute("msg", msg);
-		model.addAttribute("url", url);
-		
-		return "commons/message";
+		if(inquiryDTO.getBoard_title().equals("") || inquiryDTO.getBoard_content().equals("")) {
+			model.addAttribute("msg", "값을 입력해주세요.");
+			model.addAttribute("url", "./add");
+			return "commons/message";
+		}else {
+			int result = fnaService.fnaUpdate(inquiryDTO);
+			
+			String msg = "수정을 성공 하였습니다.";
+			String url = "./detail?board_num=" + inquiryDTO.getBoard_num();
+			if(result < 1) {
+				msg = "수정을 실패 하였습니다.";
+			};
+			model.addAttribute("msg", msg);
+			model.addAttribute("url", url);
+			
+			return "commons/message";
+		}
 	}
 	
 	@GetMapping("delete")
@@ -123,9 +146,15 @@ public class FnaController {
 	
 	@PostMapping("add")
 	public String fnaAdd(InquiryDTO inquiryDTO, Model model, HttpSession session) throws Exception{
-		// & Todo : Session에서 memberID 받는 것으로 바꿔줘야함
 		inquiryDTO.setMember_id(((MemberDTO) session.getAttribute("member")).getMember_id());
 		inquiryDTO.setMember_nickname(((MemberDTO) session.getAttribute("member")).getMember_nickname());
+		
+		if(inquiryDTO.getBoard_title().equals("") || inquiryDTO.getBoard_content().equals("")) {
+			model.addAttribute("msg", "값을 입력해주세요.");
+			model.addAttribute("url", "./add");
+			return "commons/message";
+		}else {
+			
 	
 		int result = fnaService.fnaAdd(inquiryDTO);
 		
@@ -139,6 +168,7 @@ public class FnaController {
 		model.addAttribute("url", url);
 		
 		return "commons/message";
+		}
 	}
 	
 

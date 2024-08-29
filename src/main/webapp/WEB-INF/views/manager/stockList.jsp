@@ -7,6 +7,19 @@
             <meta charset="utf-8">
             <c:import url="/WEB-INF/views/managerCommons/cssScript.jsp"></c:import>
             <style>
+                .adjusted-input {
+                    display: inline-block;
+                    /* 인라인 블록으로 설정하여 다른 요소들과 함께 정렬 */
+                    vertical-align: middle;
+                    /* 수직 중앙 정렬 */
+                    margin-top: -12px;
+                    /* 입력 필드 위치 조정을 위한 마진 */
+                    position: relative;
+                    /* 절대 위치 설정 */
+                    left: 31.5%;
+                    /* 화면의 왼쪽에서 50% 이동 */
+                }
+
                 .quantity-input {
                     width: 50px;
                     text-align: center;
@@ -182,7 +195,7 @@
                     <hr>
                     <div class="scrollable-div">
                         <table>
-                            <h2>재고 부족 품목</h2>
+                            <span style="font-size: 24px;">재고 부족 품목</span>
                             <thead>
                                 <tr>
                                     <th class="stockLackTable-checkbox"><input type="checkbox" id="selectAllLack"></th>
@@ -213,11 +226,21 @@
                                         </td>
                                     </tr>
                                 </c:forEach>
+                                <c:if test="${empty stockLackList}">
+                                    <tr>
+                                        <td colspan="6" style="text-align: center; padding-top: 30px;">재고 부족 품목이 존재하지
+                                            않습니다.</td>
+                                    </tr>
+                                </c:if>
                             </tbody>
                         </table>
                     </div>
+                    <hr>
+                    <div>
+                        <span style="font-size: 24px;">주문 가능 품목</span>
+                        <!-- 재고 검색 -->
+                    </div>
                     <div class="scrollable-div" id="stockOrderTable">
-                        <h2>주문 가능 품목</h2>
                         <table>
                             <thead>
                                 <tr>
@@ -260,8 +283,6 @@
             <c:import url="/WEB-INF/views/managerCommons/footer.jsp"></c:import>
             <!-- Sweet Alert -->
             <script src="/resources/assets/js/plugin/sweetalert/sweetalert.min.js"></script>
-            <!-- orderList Js -->
-            <script src="/resources/js/jerry/orderList.js"></script>
 
             <script>
                 document.addEventListener("DOMContentLoaded", function () {
@@ -336,10 +357,10 @@
                                             }
                                         }
                                     })
-                                    .then(()=>{
-                                        location.href = "/manager/stockList";
-                                        showSmailCat();
-                                    })
+                                        .then(() => {
+                                            location.href = "/manager/stockList";
+                                            showSmailCat();
+                                        })
                                 } else {
                                     swal({
                                         title: "알림",
@@ -352,13 +373,14 @@
                                             }
                                         }
                                     })
-                                    .then(()=>{
-                                        location.href = "/manager/stockList";
-                                        showSadCat();
-                                    })
+                                        .then(() => {
+                                            location.href = "/manager/stockList";
+                                            showSadCat();
+                                        })
                                 }
                             })
                     });
+
 
                     // 가격합 업데이트 함수
                     function updateTotalPrice(row, priceClass, totalPriceClass) {

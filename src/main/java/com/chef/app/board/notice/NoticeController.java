@@ -47,7 +47,7 @@ public class NoticeController {
 		}
 		MemberDTO memberDTO = new MemberDTO();
 		memberDTO.setMember_lev(lev);
-		model.addAttribute("member", memberDTO);
+		model.addAttribute("memberJ", memberDTO);
 		
 		List<NoticeDTO> list = noticeService.noticeList(pager);
 		model.addAttribute("noticeList", list);
@@ -74,7 +74,7 @@ public class NoticeController {
 		}
 		MemberDTO memberDTO = new MemberDTO();
 		memberDTO.setMember_lev(lev);
-		model.addAttribute("member", memberDTO);
+		model.addAttribute("memberJ	", memberDTO);
 		
 		NoticeDTO noticeDTO = noticeService.noticeDetail(commentDTO);
 		model.addAttribute("noticeDetail", noticeDTO);
@@ -83,6 +83,7 @@ public class NoticeController {
 	
 	@GetMapping("update")
 	public String noticeUpdate(CommentDTO commentDTO, Model model, HttpSession session) throws Exception{
+		
 		String memberId = "";
 		if(((MemberDTO) session.getAttribute("member")) != null) {
 			NoticeDTO noticeDTO = noticeService.noticeDetail(commentDTO);
@@ -97,17 +98,23 @@ public class NoticeController {
 	
 	@PostMapping("update")
 	public String noticeUpdate(NoticeDTO noticeDTO, Model model) throws Exception{
-		int result = noticeService.noticeUpdate(noticeDTO);
-		
-		String msg = "수정을 실패 하였습니다.";
-		String url = "/board/notice/detail";
-		if (result >= 1) {
-			msg = "수정을 성공 하였습니다.";
-			url = url + "?board_num=" + noticeDTO.getBoard_num();
+		if(noticeDTO.getBoard_title().equals("") || noticeDTO.getBoard_content().equals("")) {
+			model.addAttribute("msg", "값을 입력해주세요.");
+			model.addAttribute("url", "./add");
+			return "commons/message";
+		}else {
+			int result = noticeService.noticeUpdate(noticeDTO);
+			
+			String msg = "수정을 실패 하였습니다.";
+			String url = "/board/notice/detail";
+			if (result >= 1) {
+				msg = "수정을 성공 하였습니다.";
+				url = url + "?board_num=" + noticeDTO.getBoard_num();
+			}
+			model.addAttribute("msg", msg);
+			model.addAttribute("url", url);
+			return "commons/message";
 		}
-		model.addAttribute("msg", msg);
-		model.addAttribute("url", url);
-		return "commons/message";
 	}
 	
 	@GetMapping("delete")
@@ -146,28 +153,34 @@ public class NoticeController {
 	
 	@PostMapping("add")
 	public String noticeAdd(NoticeDTO noticeDTO, Model model, HttpSession session) throws Exception{
-		String msg = "작성을 실패 하였습니다.";
-		String url = "/board/notice/list";
-		// & Todo - admin1 - Start
-		// 세션 member의 id 값을 집어 넣을 수 있는 기능을 만들고 교체할것 
-		noticeDTO.setMember_id(((MemberDTO) session.getAttribute("member")).getMember_id());
-		noticeDTO.setMember_nickname(((MemberDTO) session.getAttribute("member")).getMember_nickname());
-		System.out.println("@@ Notice nickname : " + noticeDTO.getMember_nickname());
-		
-		// & Todo - admin1 - Finish
-		String title = noticeDTO.getBoard_title().trim();
-		if(title.length() == 0) {
-			model.addAttribute("msg", msg);
-			model.addAttribute("url", url);
+		if(noticeDTO.getBoard_title().equals("") || noticeDTO.getBoard_content().equals("")) {
+			model.addAttribute("msg", "값을 입력해주세요.");
+			model.addAttribute("url", "./add");
 			return "commons/message";
 		}else {
-			int result = noticeService.noticeAdd(noticeDTO);
-			if (result >= 1) {
-				msg = "작성을 성공 하였습니다.";
+			String msg = "작성을 실패 하였습니다.";
+			String url = "/board/notice/list";
+			// & Todo - admin1 - Start
+			// 세션 member의 id 값을 집어 넣을 수 있는 기능을 만들고 교체할것 
+			noticeDTO.setMember_id(((MemberDTO) session.getAttribute("member")).getMember_id());
+			noticeDTO.setMember_nickname(((MemberDTO) session.getAttribute("member")).getMember_nickname());
+			System.out.println("@@ Notice nickname : " + noticeDTO.getMember_nickname());
+			
+			// & Todo - admin1 - Finish
+			String title = noticeDTO.getBoard_title().trim();
+			if(title.length() == 0) {
+				model.addAttribute("msg", msg);
+				model.addAttribute("url", url);
+				return "commons/message";
+			}else {
+				int result = noticeService.noticeAdd(noticeDTO);
+				if (result >= 1) {
+					msg = "작성을 성공 하였습니다.";
+				}
+				model.addAttribute("msg", msg);
+				model.addAttribute("url", url);
+				return "commons/message";
 			}
-			model.addAttribute("msg", msg);
-			model.addAttribute("url", url);
-			return "commons/message";
 		}
 	}
 	

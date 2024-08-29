@@ -53,7 +53,7 @@
 						${inquiryDetail.board_content}
 					</div>
 					<hr>
-					<c:if test="${member.member_lev > 0}">
+					<c:if test="${memberJ.member_lev > 0}">
 						<div style="text-align: right;">
 							<a class="btn border-secondary rounded-pill px-4 py-3 text-primary"
 								href="/board/${page}/update?board_num=${inquiryDetail.board_num}">Update</a>
@@ -71,7 +71,7 @@
 							</div>
 
 							<div class="mb-4">
-								<span id="alBtn" data-alBtn="${member.member_id}" class="d-flex align-items-center">
+								<span id="alBtn" data-alBtn="${memberJ.member_id}" class="d-flex align-items-center">
 									<input type="text" id="replyInput"
 										class="form-control border-2 border-secondary rounded-pill py-2 px-3 "  style="width: 1100px;" placeholder="댓글을 입력하세요">
 									<button id="qnaReplyBtn"
