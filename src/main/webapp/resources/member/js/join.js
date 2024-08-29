@@ -163,7 +163,6 @@ phoneCheck.addEventListener("click", ()=>{
 // 닉네임 중복체크
 nickNameCheck.addEventListener("click", ()=>{
     
-    
     if(!regexpNickname.test(memberNickname.value)){
         let span = document.createElement('span');
         span.id = 'join_span';
