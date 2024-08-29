@@ -397,15 +397,15 @@
                                             </li>
                                         </ul>
                                     </div>
-                                </div>
-                                
+                                </div>                     
                                     <div class="tab-content">
                                         <c:choose>
                                             <c:when test="${tab=='1'}">
                                                 <div id="tab-1" class="tab-pane fade show active p-0">
                                                     <div class="row g-4">
                                                         <div class="col-lg-12">
-                                                            <div class="row g-4">
+                                                            <div class="row g-4"> 
+                                            
                                                                 <c:forEach items="${recipeMap.recipeAr}" var="list">
                                                                     <div class="col-md-6 col-lg-4 col-xl-3">
                                                                         <div class="rounded position-relative fruite-item">
