@@ -7,6 +7,7 @@ const recipe_num = document.getElementById("recipe_num");
 const updateDiv = document.getElementsByClassName("updateDiv");
 const updateDiv2 = document.getElementsByClassName("updateDiv2");
 
+
 // const replyList = document.getElementsByClassName("replyList");
 let count = 0;
 let max = 1;
@@ -88,47 +89,51 @@ document.querySelectorAll('.replyBtn').forEach(function (element) {
   });
 });
 
-function loadReplies(parentId, container) {
-  fetch(`getReplies?recipe_reply_num=${parentId}`)
-    .then(response => response.json())
-    .then(replies => {
-      container.innerHTML = '';
-      replies.forEach(reply => {
-        let div = document.createElement("div");
-        div.className = "reply";
-        div.innerHTML = `<p>${reply.board_content}</p>`;
-        container.appendChild(div);
-      });
-    })
-    .catch(error => {
-      console.error('Error:', error);
-    });
-}
-document.querySelectorAll('.comment').forEach(comment => {
-  const commentId = comment.id.split('_')[1];
-  const replyList = comment.querySelector('.replyList');
-  loadReplies(commentId, replyList);
-});
+// function loadReplies(parentId, container) {
+//   fetch(`getReplies?recipe_reply_num=${parentId}`)
+//     .then(response => response.json())
+//     .then(replies => {
+//       container.innerHTML = '';
+//       replies.forEach(reply => {
+//         let div = document.createElement("div");
+//         div.className = "reply";
+//         div.innerHTML = `<p>${reply.board_content}</p>`;
+//         container.appendChild(div);
+//       });
+//     })
+//     // .catch(error => {
+//     //   console.error('Error:', error);
+//     // });
+// }
+// document.querySelectorAll('.comment').forEach(comment => {
+//   const commentId = comment.id.split('_')[1];
+//   const replyList = comment.querySelector('.replyList');
+//   loadReplies(commentId, replyList);
+// });
+
+
 
 const navmission = document.getElementById("nav-mission")
 
 navmission.addEventListener("click", (e) => {
   if (e.target.classList.contains('reviewUpdateBtn')) {
-   
+   alert("눌림");
+
 
      let num = e.target.getAttribute("data-review-num");
      let conentup = e.target.getAttribute("data-review-content");
-    
+    let mId= e.target.getAttribute("data-num-mId");
 
      if (e.target.id == "updateReviwe" + num) {
 
       fetch("/recipe/reviewUpdate", {
         method: "POST",
         headers: { "Content-type": "application/x-www-form-urlencoded" },
-        body: "review_num=" + num + "&board_content=" + conentup
+        body: "review_num=" + num + "&board_content=" + conentup + "&member_id=" + mId
       })
         .then(r => r.text())
         .then(r => {
+          console.log(r);
           for (let div of updateDiv) {
             if (div.getAttribute("data-review-num") == num) {
               div.innerHTML = r;
@@ -172,6 +177,7 @@ navmission.addEventListener("click", (e) => {
         
  
     let reviewNum = e.target.getAttribute("data-review-num");
+    let mId= e.target.getAttribute("data-num-mId");
 
     if(e.target.id=="deleteReviwe"+reviewNum){
       //alert("삭제");
@@ -181,7 +187,7 @@ navmission.addEventListener("click", (e) => {
             fetch("/recipe/reviewDelete",{
                 method:"POST",
                 headers:{"Content-type":"application/x-www-form-urlencoded"},
-                body:"review_num="+reviewNum
+                body:"review_num="+reviewNum + "&mId=" + mId
             })
 
             .then((r)=>{return r.text()})
@@ -213,7 +219,7 @@ if (e.target.classList.contains('replyUpdateBtn')) {
   let conentup = e.target.getAttribute("data-reply-content");
 
   if (e.target.id == "updateReply" + num) {
-   
+   alert("gkg")
    fetch("/recipe/replyUpdate", {
      method: "POST",
      headers: {"Content-type": "application/x-www-form-urlencoded"},

@@ -277,6 +277,7 @@ public class RecipeController {
 	@PostMapping("replyUpdate")
 	public String replyUpdate(RecipeReplyDTO recipeReplyDTO, Model model, HttpSession session) throws Exception {
 		MemberDTO memberDTO = (MemberDTO) session.getAttribute("member");
+		System.out.println("");
 		if (memberDTO == null) {
 			model.addAttribute("msg", "잘못된 접근입니다.");
 			model.addAttribute("url", "/recipe/detail?recipe_num=" + recipeReplyDTO.getRecipe_num());
@@ -347,6 +348,10 @@ public class RecipeController {
 	@PostMapping("reviewUpdate")
 	public String reviewUpdate(RecipeReviewDTO recipeReviewDTO, Model model, HttpSession session) throws Exception {
 		MemberDTO memberDTO = (MemberDTO) session.getAttribute("member");
+		System.out.println("getMember_idmemberDTO " + memberDTO.getMember_id());
+		System.out.println("getMember_idrecipeReviewDTO " + recipeReviewDTO.getMember_id());
+		System.out.println();
+
 		if (memberDTO == null) {
 			model.addAttribute("msg", "잘못된 접근입니다.");
 			model.addAttribute("url", "/recipe/detail?recipe_num=" + recipeReviewDTO.getRecipe_num());
@@ -358,7 +363,7 @@ public class RecipeController {
 			return "commons/message";
 
 		} else {
-
+			System.out.println("review up");
 			model.addAttribute("dto", recipeReviewDTO);
 			return "recipe/reviewUpdate";
 		}
@@ -369,23 +374,25 @@ public class RecipeController {
 	public String reviewDelete(RecipeReviewDTO recipeReviewDTO, HttpSession session, Model model) throws Exception {
 
 		MemberDTO memberDTO = (MemberDTO) session.getAttribute("member");
-		if (memberDTO == null) {
-			model.addAttribute("msg", "잘못된 접근입니다.");
-			model.addAttribute("url", "/recipe/detail?recipe_num=" + recipeReviewDTO.getRecipe_num());
-			return "commons/message";
-		} else if (!memberDTO.getMember_id().equals(recipeReviewDTO.getMember_id())) {
+		System.out.println("getReview_num" + recipeReviewDTO.getReview_num());
+//		if (memberDTO == null) {
+//			model.addAttribute("msg", "잘못된 접근입니다.");
+//			model.addAttribute("url", "/recipe/detail?recipe_num=" + recipeReviewDTO.getRecipe_num());
+//			return "commons/message";
+//		} else if (!memberDTO.getMember_id().equals(recipeReviewDTO.getMember_id())) {
+//
+//			model.addAttribute("msg", "본인만 삭제 가능합니다.");
+//			model.addAttribute("url", "/recipe/detail?recipe_num=" + recipeReviewDTO.getRecipe_num());
+//			return "commons/message";
+//
+//		} else {
+		int result = recipeService.reviewDelete(recipeReviewDTO);
+		System.out.println("=======" + result);
 
-			model.addAttribute("msg", "본인만 삭제 가능합니다.");
-			model.addAttribute("url", "/recipe/detail?recipe_num=" + recipeReviewDTO.getRecipe_num());
-			return "commons/message";
-
-		} else {
-			int result = recipeService.reviewDelete(recipeReviewDTO);
-
-			model.addAttribute("msg", result);
-			return "commons/result";
-		}
+		model.addAttribute("msg", result);
+		return "commons/result";
 	}
+//	}
 
 	@PostMapping("comment")
 	@ResponseBody
