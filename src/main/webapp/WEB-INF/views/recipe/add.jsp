@@ -57,7 +57,7 @@
 			<h5 class="mb-4" style="text-align: center;">💡요리의 맛이 좌우될 수 있는 중요한 부분은 빠짐없이 적어주세요.</h5>
 			<div class="form-container">
 				<div class="form-wrapper">
-					<form action="/recipe/add" method ="post" enctype="multipart/form-data">
+					<form action="/recipe/add" method ="post" enctype="multipart/form-data" id="addForm">
 						<div class="row g-5">
 							<div class="col-12 ">
 							
@@ -106,7 +106,7 @@
 											<div class="form-item w-100">
 							         			<label class="form-label my-3">레시피 카테고리<sup>*</sup></label>             
 			   	                                	<select class="form-select" aria-label="Default select example" name="recipe_category" id="recipe_category" >
-			   	                    						  <option selected>카테고리를 선택하세요.</option>
+			   	                    						  <option selected value="">카테고리를 선택하세요.</option>
 															  <option value="한식">한식</option>
 															  <option value="양식">양식</option>
 															  <option value="중식">중식</option>
@@ -121,7 +121,7 @@
 											<div class="form-item w-100">
 							         			<label class="form-label my-3">난이도<sup>*</sup></label>             
 			   	                                	<select class="form-select" aria-label="Default select example" name="recipe_level" id="recipe_level">
-			   	                    						  <option selected>난이도를 선택하세요.</option>
+			   	                    						  <option selected value="">난이도를 선택하세요.</option>
 															  <option value="아무나">아무나</option>
 															  <option value="초급">초급</option>
 															  <option value="중급">중급</option>
@@ -136,7 +136,7 @@
 											<div class="form-item w-100">
 							         			<label class="form-label my-3">요리시간<sup>*</sup></label>             
 			   	                                	<select class="form-select" aria-label="Default select example" name="recipe_time" id="recipe_time">
-			   	                    						  <option selected>요리시간을 선택하세요.</option>
+			   	                    						  <option selected value="">요리시간을 선택하세요.</option>
 															  <option value="10분이내">10분이내</option>
 															  <option value="30분이내">30분이내</option>
 															  <option value="1시간이내">1시간이내</option>
@@ -150,7 +150,7 @@
 						<hr>
 						
 									<div class="row g-4 text-center align-items-center justify-content-center pt-4">
-                                		<button type="submit" class="btn border-secondary py-3 px-4 text-uppercase w-100 text-primary">등록</button>
+                                		<button type="button" id="recipeAddBtn" class="btn border-secondary py-3 px-4 text-uppercase w-100 text-primary ">등록</button>
                             		</div>
  								 </div>
 							</div> 
@@ -166,9 +166,9 @@
 </body>
 <script src="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/ckeditor.js"></script>
 <script type="text/javascript" src="/resources/js/commons/ckeditor.js"></script>
-<script type="text/javascript" src="/resources/js/commons/files.js"></script>
+ <script type="text/javascript" src="/resources/js/recipe/recipeAdd.js"></script> 
 <script type="text/javascript">
-    setMax(1);
+    // setMax(1);
 
   //3. Ckeditor 적용 
 	ClassicEditor.create( 

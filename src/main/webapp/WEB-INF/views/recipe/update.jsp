@@ -54,7 +54,7 @@
 	<div class="container-fluid py-5">
 		<div class="container py-5">
 			<h3 class="mb-4" style="text-align: center;">🍽️레시피를 수정해주세요.</h3>
-			<h5 class="mb-4" style="text-align: center;">💡완성사진은 변경하지않으면 기존 사진으로 표시됩니다.</h5>
+		
 			<div class="form-container">
 				<div class="form-wrapper">
 					<form action="/recipe/update" method ="post" enctype="multipart/form-data">
@@ -94,9 +94,10 @@
 											<!-- <div id="result">
 
  											 </div> -->
+											
 										
 		  		 					</div>
-	  		 					   <div class="col-12">
+									<div class="form-group" id="imgDiv">
 						                <input type="hidden"  name="recipeImgFileDTO.file_name" value="${dto.recipeImgFileDTO.file_name}">
 						                <img id="viewImg" src="/resources/upload/recipes/${dto.recipeImgFileDTO.file_name}"/>
 						            </div>
