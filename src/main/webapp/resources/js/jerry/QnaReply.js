@@ -109,8 +109,12 @@ if(alBtnData != ''){
 
 		if(id == "replyDelete"+dat){
 			// 삭제 버튼 클릭 시 삭제 버튼의 board_num (dat)와 해당 게시글의 board_num (qnaBoardNum)을 컨트롤러로 보낸다.
-			fetch("replyDelete?board_num="+dat+"&&detail_board_num="+qnaBoardNum, {
-				method: "GET"
+			let form = new FormData();
+			form.append("board_num", dat);
+			form.append("detail_board_num", qnaBoardNum);
+			fetch("replyDelete",{
+				method: "POST",
+				body: form
 			})
 			.then(r=>r.text())
 			.then(r=>{

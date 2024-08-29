@@ -1,5 +1,6 @@
 package com.chef.app.board.qna;
 
+import java.lang.reflect.Member;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -114,41 +115,55 @@ public class QnaController {
 	}
 	
 	@PostMapping("update")
-	public String qnaUpdate(InquiryDTO inquiryDTO, Model model) throws Exception{
+	public String qnaUpdate(HttpSession session, InquiryDTO inquiryDTO, Model model) throws Exception{
 		if(inquiryDTO.getBoard_title().equals("") || inquiryDTO.getBoard_content().equals("")) {
 			model.addAttribute("msg", "값을 입력해주세요.");
 			model.addAttribute("url", "./add");
 			return "commons/message";
 		}else {
-			int result = qnaService.qnaUpdate(inquiryDTO);
+			MemberDTO memberDTO = (MemberDTO) session.getAttribute("member");
+			if(inquiryDTO.getMember_id().equals(memberDTO.getMember_id())) {
+					
+				int result = qnaService.qnaUpdate(inquiryDTO);
+				
+				String msg = "수정을 성공 하였습니다.";
+				String url = "./detail?board_num=" + inquiryDTO.getBoard_num();
+				if(result < 1) {
+					msg = "수정을 실패 하였습니다.";
+				};
+				model.addAttribute("msg", msg);
+				model.addAttribute("url", url);
+				
+				return "commons/message";
+			}else {
+				model.addAttribute("msg", "본인글만 수정이 가능합니다.");
+				model.addAttribute("url", "./add");
+				return "commons/message";
+			}
+		}
+	}
+	
+	@GetMapping("delete")
+	public String qnaDelete(HttpSession session, CommentDTO commentDTO, Model model) throws Exception{
+		MemberDTO memberDTO = (MemberDTO) session.getAttribute("member");
+		if(commentDTO.getMember_id().equals(memberDTO.getMember_id())) {
+			int result = qnaService.qnaDelete(commentDTO);
 			
-			String msg = "수정을 성공 하였습니다.";
-			String url = "./detail?board_num=" + inquiryDTO.getBoard_num();
+			String msg = "삭제를 성공 하였습니다.";
+			String url = "./list";
 			if(result < 1) {
-				msg = "수정을 실패 하였습니다.";
+				msg = "삭제를 실패 하였습니다.";
+				url = "./detail";
 			};
 			model.addAttribute("msg", msg);
 			model.addAttribute("url", url);
 			
 			return "commons/message";
+		}else {
+			model.addAttribute("msg", "본인글만 삭제 가능합니다.");
+			model.addAttribute("url", "./add");
+			return "commons/message";
 		}
-	}
-	
-	@GetMapping("delete")
-	public String qnaDelete(CommentDTO commentDTO, Model model) throws Exception{
-		
-		int result = qnaService.qnaDelete(commentDTO);
-		
-		String msg = "삭제를 성공 하였습니다.";
-		String url = "./list";
-		if(result < 1) {
-			msg = "삭제를 실패 하였습니다.";
-			url = "./detail";
-		};
-		model.addAttribute("msg", msg);
-		model.addAttribute("url", url);
-		
-		return "commons/message";
 	}
 	
 	@GetMapping("add")
@@ -244,7 +259,7 @@ public class QnaController {
 		return "board/inquiry/commentList";
 	}
 	
-	@GetMapping("replyDelete")
+	@PostMapping("replyDelete")
 	public String replyDelete(CommentDTO commentDTO, ReplyUpdateDTO replyUpdateDTO, Model model) throws Exception{
 		System.out.println("REPLYDELETE 1 : " + commentDTO.getBoard_num());
 		System.out.println("REPLYDELETE 2 : " + replyUpdateDTO.getDetail_board_num());
