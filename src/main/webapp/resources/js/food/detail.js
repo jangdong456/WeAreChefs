@@ -82,7 +82,7 @@ firstStar.addEventListener("click", (e) => {
     fourthStar.classList.remove("text-secondary")
     fifthStar.classList.remove("text-secondary")
 
-    startValue.value = 1
+    starValue.value = 1
 
 })
 
@@ -94,7 +94,7 @@ secondStar.addEventListener("click", (e) => {
     fourthStar.classList.remove("text-secondary")
     fifthStar.classList.remove("text-secondary")
 
-    startValue.value = 2
+    starValue.value = 2
 
 })
 
@@ -106,7 +106,7 @@ thirdStar.addEventListener("click", (e) => {
     fourthStar.classList.remove("text-secondary")
     fifthStar.classList.remove("text-secondary")
 
-    startValue.value = 3
+    starValue.value = 3
 
 })
 
@@ -118,7 +118,7 @@ fourthStar.addEventListener("click", (e) => {
     fourthStar.classList.add("text-secondary")
     fifthStar.classList.remove("text-secondary")
 
-    startValue.value = 4
+    starValue.value = 4
 
 })
 
@@ -130,7 +130,7 @@ fifthStar.addEventListener("click", (e) => {
     fourthStar.classList.add("text-secondary")
     fifthStar.classList.add("text-secondary")
 
-    startValue.value = 5
+    starValue.value = 5
 
 })
 
