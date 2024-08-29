@@ -47,27 +47,25 @@ public class RecipeController {
 		// pager.setPage(1L);
 		MemberDTO memberDTO = (MemberDTO) session.getAttribute("member");
 
-		System.out.println("getMember_id" + recipeDTO.getMember_id());
 		List<RecipeDTO> ar = recipeService.recipeList(recipePager);
 
 		model.addAttribute("ar", ar);
 		model.addAttribute("recipePager", recipePager);
-		System.out.println("recipePager.getPage() cont " + recipePager.getPage());
-		System.out.println("lastNum" + recipePager.getLastNum());
 
 		List<Map<String, Object>> categoryCount = recipeService.categoryCount();
-		System.out.println("categoryCount " + categoryCount.toString());
 		model.addAttribute("count", categoryCount);
 
 	}
 
 	@GetMapping("detail")
-	public String recipeDetail(RecipeDTO recipeDTO, Model model, RecipeReviewDTO recipeReviewDTO,
+	public String recipeDetail(Model model, //RecipeDTO recipeDTO,  RecipeReviewDTO recipeReviewDTO,
 			RecipeReplyDTO recipeReplyDTO, HttpSession session) {
 		MemberDTO memberDTO = (MemberDTO) session.getAttribute("member");
 
 		// recipeDTO.setMember_id(memberDTO.getMember_id());
-
+		RecipeDTO recipeDTO = new RecipeDTO();
+		recipeDTO.setRecipe_num(recipeReplyDTO.getRecipe_num());
+		
 		recipeDTO = recipeService.recipeDetail(recipeDTO);
 
 		if (memberDTO != null) {
@@ -81,18 +79,17 @@ public class RecipeController {
 			}
 			model.addAttribute("bookMark", msg);
 			model.addAttribute("loginMember", memberDTO);
-			System.out.println("detial reuslt @@@ " + result);
-			System.out.println("detial member id @@@ " + bookRecipe.getMember_id());
 
 		}
 
-		// System.out.println("getMember_id " + recipeDTO.getMember_id());
-		// System.out.println(recipeDTO.getRecipe_name());
+		
+		RecipeReviewDTO recipeReviewDTO = new RecipeReviewDTO();
+		recipeReviewDTO.setRecipe_num(recipeReplyDTO.getRecipe_num());
+		
 		List<RecipeReviewDTO> ar = recipeService.reviewList(recipeReviewDTO);
-		System.out.println("recipeNum " + recipeReviewDTO.getRecipe_num());
-		List<RecipeReplyDTO> ar2 = recipeService.replyList(recipeReplyDTO, recipeDTO);
+		
+		List<RecipeReplyDTO> ar2 = recipeService.replyList(recipeReplyDTO);
 		Double result = recipeService.ratingTotal(recipeReviewDTO);
-		System.out.println("tot" + result);
 
 		model.addAttribute("ar", ar);
 		model.addAttribute("ar2", ar2);
@@ -133,9 +130,6 @@ public class RecipeController {
 		recipeDTO.setMember_id(memberDTO.getMember_id());
 		int result = recipeService.recipeAdd(recipeDTO, attach, session);
 
-		System.out.println("controller num" + recipeDTO.getRecipe_num());
-		System.out.println("controller name" + recipeDTO.getRecipe_name());
-
 		if (result > 0) {
 			model.addAttribute("result", "레시피 등록이 완료됐습니다!");
 			model.addAttribute("url", "/recipe/list");
@@ -156,9 +150,6 @@ public class RecipeController {
 			model.addAttribute("url", "/recipe/detail?recipe_num=" + recipeDTO.getRecipe_num());
 			return "commons/message";
 		} else if (!memberDTO.getMember_id().equals(recipeDTO.getMember_id())) {
-			System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@q");
-			System.out.println("memberDTO : " + memberDTO.getMember_id());
-			System.out.println("recipeDTO : " + recipeDTO.getMember_id());
 			model.addAttribute("msg", "본인만 수정이 가능합니다.");
 			model.addAttribute("url", "/recipe/list");
 			return "commons/message";
@@ -170,17 +161,10 @@ public class RecipeController {
 				model.addAttribute("dto", recipeDTO);
 				url = "recipe/update";
 				// model.addAttribute("result", "레시피 수정이 완료 됐습니다");
-				System.out.println("update");
-				System.out.println(url);
-				System.out.println(recipeDTO.getRecipe_num());
 //			model.addAttribute("url", "/recipe/list");
 //			return "recipe/message";
 
-			} else {
-				model.addAttribute("result", "없는 상품입니다.");
-				model.addAttribute("url", "./list");
-				url = "commons/message";
-			}
+			} 
 			return url;
 
 		}
@@ -237,10 +221,8 @@ public class RecipeController {
 	@PostMapping("review")
 	public String recipeReview(RecipeReviewDTO recipeReviewDTO, Model model, HttpSession session) {
 		MemberDTO memberDTO = (MemberDTO) session.getAttribute("member");
-		System.out.println("id" + memberDTO.getMember_id());
 		// recipeReviewDTO.setMember_id("");
 		int result = recipeService.recipeReview(recipeReviewDTO);
-		System.out.println("getRecipe_rating" + recipeReviewDTO.getRecipe_rating());
 
 		if (result > 0) {
 			model.addAttribute("result", "소중한 리뷰가 등록됐습니다!");
@@ -259,7 +241,6 @@ public class RecipeController {
 	@PostMapping("reply")
 	public String recipeReply(RecipeReplyDTO recipeReplyDTO, Model model, HttpSession session) {
 		MemberDTO memberDTO = (MemberDTO) session.getAttribute("member");
-		System.out.println("reply id" + memberDTO.getMember_id());
 		int result = recipeService.recipeReply(recipeReplyDTO);
 		if (result > 0) {
 			model.addAttribute("result", "문의가 등록됐습니다!");
@@ -277,35 +258,24 @@ public class RecipeController {
 	@PostMapping("replyUpdate")
 	public String replyUpdate(RecipeReplyDTO recipeReplyDTO, Model model, HttpSession session) throws Exception {
 		MemberDTO memberDTO = (MemberDTO) session.getAttribute("member");
-		System.out.println("");
-		if (memberDTO == null) {
-			model.addAttribute("msg", "잘못된 접근입니다.");
-			model.addAttribute("url", "/recipe/detail?recipe_num=" + recipeReplyDTO.getRecipe_num());
-			return "commons/message";
-		} else if (!memberDTO.getMember_id().equals(recipeReplyDTO.getMember_id())) {
-
-			model.addAttribute("msg", "본인만 수정 가능합니다.");
-			model.addAttribute("url", "/recipe/detail?recipe_num=" + recipeReplyDTO.getRecipe_num());
-			return "commons/message";
-
-		} else {
-			System.out.println(recipeReplyDTO.getBoard_content());
-			System.out.println(recipeReplyDTO.getRecipe_reply_num());
-			model.addAttribute("dto", recipeReplyDTO);
-
-			return "recipe/replyUpdate";
-		}
-
+		model.addAttribute("dto", recipeReplyDTO);
+		return "recipe/replyUpdate";
 	}
 
 	@PostMapping("replyUpdateInsert")
-	public String replyUpdateInsert(RecipeReplyDTO recipeReplyDTO, Model model) throws Exception {
-
-		System.out.println(recipeReplyDTO.getBoard_content());
-		System.out.println(recipeReplyDTO.getRecipe_reply_num());
-		int result = recipeService.replyUpdateInsert(recipeReplyDTO);
-
-		model.addAttribute("msg", result);
+	public String replyUpdateInsert(RecipeReplyDTO recipeReplyDTO, Model model, HttpSession session) throws Exception {
+		MemberDTO memberDTO = (MemberDTO) session.getAttribute("member");
+		if (memberDTO == null) {
+			// -100 : 잘못된 접근입니다.
+			model.addAttribute("msg", -100);
+		} else if (!memberDTO.getMember_id().equals(recipeReplyDTO.getMember_id())) {
+			// -200 : 본인만 수정 가능합니다.
+			model.addAttribute("msg", -200);
+		} else {
+			int result = recipeService.replyUpdateInsert(recipeReplyDTO);
+	
+			model.addAttribute("msg", result);
+		}
 		return "commons/result";
 
 	}
@@ -314,30 +284,21 @@ public class RecipeController {
 	public String replyDelete(RecipeReplyDTO recipeReplyDTO, Model model, HttpSession session) throws Exception {
 		MemberDTO memberDTO = (MemberDTO) session.getAttribute("member");
 		if (memberDTO == null) {
-			model.addAttribute("msg", "잘못된 접근입니다.");
-			model.addAttribute("url", "/recipe/detail?recipe_num=" + recipeReplyDTO.getRecipe_num());
-			return "commons/message";
+			// -100 : 잘못된 접근입니다.
+			model.addAttribute("msg", -100);
 		} else if (!memberDTO.getMember_id().equals(recipeReplyDTO.getMember_id())) {
-
-			model.addAttribute("msg", "본인만 삭제가 가능합니다.");
-			model.addAttribute("url", "/recipe/detail?recipe_num=" + recipeReplyDTO.getRecipe_num());
-			return "commons/message";
-
+			// -200 : 본인만 수정 가능합니다.
+			model.addAttribute("msg", -200);
 		} else {
 			int result = recipeService.replyDelete(recipeReplyDTO);
-			// model.addAttribute("dto", recipeReplyDTO);
-			model.addAttribute("msg", "삭제가 완료됐습니다.");
-			model.addAttribute("url", "/recipe/detail?recipe_num=" + recipeReplyDTO.getRecipe_num());
+			model.addAttribute("msg", result);
 		}
 		return "commons/result";
-
 	}
 
 	@PostMapping("reviewUpdateInsert")
 	public String reviewUpdateInsert(RecipeReviewDTO recipeReviewDTO, Model model) throws Exception {
 
-		System.out.println(recipeReviewDTO.getBoard_content());
-		System.out.println(recipeReviewDTO.getReview_num());
 		int result = recipeService.reviewUpdateInsert(recipeReviewDTO);
 
 		model.addAttribute("msg", result);
@@ -348,9 +309,6 @@ public class RecipeController {
 	@PostMapping("reviewUpdate")
 	public String reviewUpdate(RecipeReviewDTO recipeReviewDTO, Model model, HttpSession session) throws Exception {
 		MemberDTO memberDTO = (MemberDTO) session.getAttribute("member");
-		System.out.println("getMember_idmemberDTO " + memberDTO.getMember_id());
-		System.out.println("getMember_idrecipeReviewDTO " + recipeReviewDTO.getMember_id());
-		System.out.println();
 
 		if (memberDTO == null) {
 			model.addAttribute("msg", "잘못된 접근입니다.");
@@ -363,7 +321,6 @@ public class RecipeController {
 			return "commons/message";
 
 		} else {
-			System.out.println("review up");
 			model.addAttribute("dto", recipeReviewDTO);
 			return "recipe/reviewUpdate";
 		}
@@ -374,7 +331,6 @@ public class RecipeController {
 	public String reviewDelete(RecipeReviewDTO recipeReviewDTO, HttpSession session, Model model) throws Exception {
 
 		MemberDTO memberDTO = (MemberDTO) session.getAttribute("member");
-		System.out.println("getReview_num" + recipeReviewDTO.getReview_num());
 //		if (memberDTO == null) {
 //			model.addAttribute("msg", "잘못된 접근입니다.");
 //			model.addAttribute("url", "/recipe/detail?recipe_num=" + recipeReviewDTO.getRecipe_num());
@@ -387,7 +343,6 @@ public class RecipeController {
 //
 //		} else {
 		int result = recipeService.reviewDelete(recipeReviewDTO);
-		System.out.println("=======" + result);
 
 		model.addAttribute("msg", result);
 		return "commons/result";
@@ -403,10 +358,6 @@ public class RecipeController {
 		try {
 			MemberDTO memberDTO = (MemberDTO) session.getAttribute("member");
 			recipeReplyDTO.setMember_id(memberDTO.getMember_id());
-			System.out.println("recipe_num: " + recipeReplyDTO.getRecipe_num());
-			System.out.println("board_content: " + recipeReplyDTO.getBoard_content());
-			System.out.println("recipe_reply_num: " + recipeReplyDTO.getRecipe_reply_num());
-			System.out.println("meember_id : 2" + recipeReplyDTO.getMember_id());
 
 			int result = recipeService.recipeComment(recipeReplyDTO);
 
@@ -466,7 +417,6 @@ public class RecipeController {
 			return "commons/message";
 		} else {
 			int result = recipeService.wishUpdate(recipeDTO);
-			System.out.println("@@ cancel : " + result);
 			String url = "/recipe/detail?recipe_num=" + recipeDTO.getRecipe_num();
 
 			model.addAttribute("msg", "레시피 취소");

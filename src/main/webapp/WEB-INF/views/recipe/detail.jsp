@@ -426,7 +426,6 @@
 													data-review-num="${ar.review_num}">
 													<p class="mb-0">${ar.board_content}</p>
 													<div>
-														<h1>${ar.member_id}</h1>
 														<c:if test="${ar.member_id eq member.member_id}">
 															<button
 																class="btn text-primary rounded-pill reviewUpdateBtn ms-auto"
@@ -495,14 +494,14 @@
 																data-reply-num="${ar.recipe_reply_num}"
 																data-reply-content="${ar.board_content}"
 																style="font-size: 13px; margin-bottom: 11px; margin-left: 50px; margin-left: 620px;"
-																id="updateReply${ar.recipe_reply_num}">수정</button>
+																id="updateReply${ar.recipe_reply_num}" data-num-mId ="${ar.member_id}">수정</button>
 
 															<button
 																class="btn text-primary rounded-pill replyDeleteBtn ms-auto"
 																data-reply-num="${ar.recipe_reply_num}"
 																data-reply-content="${ar.board_content}"
 																style="font-size: 14px; margin-bottom: 11px; padding-left: inherit; font-size: 13px; margin-bottom: 11px; margin-right: 17px;"
-																id="deleteReply${ar.recipe_reply_num}">삭제</button>
+																id="deleteReply${ar.recipe_reply_num}"  data-num-mId ="${ar.member_id}">삭제</button>
 														</c:when>
 													</c:choose>
 												</c:if>

@@ -27,7 +27,7 @@ const replyButton = document.getElementById("replyButton");
 
 //applyButtonStyles();
 
-console.log(review_memberId.value);
+
 reBtn.addEventListener("click", () => {
  
     if (review.checked) {
