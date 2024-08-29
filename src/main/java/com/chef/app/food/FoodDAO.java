@@ -148,4 +148,8 @@ public class FoodDAO {
 		return sqlSession.update(NAMESPACE+"stockMinus", storeMidOrderDTO);
 	}
 	
+	public int imgDelete(FoodDTO foodDTO) throws Exception {
+		return sqlSession.delete(NAMESPACE+"imgDelete",foodDTO);
+	}
+	
 }
