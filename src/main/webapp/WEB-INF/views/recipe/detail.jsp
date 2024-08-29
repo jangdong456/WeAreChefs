@@ -132,7 +132,7 @@
 
 .replyBtn {
 	font-size: 14px;
-	margin-left: auto; /* Ensures the button moves to the right */
+	/* margin-left: auto; Ensures the button moves to the right */
 }
 
 .child {
@@ -155,6 +155,15 @@
 	font-size: 14px;
 	margin-bottom: 11px;
 }
+.long-id-style {
+	font-size: 14px;
+	position: absolute;
+	margin-left: 80px;
+    }
+.short-id-style {
+	font-size: 14px;
+	margin-right: 735px;
+    }
 </style>
 </head>
 
@@ -334,13 +343,7 @@
 									aria-labelledby="nav-about-tab">
 									<h3 style="text-align: center;">레시피 설명</h3>
 									<br>
-									<p>The generated Lorem Ipsum is therefore always free from
-										repetition injected humour, or non-characteristic words etc.
-										Susp endisse ultricies nisi vel quam suscipit</p>
-									<p>Sabertooth peacock flounder; chain pickerel hatchetfish,
-										pencilfish snailfish filefish Antarctic icefish goldeye
-										aholehole trumpetfish pilot fish airbreathing catfish,
-										electric ray sweeper.</p>
+									<p>${dto.menu_recipe}</p>
 								</div>
 								<!--기본적으로 숨겨져있는 클래스  -->
 								<!-- 리뷰 -->
@@ -428,7 +431,7 @@
 													data-review-num="${ar.review_num}">
 													<p class="mb-0">${ar.board_content}</p>
 													<div>
-														<c:if test="${dto.member_id eq member.member_id}">
+														<c:if test="${ar.member_id eq member.member_id}">
 															<button
 																class="btn text-primary rounded-pill reviewUpdateBtn ms-auto"
 																data-review-num="${ar.review_num}"
@@ -483,11 +486,12 @@
 												${ar.create_date}</p>
 											<div class="d-flex align-items-center">
 												<h5 class="mb-0">${ar.member_id}</h5>
+															
 												<c:if test="${ar.step==0 && ar.del=='N'}">
-													<button class="btn text-primary rounded-pill replyBtn"
-														style="font-size: 14px;">|답글|</button>
+													<button class="btn text-primary rounded-pill replyBtn" id="replyButton"
+														>|답글|</button>
 												</c:if>
-												<c:if test="${dto.member_id eq member.member_id}">
+												<c:if test="${ar.member_id eq member.member_id}">
 													<c:choose>
 														<c:when test="${ar.del=='N'}">
 															<button
@@ -515,7 +519,7 @@
 													<p>${ar.board_content}</p>
 												</c:when>
 												<c:otherwise>
-													<p>삭제된 리뷰입니다.</p>
+													<p>삭제된 댓글입니다.</p>
 												</c:otherwise>
 											</c:choose>
 											<div class="comment" id="comment_1">
@@ -560,20 +564,23 @@
 						<label style="margin-bottom: 2px;">별점</label><br>
 						<div class="col-lg-12 my-2" id="starRating">
 							<fieldset id="rating">
-								<input type="radio" name="recipe_rating" value="5" id="rate1"><label
-									for="rate1">⭐</label> <input type="radio" name="recipe_rating"
-									value="4" id="rate2"><label for="rate2">⭐</label> <input
-									type="radio" name="recipe_rating" value="3" id="rate3"><label
-									for="rate3">⭐</label> <input type="radio" name="recipe_rating"
-									value="2" id="rate4"><label for="rate4">⭐</label> <input
-									type="radio" name="recipe_rating" value="1" id="rate5"><label
-									for="rate5">⭐</label>
+								<input type="radio" name="recipe_rating" value="5" id="rate1">
+								<label for="rate1">⭐</label> 
+								<input type="radio" name="recipe_rating" value="4" id="rate2">
+								<label for="rate2">⭐</label> 
+								<input type="radio" name="recipe_rating" value="3" id="rate3">
+								<label for="rate3">⭐</label> 
+								<input type="radio" name="recipe_rating" value="2" id="rate4">
+								<label for="rate4">⭐</label> 
+								<input type="radio" name="recipe_rating" value="1" id="rate5">
+								<label for="rate5">⭐</label>
 							</fieldset>
 						</div>
 
 						<div class="col-lg-6">
+							
 							<div class="border-bottom rounded">
-								<input type="text" class="form-control border-0 me-4"
+								<input type="text" class="form-control border-0 me-4" id="review_memberId"
 									placeholder="작성자" name="member_id" value="${member.member_id}" readonly>
 							</div>
 						</div>
@@ -585,7 +592,7 @@
 							</div> -->
 						<div class="col-lg-12">
 							<div class="border-bottom rounded my-4">
-								<textarea name="board_content" class="form-control border-0"
+								<textarea name="board_content" class="form-control border-0" id="reply_text"
 									cols="30" rows="8" placeholder="내용" spellcheck="false"
 									name="board_content"></textarea>
 							</div>

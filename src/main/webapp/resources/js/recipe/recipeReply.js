@@ -76,17 +76,14 @@ document.querySelectorAll('.replyBtn').forEach(function (element) {
         .then(response => {
           if (response.success === true) {
             alert("답글 등록이 완료됐습니다.");
-            loadReplies(recipe_reply_num, this.closest(".replyListParent").querySelector(".replyList"));
+           loadReplies(recipe_reply_num, this.closest(".replyListParent").querySelector(".replyList"));
             location.reload()
           } else {
             alert("답글 등록에 실패했습니다.");
             location.reload()
           }
         })
-        .catch(error => {
-          console.error('Error:', error);
-          alert("서버 오류. 다시 시도해주세요.");
-        });
+    
     });
   });
 });
@@ -204,7 +201,7 @@ navmission.addEventListener("click", (e) => {
 
 }
 
-})
+});
 
 const navmission2 = document.getElementById("nav-mission2")
 
