@@ -422,7 +422,7 @@ public class MemberController {
 	}
 	
 	@PostMapping("resign")
-	public String resign(MemberDTO memberDTO,Model model) throws Exception {
+	public String resign(MemberDTO memberDTO,Model model, HttpSession session) throws Exception {
 		
 		int result = memberService.resign(memberDTO);
 		
@@ -430,7 +430,7 @@ public class MemberController {
 			
 			model.addAttribute("msg","탈퇴 완료 됐습니다. 다시 만나요!");
 			model.addAttribute("url", "/");
-			
+			session.invalidate();
 			return "commons/message";
 			
 		}

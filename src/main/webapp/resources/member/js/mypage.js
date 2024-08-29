@@ -21,6 +21,19 @@ let profileId = profileAdd.getAttribute("data-member-id");
 
 let profileDrop = profilePictureDelete.getAttribute("data-member-delete-id")
 
+const resignBtn = document.getElementById("resignBtn")
+const resignForm = document.getElementById("resignForm")
+
+resignBtn.addEventListener("click", () => {
+
+    let result = confirm("회원 탈퇴 하시겠습니까?")
+
+    if (result) {
+        resignForm.submit()
+    }
+
+})
+
 // sns url관련
 profileSnsDelete.addEventListener("click", () => {
     fetch("prfileSnsDelete?member_id="+profileSnsId, {
