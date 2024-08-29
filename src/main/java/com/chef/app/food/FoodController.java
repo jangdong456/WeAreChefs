@@ -200,7 +200,7 @@ public class FoodController {
 		
 	}
 	
-	@GetMapping("cartDelete")
+	@PostMapping("cartDelete")
 	public String deleteCart(StoreCartDTO storeCartDTO,Model model,HttpSession session) throws Exception {
 		
 		MemberDTO memberDTO = (MemberDTO)session.getAttribute("member");
@@ -237,13 +237,23 @@ public class FoodController {
 	}
 	
 	@GetMapping("pay")
-	public void payMain(HttpSession session,Model model) throws Exception{
+	public String payMain(HttpSession session,Model model) throws Exception{
 		
 		List<StoreCartDTO> cartAr =(List<StoreCartDTO>)session.getAttribute("cartList");
+		
+		if(cartAr == null) {
+			model.addAttribute("msg", "잘못된 접근입니다.");
+			model.addAttribute("url", "/");
+			
+			return "commons/message";
+		}
+		
 		MemberDTO memberDTO = (MemberDTO)session.getAttribute("member");
 		
 		model.addAttribute("orderMember", memberDTO);
 		model.addAttribute("list", cartAr);
+		
+		return "food/pay";
 		
 	}
 	
@@ -262,9 +272,20 @@ public class FoodController {
 	}
 	
 	@GetMapping("payComplete")
-	public void payComplete2(StoreOrderDTO storeOrderDTO,Model model) throws Exception{
+	public String payComplete2(StoreOrderDTO storeOrderDTO,Model model) throws Exception{
+		
+		if(storeOrderDTO.getOrder_num()==null) {
+			
+			model.addAttribute("msg", "잘못된 접근입니다.");
+			model.addAttribute("url", "/");
+			
+			return "commons/message";
+			
+		}
 		
 		model.addAttribute("num", storeOrderDTO);
+		
+		return "food/payComplete";
 		
 	}
 	

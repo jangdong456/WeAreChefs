@@ -17,6 +17,11 @@
             <!-- Single Page Header start -->
             <div class="container-fluid page-header py-5">
                 <h1 class="text-center text-white display-6">장바구니</h1>
+                <ol class="breadcrumb justify-content-center mb-0">
+                    <li class="breadcrumb-item"><a href="/">Home</a></li>
+                    <li class="breadcrumb-item"><a href="/food/list">Store</a></li>
+                    <li class="breadcrumb-item active text-white">Cart</li>
+                </ol>
             </div>
             <!-- Single Page Header End -->
 
@@ -123,7 +128,7 @@
                                                         </button>
                                                     </td>
                                                 </tr>
-                                                <form action="/food/cartDelete" method="get" class="numFrm"
+                                                <form action="/food/cartDelete" method="post" class="numFrm"
                                                     data-food-num="${f.food_num}">
                                                     <input type="hidden" name="food_num" value="${f.food_num}">
                                                 </form>
