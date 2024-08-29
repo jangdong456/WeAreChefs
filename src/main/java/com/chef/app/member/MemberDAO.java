@@ -131,5 +131,8 @@ public class MemberDAO {
 		return sqlSession.selectOne(NAMESPACE+"cartCount",memberDTO);
 	}
 	
+	public int resign(MemberDTO memberDTO) throws Exception {
+		return sqlSession.update(NAMESPACE+"resign", memberDTO);
+	}
 
 }

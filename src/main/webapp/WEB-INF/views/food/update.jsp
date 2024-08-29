@@ -36,6 +36,11 @@
             <!-- Single Page Header start -->
             <div class="container-fluid page-header py-5">
                 <h1 class="text-center text-white display-6">판매 재료 수정하기</h1>
+                <ol class="breadcrumb justify-content-center mb-0">
+                    <li class="breadcrumb-item"><a href="/">Home</a></li>
+                    <li class="breadcrumb-item"><a href="/food/list">Store</a></li>
+                    <li class="breadcrumb-item active text-white">Update</li>
+                </ol>
             </div>
             <!-- Single Page Header End -->
 
@@ -75,6 +80,10 @@
                     <div class="form-group">
                         <label class="form-label mt-3 mr-3">* 상품 설명</label>
                         <textarea id="editor" name="food_contents">${map.dto.food_contents}</textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label mt-3 mr-3">* 대표 이미지를 선택하지 않으면, 기본 이미지가 선택됩니다.</label>
                     </div>
 
                     <div class="form-group">

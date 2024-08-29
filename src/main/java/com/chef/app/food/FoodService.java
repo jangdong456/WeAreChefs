@@ -32,6 +32,14 @@ public class FoodService {
 		
 		int result = foodDAO.add(foodDTO);
 		Long foodNum = foodDTO.getFood_num();
+		
+		if(attach.isEmpty()) {
+			StoreImgFileDTO storeImgFileDTO = new StoreImgFileDTO();
+			storeImgFileDTO.setFood_num(foodNum);
+			storeImgFileDTO.setFile_name("default.jpg");
+			result = foodDAO.mainImg(storeImgFileDTO);
+			return result;
+		}
 				
 		ServletContext servletContext = session.getServletContext();
 	    String absolutePath = servletContext.getRealPath("resources/upload/foods");

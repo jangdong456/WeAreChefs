@@ -73,7 +73,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
    	<result column="FOOD_CONTENTS" property="food_contents"/>
    	<result column="CREATE_DATE" property="create_date"/>
    	<result column="UPDATE_DATE" property="update_date"/>
-   	<result column="RATING" property="rating"/>
     <association property="storeImgFileDTO" javaType="StoreImgFileDTO">
     	<id column="FOOD_IMG_NUM" property="file_num"/>
     	<result column="FOOD_FILE_NAME" property="file_name"/>
@@ -181,7 +180,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
    	<result column="FOOD_CONTENTS" property="food_contents"/>
    	<result column="CREATE_DATE" property="create_date"/>
    	<result column="UPDATE_DATE" property="update_date"/>
-   	<result column="RATING" property="rating"/>
     <association property="storeImgFileDTO" javaType="StoreImgFileDTO" resultMap="storeImgFileMap"/>
    </resultMap>
    
