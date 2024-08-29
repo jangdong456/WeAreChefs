@@ -247,11 +247,20 @@
 								</div>
 							</div>
 						</div>
-						<input type="hidden" name="food_rating" value="5" id="startValue">
+						<input type="hidden" name="food_rating" value="5" id="starValue">
 						<input type="hidden" name="member_id" value="${map.admin.member_id}">
 						<input type="hidden" name="food_num" value="${map.dto.food_num}">
 					</form>
 				</c:if>
+
+				<div style="display: none;">
+					<i class="fa fa-star text-secondary" id="firstStar"></i>
+					<i class="fa fa-star text-secondary" id="secondStar"></i>
+					<i class="fa fa-star text-secondary" id="thirdStar"></i>
+					<i class="fa fa-star text-secondary" id="fourthStar"></i>
+					<i class="fa fa-star text-secondary" id="fifthStar"></i>
+					<input type="hidden" name="food_rating" value="5" id="starValue">
+				</div>
 
 				<c:choose>
 					<c:when test="${empty map.reply}">

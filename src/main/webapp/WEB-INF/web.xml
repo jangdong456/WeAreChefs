@@ -56,6 +56,11 @@
 		<url-pattern>/member/mypage</url-pattern>
 	</filter-mapping>
 	
+	<error-page>
+		<error-code>404</error-code>
+		<location>/WEB-INF/views/commons/error.jsp</location>
+	</error-page>
+	
 
 
 	
