@@ -65,6 +65,12 @@ public class MemberController {
 		System.out.println(memberDTO.getMember_id());
 		System.out.println(memberDTO.getProfile_sns_url());
 		String url = "";
+		
+		if(memberDTO.getMember_id() == null) {
+			model.addAttribute("msg", "권한이 없습니다.");
+			return url = "commons/message";
+		}
+		
 		int result = memberService.prfileSnsAdd(memberDTO);
 		
 		if(result > 0) {
@@ -91,17 +97,19 @@ public class MemberController {
 		MemberDTO memberdto = (MemberDTO)session.getAttribute("member");
 		memberDTO.setMember_id(memberdto.getMember_id());
 		
-		System.out.println("==== 프로필 사진 변경 =====");
-		
 		int result = 0;
 		String url = "";
 		
+		if(memberdto.getMember_id() == null) {
+			model.addAttribute("msg", "권한이 없습니다.");
+			return url = "commons/message";
+		}
+		
+		
 		if(multipartFile.getSize() == 0) {
-			System.out.println("============= 파일 null 값 =============");
 			memberService.profileDelete(memberDTO);
 			return url = "redirect:/member/mypage";
 		}
-		
 		
 		result = memberService.profileChange(memberDTO, multipartFile, session);			
 		
@@ -116,7 +124,6 @@ public class MemberController {
 	@GetMapping("duplication")
 	public String duplication(MemberDTO memberDTO, Model model) throws Exception {
 		System.out.println("== duplication ==");
-		System.out.println(memberDTO.getMember_nickname());
 		int check = memberService.duplication(memberDTO);
 		
 		model.addAttribute("msg", check);
@@ -153,7 +160,12 @@ public class MemberController {
 //		현재 로그인한 멤버의 모든 정보 가져오기
 		memberdto = memberService.mypage(memberdto);
 		model.addAttribute("member", memberdto);
+		
+		// 레시피 조회수
+		System.out.println(memberdto.getMember_id());
+		Long hit = memberService.recipeHit(memberdto);
 
+		model.addAttribute("hit", hit);
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("memberdto", memberdto);
@@ -205,9 +217,15 @@ public class MemberController {
 		memberdto.setMember_id(memberDTO.getMember_id());
 		memberdto.setProfile_about_me(memberDTO.getProfile_about_me());;
 		
+		String url = "";
+		
+		if(memberdto.getMember_id() == null) {
+			model.addAttribute("msg", "권한이 없습니다.");
+			return url = "commons/message";
+		}
+		
 		int result = memberService.mypageUpdate(memberdto);
 		
-		String url = "";
 		if(result > 0) {
 			
 			url = "member/profileAboutMe";
@@ -230,10 +248,6 @@ public class MemberController {
 		return "commons/result";
 	}
 	
-	@GetMapping("email")
-	public void email() throws Exception {
-		
-	}
 	
 	@PostMapping("kakaologin")
 	public String kakaologin(String token, MemberDTO memberDTO, Model model, HttpSession session) throws Exception {
@@ -261,10 +275,7 @@ public class MemberController {
 	public void kakao() throws Exception {
 		System.out.println("== Kakao Controller ==");
 
-//		memberService.kakao();
 	}
-	
-	
 	
 	@GetMapping("logout")
 	public String logout(HttpSession session, Model model) throws Exception {
@@ -272,6 +283,12 @@ public class MemberController {
 		MemberDTO memberDTO = (MemberDTO)session.getAttribute("member");
 		
 		String url = "";
+		
+		if(memberDTO == null) {
+			url = "redirect:/";
+			return url;
+		}
+		
 		if(memberDTO.getMember_type().equals("카카오톡")) {
 			System.out.println("카카오 회원");
 			int num = 1;

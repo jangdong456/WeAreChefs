@@ -58,7 +58,7 @@
 		}
 		.test{
 			position: absolute;
-			top: 98%;
+			top: 95%;
 			left: 47%;
 		}
 

@@ -3,6 +3,7 @@ package com.chef.app.interceptors;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
@@ -34,8 +35,8 @@ public class AdminInterceptor extends HandlerInterceptorAdapter {
 	            view.forward(request, response);
 	            return false;
 	        }
-
 	        // 권한이 있는 경우 요청을 계속 진행
 	        return true;
+	        
 	    }
 	}

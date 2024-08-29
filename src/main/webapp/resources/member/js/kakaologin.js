@@ -3,6 +3,7 @@ const img = document.getElementById("img");
 
 const key = "708dbde015c2691a1b7eeac5da0b8b47"; 
 const redirectUrl2 = "http://localhost/member/login";
+const redirectUrl1 = "http://192.168.7.113/member/login";
 
 let value = window.location.search
 
@@ -16,8 +17,8 @@ let b = "708dbde015c2691a1b7eeac5da0b8b47";
 
 // response_type=code&client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}
 const url = "https://kauth.kakao.com/oauth/authorize?response_type=code&client_id="
-              +key+"&redirect_uri="+redirectUrl2+"&prompt=login"
-// 인가 번호 받아오는 메서드
+              +key+"&redirect_uri="+redirectUrl1+"&prompt=login"
+
 
 
 window.onpageshow = function(event) {
@@ -60,7 +61,7 @@ if(code != null) {
         "Content-Type": "application/x-www-form-urlencoded;charset=utf-8"
       },
       body:
-        "grant_type=" + a + "&" + "client_id=" + b + "&" + "redirect_uri=" + redirectUrl2 + "&" + "code=" + code
+        "grant_type=" + a + "&" + "client_id=" + b + "&" + "redirect_uri=" + redirectUrl1 + "&" + "code=" + code
 
     })
       .then(res => res.json())

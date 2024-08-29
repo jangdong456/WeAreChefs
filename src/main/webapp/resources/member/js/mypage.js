@@ -12,6 +12,7 @@ const profilePictureDelete = document.getElementById("profile_picture_delete");
 const profileSnsDelete = document.getElementById("profile_sns_delete");
 const profileSnsAdd = document.getElementById("profile_sns_add");
 const snsUrl = document.getElementById("snsUrl");
+const snsUrlRegexp = /^(http|https):\/\/[\w\-]+(\.[\w\-]+)+[/#?]?.*$/;
 
 let profileSnsId = profileSnsAdd.getAttribute("data-sns-member_id");
 let introductionId = introductionAdd.getAttribute("data-member-id");
@@ -20,7 +21,7 @@ let profileId = profileAdd.getAttribute("data-member-id");
 
 let profileDrop = profilePictureDelete.getAttribute("data-member-delete-id")
 
-// sns url
+// sns url관련
 profileSnsDelete.addEventListener("click", () => {
     fetch("prfileSnsDelete?member_id="+profileSnsId, {
         method : "GET"
@@ -37,8 +38,9 @@ profileSnsDelete.addEventListener("click", () => {
 })
 
 profileSnsAdd.addEventListener("click", () => {
-    if(!snsUrl.value) {
-        alert("sns url을 입력해주세요.")
+   
+    if(!snsUrlRegexp.test(snsUrl.value)) {
+        alert("url 형식으로 입력해주세요.")
         return;
     }
     fetch("prfileSnsAdd", {

@@ -9,7 +9,7 @@
 <c:import url="/WEB-INF/views/templete/header.jsp"></c:import>
 <title>Insert title here</title>
 <style>
-    p {
+    .pp {
         width: 200px;
         overflow: hidden;
         text-overflow: ellipsis;
@@ -47,15 +47,32 @@
     .about_me {
         text-align: center;
     }
+
+    .listcategory {
+        width: 78%;
+    }
+
+    .profile{
+        border: 3px solid #b2e71e;
+    }
+
 </style>
 </head>
 
 <body>
 <c:import url="/WEB-INF/views/templete/nav.jsp"></c:import>
+<div class="container-fluid page-header py-5">
+    <h1 class="text-center text-white display-6">마이페이지</h1>
+    <ol class="breadcrumb justify-content-center mb-0">
+        <li class="breadcrumb-item"><a href="/">Home</a></li>
+        <li class="breadcrumb-item"><a href="buyList">주문목록</a></li>
+    </ol>
+</div>
+
 
     <!-- Fruits Shop Start-->
     <div class="container-fluid fruite py-5">
-        <div class="container py-5 mt-5">
+        <div class="container py-5 pb-3">
             <div class="row g-4">
                 <div class="col-lg-12">
                     <div class="row g-4">
@@ -64,12 +81,11 @@
                                 <div class="col-lg-12">
                                     <div class="mb-3">
                                         <div class="rounded position-relative fruite-item mt-5">
-                                            <!-- background img 넣을수 있는지 ? 없는지? -->
                                             <div class="box-1">
                                                 <c:if test="${member.member_type eq '일반회원'}">
                                                     <c:choose>
                                                         <c:when test="${not empty member.profile_name}">
-                                                            <img src="/resources/upload/member/${member.profile_name}" class="profile" alt="">
+                                                            <img src="/resources/upload/member/${member.profile_name}"  class="profile" alt="">
                                                         </c:when>
                                                         <c:otherwise>
                                                             <img src="/resources/member/img/base.jpg" class="profile">
@@ -91,7 +107,7 @@
 
                                             <!-- 프로필 사진 modal -->
                                             <a href="#" data-bs-toggle="modal" data-bs-target="#pictureModal">
-                                                <img class="profileChange" src="/resources/member/img/picture.png" style="width: 30px; height: 30px;">
+                                                <img class="profileChange" src="/resources/member/img/5.png" style="width: 30px; height: 30px;">
                                             </a>
 
                                             <div class="modal fade" id="pictureModal" tabindex="-1" aria-labelledby="pictureModalLabel" aria-hidden="true">
@@ -135,19 +151,18 @@
                                                                     <br>
                                                                     <c:choose>
                                                                         <c:when test="${not empty member.profile_sns_url}">
-                                                                            <a href="${member.profile_sns_url}" target="_blank" class="btn border border-secondary rounded-pill px-3 text-primary mt-2">
-                                                                                <img src="/resources/member/img/youtube.png" style="width: 40px; height: 40px;">
+                                                                            
+                                                                            <a href="${member.profile_sns_url}" target="_blank"  class="btn border border-secondary rounded-pill px-3 text-primary mt-2">
+                                                                                <label for="fruits">SNS</label>
                                                                             </a>
                                                                             <a id="modalpage" class="btn border border-secondary rounded-pill px-3 text-primary mt-2" data-bs-toggle="modal" data-bs-target="#SnsModal">
-                                                                                <img src="/resources/member/img/change.png" style="width: 40px; height: 40px;">
+                                                                                <label for="fruits">SNS 변경</label>
                                                                             </a>
                                                                         </c:when>
                                                                         <c:otherwise>
                                                                             <a id="modalpage" class="btn border border-secondary rounded-pill px-3 text-primary mt-2" data-bs-toggle="modal" data-bs-target="#SnsModal">
-                                                                                <img src="/resources/member/img/social.png"
-                                                                                    style="width: 40px; height: 40px;">
-                                                                                <br>
-                                                                                <label for="fruits">SNS➕</label>
+
+                                                                                <label for="fruits">SNS 링크➕</label>
                                                                             </a>
                                                                         </c:otherwise>
                                                                     </c:choose>
@@ -165,7 +180,7 @@
                                                                                             <input id="snsUrl" type="text" size="50" placeholder="${member.profile_sns_url}" class="ms-3">
                                                                                         </c:when>
                                                                                         <c:otherwise>
-                                                                                            <input id="snsUrl" type="text" size="50" placeholder="개인 SNS URL을 입력해주세요." class="ms-3">
+                                                                                            <input id="snsUrl" type="text" size="50" placeholder="https://www.youtube.com 형식으로 작성해주세요." class="ms-3">
                                                                                         </c:otherwise>
                                                                                     </c:choose>
                                                                                 </div>
@@ -185,8 +200,9 @@
                                                                     <br>
                                                                     <c:choose>
                                                                         <c:when test="${not empty member.profile_sns_url}">
-                                                                            <a href="${member.profile_sns_url}" target="_blank" class="btn border border-secondary rounded-pill px-3 text-primary mt-2">
+                                                                            <a href="${member.profile_sns_url}" target="_blank"  class="btn border border-secondary rounded-pill px-3 text-primary mt-2">
                                                                                 <img src="/resources/member/img/youtube.png" style="width: 40px; height: 40px;">
+                                                                                <label for="fruits">SNS 링크➕</label>
                                                                             </a>
                                                                             <a id="modalpage" class="btn border border-secondary rounded-pill px-3 text-primary mt-2" data-bs-toggle="modal" data-bs-target="#SnsModal">
                                                                                 <img src="/resources/member/img/change.png" style="width: 40px; height: 40px;">
@@ -194,10 +210,7 @@
                                                                         </c:when>
                                                                         <c:otherwise>
                                                                             <a id="modalpage" class="btn border border-secondary rounded-pill px-3 text-primary mt-2" data-bs-toggle="modal" data-bs-target="#SnsModal">
-                                                                                <img src="/resources/member/img/social.png"
-                                                                                    style="width: 40px; height: 40px;">
-                                                                                <br>
-                                                                                <label for="fruits">SNS➕</label>
+                                                                                <label for="fruits">SNS 링크➕</label>
                                                                             </a>
                                                                         </c:otherwise>
                                                                     </c:choose>
@@ -215,7 +228,7 @@
                                                                                             <input id="snsUrl" type="text" size="50" placeholder="${member.profile_sns_url}" class="ms-3">
                                                                                         </c:when>
                                                                                         <c:otherwise>
-                                                                                            <input id="snsUrl" type="text" size="50" placeholder="개인 SNS URL을 입력해주세요." class="ms-3">
+                                                                                            <input id="snsUrl" type="text" size="50" placeholder="https://www.youtube.com 형식으로 작성해주세요." class="ms-3">
                                                                                         </c:otherwise>
                                                                                     </c:choose>
                                                                                 </div>
@@ -272,19 +285,11 @@
                                             </div>
 
 
-
                                             <div class="d-flex justify-content-between flex-lg-wrap">
-                                                <c:choose>
-                                                    <c:when test="${empty member.profile_hit}">
-                                                        <a
-                                                            class="btn border border-secondary rounded-pill px-3 text-primary ms-5" >❤️0</a>
-                                                    </c:when>
-                                                    <c:otherwise>
-                                                        <a
-                                                            class="btn border border-secondary rounded-pill px-3 text-primary ms-5">❤️${member.profile_hit}</a>
-                                                    </c:otherwise>
-                                                </c:choose>
-
+                                                <a class="btn border border-secondary rounded-pill px-3 text-primary ms-5 mt-2 mb-2">레시피 조회수 &#128195;${hit}</a>
+                                                <a href="buyList" class="btn border border-secondary rounded-pill px-3 text-primary ms-5 mt-2 mb-2">
+                                                    <i class="fa fa-shopping-bag me-2 text-primary iii"></i>주문목록 보러가기</a>
+                                            
                                             </div>
                                         </div>
 
@@ -314,7 +319,7 @@
                                                     alt="...">
                                                 <div class="carousel-caption d-none d-md-block">
 
-                                                    <p>${recentyList[0].recipe_name}</p>
+                                                    <p class="pp">${recentyList[0].recipe_name}</p>
                                                 </div>
                                             </div>
                                             <div class="carousel-item">
@@ -322,7 +327,7 @@
                                                     class="d-block w-100" alt="...">
                                                 <div class="carousel-caption d-none d-md-block">
 
-                                                    <p>${recentyList[1].recipe_name}</p>
+                                                    <p class="pp">${recentyList[1].recipe_name}</p>
                                                 </div>
                                             </div>
                                             <div class="carousel-item">
@@ -330,7 +335,7 @@
                                                     class="d-block w-100" alt="...">
                                                 <div class="carousel-caption d-none d-md-block">
 
-                                                    <p>${recentyList[2].recipe_name}</p>
+                                                    <p class="pp">${recentyList[2].recipe_name}</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -349,8 +354,11 @@
                                         </button>
                                     </div>
                                 </div>
-
-
+                                
+                                <form action="/member/resign" method="post" id="resignForm">
+                                    <input type="hidden" value="${member.member_id}" name="member_id">
+                                    <button class="btn btn-danger" type="button" id="resignBtn">회원탈퇴</button>
+                                </form>
                             </div>
                         </div>
 
@@ -358,7 +366,7 @@
                         <div class="col-lg-9">
                             <div class="row g-4 justify-content-center">
                                 <div class="tab-class text-center">
-                                    <div class="col-lg-8 text-end">
+                                    <div class="col-lg-8 text-end listcategory">
                                         <ul class="nav nav-pills d-inline-flex text-center mb-5 mt-5">
                                             <li class="nav-item">
                                                 <a class="d-flex m-2 py-2 bg-light rounded-pill ${tab eq '1' ? 'active' : ''}"
@@ -407,7 +415,7 @@
                                                                             </div>
                                                                             <div class="p-4 border border-secondary border-top-0 rounded-bottom">
                                                                                 <h4>${list.recipe_name}</h4>
-                                                                                <p>${list.menu_recipe}</p>
+                                                                                <p class="pp">${list.menu_recipe}</p>
                                                                                 <div class="d-flex justify-content-between flex-lg-wrap">
                                                                                     <a href="/recipe/detail?recipe_num=${list.recipe_num}" style="margin-left:18%"
                                                                                         class="btn border border-secondary rounded-pill px-3 text-primary">🧑‍🍳레시피보러가기</a>
@@ -434,7 +442,6 @@
 
 
                                             <c:when test="${tab=='2'}">
-                                                <h1>${recipeReviewMap.recipereViewAr[0].board_title}</h1>
                                                 <div id="tab-2" class="tab-pane fade show active p-0">
                                                     <div class="row g-4">
                                                         <div class="col-lg-12">
@@ -445,13 +452,11 @@
                                                                             <div class="fruite-img">
                                                                                 <img src="img/fruite-item-5.jpg" class="img-fluid w-100 rounded-top" alt="">
                                                                             </div>
-                                                                            <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">
-                                                                            </div>
                                                                             <div class="p-4 border border-secondary border-top-0 rounded-bottom">
                                                                                 <h4>${review.board_title}</h4>
-                                                                                <p>${review.board_content}</p>
+                                                                                <p class="pp">${review.board_content}</p>
                                                                             <div class="d-flex justify-content-between flex-lg-wrap">
-                                                                                <a href="/recipe/detail?recipe_num=${review.recipe_num}" style="margin-left:18%" class="btn border border-secondary rounded-pill px-3 text-primary">작성한 댓글보기</a>
+                                                                                <a href="/recipe/detail?recipe_num=${review.recipe_num}" style="margin-left:18%" class="btn border border-secondary rounded-pill px-3 text-primary">작성한 요리 후기 보러가기</a>
                                                                                 </div> 
                                                                             </div>
                                                                         </div>
@@ -488,9 +493,9 @@
                                                                             <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">${list.recipe_category}</div>
                                                                             <div class="p-4 border border-secondary border-top-0 rounded-bottom">
                                                                                 <h4>${list.recipe_name}</h4>
-                                                                                <p>${list.menu_recipe}</p>
+                                                                                <p class="pp">${list.menu_recipe}</p>
                                                                             <div class="d-flex justify-content-between flex-lg-wrap">
-                                                                                <a href="/recipe/detail?recipe_num=${list.recipe_num}" style="margin-left:18%" class="btn border border-secondary rounded-pill px-3 text-primary">찜 목록</a>
+                                                                                <a href="/recipe/detail?recipe_num=${list.recipe_num}" style="margin-left:18%" class="btn border border-secondary rounded-pill px-3 text-primary">찜 목록 보러가기</a>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -522,10 +527,9 @@
                                                                     <div class="col-md-6 col-lg-4 col-xl-3">
                                                                         <div class="rounded position-relative fruite-item">
                                                                             <div class="p-4 border border-secondary border-top-0 rounded-bottom">
-                                                                                <h4>${reply.board_title}</h4>
-                                                                                <p>${reply.board_content}</p>
+                                                                                <p class="pp">${reply.board_content}</p>
                                                                                 <div class="d-flex justify-content-between flex-lg-wrap">
-                                                                                    <a href="/recipe/detail?recipe_num=${reply.recipe_num}" style="margin-left:18%" class="btn border border-secondary rounded-pill px-3 text-primary">작성한 요리후기</a>
+                                                                                    <a href="/recipe/detail?recipe_num=${reply.recipe_num}" style="margin-left:18%" class="btn border border-secondary rounded-pill px-3 text-primary">작성한 댓글 보러가기</a>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -566,8 +570,8 @@
     </div>
     <!-- Fruits Shop End-->
 
-<script src="/resources/member/js/mypage.js"></script>
 <c:import url="/WEB-INF/views/templete/footer.jsp"></c:import>
+<script src="/resources/member/js/mypage.js"></script>
 </body>
 
 </html>

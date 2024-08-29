@@ -15,6 +15,8 @@ const nickNameCheck = document.getElementById("nickNameCheck");
 const idCheck = document.getElementById("idCheck");
 const pwdCheck = document.getElementById("pwdCheck");
 const phoneCheck = document.getElementById("phoneCheck");
+const pwdCheck_span = document.getElementById("pwdCheck_span");
+const unpwdCheck_span = document.getElementById("unpwdCheck_span");
 
 //정규식
 const regexpName     = /^[가-힣a-zA-Z]+$/;
@@ -43,12 +45,39 @@ joinTopTag.addEventListener("click", (e) => {
             emailNumCheckBtn.remove();
             emailbtn.setAttribute('disabled', false)
             emailbtn.setAttribute('data-check', true)
+
+            let span = document.createElement('span');
+            span.setAttribute('class', "email_span");
+            span.id = 'clear_span';
+            span.innerHTML = "인증번호가 일치 합니다.";
+            membere_mail.parentNode.append(span);
         } else {
             alert("인증번호가 다릅니다.")
         }
     }
 })
 
+// 비밀번호 실시간 동일하게 입력했는지 확인
+pwdCheck.addEventListener("input", () => {
+    
+    if(memberPwd.value == pwdCheck.value) {
+        console.log("비밀번호가 일치합니다")
+        pwdCheck_span.setAttribute("style", "display: block");
+        unpwdCheck_span.setAttribute("style", "display: none");
+        return;
+    } else {
+        console.log("비밀번호가 불일치합니다")
+        pwdCheck_span.setAttribute("style", "display: none");
+        unpwdCheck_span.setAttribute("style", "display: block");
+        return;
+    }
+})
+
+pwdCheck.addEventListener("focusout", () => {
+    unpwdCheck_span.setAttribute("style", "display: none");
+})
+
+// 중복체크시 중복된 값이 없다면 버튼 비활성화
 memberId.addEventListener("input", () =>{
     idCheck.disabled = false
 })
@@ -110,7 +139,7 @@ phoneCheck.addEventListener("click", ()=>{
                 
             } else {
                 let span = document.createElement('span');
-                span.id = 'join_span';
+                span.id = 'clear_span';
                 span.innerHTML = "사용 할 수 있는 휴대폰 번호 입니다.";
                 memberPhone.parentNode.append(span);
                 memberPhone.focus();
@@ -176,7 +205,7 @@ nickNameCheck.addEventListener("click", ()=>{
                 
             } else {
                 let span = document.createElement('span');
-                span.id = 'join_span';
+                span.id = 'clear_span';
                 span.innerHTML = "사용 할 수 있는 닉네임 입니다.";
                 memberNickname.parentNode.append(span);
                 memberNickname.focus();
@@ -241,7 +270,7 @@ idCheck.addEventListener("click", ()=>{
                 
             } else {
                 let span = document.createElement('span');
-                span.id = 'join_span';
+                span.id = 'clear_span';
                 span.innerHTML = "사용 할 수 있는 아이디 입니다.";
                 memberId.parentNode.append(span);
                 memberId.focus();
