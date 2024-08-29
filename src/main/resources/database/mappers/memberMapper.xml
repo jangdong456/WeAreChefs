@@ -243,4 +243,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
    	SELECT COUNT(FOOD_NUM) FROM STORECART WHERE MEMBER_ID=#{member_id}
    </select>
    
+   <update id="resign" parameterType="MemberDTO">
+   	UPDATE MEMBER SET RESIGN = 'D' WHERE MEMBER_ID =#{member_id}
+   </update>
+   
 </mapper>

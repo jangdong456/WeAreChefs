@@ -253,4 +253,8 @@ public class MemberService {
 		return memberDAO.cartCount(memberDTO);
 	}
 	
+	public int resign(MemberDTO memberDTO) throws Exception {
+		return memberDAO.resign(memberDTO);
+	}
+	
 }

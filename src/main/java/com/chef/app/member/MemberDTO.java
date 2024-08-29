@@ -27,6 +27,14 @@ public class MemberDTO extends FileDTO {
 	
 	private List<RecipeDTO> recipedtos;
 	
+	private String resign;
+	
+	public String getResign() {
+		return resign;
+	}
+	public void setResign(String resign) {
+		this.resign = resign;
+	}
 	public Date getJoin_date() {
 		return join_date;
 	}

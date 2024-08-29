@@ -304,6 +304,12 @@ public class MemberController {
 		System.out.println("== login Controller ==");
 		//session에 memberDTO 정보를 집어 넣어야함
 		
+		if(memberService.mypage(memberDTO).getResign()!=null) {
+			model.addAttribute("msg", "탈퇴");
+			return "commons/result";
+		}
+		
+		
 		MemberDTO result = memberService.login(memberDTO);
 		int num = 1;
 		Long count = memberService.cartCount(memberDTO);
@@ -396,6 +402,27 @@ public class MemberController {
 			model.addAttribute("url", "/member/buyList");	
 		}
 		return "commons/message";
+	}
+	
+	@PostMapping("resign")
+	public String resign(MemberDTO memberDTO,Model model) throws Exception {
+		
+		int result = memberService.resign(memberDTO);
+		
+		if(result>0) {
+			
+			model.addAttribute("msg","탈퇴 완료 됐습니다. 다시 만나요!");
+			model.addAttribute("url", "/");
+			
+			return "commons/message";
+			
+		}
+		
+			model.addAttribute("msg","탈퇴에 실패했습니다");
+			model.addAttribute("url", "/");
+			
+			return "commons/message";
+		
 	}
 	
 }
