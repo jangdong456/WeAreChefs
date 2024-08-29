@@ -83,6 +83,10 @@
                     </div>
 
                     <div class="form-group">
+                        <label class="form-label mt-3 mr-3">* 대표 이미지를 선택하지 않으면, 기본 이미지가 선택됩니다.</label>
+                    </div>
+
+                    <div class="form-group">
                         <label class="form-label mt-3 mr-3">* 대표 이미지</label>
                         <input type="file" name="attach" id="attach">
                     </div>
