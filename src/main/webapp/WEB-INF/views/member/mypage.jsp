@@ -355,10 +355,12 @@
                                     </div>
                                 </div>
                                 
-                                <form action="/member/resign" method="post" id="resignForm">
-                                    <input type="hidden" value="${member.member_id}" name="member_id">
-                                    <button class="btn btn-danger" type="button" id="resignBtn">회원탈퇴</button>
-                                </form>
+                                <c:if test="${member.member_type eq '일반회원'}">
+                                    <form action="/member/resign" method="post" id="resignForm">
+                                        <input type="hidden" value="${member.member_id}" name="member_id">
+                                        <button class="btn btn-danger" type="button" id="resignBtn">회원탈퇴</button>
+                                    </form>
+                                </c:if>
                             </div>
                         </div>
 
