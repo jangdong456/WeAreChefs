@@ -15,8 +15,8 @@ public class noLoginedMemberInterceptor extends HandlerInterceptorAdapter {
 	            throws Exception {
 	        MemberDTO memberDTO = (MemberDTO) request.getSession().getAttribute("member");
 
-	       
-	        // 로그인 여부 검사, 로그인한 회원만 통과
+
+	        // 로그인 여부 검사, 로그인 안한 회원만 통과
 	        if(memberDTO != null) {
 	            request.setAttribute("msg", "로그인하지 않은 회원만 접근 가능합니다.");
 	            request.setAttribute("url", "/member/login");

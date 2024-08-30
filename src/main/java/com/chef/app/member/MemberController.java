@@ -151,7 +151,8 @@ public class MemberController {
 
 	@GetMapping("mypage")
 	public void mypage(HttpSession session, Model model, Pager pager,String tab) throws Exception {
-
+		System.out.println("@@@@@ 마이페이지 @@@@@");
+		
 		if(tab==null) {
 			tab="1";
 		}
@@ -176,6 +177,8 @@ public class MemberController {
 
 		if(tab.equals("1")) {
 			Map<String, Object> recipeMap = memberService.recipeList(map);
+			System.out.println("작성한 레시피 리스트");
+			System.out.println(recipeMap);
 			model.addAttribute("recipeMap", recipeMap);
 			model.addAttribute("tab", tab);
 		}
@@ -359,7 +362,9 @@ public class MemberController {
 	@PostMapping("join")
 	public String join(MemberDTO memberDTO, Model model) throws Exception {
 		System.out.println("== Post Join Controller ==");
-
+		
+		
+		
 		int result = memberService.join(memberDTO);
 		System.out.println("Join 반환값 :" + result);
 		

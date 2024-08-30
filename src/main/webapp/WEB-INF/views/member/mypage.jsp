@@ -355,10 +355,12 @@
                                     </div>
                                 </div>
                                 
-                                <form action="/member/resign" method="post" id="resignForm">
-                                    <input type="hidden" value="${member.member_id}" name="member_id">
-                                    <button class="btn btn-danger" type="button" id="resignBtn">회원탈퇴</button>
-                                </form>
+                                <c:if test="${member.member_type eq '일반회원'}">
+                                    <form action="/member/resign" method="post" id="resignForm">
+                                        <input type="hidden" value="${member.member_id}" name="member_id">
+                                        <button class="btn btn-danger" type="button" id="resignBtn">회원탈퇴</button>
+                                    </form>
+                                </c:if>
                             </div>
                         </div>
 
@@ -395,15 +397,15 @@
                                             </li>
                                         </ul>
                                     </div>
-                                </div>
-                                
+                                </div>                     
                                     <div class="tab-content">
                                         <c:choose>
                                             <c:when test="${tab=='1'}">
                                                 <div id="tab-1" class="tab-pane fade show active p-0">
                                                     <div class="row g-4">
                                                         <div class="col-lg-12">
-                                                            <div class="row g-4">
+                                                            <div class="row g-4"> 
+                                            
                                                                 <c:forEach items="${recipeMap.recipeAr}" var="list">
                                                                     <div class="col-md-6 col-lg-4 col-xl-3">
                                                                         <div class="rounded position-relative fruite-item">
