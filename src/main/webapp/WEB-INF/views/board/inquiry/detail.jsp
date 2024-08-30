@@ -57,18 +57,18 @@
 						<c:if test="${member.member_lev > 0}">
 							<div style="text-align: right;">
 								<a class="btn border-secondary rounded-pill px-4 py-3 text-primary"
-									href="/board/${page}/update?board_num=${inquiryDetail.board_num}">Update</a>
+									href="/board/${page}/update?board_num=${inquiryDetail.board_num}&member_id=${inquiryDetail.member_id}">Update</a>
 								<a class="btn border-secondary rounded-pill px-4 py-3 text-primary"
-									href="/board/${page}/delete?board_num=${inquiryDetail.board_num}">Delete</a>
+									href="/board/${page}/delete?board_num=${inquiryDetail.board_num}&member_id=${inquiryDetail.member_id}">Delete</a>
 							</div>
 						</c:if>
 					</c:if>
 					<c:if test="${page == 'qna'}">
 						<div style="text-align: right;">
 							<a class="btn border-secondary rounded-pill px-4 py-3 text-primary"
-								href="/board/${page}/update?board_num=${inquiryDetail.board_num}">Update</a>
+								href="/board/${page}/update?board_num=${inquiryDetail.board_num}&member_id=${inquiryDetail.member_id}">Update</a>
 							<a class="btn border-secondary rounded-pill px-4 py-3 text-primary"
-								href="/board/${page}/delete?board_num=${inquiryDetail.board_num}&member_id=${inquiryDetail.member_nickname}">Delete</a>
+								href="/board/${page}/delete?board_num=${inquiryDetail.board_num}&member_id=${inquiryDetail.member_id}">Delete</a>
 						</div>
 					</c:if>
 
