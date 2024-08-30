@@ -97,6 +97,10 @@ public class MemberController {
 		MemberDTO memberdto = (MemberDTO)session.getAttribute("member");
 		memberDTO.setMember_id(memberdto.getMember_id());
 		
+		System.out.println("==== 에러사항 @@@@@@@@@@@@@@====");
+		System.out.println(multipartFile);
+		
+		
 		int result = 0;
 		String url = "";
 		

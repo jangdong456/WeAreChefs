@@ -201,11 +201,10 @@
                                                                     <c:choose>
                                                                         <c:when test="${not empty member.profile_sns_url}">
                                                                             <a href="${member.profile_sns_url}" target="_blank"  class="btn border border-secondary rounded-pill px-3 text-primary mt-2">
-                                                                                <img src="/resources/member/img/youtube.png" style="width: 40px; height: 40px;">
-                                                                                <label for="fruits">SNS 링크➕</label>
+                                                                                <label for="fruits">SNS</label>
                                                                             </a>
                                                                             <a id="modalpage" class="btn border border-secondary rounded-pill px-3 text-primary mt-2" data-bs-toggle="modal" data-bs-target="#SnsModal">
-                                                                                <img src="/resources/member/img/change.png" style="width: 40px; height: 40px;">
+                                                                                <label for="fruits">SNS 변경</label>
                                                                             </a>
                                                                         </c:when>
                                                                         <c:otherwise>
@@ -315,7 +314,7 @@
 
                                         <div class="carousel-inner">
                                             <div class="carousel-item active">
-                                                <img src="/resources/img/baner-1.png" class="d-block w-100"
+                                                <img src="/resources/member/img/test1.png" class="d-block w-100"
                                                     alt="...">
                                                 <div class="carousel-caption d-none d-md-block">
 
@@ -323,7 +322,7 @@
                                                 </div>
                                             </div>
                                             <div class="carousel-item">
-                                                <img src="/resources/img/best-product-4.jpg"
+                                                <img src="/resources/member/img/test2.png"
                                                     class="d-block w-100" alt="...">
                                                 <div class="carousel-caption d-none d-md-block">
 
@@ -331,7 +330,7 @@
                                                 </div>
                                             </div>
                                             <div class="carousel-item">
-                                                <img src="/resources/img/best-product-5.jpg"
+                                                <img src="/resources/member/img/test3.png"
                                                     class="d-block w-100" alt="...">
                                                 <div class="carousel-caption d-none d-md-block">
 
@@ -361,6 +360,12 @@
                                         <button class="btn btn-danger" type="button" id="resignBtn">회원탈퇴</button>
                                     </form>
                                 </c:if>
+
+
+                                <div style="display: none;">
+                                    <button class="btn btn-danger" type="button" id="resignBtn">회원탈퇴</button>
+                                </div>
+
                             </div>
                         </div>
 
