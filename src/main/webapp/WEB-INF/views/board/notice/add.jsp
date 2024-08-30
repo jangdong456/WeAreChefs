@@ -47,7 +47,9 @@
 
 	            </div>
 	            <hr>
-	            <button type="submit" class="btn border-secondary rounded-pill px-4 py-3 text-primary">작성 완료</button>
+							<div style="text-align: right;">
+								<button type="submit" class="btn border-secondary rounded-pill px-4 py-3 text-primary">작성 완료</button>
+							</div>
 			</form>
     	</div>
      </div>

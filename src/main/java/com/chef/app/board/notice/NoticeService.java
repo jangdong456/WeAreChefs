@@ -25,13 +25,14 @@ public class NoticeService {
 	private Pager pager;
 
 	public List<NoticeDTO> noticeList(Pager pager) throws Exception{
-		Long perBlock = 5L;
-		pager.makeRow(10L);
 		Long totalCount = noticeDAO.getRowNum(pager);
+		Long perBlock = 5L;
 		if(totalCount == 0) {
 			perBlock = 1L;
+			totalCount = 1L;
 		}
-		pager.makeNum(totalCount, 10L, perBlock);
+		pager.makeRow(5L);
+		pager.makeNum(totalCount, 5L, perBlock);
 		return noticeDAO.noticeList(pager);
 	}
 	

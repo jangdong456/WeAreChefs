@@ -122,7 +122,8 @@ public class QnaController {
 			return "commons/message";
 		}else {
 			MemberDTO memberDTO = (MemberDTO) session.getAttribute("member");
-			if(inquiryDTO.getMember_id().equals(memberDTO.getMember_id())) {
+			System.out.println("update : " + inquiryDTO.getMember_id());
+			System.out.println("update : " + memberDTO.getMember_id());
 					
 				int result = qnaService.qnaUpdate(inquiryDTO);
 				
@@ -135,11 +136,7 @@ public class QnaController {
 				model.addAttribute("url", url);
 				
 				return "commons/message";
-			}else {
-				model.addAttribute("msg", "본인글만 수정이 가능합니다.");
-				model.addAttribute("url", "./add");
-				return "commons/message";
-			}
+
 		}
 	}
 	

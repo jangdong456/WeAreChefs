@@ -47,7 +47,9 @@
 							<textarea name="board_content" class="form-control" col="40" rows="11" id="editor"></textarea>
 						</div>
 						<hr>
-						<button id="completeBtn" type="submit" class="btn border-secondary rounded-pill px-4 py-3 text-primary">작성 완료</button>
+						<div style="text-align: right;">
+							<button id="completeBtn" type="submit" class="btn border-secondary rounded-pill px-4 py-3 text-primary">작성 완료</button>
+						</div>
 					</form>
 				</div>
 			</div>
