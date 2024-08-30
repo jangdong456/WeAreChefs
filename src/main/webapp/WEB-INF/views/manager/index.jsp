@@ -238,6 +238,7 @@
 						</div>
 						<!----------------------------------------------------End 신규 유저 목록-------------------------------------------------------->
 
+
 						<!--@--------------------------------------------------Start 신규 주문 목록-------------------------------------------------------->
 						<div class="col-md-8">
 							<div class="card card-round">
@@ -313,6 +314,7 @@
 			<c:import url="/WEB-INF/views/managerCommons/footer.jsp"></c:import>
 			<!-- Index Js-->
 			<script src="/resources/js/jerry/memberIndex.js"></script>
+
 
 			<!-- Chart JS -->
 			<script src="/resources/assets/js/plugin/chart.js/chart.min.js"></script>

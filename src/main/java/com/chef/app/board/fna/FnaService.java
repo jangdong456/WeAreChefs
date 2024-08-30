@@ -25,12 +25,13 @@ public class FnaService {
 	
 	public List<InquiryDTO> fnaList(Pager pager) throws Exception{
 		Long perBlock = 5L;
-		pager.makeRow(10L);
 		Long totalCount = fnaDAO.getRowNum(pager);
 		if(totalCount == 0) {
 			perBlock = 1L;
+			totalCount = 1L;
 		}
-		pager.makeNum(totalCount, 10L, perBlock);
+		pager.makeRow(5L);
+		pager.makeNum(totalCount, 5L, perBlock);
 		return fnaDAO.fnaList(pager);
 	}
 	
