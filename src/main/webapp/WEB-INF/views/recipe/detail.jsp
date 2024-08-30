@@ -493,7 +493,7 @@
 																class="btn text-primary rounded-pill replyUpdateBtn"
 																data-reply-num="${ar.recipe_reply_num}"
 																data-reply-content="${ar.board_content}"
-																style="font-size: 13px; margin-bottom: 11px; margin-left: 50px; margin-left: 620px;"
+																style="font-size: 13px; margin-bottom: 11px; margin-left: 50px; margin-left: 570px;"
 																id="updateReply${ar.recipe_reply_num}" data-num-mId ="${ar.member_id}">수정</button>
 
 															<button
@@ -556,8 +556,8 @@
 							</div>
 						</div>
 
-						<label style="margin-bottom: 2px;">별점</label><br>
-						<div class="col-lg-12 my-2" id="starRating">
+						<label style="margin-bottom: 2px;" id="starRating2">별점</label><br>
+						<div class="col-lg-12 my-2 starRating" id="starRating">
 							<fieldset id="rating">
 								<input type="radio" name="recipe_rating" value="5" id="rate1">
 								<label for="rate1">⭐</label> 
@@ -613,12 +613,16 @@
 			const starRating = document.getElementById('starRating');
 			const reviewRadio = document.getElementById('review');
 			const replyRadio = document.getElementById('reply');
+			const starRating2 = document.getElementById('starRating2');
+			
 
 			function toggleStarRating() {
 				if (reviewRadio.checked) {
 					starRating.style.display = 'block';
+					starRating2.style.display = 'block';
 				} else {
 					starRating.style.display = 'none';
+					starRating2.style.display = 'none';
 				}
 			}
 
