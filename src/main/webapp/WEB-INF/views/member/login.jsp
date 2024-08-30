@@ -80,11 +80,11 @@
 							<div class="col-12 ">
 								<div class="row">									
 									<div class="form-item">
-										<label class="form-label my-3">아이디<sup>*</sup></label> 
+										<label class="form-label my-3">아이디</label> 
 										<input type="text" class="form-control member_join" id="member_id" name="member_id">
 									</div>
 									<div class="form-item">
-										<label class="form-label my-3">비밀번호<sup>*</sup></label>
+										<label class="form-label my-3">비밀번호</label>
 										<input type="password" class="form-control member_join" id="member_pwd" name="member_pwd">
 									</div>
 
