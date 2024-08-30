@@ -51,7 +51,7 @@ testBTN.addEventListener("click", async () => {
       }
 
       const price = isNaN(Number(item.dpr6.replace(/,/g, ''))) ? 0 : Number(item.dpr6.replace(/,/g, ''));
-      const adjustedPrice = price * 1.7;
+      const adjustedPrice = Math.floor(price/10)*20;
       console.log(meatName);
       console.log(price);
       console.log(adjustedPrice);

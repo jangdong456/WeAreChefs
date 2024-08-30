@@ -52,6 +52,7 @@ public class NoticeController {
 		List<NoticeDTO> list = noticeService.noticeList(pager);
 		model.addAttribute("noticeList", list);
 		model.addAttribute("pager", pager);
+		System.out.println("페이저 : " + pager.isNext());
 	}
 	
 	@GetMapping("hitUpdate")

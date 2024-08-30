@@ -53,12 +53,22 @@
 						${inquiryDetail.board_content}
 					</div>
 					<hr>
-					<c:if test="${memberJ.member_lev > 0}">
+					<c:if test="${page == 'fna'}">
+						<c:if test="${member.member_lev > 0}">
+							<div style="text-align: right;">
+								<a class="btn border-secondary rounded-pill px-4 py-3 text-primary"
+									href="/board/${page}/update?board_num=${inquiryDetail.board_num}">Update</a>
+								<a class="btn border-secondary rounded-pill px-4 py-3 text-primary"
+									href="/board/${page}/delete?board_num=${inquiryDetail.board_num}">Delete</a>
+							</div>
+						</c:if>
+					</c:if>
+					<c:if test="${page == 'qna'}">
 						<div style="text-align: right;">
 							<a class="btn border-secondary rounded-pill px-4 py-3 text-primary"
 								href="/board/${page}/update?board_num=${inquiryDetail.board_num}">Update</a>
 							<a class="btn border-secondary rounded-pill px-4 py-3 text-primary"
-								href="/board/${page}/delete?board_num=${inquiryDetail.board_num}">Delete</a>
+								href="/board/${page}/delete?board_num=${inquiryDetail.board_num}&member_id=${inquiryDetail.member_nickname}">Delete</a>
 						</div>
 					</c:if>
 
@@ -73,7 +83,8 @@
 							<div class="mb-4">
 								<span id="alBtn" data-alBtn="${memberJ.member_id}" class="d-flex align-items-center">
 									<input type="text" id="replyInput"
-										class="form-control border-2 border-secondary rounded-pill py-2 px-3 "  style="width: 1100px;" placeholder="댓글을 입력하세요">
+										class="form-control border-2 border-secondary rounded-pill py-2 px-3 " style="width: 1100px;"
+										placeholder="댓글을 입력하세요">
 									<button id="qnaReplyBtn"
 										class="btn btn-primary border-2 border-secondary rounded-pill text-white ml-3 px-4 py-2">댓글
 										달기</button>
@@ -97,10 +108,10 @@
 												<c:if test="${empty list.del}">
 													<button id="replyUpdate${list.board_num}"
 														class="btn btn-outline-primary rounded-pill px-3 py-1"
-														data-replyBoardNum="${list.board_num}">수정</button>
+														data-replyBoardNum="${list.board_num}" style="text-align: right;">수정</button>
 													<button id="replyDelete${list.board_num}"
 														class="btn btn-outline-danger rounded-pill px-3 py-1 ml-2"
-														data-replyBoardNum="${list.board_num}">삭제</button>
+														data-replyBoardNum="${list.board_num}" style="text-align: right;">삭제</button>
 												</c:if>
 											</div>
 										</c:if>

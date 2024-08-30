@@ -46,7 +46,9 @@
 	               <textarea name="board_content" class="form-control" cols="30" rows="11" id="editor">${noticeDetail.board_content}</textarea>
 	            </div>
 	            <hr>
-	            <button type="submit" class="btn border-secondary rounded-pill px-4 py-3 text-primary">수정완료</button>
+							<div style="text-align: right;">
+								<button type="submit" class="btn border-secondary rounded-pill px-4 py-3 text-primary">수정완료</button>
+							</div>
 			</form>
     	</div>
      </div>

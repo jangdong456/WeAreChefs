@@ -269,9 +269,9 @@ public class ManagerService {
 			//System.out.println("r : " + result);
 			System.out.println(" $$ sr");
 			i++;
+			managerDAO.addItems(a);
 		}		
 
-//		return managerDAO.addItems(ar);
 	}
 	
 	// STOCK RECORDㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ

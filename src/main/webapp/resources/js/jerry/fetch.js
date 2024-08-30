@@ -1,6 +1,6 @@
 testBTN.addEventListener("click", () => {
   console.log('누름');
-  let categoryNum = 100;
+  let categoryNum = 600;
   let url = 'http://www.kamis.or.kr/service/price/xml.do?action=dailyPriceByCategoryList';
   let productCls = '&p_product_cls_code=02';
   let itemCategory = '&p_item_category_code=';
@@ -51,11 +51,11 @@ testBTN.addEventListener("click", () => {
         // 이름
         console.log(combinedName);
         // buying
-        console.log(isNaN(Number(item.dpr1.replace(/,/g, ''))) ? 0 : Number(item.dpr1.replace(/,/g, '')));
-        let price = isNaN(Number(item.dpr1.replace(/,/g, ''))) ? 0 : Number(item.dpr1.replace(/,/g, ''))
+        console.log(isNaN(Number(item.dpr6.replace(/,/g, ''))) ? 0 : Number(item.dpr6.replace(/,/g, '')));
+        let price = isNaN(Number(item.dpr6.replace(/,/g, ''))) ? 0 : Number(item.dpr6.replace(/,/g, ''))
         // price
-        console.log(isNaN(Number(item.dpr1.replace(/,/g, '')))? 0:Number(item.dpr1.replace(/,/g, '')) * 1.5)
-        let adjustedPrice =  Math.ceil(price * 1.7/10)*10;
+        console.log(isNaN(Number(item.dpr6.replace(/,/g, '')))? 0:Number(item.dpr6.replace(/,/g, '')) * 1.5)
+        let adjustedPrice = Math.floor(price/10)*20;
 
         printedItems.add(item.item_name); // 출력된 item_name을 Set에 추가
 
