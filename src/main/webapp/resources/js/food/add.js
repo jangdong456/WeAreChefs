@@ -10,6 +10,7 @@ const foodStock = document.getElementById("foodStock")
 const foodPrice = document.getElementById("foodPrice")
 const attach = document.getElementById("attach")
 const imgDiv = document.getElementById("imgDiv")
+const frm = document.getElementById("frm")
 
 foodSearch.addEventListener("click",()=>{
     fetch("/food/searchFood?food_name="+searchName.value,{
@@ -46,8 +47,9 @@ foodAdd.addEventListener("click",()=>{
     let attachv = attach.value
     let numv = foodNum.value
 
-    if(foodv==""||catev==""||stockv==""||pricev==""||numv==""){
+    if(foodv==""||catev==""||stockv==""||pricev==""||numv==""||numv==null){
         alert('모든 항목을 입력해주세요');
+        searchName.focus()
     }else{
         frm.submit();
         }

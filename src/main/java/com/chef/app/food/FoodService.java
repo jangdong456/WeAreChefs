@@ -217,7 +217,9 @@ public class FoodService {
 	}
 	
 	public int detailDelete (FoodDTO foodDTO) throws Exception {
-		return foodDAO.detailDelete(foodDTO);
+		int result = foodDAO.detailDelete(foodDTO);
+		result = foodDAO.imgDelete(foodDTO);
+		return result;
 	} 
 	
 	public int cartAdd (Map<String, Object> map) throws Exception {

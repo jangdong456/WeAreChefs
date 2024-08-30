@@ -61,7 +61,7 @@
 
                 </div>
 
-                <form action="/food/add" method="post" enctype="multipart/form-data">
+                <form action="/food/add" method="post" enctype="multipart/form-data" id="frm">
                     <input type="hidden" id="foodNum" name="food_num">
                     <div class="form-group">
                         <label class="form-label mt-3 mr-3">* 상품명</label>
@@ -102,7 +102,7 @@
                     </div>
 
                     <div class="form-group" align="right">
-                        <button class="btn border-secondary text-uppercase text-primary" type="submit"
+                        <button class="btn border-secondary text-uppercase text-primary" type="button"
                             id="foodAdd">등록하기</button>
                     </div>
 

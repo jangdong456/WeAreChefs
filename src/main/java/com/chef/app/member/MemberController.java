@@ -265,7 +265,6 @@ public class MemberController {
 		if(num > 0) {
 			MemberDTO memberdto = memberService.kakaologin2(memberDTO);
 			Long count = memberService.cartCount(memberdto);
-			System.out.println(memberdto);
 			session.setAttribute("member", memberdto);
 			session.setAttribute("cartCount", count);
 			model.addAttribute("msg", num);
