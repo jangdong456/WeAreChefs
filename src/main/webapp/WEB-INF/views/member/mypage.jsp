@@ -315,7 +315,7 @@
 
                                         <div class="carousel-inner">
                                             <div class="carousel-item active">
-                                                <img src="/resources/img/baner-1.png" class="d-block w-100"
+                                                <img src="/resources/member/img/test1.png" class="d-block w-100"
                                                     alt="...">
                                                 <div class="carousel-caption d-none d-md-block">
 
@@ -323,7 +323,7 @@
                                                 </div>
                                             </div>
                                             <div class="carousel-item">
-                                                <img src="/resources/img/best-product-4.jpg"
+                                                <img src="/resources/member/img/test2.png"
                                                     class="d-block w-100" alt="...">
                                                 <div class="carousel-caption d-none d-md-block">
 
@@ -331,7 +331,7 @@
                                                 </div>
                                             </div>
                                             <div class="carousel-item">
-                                                <img src="/resources/img/best-product-5.jpg"
+                                                <img src="/resources/member/img/test3.png"
                                                     class="d-block w-100" alt="...">
                                                 <div class="carousel-caption d-none d-md-block">
 
@@ -361,6 +361,12 @@
                                         <button class="btn btn-danger" type="button" id="resignBtn">회원탈퇴</button>
                                     </form>
                                 </c:if>
+
+
+                                <div style="display: none;">
+                                    <button class="btn btn-danger" type="button" id="resignBtn">회원탈퇴</button>
+                                </div>
+
                             </div>
                         </div>
 
