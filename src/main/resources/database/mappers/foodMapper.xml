@@ -137,6 +137,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
    	UPDATE FOOD SET ADD_CHECK = 'D' WHERE FOOD_NUM = #{food_num}
    </update>
    
+   <delete id="imgDelete" parameterType="FoodDTO">
+   	DELETE STOREIMG WHERE FOOD_NUM=#{food_num}
+   </delete>
+   
    <insert id="cartAdd" parameterType="Map">
    	INSERT INTO STORECART VALUES (#{member_id},#{food_num},#{cart_count})
    </insert>
