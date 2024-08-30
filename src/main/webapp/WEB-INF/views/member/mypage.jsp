@@ -201,11 +201,10 @@
                                                                     <c:choose>
                                                                         <c:when test="${not empty member.profile_sns_url}">
                                                                             <a href="${member.profile_sns_url}" target="_blank"  class="btn border border-secondary rounded-pill px-3 text-primary mt-2">
-                                                                                <img src="/resources/member/img/youtube.png" style="width: 40px; height: 40px;">
-                                                                                <label for="fruits">SNS 링크➕</label>
+                                                                                <label for="fruits">SNS</label>
                                                                             </a>
                                                                             <a id="modalpage" class="btn border border-secondary rounded-pill px-3 text-primary mt-2" data-bs-toggle="modal" data-bs-target="#SnsModal">
-                                                                                <img src="/resources/member/img/change.png" style="width: 40px; height: 40px;">
+                                                                                <label for="fruits">SNS 변경</label>
                                                                             </a>
                                                                         </c:when>
                                                                         <c:otherwise>
