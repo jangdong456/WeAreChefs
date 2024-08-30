@@ -143,6 +143,8 @@ public class QnaController {
 	@GetMapping("delete")
 	public String qnaDelete(HttpSession session, CommentDTO commentDTO, Model model) throws Exception{
 		MemberDTO memberDTO = (MemberDTO) session.getAttribute("member");
+		System.out.println("@@ $ : " + commentDTO.getMember_id());
+		System.out.println("@@ % : " + memberDTO.getMember_id());
 		if(commentDTO.getMember_id().equals(memberDTO.getMember_id())) {
 			int result = qnaService.qnaDelete(commentDTO);
 			
@@ -158,7 +160,7 @@ public class QnaController {
 			return "commons/message";
 		}else {
 			model.addAttribute("msg", "본인글만 삭제 가능합니다.");
-			model.addAttribute("url", "./add");
+			model.addAttribute("url", "./list");
 			return "commons/message";
 		}
 	}
