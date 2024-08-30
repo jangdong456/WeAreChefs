@@ -13,21 +13,21 @@ const review_memberId = document.getElementById("review_memberId");
 const reply_text = document.getElementById("reply_text");
 const replyButton = document.getElementById("replyButton");
 
-function applyButtonStyles() {
-    var replyButton = document.getElementById('replyButton');
+// function applyButtonStyles() {
+//     var replyButton = document.getElementById('replyButton');
 
-    if (review_memberId.value.length >= 4) {
-        replyButton.classList.add('long-id-style');
-        replyButton.classList.remove('short-id-style');
-    } else {
-        replyButton.classList.add('short-id-style');
-        replyButton.classList.remove('long-id-style');
-    }
-}
+//     if (review_memberId.value.length >= 4) {
+//         replyButton.classList.add('long-id-style');
+//         replyButton.classList.remove('short-id-style');
+//     } else {
+//         replyButton.classList.add('short-id-style');
+//         replyButton.classList.remove('long-id-style');
+//     }
+// }
 
-applyButtonStyles();
+//applyButtonStyles();
 
-console.log(review_memberId.value);
+
 reBtn.addEventListener("click", () => {
  
     if (review.checked) {

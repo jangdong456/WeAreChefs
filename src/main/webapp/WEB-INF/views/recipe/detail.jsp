@@ -269,13 +269,8 @@
 	                           </c:when>
 							</c:choose>
 
-							<p class="mb-4">The generated Lorem Ipsum is therefore always
-								free from repetition injected humour, or non-characteristic
-								words etc.</p>
-							<p class="mb-4">Susp endisse ultricies nisi vel quam
-								suscipit. Sabertooth peacock flounder; chain pickerel
-								hatchetfish, pencilfish snailfish</p>
-							<div class="input-group quantity mb-5" style="width: 100px;">
+					
+						<!-- 	<div class="input-group quantity mb-5" style="width: 100px;">
 								<div class="input-group-btn">
 									<button
 										class="btn btn-sm btn-minus rounded-circle bg-light border">
@@ -291,12 +286,12 @@
 										<i class="fa fa-plus"></i>
 									</button>
 								</div>
+							</div> -->
+							<div style="margin-top: 50px;">
+								<a href="/food/list"
+									class="btn border border-secondary rounded-pill px-4 py-2 mb-4 text-primary"><i
+									class="fa fa-shopping-bag me-2 text-primary"></i> 재료사러가기</a> <br>
 							</div>
-							<a href="/food/list"
-								class="btn border border-secondary rounded-pill px-4 py-2 mb-4 text-primary"><i
-								class="fa fa-shopping-bag me-2 text-primary"></i> 재료사러가기</a> <br>
-
-
 
 							<c:if test="${dto.member_id ne member.member_id}">
 								<c:choose>
@@ -339,9 +334,9 @@
 								</div>
 							</nav>
 							<div class="tab-content mb-5">
-								<div class="tab-pane active" id="nav-about" role="tabpanel"
+								<div class="tab-pane active" style="text-align: center;" id="nav-about" role="tabpanel"
 									aria-labelledby="nav-about-tab">
-									<h3 style="text-align: center;">레시피 설명</h3>
+									<h3 style="text-align: center;">🥘🍴레시피 설명🥄🍲</h3>
 									<br>
 									<p>${dto.menu_recipe}</p>
 								</div>
@@ -437,14 +432,14 @@
 																data-review-num="${ar.review_num}"
 																data-review-content="${ar.board_content}"
 																style="font-size: 14px; margin-bottom: 11px; position: relative; left: 560%;"
-																id="updateReviwe${ar.review_num}">수정</button>
+																id="updateReviwe${ar.review_num}" data-num-mId ="${ar.member_id}" >수정</button>
 
 															<button
 																class="btn text-primary rounded-pill reviewDeleteBtn ms-auto"
 																data-review-num="${ar.review_num}"
 																data-review-content="${ar.board_content}"
 																style="font-size: 14px; margin-bottom: 11px; position: relative; left: 560%;"
-																id="deleteReviwe${ar.review_num}">삭제</button>
+																id="deleteReviwe${ar.review_num}" data-num-mId ="${ar.member_id}">삭제</button>
 														</c:if>
 													</div>
 												</div>
@@ -499,14 +494,14 @@
 																data-reply-num="${ar.recipe_reply_num}"
 																data-reply-content="${ar.board_content}"
 																style="font-size: 13px; margin-bottom: 11px; margin-left: 50px; margin-left: 620px;"
-																id="updateReply${ar.recipe_reply_num}">수정</button>
+																id="updateReply${ar.recipe_reply_num}" data-num-mId ="${ar.member_id}">수정</button>
 
 															<button
 																class="btn text-primary rounded-pill replyDeleteBtn ms-auto"
 																data-reply-num="${ar.recipe_reply_num}"
 																data-reply-content="${ar.board_content}"
 																style="font-size: 14px; margin-bottom: 11px; padding-left: inherit; font-size: 13px; margin-bottom: 11px; margin-right: 17px;"
-																id="deleteReply${ar.recipe_reply_num}">삭제</button>
+																id="deleteReply${ar.recipe_reply_num}"  data-num-mId ="${ar.member_id}">삭제</button>
 														</c:when>
 													</c:choose>
 												</c:if>

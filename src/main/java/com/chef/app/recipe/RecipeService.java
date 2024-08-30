@@ -127,7 +127,7 @@ public class RecipeService {
 		return recipeDAO.reviewUpdateInsert(recipeReviewDTO);
 	}
 
-	public List<RecipeReplyDTO> replyList(RecipeReplyDTO recipeReplyDTO, RecipeDTO recipeDTO) {
+	public List<RecipeReplyDTO> replyList(RecipeReplyDTO recipeReplyDTO) {
 
 		return recipeDAO.replyList(recipeReplyDTO);
 	}
