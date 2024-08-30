@@ -417,7 +417,7 @@
                                                                             </div>
                                                                             <div class="p-4 border border-secondary border-top-0 rounded-bottom">
                                                                                 <h4>${list.recipe_name}</h4>
-                                                                                <p class="pp">${list.menu_recipe}</p>
+                                                                                <!-- <p class="pp">${list.menu_recipe}</p> -->
                                                                                 <div class="d-flex justify-content-between flex-lg-wrap">
                                                                                     <a href="/recipe/detail?recipe_num=${list.recipe_num}" style="margin-left:18%"
                                                                                         class="btn border border-secondary rounded-pill px-3 text-primary">🧑‍🍳레시피보러가기</a>
@@ -455,7 +455,7 @@
                                                                                 <img src="img/fruite-item-5.jpg" class="img-fluid w-100 rounded-top" alt="">
                                                                             </div>
                                                                             <div class="p-4 border border-secondary border-top-0 rounded-bottom">
-                                                                                <h4>${review.board_title}</h4>
+                                                                                <!-- <h4>${review.board_title}</h4> -->
                                                                                 <p class="pp">${review.board_content}</p>
                                                                             <div class="d-flex justify-content-between flex-lg-wrap">
                                                                                 <a href="/recipe/detail?recipe_num=${review.recipe_num}" style="margin-left:18%" class="btn border border-secondary rounded-pill px-3 text-primary">작성한 요리 후기 보러가기</a>
@@ -495,7 +495,7 @@
                                                                             <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">${list.recipe_category}</div>
                                                                             <div class="p-4 border border-secondary border-top-0 rounded-bottom">
                                                                                 <h4>${list.recipe_name}</h4>
-                                                                                <p class="pp">${list.menu_recipe}</p>
+                                                                                <!-- <p class="pp">${list.menu_recipe}</p> -->
                                                                             <div class="d-flex justify-content-between flex-lg-wrap">
                                                                                 <a href="/recipe/detail?recipe_num=${list.recipe_num}" style="margin-left:18%" class="btn border border-secondary rounded-pill px-3 text-primary">찜 목록 보러가기</a>
                                                                                 </div>
