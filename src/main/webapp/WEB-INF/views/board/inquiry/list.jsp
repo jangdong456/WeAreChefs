@@ -75,10 +75,12 @@
 										</c:if>
 									</c:if>
 									<c:if test="${page == 'qna'}">
-										<div>
-											<a href="/board/${page}/add"
-												class="btn border-secondary rounded-pill px-4 py-3 text-primary ml-1" type="button">add</a>
-										</div>
+										<c:if test="${!empty member.member_id}">
+											<div>
+												<a href="/board/${page}/add"
+													class="btn border-secondary rounded-pill px-4 py-3 text-primary ml-1" type="button">add</a>
+											</div>
+										</c:if>
 									</c:if>
 								</div>
 							</form>
