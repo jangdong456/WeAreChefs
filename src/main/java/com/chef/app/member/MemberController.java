@@ -2,6 +2,7 @@ package com.chef.app.member;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -14,6 +15,9 @@ import javax.net.ssl.HttpsURLConnection;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,6 +25,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.chef.app.food.StoreMidOrderDTO;
@@ -42,8 +47,14 @@ public class MemberController {
 	
 	@Autowired
 	private Email email;
+	@Value("${kakao.login.admin.key}")
+	private String admin;
+	@Value("${kakao.login.rest.key}")
+	private String rest;
+	@Value("${kakao.login.app.key}")
+	private String appKey;
 	
-
+	
 	@GetMapping("prfileSnsDelete")
 	public String prfileSnsDelete(MemberDTO memberDTO, Model model) throws Exception {
 		System.out.println("===== prfileSnsDelete =====");
@@ -278,9 +289,15 @@ public class MemberController {
 	}
 	
 	@GetMapping("kakaologin")
-	public void kakao() throws Exception {
+	public ResponseEntity kakao(Model model) throws Exception {
 		System.out.println("== Kakao Controller ==");
-
+	
+		Map<String, String> key = new HashMap<String, String>();
+		key.put("admin", admin);
+		key.put("rest", rest);
+		key.put("appKey", appKey);
+	
+		return ResponseEntity.ok(key);
 	}
 	
 	@GetMapping("logout")
@@ -312,6 +329,7 @@ public class MemberController {
 	
 	@GetMapping("login")
 	public String login(HttpSession session, Model model) throws Exception {
+		
 		MemberDTO memberDTO = (MemberDTO) session.getAttribute("member");
 		if(memberDTO == null) {
 			return "member/login";

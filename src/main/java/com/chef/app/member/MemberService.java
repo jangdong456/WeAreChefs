@@ -182,8 +182,8 @@ public class MemberService {
 		
 		int result = 0;
 		if (memberDTO.getMember_id() != null) {
+			
 			result = memberDAO.kakaoCheck(memberDTO);
-
 			// result이 1이면 회원가입된 상태 | 0이면 가입안된 상태
 			if(result <= 0) {
 				// 가입된 회원이 없어서 kakaologin(생성하는 메서드 실행)
