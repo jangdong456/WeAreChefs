@@ -1,7 +1,6 @@
 const img = document.getElementById("img");
 
 const redirectUrl2 = "http://localhost/member/login";
-const redirectUrl1 = "http://192.168.7.113/member/login";
 
 let value = window.location.search
 
