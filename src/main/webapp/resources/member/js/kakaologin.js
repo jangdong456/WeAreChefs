@@ -1,20 +1,13 @@
 const img = document.getElementById("img");
-
 const redirectUrl2 = "http://localhost/member/login";
 
 let value = window.location.search
 
 const param = new URLSearchParams(value);
-let code = param.get('code');
-console.log("파람 확인: " + code);
+let code = param.get('code'); // 파람 값 확인
+
 
 let a = "authorization_code";
-
-// response_type=code&client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}
-// const url = "https://kauth.kakao.com/oauth/authorize?response_type=code&client_id="
-//               +key+"&redirect_uri="+redirectUrl1+"&prompt=login"
-
-
 
 window.onpageshow = function(event) {
   if (event.persisted == true) {
@@ -22,32 +15,25 @@ window.onpageshow = function(event) {
   }
 }
 
-//간편로그인 카카오톡 함수 호출
-// Kakao.Auth.authorize()
-
 let restKey = "";
 let adminKey = ""; 
 
 img.addEventListener("click", ()=> {
   
+  // 서버에서 저장된 key값들 가져오는 메서드
   fetch("kakaologin", {
     method : "GET"
   })
   .then(res => res.json())
   .then(res => {
-    console.log(res.rest);
-    console.log(res.admin);
-    console.log(res.appKey);
     restKey = res.rest;
     adminKey =res.admin;
 
     try {
       Kakao.init(res.appKey); // 내 앱 키번호 -> 이걸로 등록된 앱인지 확인
-      console.log("확인 :" +Kakao.isInitialized()); // true나옴 | SDK 초기화 여부 판단 함수
-      if(Kakao.isInitialized()) {
+      if(Kakao.isInitialized()) { //SDK 초기화 여부 판단 함수
   
         // 방법 1  url로 get방식
-        // location.href = url;
         location.href = "https://kauth.kakao.com/oauth/authorize?response_type=code&client_id="
               +restKey+"&redirect_uri="+redirectUrl2+"&prompt=login"
   
@@ -100,12 +86,6 @@ if(code != null) {
           })
             .then(res => res.json())
             .then(res => {
-              console.log("사용자정보 진입");
-              console.log("Bearer " + `${token}`);
-              console.log(res)
-              console.log(res.id)
-              console.log(res.properties.nickname)
-              console.log(res.properties.profile_image)
               let kakaoId = res.id
               let member_nickname = res.properties.nickname
               let kakaoImage = res.properties.profile_image
@@ -133,7 +113,5 @@ if(code != null) {
     }
 
   })
-  
-
 }
 
