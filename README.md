@@ -21,3 +21,9 @@
     - session의 정보를 활용하여 List 조회 및 페이징 처리 구현
     - 회원탈퇴 기능 구현
     - MultipartFile 활용하여 프로필 사진 추가,삭제 ,업데이트 기능 구현
+
+8.프로젝트 대략적인 이미지
+***
+<img width="400" src="https://github.com/user-attachments/assets/a1325389-1428-4751-bcae-d11be999a9c9"/>
+<img width="400" src="https://github.com/user-attachments/assets/59966a48-5c4f-47c1-9cf2-b8e92ebfb567"/>
+<img width="400" src="https://github.com/user-attachments/assets/32c6729e-e419-4b26-9f77-22bfa0f9a8f1"/>
