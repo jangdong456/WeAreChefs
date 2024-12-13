@@ -7,6 +7,7 @@
 6. ERD
 <img width="849" alt="스크린샷 2024-12-13 오후 2 38 22" src="https://github.com/user-attachments/assets/448e6a4f-a76e-412d-8c6a-2774a9a7c258" />
 
+***
 
 7. 내가 구현한 기능
 - 회원 가입 기능 구현
